@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>限制在作用域内的条件声明</title>
+</head>
+<body>
+  <script>
+    var name = 'Nicholas';
+    let age = 26;
+  </script>
+
+  <script>
+    /*
+    假设脚本不确定页面是否已经声明了同名变量
+    那它可以假设还没有声明过
+    */
+    if (typeof name === 'undefined') {
+      let name;
+    }
+
+    /*
+    name 被限制在 if {} 块的作用域内
+    因此这个赋值形同全局赋值
+    */
+    name = 'Matt';
+
+    try {
+      console.log(age);  // 如果 age 没有声明过，则会报错
+    } catch (error) {
+      let age;
+    }
+
+    /*
+    age 被限制在 catch {}  块的作用域内
+    因此这个赋值形同全局赋值
+    */
+    age = 26;
+  </script>
+</body>
+</html>

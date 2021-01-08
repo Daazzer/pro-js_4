@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>寻找符号属性</title>
+</head>
+
+<body>
+  <script>
+    let o = {
+      [Symbol('foo')]: 'foo val',
+      [Symbol('bar')]: 'bar val'
+    };
+
+    console.log(o);
+    // {Symbol(foo): "foo val", Symbol(bar): "bar val"}
+
+    let barSymbol = Object.getOwnPropertySymbols(o).find(symbol => symbol.toString().match(/bar/));
+
+    console.log(barSymbol);
+    // Symbol(bar)
+  </script>
+</body>
+
+</html>

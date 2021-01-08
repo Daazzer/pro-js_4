@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全局符号注册表</title>
+</head>
+
+<body>
+
+  <script>
+    let fooGlobalSymbol = Symbol.for('foo');
+    console.log(typeof fooGlobalSymbol);  // symbol
+
+    // 重用已有 symbol
+    let otherFooGlobalSymbol = Symbol.for('foo');
+
+    console.log(fooGlobalSymbol === otherFooGlobalSymbol);  // true
+  </script>
+
+  <script>
+    let localSymbol = Symbol('foo');
+    let globalSymbol = Symbol.for('foo');
+
+    console.log(localSymbol === globalSymbol);  // false
+  </script>
+
+  <script>
+    let emptyGlobalSymbol = Symbol.for();
+
+    console.log(emptyGlobalSymbol);  // Symbol(undefined)
+  </script>
+
+  <script>
+    // 创建全局符号
+    let s = Symbol.for('foo');
+    console.log(Symbol.keyFor(s));  // foo
+
+    // 创建普通符号
+    let s2 = Symbol('bar');
+    console.log(Symbol.keyFor(s2));  // undefined
+
+    // 如果传入的不是 symbol 类型，则抛出 TypeError
+    Symbol.keyFor(123);  // TypeError: 123 is not a symbol
+  </script>
+</body>
+
+</html>

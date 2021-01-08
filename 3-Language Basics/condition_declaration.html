@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>条件声明</title>
+</head>
+<body>
+  <script>
+    var name = 'Nicholas';
+    let age = 26;
+  </script>
+
+  <script>
+    // var 声明可以被提升，不需要检测前面是否被声明
+    var name = 'Matt';
+
+    // 如果 age 在前面被声明过，这里会报错
+    // let age = 36;
+
+    const key = 'aa';
+    const value = 11;
+    function ab(a, b, c) {
+      console.log(a);
+      console.log(b);
+      console.log(c);
+    }
+    ab`${key} = ${value}`;
+  </script>
+</body>
+</html>

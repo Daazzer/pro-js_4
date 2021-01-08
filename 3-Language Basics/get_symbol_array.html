@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>获取属性数组</title>
+</head>
+
+<body>
+  <script>
+    let s1 = Symbol('foo'),
+        s2 = Symbol('bar');
+
+    let o = {
+      [s1]: 'foo val',
+      [s2]: 'bar val',
+      baz: 'baz val',
+      qux: 'qux val'
+    };
+
+    // Object.getOwnPropertyNames() 返回对象实例的常规属性数组
+    console.log(Object.getOwnPropertyNames(o));
+    // ["baz", "qux"]
+
+    // Object.getOwnPropertySymbols() 返回对象实例的符号属性数组，与 Object.getOwnPropertyNames() 互斥
+    console.log(Object.getOwnPropertySymbols(o));
+    // [Symbol(foo), Symbol(bar)]
+
+    // Object.getOwnPropertyDescriptor() 返回同时包含常规和符号属性描述符的对象
+    console.log(Object.getOwnPropertyDescriptors(o));
+    // {baz: {…}, qux: {…}, Symbol(foo): {…}, Symbol(bar): {…}}
+
+    // Reflect.ownKeys() 返回两种类型的键
+    console.log(Reflect.ownKeys(o));
+    // ["baz", "qux", Symbol(foo), Symbol(bar)]
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array</title>
+</head>
+<body>
+  <script>
+    const colors = new Array(20);
+    const colors1 = new Array("red", "green", "blue");
+
+    console.log(colors);
+    console.log(colors1);
+
+    const arrayLikeObject = {
+      0: 1,
+      1: 2,
+      2: 3,
+      3: 4,
+      length: 4
+    };  // 类数组对象
+
+    console.log(Array.from(arrayLikeObject));
+
+    const arr = Array(3);
+    console.log(arr);
+  </script>
+</body>
+</html>

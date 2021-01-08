@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>&lt;script&gt;元素</title>
+</head>
+
+<body>
+  <!-- 表示应该立即下载脚本，但不能阻止其他页面动作，只对外部文件有效 -->
+  <script async src="js/scriptelement.js"></script>
+  <h1>&lt;script&gt;元素演示</h1>
+
+  <script charset="utf-8"></script>
+  <script crossorigin="anonymous"></script>
+  <script crossorigin="use-credentials" integrity="v0dm8c843c48388m37cm83ff3j8fej8fr8e7ghe8gg6g8"></script>
+  <!-- 代码中不能出现字符串 </script> -->
+  <script>
+    function sayHi() {
+      // 转义符解决
+      console.log("<\/script>");
+    }
+  </script>
+</body>
+
+</html>

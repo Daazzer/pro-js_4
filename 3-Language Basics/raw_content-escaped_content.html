@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字符串原始内容与转义内容</title>
+</head>
+
+<body>
+  <script>
+    function printRaw(strings) {
+      console.log('Actual characters:');
+
+      for (const string of strings) {
+        console.log(string);
+      }
+
+      console.log('Escaped charaters:');
+
+      for (const rawString of strings.raw) {
+        console.log(rawString);
+      }
+    }
+
+    printRaw`\u00A9${'and'}\n`;
+    // Actual characters:
+    // ©
+    // 换行符
+    // Escaped charaters:
+    // \u00A9
+    // \n
+  </script>
+</body>
+
+</html>

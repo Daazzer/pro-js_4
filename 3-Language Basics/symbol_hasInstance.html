@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbol.hasInstance</title>
+</head>
+
+<body>
+  <!-- <script>
+    function Foo() { }
+    const f = new Foo();
+    console.log(Foo[Symbol.hasInstance](f));  // true
+
+    class Bar { }
+    const b = new Bar();
+    console.log(Bar[Symbol.hasInstance](b));  // true
+  </script> -->
+
+  <script>
+    class Bar { }
+    // 通过静态方法重新定义
+    class Baz extends Bar {
+      static [Symbol.hasInstance]() {
+        return false;
+      }
+    }
+
+    const b = new Baz();
+    console.log(Bar[Symbol.hasInstance](b));  // true
+    console.log(b instanceof Bar);            // true
+    console.log(Baz[Symbol.hasInstance](b));  // false
+    console.log(b instanceof Baz);            // false
+  </script>
+</body>
+
+</html>

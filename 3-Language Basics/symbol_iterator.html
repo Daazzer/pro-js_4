@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbol.iterator</title>
+</head>
+
+<body>
+  <script>
+    class Emitter {
+      constructor(max) {
+        this.max = max;
+        this.idx = 0;
+      }
+
+      *[Symbol.iterator]() {
+        while (this.idx < this.max) {
+          yield this.idx++;
+        }
+      }
+    }
+
+    function count() {
+      const emitter = new Emitter(5);
+
+      for (const x of emitter) {
+        console.log(x);
+      }
+    }
+
+    count();
+    // 0
+    // 1
+    // 2
+    // 3
+    // 4
+  </script>
+</body>
+
+</html>

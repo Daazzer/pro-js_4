@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Symbol.unscopables</title>
+</head>
+
+<body>
+  <script>
+    const o = { foo: 'bar' };
+
+    with (o) {
+      console.log(foo);  // bar
+    }
+
+    o[Symbol.unscopables] = {
+      foo: true
+    };
+
+    with (o) {
+      console.log(foo);  // ReferenceError
+    }
+  </script>
+</body>
+
+</html>
