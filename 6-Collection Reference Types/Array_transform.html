@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array transform</title>
+</head>
+<body>
+  <script>
+    const colors = ["red", "green", "blue"];
+    console.log(colors.toLocaleString());  // red, green, blue
+    console.log(colors.toString());  // red, green, blue
+    console.log(colors.valueOf());  // ["red", "green", "blue"]
+    console.log(colors);  // ["red", "green", "blue"]
+  </script>
+
+  <script>
+    const person1 = {
+      toLocaleString() {
+        return "Nikolaos";
+      },
+
+      toString() {
+        return "Nicholas";
+      }
+    };
+
+    const person2 = {
+      toLocaleString() {
+        return "Grigorios";
+      },
+
+      toString() {
+        return "Greg";
+      }
+    };
+
+    const people = [person1, person2];
+    console.log(people);
+    console.log(people.toString());  // Nicholas,Greg
+    console.log(people.toLocaleString());  // Nikolaos,Grigorios
+  </script>
+</body>
+</html>
