@@ -218,3 +218,53 @@ ES6 新增两个方法
 
 - 填充方法：`array.fill()`
 - 复制方法：`array.copyWithin()`
+
+
+
+### 6.2.7 转换方法
+
+- `toLocaleString()` 方法
+- `toString()` 方法
+- `valueOf()` 方法
+- `join()` 方法，接收一个参数，字符串分隔符，返回包含所有项的字符串（如果不传入参数或者传入 `undefined`，则仍然使用逗号分隔符）
+
+```js
+const colors = ["red", "green", "blue"];
+console.log(colors.toLocaleString());  // red, green, blue
+console.log(colors.toString());  // red, green, blue
+console.log(colors.valueOf());  // ["red", "green", "blue"]
+console.log(colors);  // ["red", "green", "blue"]
+```
+
+`toLocaleString()` 方法会调用成员的 `toLocaleString()`
+
+`toString()` 方法会调用成员的 `toString()`
+
+```js
+const person1 = {
+    toLocaleString() {
+        return "Nikolaos";
+    },
+
+    toString() {
+        return "Nicholas";
+    }
+};
+
+const person2 = {
+    toLocaleString() {
+        return "Grigorios";
+    },
+
+    toString() {
+        return "Greg";
+    }
+};
+
+const people = [person1, person2];
+console.log(people);
+console.log(people.toString());  // Nicholas,Greg
+console.log(people.toLocaleString());  // Nikolaos,Grigorios
+```
+
+> **注意** 如果数组中某一项是 `null` 或 `undefined`，则在 `join()`、`toLocaleString()`、`toString()`、`valueOf()` 返回的结果中会以空字符串表示
