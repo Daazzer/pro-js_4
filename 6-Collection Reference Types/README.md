@@ -268,3 +268,32 @@ console.log(people.toLocaleString());  // Nikolaos,Grigorios
 ```
 
 > **注意** 如果数组中某一项是 `null` 或 `undefined`，则在 `join()`、`toLocaleString()`、`toString()`、`valueOf()` 返回的结果中会以空字符串表示
+
+
+
+### 6.2.8 栈方法
+
+栈结构，后进先出（LIFO，Last-In-First-Out）
+
+栈方法：
+
+- `push()`
+- `pop()`
+
+
+
+### 6.2.9 队列方法
+
+队列结构，先进先出（FIFO，First-In-First-Out）
+
+队列方法：
+
+正方向队列
+
+- `shift()`
+- `push()`
+
+反方向队列
+
+- `unshift()`
+- `pop()`
