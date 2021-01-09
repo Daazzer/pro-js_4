@@ -310,3 +310,76 @@ console.log(people.toLocaleString());  // Nikolaos,Grigorios
   - 如果第一个参数应该排列在第二个参数后面，就返回正值
 
 > **注意** `reverse()` 和 `sort()` 都返回调用它们的数组引用
+
+
+
+### 6.2.11 操作方法
+
+- `concat()` 创建一个当前数组的副本，然后再把它的参数添加到副本末尾，最后返回这个心构建的数组
+
+  修改 `concat()` 方法的默认行为
+
+  ```js
+  const colors = ["red", "green", "blue"];
+  const newColors = ["black", "brown"];
+  const moreNewColors = {
+      // 重写 concat 行为，强制打平类数组对象
+      [Symbol.isConcatSpreadable]: true,
+      length: 2,
+      0: "pink",
+      1: "cyan"
+  };
+  const moreNewColors2 = {
+      length: 2,
+      0: "pink",
+      1: "cyan"
+  };  // 如果不开启，则只当做对象添加
+  
+  newColors[Symbol.isConcatSpreadable] = false;
+  
+  const colors2 = colors.concat("yellow", newColors);
+  const colors3 = colors.concat(moreNewColors);
+  const colors4 = colors.concat(moreNewColors2);
+  
+  console.log(colors);
+  console.log(colors2);
+  console.log(colors3);
+  console.log(colors4);
+  ```
+
+- `slice()` 创建一个包含原有数组中的一个或多个元素的新数组，可以接收两个参数，开始位置和结束位置
+
+  > **注意** 如果结束位置小于开始位置，则返回空数组
+
+- `splice()` 在数组中间插入元素
+
+  - **删除**
+
+    ```js
+    const colors = ["red", "green", "blue"];
+    // 删除
+    let removed = colors.splice(0, 1);
+    console.log(colors);  // ["green", "blue"]
+    console.log(removed);  // ["red"]
+    ```
+
+  - **插入**
+
+    ```js
+    // 插入
+    removed = colors.splice(1, 0, "yellow", "orange");
+    console.log(colors);  // ["green", "yellow", "orange", "blue"]
+    console.log(removed);  // 空数组
+    ```
+
+  - **替换**
+
+    ```js
+    // 替换
+    removed = colors.splice(1, 1, "red", "purple");
+    console.log(colors);  // ["green", "red", "purple", "orange", "blue"]
+    console.log(removed);  // ["yellow"]
+    ```
+
+    
+
