@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array concat rewrite</title>
+</head>
+<body>
+  <script>
+    const colors = ["red", "green", "blue"];
+    const newColors = ["black", "brown"];
+    const moreNewColors = {
+      // 重写 concat 行为，强制打平类数组对象
+      [Symbol.isConcatSpreadable]: true,
+      length: 2,
+      0: "pink",
+      1: "cyan"
+    };
+    const moreNewColors2 = {
+      length: 2,
+      0: "pink",
+      1: "cyan"
+    };  // 如果不开启，则只当做对象添加
+
+    newColors[Symbol.isConcatSpreadable] = false;
+
+    const colors2 = colors.concat("yellow", newColors);
+    const colors3 = colors.concat(moreNewColors);
+    const colors4 = colors.concat(moreNewColors2);
+
+    console.log(colors);
+    console.log(colors2);
+    console.log(colors3);
+    console.log(colors4);
+  </script>
+</body>
+</html>
