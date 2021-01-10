@@ -381,5 +381,40 @@ console.log(people.toLocaleString());  // Nikolaos,Grigorios
     console.log(removed);  // ["yellow"]
     ```
 
-    
 
+
+
+### 6.2.12 搜索和位置方法
+
+#### 1. 严格相等
+
+- `indexOf()`
+- `lastIndexOf()`
+- `includes()`
+
+在比较第一个参数跟数组每一项时，会使用全等 `===` 比较
+
+#### 2. 断言函数
+
+每个索引都会调用这个函数。断言函数的返回值决定了相应索引的元素是否被认为匹配
+
+- `find()` 返回第一个匹配的元素
+
+- `findIndex()` 返回第一个匹配元素的索引
+
+  ```js
+  const people = [
+      {
+          name: "Matt",
+          age: 27
+      },
+      {
+          name: "Nicholas",
+          age: 29
+      }
+  ];
+  
+  console.log(people.findIndex((element, index, array) => element.age < 28));  // 0
+  ```
+
+找到匹配项之后，这两个方法都不再继续搜索
