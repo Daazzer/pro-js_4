@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array findIndex</title>
+</head>
+<body>
+  <script>
+    const people = [
+      {
+        name: "Matt",
+        age: 27
+      },
+      {
+        name: "Nicholas",
+        age: 29
+      }
+    ];
+
+    console.log(people.findIndex((element, index, array) => element.age < 28));  // 0
+  </script>
+</body>
+</html>
