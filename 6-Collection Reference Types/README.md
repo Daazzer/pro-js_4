@@ -441,3 +441,9 @@ console.log(people.toLocaleString());  // Nikolaos,Grigorios
 回调都接收 4 个参数：上一个归并值、当前项、当前项的索引和数组本身
 
 两个方法除了遍历方向之外，没有区别
+
+
+
+## 6.3 定型数组
+
+ECMAScript 新增的结构，目的是提升向原生库传输数据的效率，是一种特殊的包含数值类型的数组
