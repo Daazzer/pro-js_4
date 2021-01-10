@@ -447,3 +447,15 @@ console.log(people.toLocaleString());  // Nikolaos,Grigorios
 ## 6.3 定型数组
 
 ECMAScript 新增的结构，目的是提升向原生库传输数据的效率，是一种特殊的包含数值类型的数组
+
+### 6.3.1 历史
+
+2006 年，Mozilla、Opera 等浏览器实验性地在浏览器中增加了用于渲染复杂图形应用程序的编程平台，无需安装任何插件
+
+#### 1. WebGL
+
+2011 年发布 1.0 版，早期因为 JavaScript 数组与原生数组之间不匹配，所以出现性能问题
+
+#### 2. 定型数组
+
+Mozilla 实现了 `CanvasFloatArray` 最终成为 `Float32Array`
