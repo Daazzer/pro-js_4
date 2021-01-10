@@ -431,3 +431,13 @@ console.log(people.toLocaleString());  // Nikolaos,Grigorios
 - `map()` 返回由每次函数调用的结果构成的数组
 - `some()` 如果有一项函数返回 `true`，则这个方法返回 `true`
 
+
+
+### 6.2.14 归并方法
+
+- `reduce()`
+- `reduceRight()`
+
+回调都接收 4 个参数：上一个归并值、当前项、当前项的索引和数组本身
+
+两个方法除了遍历方向之外，没有区别
