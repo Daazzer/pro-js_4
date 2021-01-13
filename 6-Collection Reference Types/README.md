@@ -459,3 +459,32 @@ ECMAScript 新增的结构，目的是提升向原生库传输数据的效率，
 #### 2. 定型数组
 
 Mozilla 实现了 `CanvasFloatArray` 最终成为 `Float32Array`
+
+
+
+### 6.3.2 ArrayBuffer
+
+`ArrayBuffer` 实际上是所有定型数组及视图引用的基本单位
+
+`ArrayBuffer()` 是一个普通的 JavaScript 构造函数，可以用于在内存中分配特定数量的字节空间
+
+```js
+const buf = new ArrayBuffer(16);  // 在内存中分配 16 字节
+console.log(buf.byteLength);
+```
+
+
+
+`ArrayBuffer` 已经创建就不能再调整大小，可以使用 `slice()` 复制其全部或部分到一个新实例中
+
+```js
+// 一旦创建就不能调整大小
+const buf1 = new ArrayBuffer(16);
+const buf2 = buf1.slice(4, 12);
+console.log(buf2.byteLength);
+```
+
+
+
+不能仅通过对 `ArrayBuffer` 的引用就读取或写入其内容。要读取或写入 `ArrayBuffer`，就必须通过视图。视图有不同的类型，但是引用的都是 `ArrayBuffer` 中存储的二进制数据
+
