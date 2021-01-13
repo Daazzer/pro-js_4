@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array Byte Order</title>
+</head>
+<body>
+  <script>
+    const buf = new ArrayBuffer(2);
+    const view = new DataView(buf);
+
+    view.setUint8(0, 0x80);  // 设置左边第一位为 1
+    view.setUint8(1, 0x01);  // 设置最右边的位等于 1
+    // 按大端字节序读取 Uint16
+    // 0x80 是高字节，0x01 是低字节
+    console.log(view.getUint16(0));  // 32769
+    // 按小端字节序读取 Uint16
+    // 0x01 是高字节，0x80 是低字节
+    console.log(view.getUint16(0, true)); // 384
+  </script>
+
+  <script>
+    // 按大端字节序写入 Uint16
+    view.setUint16(0, 0x0004);
+    console.log(view.getUint8(0));  // 0
+    console.log(view.getUint8(1));  // 4
+  </script>
+
+  <script>
+    // 按小端字节序写入 Uint16
+    view.setUint16(0, 0x0002, true);
+    console.log(view.getUint8(0));  // 2
+    console.log(view.getUint8(1));  // 0
+  </script>
+</body>
+</html>

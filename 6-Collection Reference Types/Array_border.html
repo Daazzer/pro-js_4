@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Array border</title>
+</head>
+<body>
+  <script>
+    const buf = new ArrayBuffer(6);
+    const view = new DataView(buf);
+
+    // 尝试读取部分超出缓冲范围的值
+    view.getInt32(4);
+  </script>
+</body>
+</html>

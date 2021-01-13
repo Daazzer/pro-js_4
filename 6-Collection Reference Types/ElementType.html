@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ElementType</title>
+</head>
+<body>
+  <script>
+    const buf = new ArrayBuffer(2);
+    const view = new DataView(buf);
+  </script>
+
+  <script>
+    // 说明整个缓确实所有二进制位都是 0
+    // 检查第一个和第二个字符
+    console.log(view.getInt8(0));  // 0
+    console.log(view.getInt8(1));  // 0
+  </script>
+
+  <script>
+    // 检查整个缓冲区
+    console.log(view.getInt16(0));  // 0
+  </script>
+
+  <script>
+    // 将整个缓冲区都设置为 1
+    view.setUint8(0, 255);
+    // DataView 自动将数据转换为特定的 ElementType
+    view.setUint8(1, 0xFF);
+    console.log(view);
+  </script>
+
+  <script>
+    console.log(view.getInt16(0));  // -1
+  </script>
+</body>
+</html>
