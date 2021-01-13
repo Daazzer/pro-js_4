@@ -488,3 +488,116 @@ console.log(buf2.byteLength);
 
 不能仅通过对 `ArrayBuffer` 的引用就读取或写入其内容。要读取或写入 `ArrayBuffer`，就必须通过视图。视图有不同的类型，但是引用的都是 `ArrayBuffer` 中存储的二进制数据
 
+
+
+### 6.3.3 DataView
+
+第一种允许读写 `ArrayBuffer` 的视图是 `DataView`，其 API 支持对缓冲数据的高度控制
+
+必须对已有的 `ArrayBuffer` 读写才能创建 `DataView` 实例。这个实例可以使用全部或部分 `ArrayBuffer`
+
+```js
+const buf = new ArrayBuffer(16);
+// DataView 默认使用整个 ArrayBuffer
+const fullDataView = new DataView(buf);
+
+console.log(fullDataView.byteOffset);  // 0
+console.log(fullDataView.byteLength);  // 16
+console.log(fullDataView.buffer === buf);  // true
+```
+
+```js
+// 接受一个可选的字节偏移量和字节长度
+const firstHalfDataView = new DataView(buf, 0, 8);
+console.log(firstHalfDataView.byteOffset);  // 0
+console.log(firstHalfDataView.byteLength);  // 8
+console.log(firstHalfDataView.buffer === buf);  // true
+```
+
+```js
+// 如果不指定，则 DataView 会使用剩余的缓冲
+const secondHalfDataView = new DataView(buf, 8);
+console.log(secondHalfDataView.byteOffset);  // 8
+console.log(secondHalfDataView.byteLength);  // 8
+console.log(secondHalfDataView.buffer === buf);  // true
+```
+
+要通过 `DataView` 读取缓冲，还需要几个组件
+
+- 字节偏移量
+- ElementType 实现 JavaScript 的 `Number` 类型到缓冲内二进制格式的转换
+- 内存中值的字节序
+
+#### 1. ElementType
+
+`DataView` 对存储在缓冲中的数据类型没有预设。而是通过暴露的 API 强制开发者在读、写时指定一个 `ElementType`
+
+`DataView` 为每中类型暴露了 `get` `set` 方法
+
+```js
+const buf = new ArrayBuffer(2);
+const view = new DataView(buf);
+
+// 说明整个缓确实所有二进制位都是 0
+// 检查第一个和第二个字符
+console.log(view.getInt8(0));  // 0
+console.log(view.getInt8(1));  // 0
+
+// 检查整个缓冲区
+console.log(view.getInt16(0));  // 0
+
+// 将整个缓冲区都设置为 1
+view.setUint8(0, 255);
+// DataView 自动将数据转换为特定的 ElementType
+view.setUint8(1, 0xFF);
+console.log(view);
+
+console.log(view.getInt16(0));  // -1
+```
+
+
+
+#### 2. 字节序
+
+**字节序** 指的是计算机维护的一种字节顺序的约定。`DataView` 只支持两种约定：大端字节序和小端字节序
+
+`DataView` 默认使用大端字节序
+
+```js
+const buf = new ArrayBuffer(2);
+const view = new DataView(buf);
+
+view.setUint8(0, 0x80);  // 设置左边第一位为 1
+view.setUint8(1, 0x01);  // 设置最右边的位等于 1
+// 按大端字节序读取 Uint16
+// 0x80 是高字节，0x01 是低字节
+console.log(view.getUint16(0));  // 32769
+// 按小端字节序读取 Uint16
+// 0x01 是高字节，0x80 是低字节
+console.log(view.getUint16(0, true)); // 384
+
+// 按大端字节序写入 Uint16
+view.setUint16(0, 0x0004);
+console.log(view.getUint8(0));  // 0
+console.log(view.getUint8(1));  // 4
+
+// 按小端字节序写入 Uint16
+view.setUint16(0, 0x0002, true);
+console.log(view.getUint8(0));  // 2
+console.log(view.getUint8(1));  // 0
+```
+
+
+
+#### 3. 边界情况
+
+`DataView` 完成读写操作的前提是必须有充足的缓冲区，否则就会抛出 `RangeError`
+
+```js
+const buf = new ArrayBuffer(6);
+const view = new DataView(buf);
+
+// 尝试读取部分超出缓冲范围的值
+view.getInt32(4);  // RangeError
+```
+
