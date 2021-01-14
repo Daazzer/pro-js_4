@@ -532,6 +532,21 @@ console.log(secondHalfDataView.buffer === buf);  // true
 
 `DataView` 对存储在缓冲中的数据类型没有预设。而是通过暴露的 API 强制开发者在读、写时指定一个 `ElementType`
 
+8 种不同的 `ElementType`
+
+| ElementType | 字节 | 说明                 |
+| ----------- | ---- | -------------------- |
+| Int8        | 1    | 8位有符号整数        |
+| Uint8       | 1    | 8位无符号整数        |
+| Int16       | 2    | 16位有符号整数       |
+| Uint16      | 2    | 16位无符号整数       |
+| Int32       | 4    | 32位有符号整数       |
+| Uint32      | 4    | 32位无符号整数       |
+| Float32     | 4    | 32位 IEEE-754 浮点数 |
+| Float64     | 8    | 64位 IEEE-754 浮点数 |
+
+
+
 `DataView` 为每中类型暴露了 `get` `set` 方法
 
 ```js
