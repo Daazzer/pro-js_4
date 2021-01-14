@@ -616,3 +616,75 @@ const view = new DataView(buf);
 view.getInt32(4);  // RangeError
 ```
 
+
+
+### 6.3.4 定型数组
+
+是另一种形式的 `ArrayBuffer` 视图。它特定一种 `ElementType` 且遵循系统原生的字节序
+
+定型数组的性能会更高，底层运算速度更快
+
+创建定型数组的两种方法
+
+- `<ElementType>.from()`
+- `<ElementType>.of()`
+
+```js
+const buf = new ArrayBuffer(12);
+// 创建一个引用该缓冲的 Int32Array
+const ints = new Int32Array(buf);
+// 这个定型数组知道自己的每个元素需要 4 字节
+// 因此长度为 3
+console.log(ints.length);  // 3
+```
+
+```js
+// 创建一个长度为 6 的 Int32Array
+const ints2 = new Int32Array(6);
+// 每个数值使用 4 字节，因此 ArrayBuffer 是 24 字节
+console.log(ints2.length);  // 3
+// 类似 DataView，定型数组也有一个指向关联缓冲的引用
+console.log(ints2.buffer.byteLength);  // 4*6 === 24
+```
+
+```js
+// 创建一个 [2, 4, 6, 8] 的 Int32Array
+const ints3 = new Int32Array([2, 4, 6, 8]);
+console.log(ints3.length);  // 4
+console.log(ints3.buffer.byteLength);  // 16
+console.log(ints3[2]);  // 6
+```
+
+```js
+// 通过复制 ints3 的值创建一个 Int16Array
+const ints4 = new Int16Array(ints3);
+console.log(ints4.length);  // 4
+console.log(ints4.buffer.byteLength);  // 8
+console.log(ints4[2]);  // 6
+```
+
+```js
+// 使用 from 方法创建
+const ints5 = Int16Array.from([3, 5, 7, 9]);
+console.log(ints5.length);  // 4
+console.log(ints5.buffer.byteLength);  // 8
+```
+
+```js
+// 使用 of 方法基于传入的参数创建
+const floats = Float32Array.of(3.14, 2.718, 1.618);
+console.log(floats.length);  // 3
+console.log(floats.buffer.byteLength);  // 12
+console.log(floats[2]);  // 1.6180000305175781
+```
+
+```js
+// BYTES_PER_ELEMENT 属性，返回该类型数组中每个元素的字节大小
+console.log(Int16Array.BYTES_PER_ELEMENT);  // 2
+console.log(Int32Array.BYTES_PER_ELEMENT);  // 4
+console.log(ints.BYTES_PER_ELEMENT);  // 4
+
+const float = new Float64Array(1);
+console.log(float.BYTES_PER_ELEMENT);  // 8
+```
+
