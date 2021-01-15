@@ -776,3 +776,81 @@ console.log(partialCopy);  // Int16Array(2) [4, 6]
 ## 6.4 Map
 
 ECMAScript 6 新增的键/值存储机制
+
+
+
+### 6.4.1 基本 API
+
+使用 `new` 关键字和 `Map` 构造函数可以创建一个空间映射
+
+```js
+const m = new Map();
+
+// 可以传入键/值对数组作为参数
+const m1 = new Map([
+    ["key1", "val1"],
+    ["key2", "val2"],
+    ["key3", "val3"]
+]);
+console.log(m1.size);  // 3
+
+// 使用自定义迭代器初始化映射
+const m2 = new Map({
+    [Symbol.iterator]: function*() {
+        yield ["key1", "val1"];
+        yield ["key2", "val2"];
+        yield ["key3", "val3"];
+    }
+});
+console.log(m2.size);  // 3
+
+// 映射期待的键/值对，无论是否提供
+const m3 = new Map([[]]);
+console.log(m3.has(undefined));  // true
+console.log(m3.get(undefined));  // undefined
+```
+
+
+
+- `set()` 添加键/值对
+- `get()` 获取键值
+- `has()` 查询是否存在键值
+- `size` 获取映射中的键/值对的数量
+- `delete()`、`clear()` 删除值
+
+```js
+const m = new Map();
+m.set("firstName", "Matt");
+m.set("lastName", "Frisbie");
+console.log(m.has("firstName"));  // true
+console.log(m.get("firstName"));  // Matt
+console.log(m.size);  // 2
+```
+
+
+
+与 `Object` 只能用数值、字符串或符号作为键不同。
+
+`Map` 可以使用任何 JavaScript 数据类型作为键，内部使用 SameValueZero 来比较操作（ECMAScript 内部定义，语言中不能使用），而映射的值也是和 `Object` 一样没有限制
+
+```js
+const m = new Map();
+
+const functionKey = function() {};
+const symbolKey = Symbol();
+const objectKey = new Object();
+
+m.set(functionKey, "functionValue");
+m.set(symbolKey, "symbolValue");
+m.set(objectKey, "objectValue");
+
+console.log(m.get(functionKey));  // functionValue
+console.log(m.get(symbolKey));  // symbolValue
+console.log(m.get(objectKey));  // objectValue
+
+console.log(m.get(function() {}));  // undefined
+```
+
+在映射中用作键和值对的对象以及其它“集合”类型，在自己的内容或属性被修改时仍然保持不变
+
+但是基本类型的话只要值相同，则是有可能访问相同的有映射值
