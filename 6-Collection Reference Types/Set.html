@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set</title>
+</head>
+<body>
+  <script>
+    // 使用自定义迭代器初始化集合
+    const s2 = new Set({
+      [Symbol.iterator]: function* () {
+        yield "val1";
+        yield "val2";
+        yield "val3";
+      }
+    });
+    console.log(s2.size);  // 3
+  </script>
+</body>
+</html>
