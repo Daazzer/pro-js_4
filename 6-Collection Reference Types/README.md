@@ -978,3 +978,54 @@ function removeReference() {
 因为不可能迭代，所以也不可能在不知道对象引用的情况下从弱映射中取得值。
 
 `WeakMap` 实例之所以限制只能用对象作为键，是为了保证只有通过键对象的引用才能取得值。如果允许原始值，就没办法区分初始化时使用的字符串字面量和初始化之后使用的一个相等的字符串了
+
+
+
+### 6.5.4 使用弱映射
+
+#### 1. 私有变量
+
+```js
+const User = (() => {
+    const wm = new WeakMap();
+
+    class User {
+        constructor(id) {
+            this.idProperty = Symbol('id');
+            this.setId(id);
+        }
+
+        setPrivate(property, value) {
+            const privateMembers = wm.get(this) || {};
+            privateMembers[property] = value;
+            wm.set(this, privateMembers);
+        }
+
+        getPrivate(property) {
+            return wm.get(this)[property];
+        }
+
+        setId(id) {
+            this.setPrivate(this.idProperty, id);
+        }
+
+        getId() {
+            return this.getPrivate(this.idProperty);
+        }
+    }
+    return User;
+})();
+
+
+const user = new User(123);
+console.log(user.getId());  // 123
+user.setId(456);
+console.log(user.getId());  // 456
+```
+
+
+
+#### 2. DOM 节点元数据
+
+因为 `WeakMap` 不会妨碍垃圾回收，所以非常适合保存关联元数据
+
