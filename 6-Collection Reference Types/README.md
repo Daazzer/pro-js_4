@@ -688,3 +688,85 @@ const float = new Float64Array(1);
 console.log(float.BYTES_PER_ELEMENT);  // 8
 ```
 
+
+
+#### 1. 定型数组行为
+
+很多方面来看，定型数组与普通数组都很相似
+
+- `[]`
+- `copyWithin()`
+- `entries()`
+- `every()`
+- `fill()`
+- `filter()`
+- `find()`
+- `findIndex()`
+- `forEach()`
+- `indexOf()`
+- `join()`
+- `keys()`
+- `lastIndexOf()`
+- `length`
+- `map()`
+- `reduce()`
+- `reduceRight()`
+- `reverse()`
+- `slice()`
+- `some()`
+- `sort()`
+- `toLocaleString()`
+- `toString()`
+- `values()`
+
+返回新数组的方法也会返回包含同样元素类型的新定型数组
+
+定型数组有一个 `Symbol.iterator` 符号属性，因此可以通过 `for-of` 循环
+
+#### 2. 合并、复制和修改定型数组
+
+- `set()`
+- `subarray()`
+
+```js
+// 创建长度为 8 的 int16 数组
+const container = new Int16Array(8);
+// 把定型数组复制为前 4 个值
+// 偏移量默认为索引 0
+container.set(Int8Array.of(1, 2, 3, 4));
+console.log(container);  // Int16Array(8) [1, 2, 3, 4, 0, 0, 0, 0]
+container.set([5, 6, 7, 8], 4);
+console.log(container);  // Int16Array(8) [1, 2, 3, 4, 5, 6, 7, 8]
+// 溢出会抛错
+container.set([5, 6, 7, 8], 7); // RangeError
+```
+
+
+
+```js
+const source = Int16Array.of(2, 4, 6, 8);
+
+// 把整个数组复制为一个同类型的新数组
+const fullCopy = source.subarray();
+console.log(fullCopy);  // Int16Array(4) [2, 4, 6, 8]
+
+// 从索引 2 开始复制数组
+const halfCopy = source.subarray(2);
+console.log(halfCopy);  // Int16Array(2) [6, 8]
+
+// 从索引 1 开始复制到索引 3
+const partialCopy = source.subarray(1, 3);
+console.log(partialCopy);  // Int16Array(2) [4, 6]
+```
+
+
+
+定型数组没有原生的拼接能力，只能自己手动拼接
+
+
+
+#### 3.  下溢和上溢
+
+定型数组存入的值如果超过范围会导致值的溢出，但不会影响数组中其它索引
+
+除了 8 种元素类型，还有一种”夹板“数组类型：`Uint8ClampedArray` 但是这个类型最好只用在 `canvas` 开发中
