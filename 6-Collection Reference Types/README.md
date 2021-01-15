@@ -1129,3 +1129,38 @@ s.forEach((val, dupVal) => console.log(`${val} -> ${dupVal}`));
 
 weak 描述的是垃圾回收对待“弱集合”中值的方式
 
+
+
+### 6.7.1 基本 API
+
+使用 `new` 关键字实例化 `WeakSet`
+
+```js
+const ws = new WeakSet();
+```
+
+弱集合中的值只能是 `Object` 或者继承自 `Object` 的类型，否则会抛错 `TypeError`
+
+```js
+const val1 = {id: 1},
+      val2 = {id: 2},
+      val3 = {id: 3};
+const ws1 = new WeakSet([val1, val2, val3]);
+
+console.log(ws1.has(val1)); // true
+console.log(ws1.has(val2)); // true
+console.log(ws1.has(val3)); // true
+
+const ws2 = new WeakSet([val1, "BADVAL", val3]);  // TypeError
+typeof ws2;  // ws2 is not defined
+
+// 原始值可以先包装为对象在用作值
+const stringVal = new String("val1");
+const ws3 = new WeakSet([stringVal]);
+console.log(ws3.has(stringVal));  // true
+```
+
+
+
+初始化之后可以用 `add()` 添加新值，可以用 `has()` 查询，还可以使用 `delete()` 删除
+
