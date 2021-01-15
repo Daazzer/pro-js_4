@@ -1164,3 +1164,30 @@ console.log(ws3.has(stringVal));  // true
 
 初始化之后可以用 `add()` 添加新值，可以用 `has()` 查询，还可以使用 `delete()` 删除
 
+
+
+### 6.7.2 弱值
+
+这些值不属于正式的引用
+
+```js
+const ws = new WeakSet();
+ws.add({});  // 这个对象没被引用，所以这一行执行完对象马上被回收
+```
+
+
+
+```js
+const ws = new WeakSet();
+
+const container = {
+    val: {}
+};
+
+ws.add(container.val);
+
+// 一旦调用这个函数，就会解除引用，这个对象就会被销毁
+function removeReference() {
+    container.val = null;
+}
+```
