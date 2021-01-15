@@ -854,3 +854,24 @@ console.log(m.get(function() {}));  // undefined
 在映射中用作键和值对的对象以及其它“集合”类型，在自己的内容或属性被修改时仍然保持不变
 
 但是基本类型的话只要值相同，则是有可能访问相同的有映射值
+
+### 6.4.2 顺序与迭代
+
+与 `Object` 类型的一个主要差异就是，`Map` 实例会维护键值对的插入顺序
+
+映射实提供一个迭代器，可以通过 `entries()` 方法（或者 `Symbol.iterator` 属性，它引用 `entries()` ）取得这个迭代器
+
+```js
+const m = new Map([
+    ["key1", "val1"],
+    ["key2", "val2"],
+    ["key3", "val3"]
+]);
+
+console.log(m.entries === m[Symbol.iterator]); // true
+```
+
+
+
+`keys()` 和 `values()` 分别返回以插入顺序生成键和值的迭代器
+
