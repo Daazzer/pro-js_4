@@ -940,3 +940,34 @@ console.log(wm3.get(stringKey));  // "val1"
 - `set()` 添加键值对，返回弱映射实例
 - `has()` 查询键值
 - `delete()` 删除键值对
+
+
+
+### 6.5.2 弱键
+
+键不属于正式的引用，不会阻止垃圾回收
+
+只要键存在，键值对就会存在于映射中，并被当作对值的引用，因此就不会被当作垃圾回收
+
+```js
+const wm = new WeakMap();
+wm.set({}, "val");  // 由于对象键没有被其它引用，因此当这行代码执行完之后，这个对象键就会被垃圾回收，然后，这个键值对也会从弱映射中消失
+```
+
+
+
+```js
+const wm = new WeakMap();
+
+const container = {
+    key: {}
+};
+
+wm.set(container.key, "val");  // 由于这个对象键被引用着，所以不会被回收
+
+// 如果调用这个函数，则会摧毁对象的最后一个引用，把键值对给清掉
+function removeReference() {
+    container.key = null;
+}
+```
+
