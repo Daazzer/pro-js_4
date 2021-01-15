@@ -1203,3 +1203,79 @@ function removeReference() {
 因为不可能迭代，所以也不可能在不知道对象引用的情况下从弱集合中取得值。
 
 `WeakSet` 之所以限制只能用对象作为值，是为了保证只有通过值对象的引用才能取得值。
+
+
+
+## 6.8 迭代与扩展操作
+
+4 中原生集合类型定义了默认迭代器
+
+- `Array`
+- 所有定型数组
+- `Map`
+- `Set`
+
+这意味着上述所有类型都支持顺序迭代，都可以传入 `for-of` 循环
+
+```js
+const iterableThings = [
+    Array.of(1, 2),
+    Int16Array.of(3, 4),
+    new Map([[5, 6], [7, 8]]),
+    new Set([9, 10])
+];
+
+for (const iterableThing of iterableThings) {
+    for (const x of iterableThing) {
+        console.log(x);
+        // 1
+        // 2
+        // 3
+        // 4
+        // [5, 6]
+        // [7, 8]
+        // 9
+        // 10
+    }
+}
+```
+
+
+
+也意味着所有这些类型都兼容扩展操作符
+
+```js
+const arr1 = [1, 2, 3];
+const arr2 = [...arr1];
+
+console.log(arr1);  // [1, 2, 3]
+console.log(arr2);  // [1, 2, 3]
+console.log(arr1 === arr2);  // false
+
+// 复制可迭代对象
+const map1 = new Map([[1, 2], [3, 4]]);
+const map2 = new Map(map1);
+
+console.log(map1);  // Map(2) {1 => 2, 3 => 4}
+console.log(map2);  // Map(2) {1 => 2, 3 => 4}
+
+// 把数组复制到定型数组
+const typedArray1 = Int16Array.of(...arr1);
+const typedArray2 = Int16Array.from(arr1);
+
+console.log(typedArray1);  // Int16Array(3) [1, 2, 3]
+console.log(typedArray2);  // Int16Array(3) [1, 2, 3]
+
+// 把数组复制到映射
+const map = new Map(arr1.map(x => [x, 'val' + x]));
+console.log(map);  // Map(3) {1 => "val1", 2 => "val2", 3 => "val3"}
+
+// 把数组复制到集合
+const set = new Set(arr1);
+console.log(set);  // Set(3) {1, 2, 3}
+
+// 把集合复制回数组
+const arr3 = [...set];
+console.log(arr3);  // [1, 2, 3]
+```
+
