@@ -770,3 +770,9 @@ console.log(partialCopy);  // Int16Array(2) [4, 6]
 定型数组存入的值如果超过范围会导致值的溢出，但不会影响数组中其它索引
 
 除了 8 种元素类型，还有一种”夹板“数组类型：`Uint8ClampedArray` 但是这个类型最好只用在 `canvas` 开发中
+
+
+
+## 6.4 Map
+
+ECMAScript 6 新增的键/值存储机制
