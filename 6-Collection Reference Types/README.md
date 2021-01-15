@@ -1033,7 +1033,7 @@ console.log(user.getId());  // 456
 
 ## 6.6 Set
 
-ECMAScript 6 新增的集合类型，大多数 API 与 `Map` 共有的
+ECMAScript 6 新增的集合类型，大多数 API 与 `Map` 共有
 
 ### 6.6.1 基本 API
 
@@ -1112,4 +1112,20 @@ s.forEach((val, dupVal) => console.log(`${val} -> ${dupVal}`));
 // val2 -> val2
 // val3 -> val3
 ```
+
+
+
+### 6.6.3 定义正式集合操作
+
+子类化 `Set`
+
+定义一个使用函数库
+
+
+
+## 6.7 WeakSet
+
+`WeakSet` 是 `Set` 的“兄弟”类型，其 API 也是 `Set` 的子集
+
+weak 描述的是垃圾回收对待“弱集合”中值的方式
 
