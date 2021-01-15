@@ -1029,3 +1029,44 @@ console.log(user.getId());  // 456
 
 因为 `WeakMap` 不会妨碍垃圾回收，所以非常适合保存关联元数据
 
+
+
+## 6.6 Set
+
+ECMAScript 6 新增的集合类型，大多数 API 与 `Map` 共有的
+
+### 6.6.1 基本 API
+
+`new` 关键字和 `Set` 构造函数创建空集合
+
+```js
+const s = new Set();
+
+// 创建同时初始化实例
+const s1 = new Set(["val1", "val2", "val3"]);
+
+console.log(s1.size);  // 3
+
+// 使用自定义迭代器初始化集合
+const s2 = new Set({
+    [Symbol.iterator]: function* () {
+        yield "val1";
+        yield "val2";
+        yield "val3";
+    }
+});
+console.log(s2.size);  // 3
+```
+
+
+
+- `add()` 添加值
+- `has()` 查询值是否存在
+- `size` 获取元素数量
+- `delete()` 删除单个元素
+- `clear()` 删除所有元素
+
+
+
+与 `Map` 类似，`Set` 可以包含任意 JavaScript 数据类型。也使用 SameValueZero 操作，基本上相当于使用严格对象相等的标准来检查值的匹配性
+
