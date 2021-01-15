@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set Iterator</title>
+</head>
+<body>
+  <script>
+    const s = new Set(["val1", "val2", "val3"]);
+
+    console.log(s.values === s[Symbol.iterator]);  // true
+    console.log(s.keys === s[Symbol.iterator]);  // true
+
+    for (let value of s.values()) {
+      console.log(value);
+      // val1
+      // val2
+      // val3
+    }
+
+    for (let value of s[Symbol.iterator]()) {
+      console.log(value);
+      // val1
+      // val2
+      // val3
+    }
+
+    // entries() 返回两个重复元素的集合
+    for (let pair of s.entries()) {
+      console.log(pair);
+      // ["val1", "val1"]
+      // ["val2", "val2"]
+      // ["val3", "val3"]
+    }
+
+    // forEach 方法的第二个参数返回重复的元素
+    s.forEach((val, dupVal) => console.log(`${val} -> ${dupVal}`));
+    // val1 -> val1
+    // val2 -> val2
+    // val3 -> val3
+  </script>
+</body>
+</html>
