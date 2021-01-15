@@ -896,3 +896,9 @@ console.log(m.entries === m[Symbol.iterator]); // true
 #### 4. 删除性能
 
 `Map` 的 `delete()` 操作都比插入和查找更快。而 `delete` 删除 `Object` 属性的性能一直很低，如果涉及到大量的删除操作，毫无疑问是 `Map`
+
+
+
+## 6.5 WeakMap
+
+`WeakMap` 是 `Map` 的“兄弟”类型，其 API 也是 `Map` 的子集
