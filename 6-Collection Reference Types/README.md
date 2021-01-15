@@ -902,3 +902,41 @@ console.log(m.entries === m[Symbol.iterator]); // true
 ## 6.5 WeakMap
 
 `WeakMap` 是 `Map` 的“兄弟”类型，其 API 也是 `Map` 的子集
+
+
+
+### 6.5.1 基本 API
+
+使用 `new` 关键字实例化一个空的 `WeakMap`
+
+```js
+const wm = new WeakMap();
+```
+
+弱映射中的键只能是 `Object` 或者继承自 `Object` 的类型，尝试使用非对象设置键会抛出 `TypeError`。值的类型没有限制
+
+```js
+/*
+初始化是全有或全无的操作
+只要有一个键无效就会抛出错误，导致整个初始化失败
+ */
+const wm2 = new WeakMap([
+    [key1, "val1"],
+    ["BADKEY", "val2"],
+    [key3, "val3"]
+]);  // TypeError
+```
+
+```js
+// 原始值可以先包装成对象再用作键
+const stringKey = new String("key1");
+const wm3 = new WeakMap([
+    [stringKey, "val1"]
+]);
+console.log(wm3.get(stringKey));  // "val1"
+```
+
+- `get()` 获取键值
+- `set()` 添加键值对，返回弱映射实例
+- `has()` 查询键值
+- `delete()` 删除键值对
