@@ -1070,3 +1070,46 @@ console.log(s2.size);  // 3
 
 与 `Map` 类似，`Set` 可以包含任意 JavaScript 数据类型。也使用 SameValueZero 操作，基本上相当于使用严格对象相等的标准来检查值的匹配性
 
+
+
+### 6.6.2 顺序与迭代
+
+`Set` 会维护插入时的顺序
+
+集合可以提供一个迭代器。可以通过 `values()` 和 `keys()` （或者 `Symbol.iterator` 属性，它引用 `values()`）取得这个迭代器
+
+```js
+const s = new Set(["val1", "val2", "val3"]);
+
+console.log(s.values === s[Symbol.iterator]);  // true
+console.log(s.keys === s[Symbol.iterator]);  // true
+
+for (let value of s.values()) {
+    console.log(value);
+    // val1
+    // val2
+    // val3
+}
+
+for (let value of s[Symbol.iterator]()) {
+    console.log(value);
+    // val1
+    // val2
+    // val3
+}
+
+// entries() 返回两个重复元素的集合
+for (let pair of s.entries()) {
+    console.log(pair);
+    // ["val1", "val1"]
+    // ["val2", "val2"]
+    // ["val3", "val3"]
+}
+
+// forEach 方法的第二个参数返回重复的元素
+s.forEach((val, dupVal) => console.log(`${val} -> ${dupVal}`));
+// val1 -> val1
+// val2 -> val2
+// val3 -> val3
+```
+
