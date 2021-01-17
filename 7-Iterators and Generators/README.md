@@ -366,3 +366,215 @@ console.log(g === g[Symbol.iterator]());  // true
 console.log(generatorFn()[Symbol.iterator]());  // generatorFn {<suspended>}
 ```
 
+
+
+### 7.3.2 通过 yield 中断执行
+
+`yield` 关键字可以让生成器停止和开始执行
+
+`yield` 关键字有点像函数的中间返回语句，它生成的值会出现在 `next()` 方法返回的对象里。通过 `yield` 关键字退出的生成器函数会在 `done: false` 状态；通过 `return` 关键字退出的生成器函数会处于 `done: true` 状态
+
+`yield` 关键字只能在生成器函数内部使用，用在其它地方会抛出错误
+
+```js
+function* generator() {
+    yield 'foo';
+    yield 'bar';
+    return 'baz';
+}
+
+const generatorObject = generator();
+
+console.log(generatorObject.next());  // { done: false, value: 'foo' }
+console.log(generatorObject.next());  // { done: false, value: 'bar' }
+console.log(generatorObject.next());  // { done: true, value: 'baz' }
+
+// 每个生成器对象上调用 next() 不会影响其他生成器
+const generatorObject1 = generator();
+const generatorObject2 = generator();
+
+console.log(generatorObject1.next());  // { done: false, value: 'foo' }
+console.log(generatorObject2.next());  // { done: false, value: 'foo' }
+console.log(generatorObject2.next());  // { done: false, value: 'bar' }
+console.log(generatorObject1.next());  // { done: false, value: 'bar' }
+```
+
+
+
+#### 1. 生成器对象作为可迭代对象
+
+```js
+// 生成器对象作为可迭代对象
+function* generatorFn() {
+    yield 1;
+    yield 2;
+    yield 3;
+}
+
+for (const x of generatorFn()) {
+    console.log(x);
+}
+// 1
+// 2
+// 3
+
+// 迭代器执行指定次数
+function* nTimes(n) {
+    while (n--) {
+        yield;
+    }
+}
+
+for (const _ of nTimes(3)) {
+    console.log('foo');
+}
+// foo
+// foo
+// foo
+```
+
+#### 2. 使用 yield 实现输入和输出
+
+`yield` 关键字可以作为函数的中间参数使用。上一次生成器函数暂停的 `yield` 关键字会接收到传给 `next()` 方法的第一个值
+
+```js
+// yield 关键字可以作为函数的中间参数使用
+function* generatorFn(initial) {
+    console.log(initial);
+    console.log(yield);
+	console.log(yield);
+}
+
+const generatorObject = generatorFn('foo');
+
+generatorObject.next('bar');  // 'foo'  *第一个 next 参数不会使用，因为这是函数的开始
+generatorObject.next('baz');  // 'baz'
+generatorObject.next('qux');  // 'qux'
+```
+
+`yield` 关键字同时用于输入输出
+
+```js
+function* generatorFn1() {
+    return yield 'foo';
+}
+
+const generatorObject1 = generatorFn1();
+
+console.log(generatorObject1.next());  // {value: "foo", done: false}
+console.log(generatorObject1.next('bar'));  // {value: "bar", done: true}
+console.log(generatorObject1.next('bar'));  // {value: undefined, done: true}
+```
+
+#### 3. 产生可迭代对象
+
+使用星号增强 `yield` 的行为，让它能够迭代一个可迭代对象，从而一次产出一个值
+
+```js
+function* generatorFn() {
+    yield* [1, 2, 3];
+}
+
+const generatorObject = generatorFn();
+
+for (const x of generatorObject) {
+    console.log(x);
+    // 1
+    // 2
+    // 3
+}
+
+// 相当于 
+// function* generatorFn() {
+//     for (const x of [1, 2, 3]) {
+//         yield 1x;
+//     }
+// }
+```
+
+```js
+function* generatorFn1() {
+    yield* [1, 2];
+    yield* [3, 4];
+    yield* [5, 6];
+}
+
+for (const x of generatorFn1()) {
+    console.log(x);
+    // 1
+    // 2
+    // 3
+    // 4
+    // 5
+    // 6
+}
+
+function* generatorFn2() {
+    yield* 'abcde';
+}
+
+for (const x of generatorFn2()) {
+    console.log(x);
+    // a
+    // b
+    // c
+    // d
+    // e
+}
+```
+
+`yield*` 的值时关联迭代器返回 `done: true` 时的 `value` 属性。对于普通迭代器来说，这个值是 `undefined`
+
+```js
+function* generatorFn3() {
+    console.log('iter value:', yield* [1, 2, 3]);
+}
+
+for (const x of generatorFn3()) {
+    console.log('value:', x);
+    // value: 1
+    // value: 2
+    // value: 3
+    // iter value: undefined
+}
+```
+
+对于生成器函数产生的迭代值来说，这个值就是生成器函数返回的值
+
+```js
+function* innerGeneratorFn() {
+    yield 'foo';
+    return 'bar';
+}
+
+function* outerGeneratorFn(genObj) {
+    console.log('iter value:', yield* genObj());
+}
+
+for (const x of outerGeneratorFn(innerGeneratorFn)) {
+    console.log('value:', x);
+}
+// value: foo
+// iter value: bar
+```
+
+
+
+#### 4. 使用 yield* 实现递归算法
+
+```js
+// 实现递归算法
+function* nTimes(n) {
+    if (n > 0) {
+        yield* nTimes(n - 1);
+        yield n - 1;
+    }
+}
+
+for (const x of nTimes(3)) {
+    console.log(x);
+    // 0
+    // 1
+    // 2
+}
+```
