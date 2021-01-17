@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yield</title>
+</head>
+<body>
+  <script>
+    function* generator() {
+      yield 'foo';
+      yield 'bar';
+      return 'baz';
+    }
+
+    const generatorObject = generator();
+
+    console.log(generatorObject.next());  // { done: false, value: 'foo' }
+    console.log(generatorObject.next());  // { done: false, value: 'bar' }
+    console.log(generatorObject.next());  // { done: true, value: 'baz' }
+
+    // 每个生成器对象上调用 next() 不会影响其他生成器
+    const generatorObject1 = generator();
+    const generatorObject2 = generator();
+
+    console.log(generatorObject1.next());  // { done: false, value: 'foo' }
+    console.log(generatorObject2.next());  // { done: false, value: 'foo' }
+    console.log(generatorObject2.next());  // { done: false, value: 'bar' }
+    console.log(generatorObject1.next());  // { done: false, value: 'bar' }
+  </script>
+
+  <script>
+    // 生成器对象作为可迭代对象
+    function* generatorFn() {
+      yield 1;
+      yield 2;
+      yield 3;
+    }
+
+    for (const x of generatorFn()) {
+      console.log(x);
+    }
+    // 1
+    // 2
+    // 3
+  </script>
+
+  <script>
+    // 迭代器执行指定次数
+    function* nTimes(n) {
+      while (n--) {
+        yield;
+      }
+    }
+
+    for (const _ of nTimes(3)) {
+      console.log('foo');
+    }
+    // foo
+    // foo
+    // foo
+  </script>
+</body>
+</html>

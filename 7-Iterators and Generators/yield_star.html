@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>产生可迭代对象</title>
+</head>
+<body>
+  <script>
+    function* generatorFn() {
+      yield* [1, 2, 3];
+    }
+
+    const generatorObject = generatorFn();
+
+    for (const x of generatorObject) {
+      console.log(x);
+      // 1
+      // 2
+      // 3
+    }
+  </script>
+
+  <script>
+    function* generatorFn1() {
+      yield* [1, 2];
+      yield* [3, 4];
+      yield* [5, 6];
+    }
+
+    for (const x of generatorFn1()) {
+      console.log(x);
+      // 1
+      // 2
+      // 3
+      // 4
+      // 5
+      // 6
+    }
+  </script>
+
+  <script>
+    function* generatorFn2() {
+      yield* 'abcde';
+    }
+
+    for (const x of generatorFn2()) {
+      console.log(x);
+      // a
+      // b
+      // c
+      // d
+      // e
+    }
+  </script>
+
+  <script>
+    // yield* 的值时关联迭代器返回 done: true 时的 value 属性。对于普通迭代器来说，这个值是 undefined
+    function* generatorFn3() {
+      console.log('iter value:', yield* [1, 2, 3]);
+    }
+
+    for (const x of generatorFn3()) {
+      console.log('value:', x);
+      // value: 1
+      // value: 2
+      // value: 3
+      // iter value: undefined
+    }
+  </script>
+
+  <script>
+    // 对于生成器函数产生的迭代值来说，这个值就是生成器函数返回的值
+    function* innerGeneratorFn() {
+      yield 'foo';
+      return 'bar';
+    }
+
+    function* outerGeneratorFn(genObj) {
+      console.log('iter value:', yield* genObj());
+    }
+
+    for (const x of outerGeneratorFn(innerGeneratorFn)) {
+      console.log('value:', x);
+    }
+    // value: foo
+    // iter value: bar
+  </script>
+
+  <script>
+    // 实现递归算法
+    function* nTimes(n) {
+      if (n > 0) {
+        yield* nTimes(n - 1);
+        yield n - 1;
+      }
+    }
+
+    for (const x of nTimes(3)) {
+      console.log(x);
+      // 0
+      // 1
+      // 2
+    }
+  </script>
+</body>
+</html>

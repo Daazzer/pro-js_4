@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用 yield 实现输入和输出</title>
+</head>
+<body>
+  <script>
+    // yield 关键字可以作为函数的中间参数使用
+    function* generatorFn(initial) {
+      console.log(initial);
+      console.log(yield);
+      console.log(yield);
+    }
+
+    const generatorObject = generatorFn('foo');
+
+    generatorObject.next('bar');  // 'foo'  *第一个 next 参数不会使用，因为这是函数的开始
+    generatorObject.next('baz');  // 'baz'
+    generatorObject.next('qux');  // 'qux'
+  </script>
+
+  <script>
+    function* generatorFn1() {
+      return yield 'foo';
+    }
+
+    const generatorObject1 = generatorFn1();
+
+    console.log(generatorObject1.next());  // {value: "foo", done: false}
+    console.log(generatorObject1.next('bar'));  // {value: "bar", done: true}
+    console.log(generatorObject1.next('bar'));  // {value: undefined, done: true}
+  </script>
+</body>
+</html>
