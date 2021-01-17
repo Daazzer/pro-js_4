@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自定义迭代器</title>
+</head>
+<body>
+  <script>
+    class Counter {
+      // Counter 实例应该迭代 limit 次
+      constructor(limit) {
+        this.count = 1;
+        this.limit = limit;
+      }
+
+      [Symbol.iterator]() {
+        let count = 1,
+            limit = this.limit;
+        // 为了能够创建多个独立的迭代器，可以把计数器变量放到闭包里
+        return {
+          next() {
+            if (count <= limit) {
+              return { done: false, value: count++ };
+            } else {
+              return { done: true, value: undefined };
+            }
+          }
+        };
+      }
+    }
+
+    const counter = new Counter(3);
+
+    for (const c of counter) {
+      console.log(c);
+    }
+
+    for (const c of counter) {
+      console.log(c);
+    }
+  </script>
+</body>
+</html>
