@@ -197,3 +197,105 @@ for (const c of counter) {
 // 3
 ```
 
+
+
+### 7.2.4 提前终止迭代器
+
+可选的 `return()` 方法用于指定在迭代器提前关闭时执行的逻辑，可能情况包括
+
+- `for-of` 循环通过 `break`、`continue`、`return` 或  `throw` 提前退出
+- 解构操作并未消费所有值
+
+`return()` 方法必须返回一个有效的 `IteratorResult` 对象，简单情况下，可以只返回 `{ done: true }`
+
+```js
+class Counter {
+    constructor(limit) {
+        this.limit = limit;
+    }
+
+    [Symbol.iterator]() {
+        let count = 1,
+            limit = this.limit;
+        return {
+            next() {
+                if (count <= limit) {
+                    return { done: false, value: count++ };
+                } else {
+                    return { done: true };
+                }
+            },
+            // 可选的 return() 方法用于指定在迭代器提前关闭时执行的逻辑。
+            return() {
+                console.log('提前退出');
+                return { done: true };
+            }
+        };
+    }
+}
+
+const counter1 = new Counter(5);
+
+for (const i of counter1) {
+    if (i > 2) {
+        break;
+    }
+    console.log(i);
+    // 1
+    // 2
+    // 提前退出
+}
+
+const counter2 = new Counter(5);
+
+try {
+    for (const i of counter2) {
+        if (i > 2) {
+            throw 'err';
+        }
+        console.log(i);
+    }
+} catch (e) {}
+// 1
+// 2
+// 提前退出
+
+const counter3 = new Counter(5);
+
+const [a, b] = counter3;
+// 提前退出
+```
+
+
+
+如果迭代器没有关闭，则还可以继续从上次离开的地方继续迭代
+
+`return()` 方法是可选的。并非所有的迭代器都可关闭的，要知道某个迭代器是否可以关闭，可以测试这个迭代器实例的 `return` 属性是不是函数对象，不过仅仅给一个不可关闭的迭代器增加这个方法**并不能**让它变成可关闭的
+
+```js
+const arr = [1, 2, 3, 4, 5];
+const iter = arr[Symbol.iterator]();
+
+iter.return = function() {
+    console.log('提前退出');
+    return { done: true };
+}
+
+for (const i of iter) {
+    console.log(i);
+    if (i > 2) {
+        break;
+    }
+}
+// 1
+// 2
+// 3
+// 提前退出
+
+for (const i of iter) {
+    console.log(i);
+}
+// 4
+// 5
+```
+
