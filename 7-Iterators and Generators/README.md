@@ -299,3 +299,70 @@ for (const i of iter) {
 // 5
 ```
 
+
+
+## 7.3 生成器
+
+拥有在一个函数块内暂停和恢复代码执行的能力
+
+### 7.3.1 生成器的基础
+
+```js
+// 声明一个生成器函数
+function* generatorFn() {}
+
+//  生成器函数表达式
+let generatorFn() = function* () {}
+
+// 对象字面量
+let foo = {
+    * generatorFn() {}
+}
+
+// 作为类实例方法的生成器函数
+class Foo {
+    * generatorFn() {}
+}
+
+// 作为静态方法的生成器函数
+class Bar {
+    static * generatorFn() {}
+}
+```
+
+
+
+调用生成器函数会产生一个**生成器对象**，生成器对象一开始处于暂定执行 (suspended) 的状态。生成器对象也实现了 `Iterator` 接口，因此具有 `next()` 方法
+
+函数体为空的生成器函数，调用一次 `next()` 就会让生成器到达 `done: true`
+
+```js
+function* generatorFn() {}
+
+const generatorObject = generatorFn();
+
+console.log(generatorObject.next());  // { done: true, value: undefined }
+```
+
+```js
+class Foo {
+    *generatorFn() {}
+}
+
+function *generatorFn() {
+    console.log('foobar');
+    return 'foo';
+}
+
+class Bar {
+    static * generatorFn() {}
+}
+
+const g = generatorFn();  // 调用生成器函数不会执行内部代码
+console.log(g);
+console.log(g.next);
+console.log(g.next());   // 只有 next() 之后才会执行内部代码
+console.log(g === g[Symbol.iterator]());  // true
+console.log(generatorFn()[Symbol.iterator]());  // generatorFn {<suspended>}
+```
+
