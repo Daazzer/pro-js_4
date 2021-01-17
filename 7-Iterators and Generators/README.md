@@ -578,3 +578,27 @@ for (const x of nTimes(3)) {
     // 2
 }
 ```
+
+
+
+### 7.3.3 生成器作为默认迭代器
+
+```js
+class Foo {
+    constructor() {
+        this.values = [1, 2, 3];
+    }
+    * [Symbol.iterator]() {
+        yield* this.values;
+    }
+}
+
+const f = new Foo();
+for (const x of f) {
+    console.log(x);
+}
+// 1
+// 2
+// 3
+```
+
