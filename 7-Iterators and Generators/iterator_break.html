@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>提前终止迭代器</title>
+</head>
+<body>
+  <script>
+    class Counter {
+      constructor(limit) {
+        this.limit = limit;
+      }
+
+      [Symbol.iterator]() {
+        let count = 1,
+            limit = this.limit;
+        return {
+          next() {
+            if (count <= limit) {
+              return { done: false, value: count++ };
+            } else {
+              return { done: true };
+            }
+          },
+          // 可选的 return() 方法用于指定在迭代器提前关闭时执行的逻辑。
+          return() {
+            console.log('提前退出');
+            return { done: true };
+          }
+        };
+      }
+    }
+
+    const counter1 = new Counter(5);
+
+    for (const i of counter1) {
+      if (i > 2) {
+        break;
+      }
+      console.log(i);
+      // 1
+      // 2
+      // 提前退出
+    }
+
+    const counter2 = new Counter(5);
+
+    try {
+      for (const i of counter2) {
+        if (i > 2) {
+          throw 'err';
+        }
+        console.log(i);
+      }
+    } catch (e) {}
+    // 1
+    // 2
+    // 提前退出
+
+    const counter3 = new Counter(5);
+
+    const [a, b] = counter3;
+    // 提前退出
+  </script>
+
+  <script>
+    const arr = [1, 2, 3, 4, 5];
+    const iter = arr[Symbol.iterator]();
+
+    iter.return = function() {
+      console.log('提前退出');
+      return { done: true };
+    }
+
+    for (const i of iter) {
+      console.log(i);
+      if (i > 2) {
+        break;
+      }
+    }
+    // 1
+    // 2
+    // 3
+    // 提前退出
+
+    for (const i of iter) {
+      console.log(i);
+    }
+    // 4
+    // 5
+  </script>
+</body>
+</html>
