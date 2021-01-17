@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成器</title>
+</head>
+<body>
+  <script>
+    class Foo {
+      *generatorFn() {}
+    }
+
+    function *generatorFn() {
+      console.log('foobar');
+      return 'foo';
+    }
+
+    class Bar {
+      static * generatorFn() {}
+    }
+
+    const g = generatorFn();  // 调用生成器函数不会执行内部代码
+    console.log(g);
+    console.log(g.next);
+    console.log(g.next());   // 只有 next() 之后才会执行内部代码
+    console.log(g === g[Symbol.iterator]());  // true
+    console.log(generatorFn()[Symbol.iterator]());  // generatorFn {<suspended>}
+  </script>
+</body>
+</html>
