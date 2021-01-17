@@ -150,3 +150,50 @@ const foo = new Foo();
 console.log(foo[Symbol.iterator]());  // { next: f() {} }
 ```
 
+
+
+### 7.2.3 自定义迭代器
+
+任何实现 `Iterator` 接口的对象都可以作为迭代器使用
+
+```js
+class Counter {
+    // Counter 实例应该迭代 limit 次
+    constructor(limit) {
+        this.count = 1;
+        this.limit = limit;
+    }
+
+    [Symbol.iterator]() {
+        let count = 1,
+            limit = this.limit;
+        // 为了能够创建多个独立的迭代器，可以把计数器变量放到闭包里
+        return {
+            next() {
+                if (count <= limit) {
+                    return { done: false, value: count++ };
+                } else {
+                    return { done: true, value: undefined };
+                }
+            }
+        };
+    }
+}
+
+const counter = new Counter(3);
+
+for (const c of counter) {
+    console.log(c);
+}
+// 1
+// 2
+// 3
+
+for (const c of counter) {
+    console.log(c);
+}
+// 1
+// 2
+// 3
+```
+
