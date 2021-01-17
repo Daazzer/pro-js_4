@@ -85,3 +85,68 @@ for (const el of fooArr) {
 // baz
 ```
 
+
+
+### 7.2.2 迭代器协议
+
+迭代器 API
+
+- `next()` 方法在可迭代对象中遍历数据，每次成功调用 `next()`，都会返回一个 `IteratorResult` 对象，包含两个属性 `done` 和 `value`
+  - `done` 布尔值，表示是否还可以调用 `next()` 取得下一个值
+  - `value` 包含可迭代对象的下一个值 (`done` 为 `false`)，或者 `undefined` (`done` 为 `true`)
+
+
+
+不同迭代器的实例相互之间没有联系，只会独立地遍历可迭代对象
+
+```js
+let arr = ['foo', 'bar'];
+let iter1 = arr[Symbol.iterator]();
+let iter2 = arr[Symbol.iterator]();
+
+console.log(iter1.next());  // { done: false, value: 'foo' }
+console.log(iter2.next());  // { done: false, value: 'foo' }
+console.log(iter2.next());  // { done: false, value: 'bar' }
+console.log(iter1.next());  // { done: false, value: 'bar' }
+```
+
+
+
+如果可迭代对象在迭代期间被修改了，那么迭代器也会反映相应的变化
+
+```js
+let arr = ['foo', 'baz'];
+let iter = arr[Symbol.iterator]();
+
+console.log(iter.next());  // { done: false, value: 'foo' }
+
+// 在数组中间插入值
+arr.splice(1, 0, 'bar');
+
+console.log(iter.next());  // { done: false, value: 'bar' }
+console.log(iter.next());  // { done: false, value: 'baz' }
+console.log(iter.next());  // { done: true, value: undefined }
+```
+
+> **注意** 迭代器维护着一个指向可迭代对象的引用，因此迭代器会阻止垃圾回收程序回收可迭代对象
+
+
+
+显式的迭代器实现
+
+```js
+class Foo {
+    // 实现可迭代接口 (Iterable)
+    [Symbol.iterator]() {
+        return {
+            next() {
+                return { done: false, value: 'foo' };
+            }
+        };
+    }
+}
+
+const foo = new Foo();
+console.log(foo[Symbol.iterator]());  // { next: f() {} }
+```
+
