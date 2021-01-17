@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>提前终止生成器</title>
+</head>
+<body>
+  <script>
+    function* generatorFn() {
+      for (const x of [1, 2, 3]) {
+        yield x;
+      }
+    }
+
+    const g = generatorFn();
+
+    console.log(g);  // generatorFn {<suspended>}
+    console.log(g.return(4));  // { value: 4, done: true }
+    console.log(g);  // generatorFn {<closed>}
+    // 后续调用 next 都是 done: true 状态
+    console.log(g.next());
+    console.log(g.next());
+  </script>
+
+  <script>
+    function* generatorErrorFn() {
+      for (const x of [1, 2, 3]) {
+        yield x;
+      }
+    }
+
+    const gError = generatorErrorFn();
+    console.log(gError);  // generatorFn {<suspended>}
+    try {
+      gError.throw('foo');
+    } catch (e) {
+      console.log(e);  // foo
+    }
+    console.log(gError);  // generatorFn {<closed>}
+  </script>
+
+  <script>
+    function* generatorHandleErrorFn() {
+      for (const x of [1, 2, 3]) {
+        try {
+          yield x;
+        } catch (e) {}
+      }
+    }
+
+    const gHandleError = generatorHandleErrorFn();
+
+    console.log(gHandleError.next());  // {value: 1, done: false}
+    gHandleError.throw('foo');
+    console.log(gHandleError.next());  // {value: 3, done: false}
+  </script>
+</body>
+</html>
