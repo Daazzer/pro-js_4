@@ -7,4 +7,5 @@
 - [第 5 章 基本引用类型](5-Basic Reference Types/README.md)
 - [第 6 章 集合引用类型](6-Collection Reference Types/README.md)
 - [第 7 章 集合引用类型](7-Iterators and Generators/README.md)
+- [第 8 章 对象、类与面向对象编程](8-Objects, Classes, and Object-Oriented Programming)
 
