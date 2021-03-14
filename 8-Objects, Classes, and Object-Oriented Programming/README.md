@@ -81,3 +81,50 @@ console.log(person.name);  // "Nicholas"
 
 - 不可 `delete` 此属性
 - 不可再次对同一个属性调用 `Object.defineProperty()`
+
+调用 `Object.defineProperty()` 默认的 `[[configurable]]` `[[enumerable]]` `[[writable]]` 默认为 `false`
+
+
+
+#### 2. 访问器属性
+
+不包含数据值。包含一个获取 (getter) 函数和一个设置 (setter) 函数
+
+访问属性值时调用 getter，设置属性值时会调用 setter
+
+- `[[configurable]]` 表示属性是否可以通过 `delete` 删除并重新定义，默认值 `true`
+- `[[Enumberable]]` 表示是否可以通过 `for-in` 循环返回，默认值 `true`
+- `[[Get]]` 获取函数，读取属性时调用。默认为 `undefined`
+- `[[Set]]` 设置函数，写入属性时调用。默认为 `undefined`
+
+```js
+// 设置一个值会导致其他变化发生
+let book = {
+    year_: 2017,
+    edition: 1
+};
+
+Object.defineProperty(book, "year", {
+    get() {
+        return this.year_;
+    },
+    set(newValue) {
+        if (newValue > 2017) {
+            this.year_ = newValue;
+            this.edition += newValue - 2017;
+        }
+    }
+});
+
+book.year = 2018;
+console.log(book.edition);  // 2
+```
+
+
+
+只定义获取函数 (getter) 说明这个属性时只读的，只有一个设置函数的属性是不能读取的
+
+
+
+> **注意** 在 ES5 以前有两个非标准属性可以访问访问器属性: `__defineGetter__()` 和 `__defineSetter__()`
+
