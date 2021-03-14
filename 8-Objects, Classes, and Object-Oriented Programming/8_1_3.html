@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8.3.1 读取属性的特性</title>
+</head>
+<body>
+  <script>
+    let book = {};
+    Object.defineProperties(book, {
+      year_: {
+        value: 2017
+      },
+      edition: {
+        value: 1
+      },
+      year: {
+        get: function() {
+          return this.year_;
+        },
+        set: function(newValue) {
+          if (newValue > 2017) {
+            this.year_ = newValue;
+            this.edition += newValue - 2017;
+          }
+        }
+      }
+    });
+    let descriptor = Object.getOwnPropertyDescriptor(book, "year_");
+    console.log(descriptor.value);  // 2017
+    console.log(descriptor.configurable);  // false
+    console.log(typeof descriptor.get);  // "undefined"
+    let descriptor1 = Object.getOwnPropertyDescriptor(book, "year");
+    console.log(descriptor1.value);  // undefined
+    console.log(descriptor1.enumerable);  // false
+    console.log(typeof descriptor1.get);  // "function"
+  </script>
+
+  <script>
+    console.log(Object.getOwnPropertyDescriptors(book));
+    document.body.innerHTML = JSON.stringify(Object.getOwnPropertyDescriptors(book));
+  </script>
+</body>
+</html>

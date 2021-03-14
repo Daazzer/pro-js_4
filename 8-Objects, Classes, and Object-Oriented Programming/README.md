@@ -157,3 +157,91 @@ Object.defineProperties(book, {
 });
 ```
 
+
+
+### 8.1.3 读取属性的特性
+
+`Object.getOwnPropertyDescriptor(targetObj, propName): descObj`
+
+
+
+```js
+let book = {};
+Object.defineProperties(book, {
+    year_: {
+        value: 2017
+    },
+    edition: {
+        value: 1
+    },
+    year: {
+        get: function() {
+            return this.year_;
+        },
+        set: function(newValue) {
+            if (newValue > 2017) {
+                this.year_ = newValue;
+                this.edition += newValue - 2017;
+            }
+        }
+    }
+});
+let descriptor = Object.getOwnPropertyDescriptor(book, "year_");
+console.log(descriptor.value);  // 2017
+console.log(descriptor.configurable);  // false
+console.log(typeof descriptor.get);  // "undefined"
+let descriptor1 = Object.getOwnPropertyDescriptor(book, "year");
+console.log(descriptor1.value);  // undefined
+console.log(descriptor1.enumerable);  // false
+console.log(typeof descriptor1.get);  // "function"
+```
+
+
+
+ **ES2017:**  `Object.getOwnPropertyDescriptors()`
+
+```js
+let book = {};
+Object.defineProperties(book, {
+    year_: {
+        value: 2017
+    },
+    edition: {
+        value: 1
+    },
+    year: {
+        get: function() {
+            return this.year_;
+        },
+        set: function(newValue) {
+            if (newValue > 2017) {
+                this.year_ = newValue;
+                this.edition += newValue - 2017;
+            }
+        }
+    }
+});
+console.log(Object.getOwnPropertyDescriptors(book));
+
+/*
+{
+    "year_": {
+        "value":2017,
+        "writable":false,
+        "enumerable":false,
+        "configurable":false
+    },
+    "edition": {
+        "value":1,
+        "writable":false,
+        "enumerable":false,
+        "configurable":false
+    },
+    "year":{
+        "enumerable":false,
+        "configurable":false
+    }
+}; 
+*/
+```
+
