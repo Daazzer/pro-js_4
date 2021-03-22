@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合并对象</title>
+</head>
+<body>
+  <script>
+    let dest, src, result;
+
+    /**  
+     * 简单复制
+     */
+    dest = {};
+    src = { id: 'src' };
+    result = Object.assign(dest, src);
+
+    // Object.assign 修改目标对象
+    // 也会返回修改后的目标对象
+    console.log(dest === result);  // true
+    console.log(dest !== src);  // true
+    console.log(result);  // { id: 'src' }
+    console.log(dest);  // { id: 'src' }
+  </script>
+
+  <script>
+    /**
+     * 多个源对象
+     */
+    dest = {};
+    
+    result = Object.assign(dest, { a: 'foo' }, { b: 'bar' });
+
+    console.log(result);  // { a: 'foo', b: 'bar' }
+  </script>
+
+  <script>
+    /**
+     * 获取函数与设置函数
+     */
+    dest = {
+      set a(val) {
+        console.log(`Invoked dest setter with param ${val}`);
+      }
+    };
+    src = {
+      get a() {
+        console.log('Involed src getter');
+        return 'foo';
+      }
+    };
+
+    Object.assign(dest, src);
+
+    /*
+    调用 src 的获取方法
+    调用 dest 的设置方法并传入参数 "foo"
+    因为这里的设置函数不执行赋值操作
+    所以实际上并没有把值转移过来
+     */
+    console.log(dest);  // { set a(val) {...} }
+  </script>
+
+  <script>
+    /**
+     * 覆盖属性
+     */
+    desc = { id: 'dest' };
+
+    result = Object.assign(dest, { id: 'src1', a: 'foo' }, { id: 'src2', b: 'bar' });
+
+    // Object.assign 会覆盖重复的属性
+    console.log(result);  // { id: 'src2', a: 'foo', b: 'bar' }
+  </script>
+</body>
+</html>

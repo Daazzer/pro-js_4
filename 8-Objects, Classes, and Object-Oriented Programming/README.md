@@ -163,8 +163,6 @@ Object.defineProperties(book, {
 
 `Object.getOwnPropertyDescriptor(targetObj, propName): descObj`
 
-
-
 ```js
 let book = {};
 Object.defineProperties(book, {
@@ -245,3 +243,72 @@ console.log(Object.getOwnPropertyDescriptors(book));
 */
 ```
 
+
+
+### 8.1.4 合并对象
+
+把源对象所有的本地属性一起复制到目标对象上。有时候这种操作叫做混入 (mixin)
+
+- `Object.assign()` 接收一个目标对象和一个或多个源对象作为参数，然后将每个原对象中可枚举和只有属性复制到目标对象
+
+  这个方法会使用源对象上的 `[[Get]]` 取得属性的值，然后使用目标对象上的 `[[Set]]` 设置属性的值
+
+  ```js
+  let dest, src, result;
+  
+  /**  
+   * 简单复制
+   */
+  dest = {};
+  src = { id: 'src' };
+  result = Object.assign(dest, src);
+  
+  // Object.assign 修改目标对象
+  // 也会返回修改后的目标对象
+  console.log(dest === result);  // true
+  console.log(dest !== src);  // true
+  console.log(result);  // { id: 'src' }
+  console.log(dest);  // { id: 'src' }
+  
+  /**
+   * 多个源对象
+   */
+  dest = {};
+  
+  result = Object.assign(dest, { a: 'foo' }, { b: 'bar' });
+  
+  console.log(result);  // { a: 'foo', b: 'bar' }
+  
+  /**
+   * 获取函数与设置函数
+   */
+  dest = {
+      set a(val) {
+          console.log(`Invoked dest setter with param ${val}`);
+      }
+  };
+  src = {
+      get a() {
+          console.log('Involed src getter');
+          return 'foo';
+      }
+  };
+  
+  Object.assign(dest, src);
+  
+  /*
+  调用 src 的获取方法
+  调用 dest 的设置方法并传入参数 "foo"
+  因为这里的设置函数不执行赋值操作
+  所以实际上并没有把值转移过来
+   */
+  console.log(dest);  // { set a(val) {...} }
+  ```
+
+
+
+`Object.assign()` 实际上对每个源对象执行的是浅复制，如果多个源对象都有相同的属性，则使用最后一个复制的值
+
+
+
+`Object.assign()` 没有“回滚”操作，如果报错会中断复制，可能只会完成部分复制
