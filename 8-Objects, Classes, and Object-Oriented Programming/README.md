@@ -360,3 +360,111 @@ function recursivelyCheckEqual(x, ...rest) {
 }
 ```
 
+
+
+### 8.1.6 增强的对象语法
+
+#### 1. 属性名简写
+
+```js
+let name = "Matt";
+
+let person = {
+    name
+};
+
+console.log(person);  // { name: "Matt" }
+```
+
+
+
+#### 2. 可计算属性
+
+```js
+const nameKey = "name";
+const ageKey = "age";
+const jobKey = "job";
+
+const person = {
+    [nameKey]: "Matt",
+    [ageKey]: 27,
+    [jobKey]: "Sofeware engineer"
+};
+
+console.log(person);  // { name: "Matt", age: 27, job: "Sofeware engineer" }
+```
+
+
+
+也可以是复杂的表达式
+
+```js
+const nameKey = "name";
+const ageKey = "age";
+const jobKey = "job";
+let uniqueToken = 0;
+
+function getUniqueKey(key) {
+    return `${key}_${uniqueToken++}`;
+}
+
+const person = {
+    [getUniqueKey(nameKey)]: "Matt",
+    [getUniqueKey(ageKey)]: 27,
+    [getUniqueKey(jobKey)]: "Sofeware engineer"
+};
+
+console.log(person);  // { name_0: "Matt", age_1: 27, job_2: "Sofeware engineer" }
+```
+
+
+
+> **注意** 可计算属性表达式在报错时没有回滚操作
+
+
+
+#### 3. 简写方法名
+
+```js
+let person = {
+    sayName(name) {
+        console.log(`My name is ${name}`);
+    }
+};
+
+person.sayName("Matt");  // My name is Matt
+
+// 获取函数和设置函数同样适用
+person = {
+    name_: '',
+    get name() {
+        return this.name_;
+    },
+    set name(name) {
+        this.name_ = name;
+    },
+    sayName() {
+        console.log(`My name is ${this.name_}`);
+    }
+};
+
+person.name = "Matt";
+person.sayName();  // My name is Matt
+```
+
+
+
+同时可以与计算属性键相互兼容
+
+```js
+const methodKey = "sayName";
+
+const person = {
+    [methodKey](name) {
+        console.log(`My name is ${name}`);
+    }
+};
+
+person.sayName("Matt");  // My name is Matt
+```
+
