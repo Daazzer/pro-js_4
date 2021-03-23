@@ -330,3 +330,33 @@ console.log(dest.a === src.a);  // true
 
 `Object.assign()` 没有“回滚”操作，如果报错会中断复制，可能只会完成部分复制
 
+
+
+### 8.1.5 对象标识及相等判定
+
+ECMAScript 6 新增 `Object.is()`，与 `===` 很像，但同时也考虑了边界情况
+
+```js
+console.log(Object.is(true, 1));  // false
+console.log(Object.is({}, {}));  // false
+console.log(Object.is("2", 2));  // false
+
+// 正确的 0、-0、+0 相等/不等判定
+console.log(Object.is(+0, -0));  // false
+console.log(Object.is(+0, 0));  // true
+console.log(Object.is(-0, 0));  // false
+
+// 正确的 NaN 相等判定
+console.log(Object.is(NaN, NaN));  // true
+```
+
+
+
+递归检查超过两个值
+
+```js
+function recursivelyCheckEqual(x, ...rest) {
+    return Object.is(x, rest[0]) && (rest.length < 2 || rescursivelyCheckEqual(...rest));
+}
+```
+
