@@ -309,6 +309,24 @@ console.log(Object.getOwnPropertyDescriptors(book));
 
 `Object.assign()` 实际上对每个源对象执行的是浅复制，如果多个源对象都有相同的属性，则使用最后一个复制的值
 
+```js
+/**
+ * 覆盖属性
+ */
+let desc = { id: 'dest' };
+
+let result = Object.assign(dest, { id: 'src1', a: 'foo' }, { id: 'src2', b: 'bar' });
+
+// Object.assign 会覆盖重复的属性
+console.log(result);  // { id: 'src2', a: 'foo', b: 'bar' }
+
+desc = {};
+src = { a: {} };
+console.log(dest);  // { a: {} }
+console.log(dest.a === src.a);  // true
+```
+
 
 
 `Object.assign()` 没有“回滚”操作，如果报错会中断复制，可能只会完成部分复制
+
