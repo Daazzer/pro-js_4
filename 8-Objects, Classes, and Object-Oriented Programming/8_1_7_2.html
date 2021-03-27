@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>部分解构</title>
+</head>
+<body>
+  <script>
+    const person = {
+      name: 'Matt',
+      age: 27
+    };
+
+    let personName, personBar, personAge;
+
+    try {
+      // person.foo 是 undefined，会抛错
+      ({ name: personName, foo: { bar: personBar }, age: personAge } = person)
+    } catch (err) {}
+
+    console.log(personName, personBar, personAge);  // Matt undefined undefined
+  </script>
+</body>
+</html>

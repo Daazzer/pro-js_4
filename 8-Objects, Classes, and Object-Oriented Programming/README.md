@@ -468,3 +468,171 @@ const person = {
 person.sayName("Matt");  // My name is Matt
 ```
 
+
+
+### 8.1.7 对象解构
+
+ECMAScript 6 新增了对象解构语法，可以在一条语句中使用嵌套数据实现一个或多个赋值操作。
+
+不使用对象解构
+
+```js
+const person = {
+    name: "Matt",
+    age: 27
+};
+
+const personName = person.name,
+      personAge = person.age;
+console.log(personName);  // Matt
+console.log(personAge);  // 27
+```
+
+
+
+使用对象解构
+
+```js
+const person = {
+    name: "Matt",
+    age: 27
+};
+
+const { name: personName, age: personAge } = person;
+
+console.log(personName);  // Matt
+console.log(personAge);  // 27
+```
+
+
+
+解构赋值时定义默认值
+
+```js
+const person = {
+    name: "Matt",
+    age: 27
+};
+
+// 如果访问对象不存在的属性则默认是 undefined，除非赋默认值
+const { name, job = 'Sofeware engineer' } = person;
+
+console.log(name);  // Matt
+console.log(job);  // Sofeware engineer
+```
+
+
+
+解构在内部使用函数 `ToObject()` (不能在运行时环境中直接访问) 把数据结构转换为对象。这意味着在对象解构的上下文中，原始值会被当成对象，但是 `null` 和 `undefined` 不能被解构，否则会抛出错误
+
+```js
+let { length } = 'foobar';
+console.log(length);  // 6
+
+let { constructor: c } = 4;
+console.log(c === Number);  // true
+
+let { _ } = null;  // TypeError
+let { _ } = undefined;  // TypeError
+```
+
+
+
+预先声明的变量，对象解构赋值时要包在括号内部
+
+```js
+let personName, personAge;
+
+let person = {
+    name: "Matt",
+    age: 27
+};
+
+({ name: personName, age: personAge } = person);
+
+console.log(personName, personAge);  // Matt, 27
+```
+
+
+
+#### 1. 嵌套解构
+
+```js
+const person = {
+    name: 'Matt',
+    age: 27,
+    job: {
+        title: 'Sofeware engineer'
+    }
+};
+const personCopy = {};
+
+({
+    name: personCopy.name,
+    age: personCopy.age,
+    job: personCopy.job
+} = person);
+
+// person.job 是对象引用，所以修改里面的属性 personCopy 也会影响
+person.job.title = 'Hacker';
+
+console.log(person);  // { name: 'Matt', age: 27, { title: 'Hacker' } }
+console.log(personCopy);  // { name: 'Matt', age: 27, { title: 'Hacker' } }
+
+// 嵌套结构
+let { job: { title } } = person;
+
+console.log(title);  // Hacker
+```
+
+
+
+#### 2. 部分解构
+
+```js
+const person = {
+    name: 'Matt',
+    age: 27
+};
+
+let personName, personBar, personAge;
+
+try {
+    // person.foo 是 undefined，会抛错
+    ({ name: personName, foo: { bar: personBar }, age: personAge } = person)
+} catch (err) {}
+
+console.log(personName, personBar, personAge);  // Matt undefined undefined
+```
+
+
+
+#### 3. 参数上下文匹配
+
+在函数参数列表中也可以进行解构赋值。对参数的解构赋值不会影响 `arguments` 对象
+
+```js
+const person = {
+    name: 'Matt',
+    age: 27
+};
+
+function printPerson(foo, { name, age }, bar) {
+    console.log(arguments);
+    console.log(name, age);
+}
+
+function printPerson2(foo, { name: personName, age: personAge }, bar) {
+    console.log(arguments);
+    console.log(personName, personAge);
+}
+
+printPerson('1st', person, '2nd');
+// ['1st', { name: 'Matt', age: 27 }, '2nd']
+// 'Matt', 27
+
+printPerson2('1st', person, '2nd');
+// ['1st', { name: 'Matt', age: 27 }, '2nd']
+// 'Matt', 27
+```
+
