@@ -738,3 +738,31 @@ console.log(person2 instanceof Object);  // true
 console.log(person2 instanceof Person);  // true
 ```
 
+#### 1. 构造函数也是函数
+
+任何函数只要使用 `new` 操作符调用就是构造函数，而不使用 `new` 操作符调用的函数就是普通函数
+
+```js
+function Person(name, age, job) {
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = function() {
+        console.log(this.name);
+    };
+}
+
+// 作为构造函数
+const person = new Person("Nicholas", 29, "Sofeware Enginner");
+person.sayName();  // Nicholas
+
+// 作为函数调用
+Person("Greg", 27, "Doctor");  // 添加到 window 对象
+window.sayName();  // "Greg"
+
+// 在另一个对象的作用域中调用
+const o = new Object();
+Person.call(o, "Kristen", 25, "Nurse");
+o.sayName();  // "Kristen"
+```
+
