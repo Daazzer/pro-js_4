@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>构造函数模式</title>
+</head>
+<body>
+  <script>
+    function Person(name, age, job) {
+      this.name = name;
+      this.age = age;
+      this.job = job;
+      this.sayName = function() {
+        console.log(this.name);
+      };
+    }
+
+    const person1 = new Person("Nicholas", 29, "Sofeware Enginner");
+    const person2 = new Person("Greg", 27, "Doctor");
+
+    person1.sayName();  // Nicholas
+    person2.sayName();  // Greg
+
+    console.log(person1.constructor === Person);  // true
+    console.log(person2.constructor === Person);  // true
+
+    // constructor 本来是用于表示对象类型的。不过，一般认为 instanceof 操作符是确定对象类型更可靠的方式
+    console.log(person1 instanceof Object);  // true
+    console.log(person1 instanceof Person);  // true
+    console.log(person2 instanceof Object);  // true
+    console.log(person2 instanceof Person);  // true
+  </script>
+</body>
+</html>

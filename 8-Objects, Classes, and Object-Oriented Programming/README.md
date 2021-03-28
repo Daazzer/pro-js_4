@@ -669,3 +669,72 @@ const person2 = createPerson("Greg", 27, "Doctor");
 ```
 
 工厂模式虽然可以解决创建多个类似对象的问题，但是没有解决对象标识问题 (即新创建的对象是什么类型)
+
+### 8.2.3 构造函数模式
+
+ECMAScript 中的构造函数是用于创建特定类型对象的。
+
+```js
+function Person(name, age, job) {
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = function() {
+        console.log(this.name);
+    };
+}
+
+const person1 = new Person("Nicholas", 29, "Sofeware Enginner");
+const person2 = new Person("Greg", 27, "Doctor");
+
+person1.sayName();  // Nicholas
+person2.sayName();  // Greg
+
+console.log(person1.constructor === Person);  // true
+console.log(person2.constructor === Person);  // true
+
+// constructor 本来是用于表示对象类型的。不过，一般认为 instanceof 操作符是确定对象类型更可靠的方式
+console.log(person1 instanceof Object);  // true
+console.log(person1 instanceof Person);  // true
+console.log(person2 instanceof Object);  // true
+console.log(person2 instanceof Person);  // true
+```
+
+构造函数模式与工厂模式的区别
+
+- 没有显示地创建对象
+- 属性和方法直接赋值给了 `this`
+- 没有 `return`
+
+构造函数名要按照惯例，首字母大写
+
+要创建 `Person` 实例，应使用 `new` 操作符。以这种方式调用构造函数会执行以下操作
+
+1. 在内存中创建一个对象
+2. 这个对象内部的 `[[Prototype]]` 特性被赋值为构造函数的 `prototype` 属性
+3. 构造函数内部的 `this` 被赋值为这个新对象 (即 `this` 指向新对象)
+4. 执行构造函数内部的代码 (给新对象添加属性)
+5. 如果构造函数返回非空对象，则返回该对象；否则，返回刚创建的新对象
+
+在实例化时，如果不想传参数，那么构造函数后面的括号可以不加 (不推荐)。只要有 `new` 操作符，就可以调用相应的构造函数
+
+```js
+function Person() {
+    this.name = "Jake";
+    this.sayName = function() {
+        console.log(this.name);
+    };
+}
+
+const person1 = new Person();
+const person2 = new Person;  // 不推荐
+
+person1.sayName();  // Jake
+person2.sayName();  // Jake
+
+console.log(person1 instanceof Object);  // true
+console.log(person1 instanceof Person);  // true
+console.log(person2 instanceof Object);  // true
+console.log(person2 instanceof Person);  // true
+```
+
