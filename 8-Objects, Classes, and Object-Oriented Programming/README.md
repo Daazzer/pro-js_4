@@ -646,3 +646,26 @@ printPerson2('1st', person, '2nd');
 
 ES6 开始正式支持类和继承，ES6 的类都仅仅是封装了 ES5.1 构造函数加原型继承的语法糖而已
 
+### 8.2.2 工厂模式
+
+工厂模式用于抽象创建特定对象的过程。
+
+按照特定接口创建对象的方式：
+
+```js
+function createPerson(name, age, job) {
+    const o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function() {
+        console.log(this.name);
+    };
+    return o;
+}
+
+const person1 = createPerson("Nicholas", 29, "Sofeware Enginner");
+const person2 = createPerson("Greg", 27, "Doctor");
+```
+
+工厂模式虽然可以解决创建多个类似对象的问题，但是没有解决对象标识问题 (即新创建的对象是什么类型)
