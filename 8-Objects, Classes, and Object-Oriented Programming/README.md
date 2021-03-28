@@ -766,3 +766,53 @@ Person.call(o, "Kristen", 25, "Nurse");
 o.sayName();  // "Kristen"
 ```
 
+
+
+#### 2. 构造函数的问题
+
+构造函数的问题在于，其定义的方法会在每个实例上都会创建一遍。
+
+我们知道，ECMAScript 中的函数时对象，因此每次定义函数时，都会初始化一个对象
+
+```js
+function Person(name, age, job) {
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = function() {
+        console.log(this.name);
+    };
+}
+
+const person1 = new Person("Nicholas", 29, "Sofeware Enginner");
+const person2 = new Person("Greg", 27, "Doctor");
+
+console.log(person1.sayName === person2.sayName);  // false
+```
+
+
+
+要解决这个问题，可以把函数定义移到构造函数外部
+
+```js
+function Person(name, age, job) {
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayName = sayName;
+}
+
+function sayName() {
+    console.log(this.name);
+}
+
+const person1 = new Person("Nicholas", 29, "Sofeware Enginner");
+const person2 = new Person("Greg", 27, "Doctor");
+
+person1.sayName();  // Nicholas
+person2.sayName();  // Greg
+```
+
+
+
+虽然这样解决了相同逻辑的函数重复定义的问题，但是污染了全局作用域。如果方法一旦多起来，那么全局作用域就要定义多个函数。这会导致自定义类型引用的代码不能很好地聚集一起。这个新问题可以通过原型模式来解决
