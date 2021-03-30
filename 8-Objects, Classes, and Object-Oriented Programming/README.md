@@ -816,3 +816,30 @@ person2.sayName();  // Greg
 
 
 虽然这样解决了相同逻辑的函数重复定义的问题，但是污染了全局作用域。如果方法一旦多起来，那么全局作用域就要定义多个函数。这会导致自定义类型引用的代码不能很好地聚集一起。这个新问题可以通过原型模式来解决
+
+### 8.2.4 原型模式
+
+每个函数都会创建一个 `prototype` 属性，这个属性是一个对象，包含应该由特定引用类型的实例共享的属性和方法。实际上，这个对象就是通过调用构造函数创建的对象的原型。
+
+使用原型对象的好处是，在它上面定义的属性和方法可以被对象实例共享。
+
+```js
+function Person() {}  // 也可用函数表达式 let Person = function() {};
+
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Sofeware Engineer";
+Person.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+const person1 = new Person();
+person1.sayName();  // "Nicholas"
+const person2 = new Person();
+person2.sayName();  // "Nicholas"
+
+console.log(person1.sayName === person2.sayName);  // true
+```
+
+
+

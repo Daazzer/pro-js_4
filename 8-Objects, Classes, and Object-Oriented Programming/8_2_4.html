@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原型模式</title>
+</head>
+<body>
+  <script>
+    function Person() {}
+
+    Person.prototype.name = "Nicholas";
+    Person.prototype.age = 29;
+    Person.prototype.job = "Sofeware Engineer";
+    Person.prototype.sayName = function() {
+      console.log(this.name);
+    };
+
+    const person1 = new Person();
+    person1.sayName();  // "Nicholas"
+    const person2 = new Person();
+    person2.sayName();  // "Nicholas"
+
+    console.log(person1.sayName === person2.sayName);  // true
+  </script>
+</body>
+</html>
