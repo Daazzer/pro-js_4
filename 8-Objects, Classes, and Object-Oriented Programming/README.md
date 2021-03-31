@@ -841,5 +841,48 @@ person2.sayName();  // "Nicholas"
 console.log(person1.sayName === person2.sayName);  // true
 ```
 
+#### 1. 理解原型
+
+只要创建一个函数，就会按照特定的规则为这个函数创建一个 `prototype` 属性 (指向原型对象)
+
+默认情况下，所有原型对象自动获得一个名为 `constructor` 属性，指向与之关联的构造函数
+
+原型对象默认只会获得 `constructor` 属性，其它所有方法则继承自 `Object`
+
+每次调用构造函数创建一个新实例，实例内部 `[[Prototype]]` 指针会被赋值为构造函数的原型对象
+
+有非标准方式可以访问这个 `[[Prototype]]`，在每个对象上暴露的 `__proto__` 属性 (Firefox、Safari、Chrome 实现)
+
+![图8-1](./i/8_2_4_1.svg)
+
+```mermaid
+classDiagram
+Animal <|-- Duck
+Animal <|-- Fish
+Animal <|-- Zebra
+Animal: int age
+Animal: String gender
+Animal: isMammal()
+Animal: mate()
+class Duck{
++String beakColor
++swim()
++quack()
+}
+class Fish{
+-int sizeInFeet
+-canEat()
+}
+class Zebra{
++bool is_wild
++run()
+}
+Person Prototype <|-- Person
+Person Prototype: constructor
+class Person {
+	constructor
+}
+```
+
 
 
