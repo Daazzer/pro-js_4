@@ -912,3 +912,66 @@ console.log(person.numLegs);  // 2
 console.log(Object.getPrototypeOf(person) === biped);  // true
 ```
 
+
+
+#### 2.  原型层级
+
+在通过对象访问属性时，会按照这个属性的名称开始搜索。搜索开始于对象实例本身。如果在实例上发现了这个名称，则返回该名称对应的值。如果没有找到这个属性，则搜索会沿着指针进入原型对象，然后在原型对象上找到属性后，再返回对应的值。
+
+> **注意** `constructor` 属性只存在于原型对象，因此通过实例对象也是可以访问到的
+
+虽然可以通过实例读取原型对象上的值，但不可能通过实例重写这些值。如果在实例上添加了一个与原型对象相同的属性名，则会遮住原型对象上的属性
+
+```js
+function Person() {}
+
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Sofeware Engineer";
+Person.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+const person1 = new Person(),
+      person2 = new Person();
+
+person1.name = "Greg";
+console.log(person1.name);  // "Greg", 来自实例
+console.log(person2.name);  // "Nicholas", 来自原型
+
+// 可以使用 delete 操作符删除实例属性，恢复对原型属性的访问
+delete person1.name;
+console.log(person1.name);  // "Nicholas", 来自原型
+```
+
+
+
+`hasOwnProperty()` 方法用于确定属性是在实例上还是原型上
+
+```js
+function Person() {}
+
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Sofeware Engineer";
+Person.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+const person1 = new Person(),
+      person2 = new Person();
+
+console.log(person1.hasOwnProperty("name"));  // false
+console.log(person2.hasOwnProperty("name"));  // false
+
+person1.name = "Greg";
+console.log(person1.hasOwnProperty("name"));  // true
+
+delete person1.name;
+console.log(person1.hasOwnProperty("name"));  // false
+```
+
+
+
+> **注意** `Object.getOwnPropertyDescriptor()` 方法只对实例属性有效，要取得原型上的属性描述符，就必须直接在原型对象上调用 
+
