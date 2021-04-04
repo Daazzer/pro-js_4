@@ -853,36 +853,62 @@ console.log(person1.sayName === person2.sayName);  // true
 
 有非标准方式可以访问这个 `[[Prototype]]`，在每个对象上暴露的 `__proto__` 属性 (Firefox、Safari、Chrome 实现)
 
-![图8-1](./i/8_2_4_1.svg)
+```js
+function Person() {}
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Sofeware Engineer";
+Person.prototype.sayName = function() {
+    console.log(this.name);
+};
 
-```mermaid
-classDiagram
-Animal <|-- Duck
-Animal <|-- Fish
-Animal <|-- Zebra
-Animal: int age
-Animal: String gender
-Animal: isMammal()
-Animal: mate()
-class Duck{
-+String beakColor
-+swim()
-+quack()
-}
-class Fish{
--int sizeInFeet
--canEat()
-}
-class Zebra{
-+bool is_wild
-+run()
-}
-Person Prototype <|-- Person
-Person Prototype: constructor
-class Person {
-	constructor
-}
+console.log(Person.prototype.constructor === Person);  // true
+console.log(Person.prototype.__proto__ === Object.prototype);  // true
+console.log(Person.prototype.__proto__.constructor === Object);  // true
+console.log(Person.prototype.__proto__.__proto__ === null);  // true
+
+const person1 = new Person(),
+      person2 = new Person();
 ```
 
+![图8-1](./i/8_2_4_1.svg)
 
+ECMAScript 的 `Object` 类型有一个方法叫 `Object.getPrototypeOf()`，返回参数的内部特性 `[[Prototype]]` 的值，可以方便的获取一个对象的原型
+
+`setPrototypeOf()` 方法，可以向实例私有特性 `[[Prototype]]` 写入一个新值
+
+```js
+let biped = {
+    numLegs: 2
+};
+
+let person = {
+    name: 'Matt'
+};
+
+Object.setPrototypeOf(person, biped);
+
+console.log(person.name);  // Matt
+console.log(person.numLegs);  // 2
+console.log(Object.getPrototypeOf(person) === biped);  // true
+```
+
+> **注意** `Object.setPrototypeOf()` 可能会严重影响代码性能
+
+
+
+为了避免性能影响，可以使用 `Object.create()` 来创建对象，同时为其指定原型
+
+```js
+let biped = {
+    numLegs: 2
+};
+
+let person = Object.create(biped);
+person.name = 'Matt';
+
+console.log(person.name);  // Matt
+console.log(person.numLegs);  // 2
+console.log(Object.getPrototypeOf(person) === biped);  // true
+```
 
