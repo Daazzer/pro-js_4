@@ -1123,3 +1123,57 @@ console.log(Object.values(o1));  // []
 console.log(Object.entries(o1));  // []
 ```
 
+#### 1. 其他原型语法
+
+原型方法减少冗余
+
+```js
+function Person() {}
+
+Person.prototype = {
+    name: "Nicholas",
+    age: 29,
+    job: "Sofeware Engineer",
+    sayName() {
+        console.log(this.name);
+    }
+};
+```
+
+但是这样重写原型对象之后，`constructor` 属性就不再指向 `Person` 了而是指向 `Object` 所以要专门设置一下它的值
+
+```js
+function Person() {}
+
+Person.prototype = {
+    constructor: Person,
+    name: "Nicholas",
+    age: 29,
+    job: "Sofeware Engineer",
+    sayName() {
+        console.log(this.name);
+    }
+};
+```
+
+但是这种方式恢复 `constructor` 属性会创建一个 `[[Enumberable]]` 为 `true` 的属性，而原生的 `constructor` 是不可枚举的，所以 `constructor` 要用 `Object.defineProperty` 方法来定义 `constructor` 属性
+
+```js
+function Person() {}
+
+Person.prototype = {
+    name: "Nicholas",
+    age: 29,
+    job: "Sofeware Engineer",
+    sayName() {
+        console.log(this.name);
+    }
+};
+
+// 恢复 constructor 属性
+Object.defineProperty(Person.prototype, "constructor", {
+    enumerable: false,
+    value: Person
+});
+```
+
