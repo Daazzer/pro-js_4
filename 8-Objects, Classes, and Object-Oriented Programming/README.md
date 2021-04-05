@@ -1309,3 +1309,83 @@ console.log(instance.getSuperValue());  // true
 
 - `instanceof` 操作符
 - `isPrototypeOf()` 方法
+
+
+
+#### 3. 关于方法
+
+子类有时候需要覆盖父类的方法，或者增加父类没有的方法。为此，这些方法必须在原型赋值之后再添加到原型上
+
+```js
+function SuperType() {
+    this.property = true;
+}
+
+SuperType.prototype.getSuperValue = function() {
+    return this.property;
+};
+
+function SubType() {
+    this.subProperty = false;
+}
+
+// 继承 SuperType
+SubType.prototype = new SuperType();
+
+// 新方法
+SubType.prototype.getSuperValue = function() {
+    return this.subProperty;
+};
+
+// 覆盖已有的方法
+SubType.prototype.getSuperValue = function() {
+    return false;
+};
+
+let instance = new SubType();
+
+console.log(instance.getSuperValue());  // false
+```
+
+
+
+另一种是以对象字面量方式创建原型方法
+
+```js
+function SuperType() {
+    this.property = true;
+}
+
+SuperType.prototype.getSuperValue = function() {
+    return this.property;
+};
+
+function SubType() {
+    this.subProperty = false;
+}
+
+// 继承 SuperType
+SubType.prototype = new SuperType();
+
+// 通过对象字面量添加新方法，这会导致上一行无效
+SubType.prototype = {
+    getSubValue() {
+        return this.subProperty;
+    },
+
+    someOtherMethod() {
+        return false;
+    }
+};
+
+let instance = new SubType();
+console.log(instance.getSuperValue());  // 出错
+```
+
+
+
+#### 4. 原型链问题
+
+原型中包含的引用值会在所有实例间共享，这也是为什么属性通常会在构造函数中定义而不会在原型上的原因
+
+原型链的第二个问题，子类型在实例化时不能给父类型的构造函数传参。事实上，我们无法在不影响所有对象实例的情况下把参数传进父类的构造函数

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于方法</title>
+</head>
+<body>
+  <script>
+    function SuperType() {
+      this.property = true;
+    }
+
+    SuperType.prototype.getSuperValue = function() {
+      return this.property;
+    };
+
+    function SubType() {
+      this.subProperty = false;
+    }
+
+    // 继承 SuperType
+    SubType.prototype = new SuperType();
+
+    // 新方法
+    SubType.prototype.getSuperValue = function() {
+      return this.subProperty;
+    };
+
+    // 覆盖已有的方法
+    SubType.prototype.getSuperValue = function() {
+      return false;
+    };
+
+    let instance = new SubType();
+
+    console.log(instance.getSuperValue());  // false
+  </script>
+
+  <script>
+    function SuperType() {
+      this.property = true;
+    }
+
+    SuperType.prototype.getSuperValue = function() {
+      return this.property;
+    };
+
+    function SubType() {
+      this.subProperty = false;
+    }
+
+    // 继承 SuperType
+    SubType.prototype = new SuperType();
+
+    // 通过对象字面量添加新方法，这会导致上一行无效
+    SubType.prototype = {
+      getSubValue() {
+        return this.subProperty;
+      },
+
+      someOtherMethod() {
+        return false;
+      }
+    };
+
+    let instance = new SubType();
+    console.log(instance.getSuperValue());  // 出错
+  </script>
+</body>
+</html>
