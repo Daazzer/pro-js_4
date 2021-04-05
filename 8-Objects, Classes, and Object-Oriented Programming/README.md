@@ -1590,3 +1590,70 @@ anotherPerson.sayHi();  // "hi"
 
 
 
+### 8.3.6 寄生式组合继承
+
+组合继承最主要的问题就是父类构造函数始终会被调用两次：一次是创建子类原型时调用，另一次是在子类构造函数中调用。本质上，子类原型最后中是要包含超类对象的所有实例属性，子类构造函数只要在执行时重写自己的原型就行了
+
+```js
+function SuperType(name) {
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+}
+
+SuperType.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+function SubType(name, age) {
+    SuperType.call(this, name);  // 第二次调用 SuperType()
+    this.age = age;
+}
+
+SubType.prototype = new SuperType();  // 第一次调用 SuperType()
+SubType.prototype.constructor = SubType;
+SubType.prototype.sayAge = function() {
+    console.log(this.age);
+};
+```
+
+
+
+![图8-6](./i/8_3_6.svg)
+
+寄生式组合继承通过盗用构造函数继承属性，但使用混合模式原型链继承方法。基本思路是不通过调用父类构造函数给子类原型赋值，而是取得父类原型的一个副本。说到底就是使用寄生式继承来继承父类原型，然后将返回的新对象赋值给子类原型。
+
+```js
+function object(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+
+function inheritPrototype(subType, superType) {
+    let prototype = object(superType.prototype);
+    prototype.constructor = subType;
+    subType.prototype = prototype;
+}
+
+function SuperType(name) {
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+}
+
+SuperType.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+function SubType(name, age) {
+    SuperType.call(this, name);
+    this.age = age;
+}
+
+inheritPrototype(SubType, SuperType);
+
+SubType.prototype.sayAge = function() {
+    console.log(this.age);
+};
+```
+
+寄生式组合继承可以算是引用类型继承的最佳模式
