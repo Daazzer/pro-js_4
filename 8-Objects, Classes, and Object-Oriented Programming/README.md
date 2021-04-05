@@ -1253,3 +1253,52 @@ console.log(person2.firends);  // "Shelby,Court,Van"
 console.log(person1.firends === person2.friends);  // true
 ```
 
+
+
+## 8.3 继承
+
+很多面向对象语言都支持两种继承：接口继承和实现继承
+
+实现继承是 ECMAScript 唯一支持的继承方式
+
+### 8.3.1 原型链
+
+```js
+// 类继承
+function SuperType() {
+    this.property = true;
+}
+
+SuperType.prototype.getSuperValue = function() {
+    return this.property;
+};
+
+function SubType() {
+    this.subProperty = false;
+}
+
+// 继承 SuperType
+SubType.prototype = new SuperType();
+
+SubType.prototype.getSubValue = function() {
+    return this.subProperty;
+};
+
+let instance = new SubType();
+
+console.log(instance.getSuperValue());  // true
+```
+
+
+
+![图8-4](./i/8_3_1.svg)
+
+这个例子的关键是，`SubType` 没有使用默认原型，而是将其替换成了一个新的对象，这个新对象恰好是 `SuperType` 的原型挂上了钩，但是这里的 `SubType` 原型的 `constructor` 还是指向 `SuperType` 的构造器，所以 `SubType` 的原型还是要手动修改 `constructor` 的指向
+
+
+
+#### 1. 默认原型
+
+任何函数的默认原型都是一个 `Object` 的实例，这意味着这个实例有一个内部指针指向 `Object.prototype`。这也是为什么自定义类型能够继承包括 `toString()`、`valueOf()` 在内的所有默认方法的原因
+
+![图8-5](./i/8_3_1_1.svg)
