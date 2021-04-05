@@ -1389,3 +1389,23 @@ console.log(instance.getSuperValue());  // 出错
 原型中包含的引用值会在所有实例间共享，这也是为什么属性通常会在构造函数中定义而不会在原型上的原因
 
 原型链的第二个问题，子类型在实例化时不能给父类型的构造函数传参。事实上，我们无法在不影响所有对象实例的情况下把参数传进父类的构造函数
+
+```js
+function SuperType() {
+    this.color = ["red", "blue", "green"];
+}
+
+function SubType() {}
+
+// 继承 SuperType
+SubType.prototype = new SuperType();
+
+let instance1 = new SubType();
+
+instance1.colors.push("black");
+console.log(instance1.colors);  // "red,blue,green,black"
+
+let instance2 = new SubType();
+console.log(instance2.colors);  // "red,blue,green,black"
+```
+
