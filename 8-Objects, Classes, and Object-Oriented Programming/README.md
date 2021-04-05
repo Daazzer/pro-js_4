@@ -1630,9 +1630,9 @@ function object(o) {
 }
 
 function inheritPrototype(subType, superType) {
-    let prototype = object(superType.prototype);
-    prototype.constructor = subType;
-    subType.prototype = prototype;
+    let prototype = object(superType.prototype);  // 创建对象
+    prototype.constructor = subType;  // 增强对象
+    subType.prototype = prototype;  // 赋值对象
 }
 
 function SuperType(name) {
