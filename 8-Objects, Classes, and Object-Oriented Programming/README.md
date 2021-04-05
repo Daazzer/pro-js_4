@@ -1409,3 +1409,31 @@ let instance2 = new SubType();
 console.log(instance2.colors);  // "red,blue,green,black"
 ```
 
+
+
+### 8.3.2 盗用构造函数
+
+盗用构造函数（constructor stealing）。在子类中调用父类构造函数
+
+可以使用 `apply()` 和 `call()` 方法以新创建的对象为上下文执行构造函数
+
+```js
+function SuperType() {
+    this.color = ["red", "blue", "green"];
+}
+
+function SubType() {
+    // 继承 SuperType
+    SuperType.call(this);
+}
+
+
+let instance1 = new SubType();
+instance1.colors.push("black");
+console.log(instance1.colors);  // "red,blue,green,black"
+
+let instance2 = new SubType();
+console.log(instance2.colors);  // "red,blue,green"
+```
+
+相当于 `SuperType` 构造函数在为 `SubType` 的实例创建的对象的上下文中执行了
