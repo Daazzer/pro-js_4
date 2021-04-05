@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>原型和 in 操作符</title>
+</head>
+<body>
+  <script>
+    let k1 = Symbol('k1'),
+      k2 = Symbol('k2');
+
+    let o = {
+      [k1]: 'k1',
+      [k2]: 'k2',
+      c: 3
+    };
+
+    console.log(Object.getOwnPropertySymbols(o));  // [Symbol(k1), Symbol(k2)]
+  </script>
+</body>
+</html>

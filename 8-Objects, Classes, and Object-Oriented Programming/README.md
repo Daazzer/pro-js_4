@@ -975,3 +975,89 @@ console.log(person1.hasOwnProperty("name"));  // false
 
 > **注意** `Object.getOwnPropertyDescriptor()` 方法只对实例属性有效，要取得原型上的属性描述符，就必须直接在原型对象上调用 
 
+
+
+#### 3. 原型和 in 操作符
+
+两种方式使用 `in` 操作符：
+
+- 单独使用
+  - `in` 操作符通过对象访问指定属性时返回 `true`，无论该属性是在实例上还是在原型上
+- 在 `for-in` 循环中使用
+
+```js
+function Person() {}
+
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Sofeware Engineer";
+Person.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+const person1 = new Person(),
+      person2 = new Person();
+
+console.log(person1.hasOwnProperty("name"));  // false
+console.log("name" in person1);  // true
+
+person1.name = "Greg";
+console.log(person1.hasOwnProperty("name"));  // true
+console.log("name" in person1);  // true
+
+delete person1.name;
+console.log(person1.hasOwnProperty("name"));  // false
+console.log("name" in person1);  // true
+```
+
+
+
+在 `for-in`  循环中使用 `in` 操作符时，可以通过对象访问且可以被枚举的属性都会返回，包括实例属性和原型属性，开发者默认定义的属性都是可枚举的
+
+要获得对象上所有可枚举的实例属性，可以使用 `Object.keys()` 方法，返回包含改对象所有可枚举属性名称的字符串数组
+
+```js
+function Person() {}
+
+Person.prototype.name = "Nicholas";
+Person.prototype.age = 29;
+Person.prototype.job = "Sofeware Engineer";
+Person.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+let keys = Object.keys(Person.prototype);
+console.log(keys);  // "name,age,job,sayName"
+let p1 = new Person();
+p1.name = "Rob";
+p1.age = 31;
+let p1keys = Object.keys(p1);
+console.log(p1keys);  // "name,age"
+```
+
+
+
+`Object.getOwnPropertyNames()` 可以列出所有实例属性，无论是否可枚举
+
+```js
+let keys = Object.getOwnPropertyNames(Person.prototype);
+console.log(keys);  // "constructor,name,age,job,sayName"
+```
+
+
+
+ES6 新增了 `Object.getOwnPropertySymbols()` ，因为符号作为属性没有名称概念。返回所有的符号属性
+
+```js
+let k1 = Symbol('k1'),
+    k2 = Symbol('k2');
+
+let o = {
+    [k1]: 'k1',
+    [k2]: 'k2',
+    c: 3
+};
+
+console.log(Object.getOwnPropertySymbols(o));  // [Symbol(k1), Symbol(k2)]
+```
+
