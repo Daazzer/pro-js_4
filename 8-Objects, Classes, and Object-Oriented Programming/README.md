@@ -1223,3 +1223,33 @@ console.log(msg.startsWith("Hello"));  // true
 
 
 > **注意** 不推荐直接在生产环境中修改修改原生原型方法
+
+
+
+#### 4. 原型问题
+
+主要问题来自于它的共享特性。如果原型上包含引用值的属性
+
+```js
+function Person() {}
+
+Person.prototype = {
+    constructor: Person,
+    name: "Nicholas",
+    age: 29,
+    job: "Software Engineer",
+    firends: ["Shelby", "Court"],
+    sayName() {
+        console.log(this.name);
+    }
+};
+
+let person1 = new Person(),
+    person2 = new Person();
+person1.friends.push("Van");
+
+console.log(person1.firends);  // "Shelby,Court,Van"
+console.log(person2.firends);  // "Shelby,Court,Van"
+console.log(person1.firends === person2.friends);  // true
+```
+
