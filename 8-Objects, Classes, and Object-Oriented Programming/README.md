@@ -1554,3 +1554,39 @@ let somePerson = Object.create(person, {
 ```
 
 原型式继承非常适合不需要单独创建构造函数，但仍需要在对象共享信息的场合。但是属性中包含的引用值始终会在相关对象共享，跟使用原型模式是一样的
+
+### 8.3.5 寄生式继承
+
+类似于寄生构造函数和工厂模式：创建一个实现继承的函数，以某种方式增强对象，然后返回这个对象
+
+```js
+function object(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+
+function createAnother(original) {
+    let clone = object(original);
+    clone.sayHi = function() {
+        console.log("hi");
+    };
+}
+
+let person = {
+    name: "Nicholas",
+    friends: ["Shelby", "Court", "Van"]
+};
+
+let anotherPerson = createAnother(person);
+anotherPerson.sayHi();  // "hi"
+```
+
+
+
+寄生式继承同样适合主要关注对象，而不在乎类型和构造函数的场景。`object()` 函数不是寄生式继承所必须的，任何返回新对象的函数都可以在这里使用
+
+> **注意** 通过寄生式继承给对象添加函数会导致函数难以重用，与构造函数模式类似
+
+
+
