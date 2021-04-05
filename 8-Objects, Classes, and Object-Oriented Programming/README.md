@@ -1467,3 +1467,47 @@ console.log(instance.age);  // 29
 
 主要的缺点，也是使用构造函数模式自定义类型的问题：必须在构造函数中定义方法，因此函数不能复用。此外，子类也不能访问访问父类原型上定义的方法，因此所有类型只能使用构造函数模式。由于存在这些问题，盗用构造函数基本上也不能单独使用
 
+
+
+### 8.3.3 组合继承
+
+**组合继承**（有时候也叫伪经典继承）综合了原型链和盗用构造函数，将两者的优点集中了起来
+
+思路是使用原型链继承原型上的属性和方法，而通过盗用构造函数继承实例属性。
+
+```js
+function SuperType(name) {
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+}
+
+SuperType.prototype.sayName = function() {
+    console.log(this.name);
+};
+
+function SubType(name, age) {
+    // 继承属性
+    SuperType.call(this, name);
+
+    this.age = age;
+}
+
+// 继承方法
+SubType.prototype = new SuperType();
+
+SubType.prototype.sayAge = function() {
+    console.log(this.age);
+};
+
+let instance1 = new SubType("Nicholas", 29);
+instance1.colors.push("black");
+console.log(instance.colors);  // "red,blue,green,black"
+instance1.sayName();  // "Nicholas"
+instance1.sayAge();  // 29
+
+let instance2 = new SubType("Greg", 27);
+console.log(instance2.colors);  // "red,blue,green"
+instance2.sayName();  // "Greg"
+instance2.sayAge();  // 27
+```
+
