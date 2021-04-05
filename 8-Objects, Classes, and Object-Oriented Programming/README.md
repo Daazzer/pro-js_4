@@ -1437,3 +1437,33 @@ console.log(instance2.colors);  // "red,blue,green"
 ```
 
 相当于 `SuperType` 构造函数在为 `SubType` 的实例创建的对象的上下文中执行了
+
+
+
+#### 1. 传递参数
+
+```js
+function SuperType(name) {
+    this.name = name;
+}
+
+function SubType() {
+    // 继承 SuperType 并传参
+    SuperType.call(this, "Nicholas");
+    
+    // 实例属性
+    this.age = 29;
+}
+
+
+let instance1 = new SubType();
+console.log(instance.name);  // "Nicholas"
+console.log(instance.age);  // 29
+```
+
+
+
+#### 2. 盗用构造函数的问题
+
+主要的缺点，也是使用构造函数模式自定义类型的问题：必须在构造函数中定义方法，因此函数不能复用。此外，子类也不能访问访问父类原型上定义的方法，因此所有类型只能使用构造函数模式。由于存在这些问题，盗用构造函数基本上也不能单独使用
+
