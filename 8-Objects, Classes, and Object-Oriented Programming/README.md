@@ -1092,3 +1092,34 @@ console.log(Object.getOwnPropertySymbols(o));
 // [Symbol(k1), Symbol(k2)]
 ```
 
+
+
+### 8.2.5 对象迭代
+
+ECMAScript2017 新增两个静态方法迭代对象属性
+
+- `Object.values()` 返回对象值的数组
+
+- `Object.entries()` 返回对象键 / 值对的数组
+
+```js
+const o = {
+    foo: 'bar',
+    baz: 1,
+    qux: {}
+};
+
+console.log(Object.values(o));  // ["bar", 1, {}]
+console.log(Object.entries(o));  // [["foo", "bar"], ["baz", 1], ["qux", {}]]
+
+// 符号属性会被忽略
+const sym = Symbol();
+
+const o1 = {
+    [sym]: 'foo'
+};
+
+console.log(Object.values(o1));  // []
+console.log(Object.entries(o1));  // []
+```
+

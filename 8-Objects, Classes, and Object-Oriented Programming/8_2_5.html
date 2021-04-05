@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象迭代</title>
+</head>
+<body>
+  <script>
+    const o = {
+      foo: 'bar',
+      baz: 1,
+      qux: {}
+    };
+
+    console.log(Object.values(o));  // ["bar", 1, {}]
+    console.log(Object.entries(o));  // [["foo", "bar"], ["baz", 1], ["qux", {}]]
+
+    // 符号属性会被忽略
+    const sym = Symbol();
+
+    const o1 = {
+      [sym]: 'foo'
+    };
+
+    console.log(Object.values(o1));  // []
+    console.log(Object.entries(o1));  // []
+  </script>
+</body>
+</html>
