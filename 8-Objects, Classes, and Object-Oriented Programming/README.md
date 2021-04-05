@@ -1177,3 +1177,28 @@ Object.defineProperty(Person.prototype, "constructor", {
 });
 ```
 
+
+
+#### 2. 原型的动态性
+
+重写构造函数上的原型之后再创建的实例才会引用新的原型。而在此之前创建的实例仍然会引用最初的原型
+
+```js
+function Person() {}
+
+let friend = new Person();
+Person.prototype = {
+    name: "Nicholas",
+    age: 29,
+    job: "Sofeware Engineer",
+    sayName() {
+        console.log(this.name);
+    }
+};
+
+friend.sayName();  // 错误
+```
+
+
+
+![图8-3](./i/8_2_5_2.svg)
