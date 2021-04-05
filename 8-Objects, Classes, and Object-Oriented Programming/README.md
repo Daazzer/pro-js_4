@@ -1511,3 +1511,46 @@ instance2.sayName();  // "Greg"
 instance2.sayAge();  // 27
 ```
 
+
+
+### 8.3.4 原型式继承
+
+```js
+function object(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+```
+
+这个函数会创建一个临时构造函数，将传入的对象赋值给这个构造函数的原型，然后返回这个临时类型的一个实例。本质上，`object()` 是对传入的对象执行了一次浅复制
+
+
+
+ECMAScript 5 通过添加 `Object.create()` 方法将原型式继承的概念规范化了
+
+```js
+let person = {
+    name: "Nicholas",
+    friends: ["Shelby", "Court", "Van"]
+};
+
+let anotherPerson = Object.create(person);
+anotherPerson.name = "Greg";
+anotherPerson.friends.push("Rob");
+
+let yetAnotherPerson = Object.create(person);
+yetAnotherPerson.name = "Linda";
+yetAnotherPerson.friends.push("Barbie");
+
+console.log(person.friends);  // "Shelby", "Court", "Van", "Rob", "Barbie"
+
+// Object.create() 方法的第二个参数与 Object.defineProperties() 的第二个参数一样
+let somePerson = Object.create(person, {
+    name: {
+        value: "Greg"
+    }
+});
+```
+
+原型式继承非常适合不需要单独创建构造函数，但仍需要在对象共享信息的场合。但是属性中包含的引用值始终会在相关对象共享，跟使用原型模式是一样的
