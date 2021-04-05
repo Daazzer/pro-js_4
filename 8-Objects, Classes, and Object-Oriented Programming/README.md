@@ -1202,3 +1202,24 @@ friend.sayName();  // 错误
 
 
 ![图8-3](./i/8_2_5_2.svg)
+
+
+
+#### 3. 原生对象类型
+
+所有原生引用类型的构造函数（包括 `Object`、`Array`、`String` 等）都在原型上定义了实例方法。
+
+可以在原生对象原型上添加自定义方法
+
+```js
+String.prototype.startsWith = function(text) {
+    return this.indexOf(text) === 0;
+};
+
+let msg = "Hello world!";
+console.log(msg.startsWith("Hello"));  // true
+```
+
+
+
+> **注意** 不推荐直接在生产环境中修改修改原生原型方法
