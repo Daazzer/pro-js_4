@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>属性枚举顺序</title>
+</head>
+<body>
+  <script>
+    let k1 = Symbol('k1'),
+      k2 = Symbol('k2');
+
+    let o = {
+      1: 1,
+      first: 'first',
+      [k1]: 'sym1',
+      second: 'second',
+      0: 0
+    };
+
+    o[k2] = 'sym2';
+    o[3] = 3;
+    o.third = 'third';
+    o[2] = 2;
+
+    console.log(Object.getOwnPropertyNames(o));
+    // ["0", "1", "2", "3", "first", "second", "third"]
+    console.log(Object.getOwnPropertySymbols(o));
+    // [Symbol(k1), Symbol(k2)]
+  </script>
+</body>
+</html>
