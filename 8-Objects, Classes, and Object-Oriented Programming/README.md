@@ -2131,3 +2131,86 @@ p.sayName();  // My name is Jake
 
 
 
+#### 5. 迭代器与生成器方法
+
+类定义语法支持在原型和类本身上定义生成器方法
+
+```js
+class Person {
+    // 在原型上定义生成器方法
+    *createNicknameIterator() {
+        yield 'Jack';
+        yield 'Jake';
+        yield 'J-Dog';
+    }
+
+    // 在类上定义生成器方法
+    static *createJobIterator() {
+        yield 'Butcher';
+        yield 'Baker';
+        yield 'Candlestick maker';
+    }
+}
+
+let jobIter = Person.createJobIterator();
+console.log(jobIter.next().value);  // Butcher
+console.log(jobIter.next().value);  // Baker
+console.log(jobIter.next().value);  // Candlestick maker
+
+let p = new Person();
+let nicknameIter = p.createNicknameIterator();
+console.log(nicknameIter.next().value);  // Jack
+console.log(nicknameIter.next().value);  // Jake
+console.log(nicknameIter.next().value);  // J-Dog
+```
+
+
+
+可以添加一个默认迭代器，让实例变成可迭代对象
+
+```js
+class Person {
+    constructor() {
+        this.nicknames = ['Jack', 'Jake', 'J-Dog'];
+    }
+    
+    *[Symbol.iterator]() {
+        yield *this.nicknames.entries();
+    }
+}
+
+let p = new Person();
+for (let [idx, nickname] of p) {
+    console.log(nickname);
+}
+
+// Jack
+// Jake
+// J-Dog
+```
+
+
+
+也可以只返回迭代器实例
+
+```js
+class Person {
+    constructor() {
+        this.nicknames = ['Jack', 'Jake', 'J-Dog'];
+    }
+
+    [Symbol.iterator]() {
+        return this.nicknames.entries();
+    }
+}
+
+let p = new Person();
+for (let [idx, nickname] of p) {
+    console.log(nickname);
+}
+
+// Jack
+// Jake
+// J-Dog
+```
+
