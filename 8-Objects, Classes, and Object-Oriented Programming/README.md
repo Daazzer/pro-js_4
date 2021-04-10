@@ -1747,3 +1747,10 @@ p.identify();  // PersonName Person
 console.log(Person.name);  // PersonName
 console.log(PersonName);  // ReferenceError: PersonName is not defined
 ```
+
+
+
+### 8.4.2 类构造函数
+
+`constructor` 关键字用于在类定义块内部创建类的构造函数。构造函数的定义不是必须的，不定义构造函数相当于构造函数定义为空函数
+
