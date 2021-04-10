@@ -1754,3 +1754,114 @@ console.log(PersonName);  // ReferenceError: PersonName is not defined
 
 `constructor` 关键字用于在类定义块内部创建类的构造函数。构造函数的定义不是必须的，不定义构造函数相当于构造函数定义为空函数
 
+
+
+#### 1. 实例化
+
+使用 `new` 操作符实例化 `Person` 的操作等于使用 `new` 调用其构造函数
+
+使用 `new` 调用类的构造函数会执行如下操作
+
+1. 在内存中创建一个新的对象
+2. 这个对象内部的 `[[Prototype]]` 指针被赋值为构造函数的 `prototype` 属性
+3. 构造函数内部的 `this` 被赋值为这个新对象
+4. 执行构造函数内部的代码
+5. 如果构造函数返回非空对象，则返回该对象；否则，返回刚刚创建的新对象
+
+```js
+class Animal {}
+
+class Person {
+    constructor() {
+        console.log('person color');
+    }
+}
+
+class Vegetable {
+    constructor() {
+        this.color = 'orange';
+    }
+}
+
+let a = new Animal();
+
+let p = new Person();  // person color
+
+let v = new Vegetable();
+console.log(v.color);  // orange
+```
+
+
+
+类实例化时传入的参数会用作构造函数的参数。如果不需要参数，则类名后面的括号也是可选的
+
+```js
+class Person {
+    constructor(name) {
+        console.log(arguments.length);
+        this.name = name || null;
+    }
+}
+
+let p1 = new Person;  // 0，不推荐
+console.log(p1.name);  // null
+
+let p2 = new Person();  // 0
+console.log(p2.name);  // null
+
+let p3 = new Person('Jake');  // 1
+console.log(p3.name);  // Jake
+```
+
+
+
+如果构造函数返回的是其他对象，那么这个对象不会通过 `instanceof` 操作符检测出跟类有关联
+
+```js
+class Person {
+    constructor(override) {
+        this.foo = 'foo';
+        if (override) {
+            return {
+                bar: 'bar'
+            };
+        }
+    }
+}
+
+let p1 = new Person(),
+    p2 = new Person(true);
+
+console.log(p1);  // Person{ foo: 'foo' }
+console.log(p1 instanceof Person);  // true
+
+console.log(p2);  // { bar: 'bar' }
+console.log(p2 instanceof Person);  // false
+```
+
+
+
+类构造函数如果不使用 `new` 调用则会报错
+
+```js
+class Animal {}
+
+let a = Animal();  // TypeError: class constructor Animal cannot be invoked without 'new'
+```
+
+
+
+类实例化之后仍然可以调用构造函数
+
+```js
+class Person {}
+
+let p1 = new Person();
+
+p1.constructor();  // TypeError: class constructor Animal cannot be invoked without 'new'
+
+
+// 使用对类构造函数的引用创建一个新的实例
+let p2 = new p1.constructor();
+```
+
