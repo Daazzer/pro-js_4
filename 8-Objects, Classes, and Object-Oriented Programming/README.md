@@ -1962,3 +1962,85 @@ p1.sayName()  // Jake
 p2.sayName()  // J-Dog
 ```
 
+
+
+#### 2. 原型方法与访问器
+
+为了在实例间共享方法，类定义语法把类块中定义的方法作为原型方法
+
+```js
+class Person {
+    constructor() {
+        // 添加到 this 的所有内容都会存在于不同的实例上
+        this.locate = () => console.log('instance');
+    }
+
+    // 在块中定义的所有内容都会定义在类的原型上
+    locate() {
+        console.log('prototype');
+    }
+}
+
+let p = new Person();
+
+p.locate();  // instance
+Person.prototype.locate();  // prototype
+```
+
+
+
+不能在类块中给原型添加原始值或对象作为成员数据
+
+```js
+class Person {
+    name: 'Jake'
+}
+// Uncaught SyntaxError: Unexpected token
+```
+
+
+
+类方法等同于对象属性，因此可以使用字符串、符号或计算的值作为键
+
+```js
+const symbolKey = Symbol('symbolKey');
+
+class Person {
+    stringKey() {
+        console.log('invoked stringKey');
+    }
+    [symbolKey]() {
+        console.log('invoked symbolKey');
+    }
+    ['computed' + 'Key']() {
+        console.log('invoked computedKey');
+    }
+}
+
+let p = new Person();
+
+p.stringKey();  // invoked stringKey
+p[symbolKey]();  // invoked symbolKey
+p.computedKey();  // invoked computedKey
+```
+
+
+
+类定义的访问器属性
+
+```js
+class Person {
+    set name(newName) {
+        this.name_ = newName;
+    }
+    
+    get name() {
+        return this.name_;
+    }
+}
+
+let p = new Person();
+p.name = 'Jake';
+console.log(p.name);  // Jake
+```
+
