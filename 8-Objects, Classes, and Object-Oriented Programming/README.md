@@ -2366,4 +2366,25 @@ Bus.identify();  // vehicle
   console.log(new Van());  // {}
   ```
 
-  
+#### 3. 抽象基类
+
+通过检测 `new.target` 是不是抽象基类，可以阻止对抽象基类的实例化
+
+```js
+class Vehicle {
+    constructor() {
+        console.log(new.target);
+        if (new.target === Vehicle) {
+            throw new Error('Vehicle cannot be directly instantiated');
+        }
+    }
+}
+
+// 派生类
+class Bus extends Vehicle {}
+
+new Bus();  // class Bus {}
+new Vehicle();  // class Vehicle {}
+// Vehicle cannot be directly instantiated
+```
+

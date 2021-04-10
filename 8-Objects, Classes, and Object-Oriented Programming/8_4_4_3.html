@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽象基类</title>
+</head>
+<body>
+  <script>
+    class Vehicle {
+      constructor() {
+        console.log(new.target);
+        if (new.target === Vehicle) {
+          throw new Error('Vehicle cannot be directly instantiated');
+        }
+      }
+    }
+
+    // 派生类
+    class Bus extends Vehicle {}
+
+    new Bus();  // class Bus {}
+    new Vehicle();  // class Vehicle {}
+    // Vehicle cannot be directly instantiated
+  </script>
+</body>
+</html>
