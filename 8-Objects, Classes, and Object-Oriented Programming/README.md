@@ -2219,3 +2219,59 @@ for (let [idx, nickname] of p) {
 ### 8.4.4 继承
 
 虽然类继承使用新语法，但背后依旧是使用的是原型链
+
+
+
+#### 1. 继承基础
+
+ES6 支持单继承，使用 `extends` 关键字，不仅可以继承一个类，也可以继承普通的构造函数（保持向后兼容）
+
+```js
+class Vechicle {}
+
+class Bus extends Vechicle {}
+
+let b = new Bus();
+console.log(b instanceof Bus);  // true
+console.log(b instanceof Vechicle);  // true
+
+function Person() {}
+
+// 继承普通函数
+class Engineer extends Person {}
+
+let e = new Engineer();
+console.log(e instanceof Engineer);  // true
+console.log(e instanceof Person);  // true
+```
+
+
+
+类和原型上定义的方法都会带到派生类。`this` 的值会反映调用相应方法的实例或者类
+
+```js
+class Vehicle {
+    identifyPrototype(id) {
+        console.log(id, this);
+    }
+    
+    static identifyClass(id) {
+        console.log(id, this);
+    }
+}
+
+class Bus extends Vehicle {}
+
+let v = new Vehicle();
+let b = new Bus();
+
+b.identifyPrototype('bus');  // bus, Bus {}
+v.identifyPrototype('vehicle');  // vehicle, Vehicle {}
+
+Bus.identifyClass('bus');  // bus, class Bus {}
+Vehicle.identifyClass('vehicle');  // vehicle, class Vehicle {}
+```
+
+
+
+> **注意** `extends` 关键字也可以在类表达式中使用
