@@ -2424,3 +2424,76 @@ console.log(a2 instanceof SuperArray);  // false
 
 
 
+#### 5. 类混入
+
+策略1，定义一组“可嵌套”函数
+
+```js
+class Vehicle {}
+
+let FooMixin = (SuperClass) => class extends SuperClass {
+    foo() {
+        console.log('foo');
+    }
+};
+
+let BarMixin = (SuperClass) => class extends SuperClass {
+    bar() {
+        console.log('bar');
+    }
+};
+
+let BazMixin = (SuperClass) => class extends SuperClass {
+    baz() {
+        console.log('baz');
+    }
+};
+
+class Bus extends FooMixin(BarMixin(BazMixin(Vehicle))) {}
+
+let b = new Bus();
+b.foo();  // foo
+b.bar();  // bar
+b.baz();  // baz
+```
+
+
+
+可以写一个辅助函数，把嵌套的调用解开
+
+```js
+class Vehicle {}
+
+let FooMixin = (SuperClass) => class extends SuperClass {
+    foo() {
+        console.log('foo');
+    }
+};
+
+let BarMixin = (SuperClass) => class extends SuperClass {
+    bar() {
+        console.log('bar');
+    }
+};
+
+let BazMixin = (SuperClass) => class extends SuperClass {
+    baz() {
+        console.log('baz');
+    }
+};
+
+function mix(BaseClass, ...Mixins) {
+    return Mixins.reduce((accumulator, current) => current(accumulator), BaseClass);
+}
+
+class Bus extends mix(Vehicle, FooMixin, BarMixin, BazMixin) {}
+
+let b = new Bus();
+b.foo();  // foo
+b.bar();  // bar
+b.baz();  // baz
+```
+
+
+
+> **注意** 很多 JavaScript 框架（特别是 React）已经抛弃混入模式，转向了复合模式（把方法提取到独立的类和辅助对象中，然后把它们组合起来，但不使用继承）
