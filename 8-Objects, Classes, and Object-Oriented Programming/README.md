@@ -1923,3 +1923,42 @@ let p = new class Foo {
 console.log(p)  // Foo {}
 ```
 
+
+
+### 8.4.3 实例、原型和类成员
+
+#### 1. 实例成员
+
+在构造函数执行完毕后，仍然可以给实例继续添加新成员
+
+每个实例都对应一个唯一的成员对象，这意味着所有成员都不会在原型上共享
+
+```js
+class Person {
+    constructor() {
+        // 这个例子先使用对象包装类型定义一个字符串
+        this.name = new String('Jack');
+
+        this.sayName = () => console.log(this.name);
+
+        this.nicknames = ['Jake', 'J-Dog'];
+    }
+}
+
+let p1 = new Person(),
+    p2 = new Person();
+
+p1.sayName();  // String {"Jack"}
+p2.sayName();  // String {"Jack"}
+
+console.log(p1.name === p2.name);  // false
+console.log(p1.sayName === p2.sayName);  // false
+console.log(p1.nicknames === p2.nicknames);  // false
+
+p1.name = p1.nicknames[0];
+p2.name = p2.nicknames[1];
+
+p1.sayName()  // Jake
+p2.sayName()  // J-Dog
+```
+
