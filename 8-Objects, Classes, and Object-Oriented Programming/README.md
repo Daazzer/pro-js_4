@@ -2388,3 +2388,39 @@ new Vehicle();  // class Vehicle {}
 // Vehicle cannot be directly instantiated
 ```
 
+
+
+#### 4. 继承内置类型
+
+有些内置类型的方法返回新实例，默认情况下，返回实例的类型与原始实例的类型是一致的
+
+```js
+class SuperArray extends Array {}
+
+let a1 = new SuperArray(1, 2, 3, 4, 5);
+let a2 = a.filter(x => !!(x%2));
+
+console.log(a1 instanceof SuperArray);  // true
+console.log(a2 instanceof SuperArray);  // true
+```
+
+
+
+如果想覆盖这个默认行为，则可以覆盖 `Symbol.species` 访问器，这个访问器决定在创建返回的实例时使用的类
+
+```js
+class SuperArray extends Array {
+    static get [Symbol.species]() {
+        return Array;
+    }
+}
+
+let a1 = new SuperArray(1, 2, 3, 4, 5);
+let a2 = a.filter(x => !!(x%2));
+
+console.log(a1 instanceof SuperArray);  // true
+console.log(a2 instanceof SuperArray);  // false
+```
+
+
+
