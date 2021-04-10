@@ -1865,3 +1865,61 @@ p1.constructor();  // TypeError: class constructor Animal cannot be invoked with
 let p2 = new p1.constructor();
 ```
 
+
+
+#### 2. 把类当成特殊函数
+
+ECMAScript 类是一种特殊函数
+
+```js
+class Person {}
+
+console.log(Person);  // class Person {}
+console.log(typeof Person);  // function
+```
+
+
+
+类标签符有 `prototype` 属性，而这个原型也有一个 `constructor` 属性指向类自身
+
+```js
+class Person {}
+
+console.log(Person.prototype);  // { constructor: f() }
+console.log(Person === Person.prototype.constructor);  // true
+```
+
+
+
+类定义的 `constructor` 方法**不会**被当成构造函数，在对它使用 `instanceof` 操作符时会返回 `false`。但是，如果在创建实例时直接将类构造函数当成普通构造函数来使用，那么 `instanceof` 操作符的返回值就会反转
+
+```js
+class Person {}
+
+let p1 = new Person();
+
+console.log(p1.constructor === Person);  // true
+console.log(p1 instanceof Person);  // true
+console.log(p1 instanceof Person.constructor);  // false
+
+let p2 = new Person.constructor();
+
+console.log(p2.consturctor === Person);  // false
+console.log(p2 instanceof Person);  // false
+console.log(p2 instanceof Person.constructor);  // true
+```
+
+
+
+与立即调用函数表达式类似，类也可以立即实例化
+
+```js
+let p = new class Foo {
+    constructor(x) {
+        console.log(x);
+    }
+}('bar');  // bar
+
+console.log(p)  // Foo {}
+```
+
