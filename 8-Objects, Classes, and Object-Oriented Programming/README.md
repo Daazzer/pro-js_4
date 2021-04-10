@@ -2102,3 +2102,32 @@ class Person {
 console.log(Person.create());  // Person { age_: ... }
 ```
 
+
+
+#### 4. 非函数原型和类成员
+
+虽然类定义并不显式支持在原型或类上添加成员数据，但在类定义外部，可以手动添加
+
+```js
+class Person {
+	sayName() {
+        console.log(`${Person.greeting} ${this.name}`);
+    }
+}
+
+// 在类上定义数据成员
+Person.greeting = 'My name is';
+
+// 在原型上定义数据成员
+Person.prototype.name = 'Jake';
+
+let p = new Person();
+p.sayName();  // My name is Jake
+```
+
+
+
+> **注意** 类定义中之所以没有显式支持添加数据成员，是因为在共享目标（原型和类）上添加可变（可修改）数据成员是一种反模式。
+
+
+
