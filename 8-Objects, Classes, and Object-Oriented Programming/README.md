@@ -1666,3 +1666,84 @@ ES6 新引入的 `class` 关键字，是新的基础性语法糖结构，解决�
 
 背后的概念仍然是原型和构造函数
 
+### 8.4.1 类定义
+
+- 类声明
+
+- 类表达式
+
+```js
+// 类声明
+class Person {}
+
+// 类表达式
+const Animal = class {};
+```
+
+
+
+函数定义可以提升，但是类定义不能
+
+函数受函数作用域限制，类受块作用域限制
+
+```js
+{
+    function FunctionDeclaration() {}
+    class ClassDeclaration {}
+}
+
+console.log(FunctionDeclaration);  // FunctionDeclaration() {}
+console.log(ClassDeclaration);  // ReferenceError: ClassDeclaration is not defined
+```
+
+
+
+#### 类的构成
+
+- 构造函数方法
+- 实例方法
+- 获取函数 `[[Getter]]`
+- 设置函数 `[[Setter]]`
+- 静态类方法
+
+类定义中的代码都在严格模式下执行
+
+```js
+// 空类定义，有效
+class Foo {}
+
+// 有构造函数的类，有效
+class Bar {
+    constructor() {}
+}
+
+// 有获取函数和设置函数的类，有效
+class Baz {
+    get myBaz() {}
+    set myBazer() {}
+}
+
+// 有静态方法的类，有效
+class Qux {
+    static myQux() {}
+}
+```
+
+
+
+类表达式的名称是可选的。把类表达式赋值给变量后，可以通过 `name` 属性取得表达式的名称字符串。但不能在类表达式作用域外部访问这个标识符`
+
+```js
+let Person = class PersonName {
+    identify() {
+        console.log(Person.name, PersonName.name);
+    }
+}
+
+let p = new Person();
+
+p.identify();  // PersonName Person
+
+console.log(Person.name);  // PersonName
+console.log(PersonName);  // ReferenceError: PersonName is not defined
+```
