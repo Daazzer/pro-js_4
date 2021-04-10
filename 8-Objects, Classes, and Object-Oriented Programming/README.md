@@ -2044,3 +2044,61 @@ p.name = 'Jake';
 console.log(p.name);  // Jake
 ```
 
+
+
+#### 3. 类静态方法
+
+可以在类上定义静态方法。这些方法通常用于执行不特定于实例的操作，也不要求存在于类的实例，每个类上只能有一个静态成员
+
+在类定义中使用 `static` 关键字作为前缀
+
+在静态类成员中，`this` 引用类自身
+
+```js
+class Person {
+    constructor() {
+        // 添加到 this 的所有内容都会存在于不同的实例上
+        this.locate = () => console.log('instance');
+    }
+
+    // 定义在类的原型对象上
+    locate() {
+        console.log('prototype', this);
+    }
+    
+    // 定义在类本身上
+    static locate() {
+        console.log('class', this);
+    }
+}
+
+let p = new Person();
+
+p.locate();  // instance, Person {}
+Person.prototype.locate();  // prototype, { constructor: ... }
+Person.locate();  // class, class Person {}
+```
+
+
+
+静态方法非常适合作为实例工厂
+
+```js
+class Person {
+    constructor(age) {
+        this.age_ = age;
+    }
+    
+    sayAge() {
+        console.log(this.age_);
+    }
+    
+    static create() {
+        // 使用随机年龄创建并返回一个 Person 实例
+        return new Person(Math.floor(Math.random()*100));
+    }
+}
+
+console.log(Person.create());  // Person { age_: ... }
+```
+
