@@ -49,3 +49,46 @@ console.log(proxy instanceof Proxy);  // TypeError: Function has non-object prot
 console.log(target === proxy);  // false
 ```
 
+
+
+### 9.1.2 定义捕获器
+
+捕获器就是在处理程序对象中定义的“基本操作的拦截器”
+
+> **注意** 捕获器（trap）是从操作系统中借用的概念。在操作系统中，捕获器是程序流中的一个同步中断，可以暂停程序流，转而执行一段子例程，之后再返回原始程序流
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+const proxy = new Proxy(target, {
+    get() {
+        return 'handler override';
+    }
+});
+```
+
+`proxy[property]`、`proxy.property` 或 `Object.create(proxy)[property]` 等操作都会触发基本的  `get()` 操作以获取属性。注意，只有在代理对象上执行这些操作才会触发捕获器。在目标对象上仍然会产生正常的行为
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+const proxy = new Proxy(target, {
+    get() {
+        return 'handler override';
+    }
+});
+
+console.log(target.foo);  // bar
+console.log(proxy.foo);  // handler override
+
+console.log(target['foo']);  // bar
+console.log(proxy['foo']);  // handler override
+
+console.log(Object.create(target)['foo']);  // bar
+console.log(Object.create(proxy)['foo']);  // handler override
+```
+
