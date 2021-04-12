@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建空代理</title>
+</head>
+<body>
+  <script>
+    const target = {
+      id: 'target'
+    };
+
+    const handler = {};
+
+    const proxy = new Proxy(target, handler);
+
+    // id 属性会访问同一个值
+    console.log(target.id);  // target
+    console.log(proxy.id);  // target
+
+    // 给目标属性赋值会反映在两个对象上
+    target.id = 'foo';
+    console.log(target.id);  // foo
+    console.log(proxy.id);  // foo
+
+    console.log(target.hasOwnProperty('id'));  // true
+    console.log(proxy.hasOwnProperty('id'));  // true
+
+    // Proxy.prototype 是 undefined
+    console.log(target instanceof Proxy);  // TypeError: Function has non-object prototype 'undefined' in instanceof check
+    console.log(proxy instanceof Proxy);  // TypeError: Function has non-object prototype 'undefined' in instanceof check
+
+    // 全等可以用来区分代理和目标
+    console.log(target === proxy);  // false
+  </script>
+</body>
+</html>
