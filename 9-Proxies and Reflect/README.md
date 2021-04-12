@@ -92,3 +92,118 @@ console.log(Object.create(target)['foo']);  // bar
 console.log(Object.create(proxy)['foo']);  // handler override
 ```
 
+
+
+### 9.1.3 捕获器参数和反射 API
+
+所有的捕获器都可以访问相应的参数
+
+`get()` 捕获器会接收到目标对象、要查询的属性和代理对象三个参数
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+const proxy = new Proxy(target, {
+    get(trapTarget, property, receiver) {
+        console.log(trapTarget === target);
+        console.log(property);
+        console.log(receiver === proxy);
+    }
+});
+
+proxy.foo;
+// true
+// foo
+// true
+```
+
+
+
+有了这些参数，就可以重建被捕获方法的原始行为
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+const proxy = new Proxy(target, {
+    get(trapTarget, property, receiver) {
+        return trapTarget[property];
+    }
+});
+
+console.log(proxy.foo);  // bar
+console.log(target.foo);  // bar
+```
+
+
+
+实际上，可以通过全局 `Reflect` 对象上（封装了原始行为）的同名方法来轻松重建
+
+处理程序对象中所有可以捕获的方法都有对应的反射（Reflect）API 方法。这些方法与捕获器拦截的方法具有相同的名称和函数签名
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+// const proxy0 = new Proxy(target, {
+//   get() {
+//     return Reflect.get(...arguments);
+//   }
+// });
+
+const proxy = new Proxy(target, {
+    get: Reflect.get
+});
+
+console.log(proxy.foo);  // bar
+console.log(target.foo);  // bar
+```
+
+
+
+如果创建一个可以捕获所有方法，然后将每个方法转发给对应反射 API 的空代理，那么甚至不需要定义处理程序对象
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+const proxy = new Proxy(target, Reflect);
+
+console.log(proxy.foo);  // bar
+console.log(target.foo);  // bar
+```
+
+
+
+反射 API 为开发者准本好了样板代码，在此基础上开发者可以用最少的代码修饰捕获的方法
+
+```js
+const target = {
+    foo: 'bar',
+    baz: 'qux',
+    bar: 'aa'
+};
+
+const proxy = new Proxy(target, {
+    get(trapTarget, property, receiver) {
+        let decoration = '';
+        if (property === 'foo') {
+            decoration = '!!!';
+        }
+
+        return Reflect.get(...arguments) + decoration;
+    }
+});
+
+console.log(proxy.foo);  // bar!!!
+console.log(target.foo);  // bar
+
+console.log(proxy.baz);  // qux
+console.log(target.baz);  // qux
+```
+

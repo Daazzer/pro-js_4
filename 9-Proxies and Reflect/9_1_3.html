@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>捕获器参数和反射 API</title>
+</head>
+<body>
+  <script>
+    const target = {
+      foo: 'bar'
+    };
+
+    const proxy = new Proxy(target, {
+      get(trapTarget, property, receiver) {
+        console.log(trapTarget === target);
+        console.log(property);
+        console.log(receiver === proxy);
+      }
+    });
+
+    proxy.foo;
+    // true
+    // foo
+    // true
+  </script>
+
+  <script>
+    const proxy1 = new Proxy(target, {
+      get(trapTarget, property, receiver) {
+        return trapTarget[property];
+      }
+    });
+
+    console.log(proxy1.foo);  // bar
+    console.log(target.foo);  // bar
+  </script>
+
+  <script>
+    const proxy2 = new Proxy(target, {
+      get() {
+        return Reflect.get(...arguments);
+      }
+    });
+
+    console.log(proxy2.foo);  // bar
+    console.log(target.foo);  // bar
+
+    // 更简洁
+    const proxy3 = new Proxy(target, {
+      get: Reflect.get
+    });
+
+    console.log(proxy3.foo);  // bar
+    console.log(target.foo);  // bar
+  </script>
+
+  <script>
+    const proxy4 = new Proxy(target, Reflect);
+
+    console.log(proxy4.foo);  // bar
+    console.log(target.foo);  // bar
+  </script>
+
+  <script>
+    const target2 = {
+      foo: 'bar',
+      baz: 'qux',
+      bar: 'aa'
+    };
+
+    const proxy5 = new Proxy(target2, {
+      get(trapTarget, property, receiver) {
+        let decoration = '';
+        if (property === 'foo') {
+          decoration = '!!!';
+        }
+
+        return Reflect.get(...arguments) + decoration;
+      }
+    });
+
+    console.log(proxy5.foo);  // bar!!!
+    console.log(target2.foo);  // bar
+
+    console.log(proxy5.baz);  // qux
+    console.log(target2.baz);  // qux
+  </script>
+</body>
+</html>
