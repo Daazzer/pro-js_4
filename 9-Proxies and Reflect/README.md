@@ -232,3 +232,32 @@ const proxy = new Proxy(target, {
 console.log(proxy.foo);  // TypeError
 ```
 
+
+
+### 9.1.5 可撤销代理
+
+对于使用 `new Proxy()` 创建的普通代理来说，这种联系会在代理对象的生命周期内一直持续存在
+
+`Proxy` 也暴露了 `revocable()` 方法，这个方法支持撤销代理对象与目标对象的关联。
+
+撤销代理的操作是不可逆的。撤销代理后再调用代理会抛出 `TypeError`
+
+```js
+const target = {
+    foo: 'bar'
+};
+
+const { proxy, revoke } = Proxy.revocable(target, {
+    get() {
+        return 'intercepted';
+    }
+});
+
+console.log(proxy.foo);  // intercepted
+console.log(target.foo);  // bar
+
+revoke();
+
+console.log(proxy.foo);  // TypeError
+```
+
