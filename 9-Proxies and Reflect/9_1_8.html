@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代理的问题与不足</title>
+</head>
+<body>
+  <script>
+    const wm = new WeakMap();
+
+    class User {
+      constructor(userId) {
+        wm.set(this, userId);
+      }
+
+      set id(userId) {
+        wm.set(this, userId);
+      }
+
+      get id() {
+        return wm.get(this);
+      }
+    }
+
+    // 由于这个实现依赖 User 实例的对象标识，在这个实例被代理的情况下就会出问题
+    const user = new User(123);
+    console.log(user.id);  // 123
+
+    const userInstanceProxy = new Proxy(user, {});
+    console.log(userInstanceProxy.id);  // undefined
+
+    /* 
+    因为 User 实例一开始使用目标对象作为 WeakMao 的键，代理对象却尝试从自身取得这个实例
+    要解决这个问题，就需要重新配置代理，把代理 User 实例改为代理 User 类本身。之后再创建
+    代理的实例就会以代理实例作为 WeakMap 的键了
+     */
+    const UserClassProxy = new Proxy(User, {});
+    const proxyUser = new UserClassProxy(456);
+    console.log(proxyUser.id);  // 456
+  </script>
+</body>
+</html>
