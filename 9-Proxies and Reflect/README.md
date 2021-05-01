@@ -418,3 +418,20 @@ const proxyUser = new UserClassProxy(456);
 console.log(proxyUser.id);  // 456
 ```
 
+
+
+#### 2. 代理与内部槽位
+
+代理与内置引用类型，通常能很好的协同，但是也有一些例外
+
+例如 `Date` 类型，`Date` 类型方法的执行依赖 `this` 值上的内部槽位 `[[NumberDate]]`。代理对象上不存在这个槽位，而且这个内部槽位的值也不能通过普通的 `get()` 和 `set()` 操作访问到，于是代理拦截后本应该转发给目标对象的方法会抛出 `TypeError`
+
+```js
+const target = new Date();
+const proxy = new Proxy(target, {});
+
+console.log(proxy instanceof Date);  // true
+
+proxy.getDate();  // TypeError: 'this' is not a Date object
+```
+
