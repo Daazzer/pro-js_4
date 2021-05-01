@@ -269,3 +269,42 @@ console.log(proxy.foo);  // TypeError
 
 1. 反射 API 并不限于捕获处理程序；
 2. 大多数反射 API 方法在 `Object` 类型上有对应的方法。
+
+#### 2. 状态标记
+
+很多反射方法返回称作“状态标记”的布尔值，表示意图执行的操作是否成功
+
+比如
+
+```js
+const o = {};
+try {
+    Object.defineProperty(o, 'foo', 'bar');
+    console.log('success');
+} catch (e) {
+    console.log('failure');
+}
+```
+
+在定义新属性时如果发生问题，`Reflect.defineProperty()` 会返回 `false`，而不是抛出错误。
+
+```js
+// 重构以上代码
+const o = {};
+if (Reflect.defineProperty(o, 'foo', { value: 'bar' })) {
+    console.log('success');
+} else {
+    console.log('failure');
+}
+```
+
+
+
+以下反射方法都会提供状态标记
+
+- `Reflect.defineProperty()`
+- `Reflect.preventExtensions()`
+- `Reflect.setPrototypeOf()`
+- `Reflect.set()`
+- `Reflect.deleteProperty()`
+
