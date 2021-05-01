@@ -308,3 +308,13 @@ if (Reflect.defineProperty(o, 'foo', { value: 'bar' })) {
 - `Reflect.set()`
 - `Reflect.deleteProperty()`
 
+#### 3. 用一等函数替代操作符
+
+以下反射方法提供只有通过操作符才能完成的操作
+
+- `Reflect.get()` 可以替代对象属性访问操作符
+- `Reflect.set()` 可以替代 `=` 赋值操作符
+- `Reflect.has()` 可以替代 `in` 操作符或 `with()`
+- `Reflect.deleteProperty()` 可以替代 `delete` 操作符
+- `Reflect.construct()` 可以替代 `new` 操作符
+
