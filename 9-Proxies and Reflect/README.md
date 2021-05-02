@@ -513,3 +513,10 @@ proxy.foo = 'bar';
 - `Object.create(proxy)[property] = value`
 - `Reflect.set(proxy, property, value, receiver)`
 
+#### 3. 捕获器处理程序参数
+
+- `target` 目标对象
+- `property` 引用目标对象上的字符串键属性
+- `value` 要赋给属性的值
+- `receiver` 接收最初赋值的对象
+
