@@ -464,3 +464,11 @@ proxy.foo;
 #### 1. 返回值
 
 返回值无限制
+
+#### 2. 拦截的操作
+
+- `proxy.property`
+- `proxy[property]`
+- `Object.create(proxy)[property]`
+- `Reflect.get(proxy, property, receiver)`
+
