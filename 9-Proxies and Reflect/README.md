@@ -505,3 +505,11 @@ proxy.foo = 'bar';
 #### 1. 返回值
 
 返回 `true` 表示成功；返回 `false` 表示失败，严格模式下会抛出 `TypeError`
+
+#### 2. 拦截的操作
+
+- `proxy.property = value`
+- `proxy[property] = value`
+- `Object.create(proxy)[property] = value`
+- `Reflect.set(proxy, property, value, receiver)`
+
