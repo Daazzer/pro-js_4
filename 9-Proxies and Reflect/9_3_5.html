@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数据绑定</title>
+</head>
+<body>
+  <script>
+    const userList = [];
+
+    class User {
+      constructor(name) {
+        this.name_ = name;
+      }
+    }
+
+    const proxy = new Proxy(User, {
+      construct(target, argumentsList, newTarget) {
+        const newUser = Reflect.construct(...arguments);
+        userList.push(newUser);
+        return newUser;
+      }
+    });
+
+    new proxy('John');
+    new proxy('Jacob');
+    new proxy('Jingleheimerschmidt');
+    console.log(userList);  // [User {}, User {}, User {}]
+  </script>
+</body>
+</html>

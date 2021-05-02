@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>可观察对象</title>
+</head>
+<body>
+  <script>
+    const userList = [];
+
+    function emit(newValue) {
+      console.log(newValue);
+    }
+
+    const proxy = new Proxy(userList, {
+      set(target, property, value, receiver) {
+        const result = Reflect.set(...arguments);
+        if (result) {
+          emit(Reflect.get(target, property, receiver));
+        }
+        return result;
+      }
+    });
+
+    proxy.push('John');
+    // John
+    proxy.push('Jacob');
+    // Jacob
+  </script>
+</body>
+</html>
