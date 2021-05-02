@@ -472,3 +472,8 @@ proxy.foo;
 - `Object.create(proxy)[property]`
 - `Reflect.get(proxy, property, receiver)`
 
+#### 3. 捕获器处理程序参数
+
+- `target` 目标对象
+- `property` 引用的目标对象上的字符串键属性
+- `receiver` 代理对象或继承代理对象的对象
