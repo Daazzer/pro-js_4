@@ -443,3 +443,21 @@ proxy.getDate();  // TypeError: 'this' is not a Date object
 
 只要在代理上调用，所有捕获器都会拦截它们对应的反射 API 操作
 
+### 9.2.1 get()
+
+`get()` 捕获器会在获取属性的操作中被调用。对应的反射 API 方法为 `Reflect.get()`
+
+```js
+const myTarget = {};
+
+const proxy = new Proxy(myTarget, {
+    get(target, property, receiver) {
+        console.log('get()');
+        return Reflect.get(...arguments);
+    }
+});
+
+proxy.foo;
+// get()
+```
+
