@@ -951,3 +951,41 @@ proxy.name;  // Getting name
 proxy.age = 27;  // Setting age=27
 ```
 
+
+
+### 9.3.2 隐藏属性
+
+```js
+const hiddenProperties = ['foo', 'bar'];
+const targetObject = {
+    foo: 1,
+    bar: 2,
+    baz: 3
+};
+const proxy = new Proxy(targetObject, {
+    get(target, property) {
+        if (hiddenProperties.includes(property)) {
+            return undefined
+        } else {
+            return Reflect.get(...arguments);
+        }
+    },
+    has(target, property) {
+        if (hiddenProperties.includes(property)) {
+            return false;
+        } else {
+            return Reflect.has(...arguments);
+        }
+    }
+});
+// get()
+console.log(proxy.foo);  // undefined
+console.log(proxy.bar);  // undefined
+console.log(proxy.baz);  // 3
+
+// has()
+console.log('foo' in proxy);  // false
+console.log('bar' in proxy);  // false
+console.log('baz' in proxy);  // true
+```
+
