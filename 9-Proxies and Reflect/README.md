@@ -435,3 +435,11 @@ console.log(proxy instanceof Date);  // true
 proxy.getDate();  // TypeError: 'this' is not a Date object
 ```
 
+
+
+## 9.2 代理捕获器与反射方法
+
+代理可以捕获 13 种不同的基本操作
+
+只要在代理上调用，所有捕获器都会拦截它们对应的反射 API 操作
+
