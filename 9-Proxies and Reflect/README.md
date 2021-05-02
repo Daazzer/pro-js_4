@@ -520,3 +520,11 @@ proxy.foo = 'bar';
 - `value` 要赋给属性的值
 - `receiver` 接收最初赋值的对象
 
+#### 4. 捕获器不变式
+
+如果 `target.property` 不可写且不可配置，则不能修改目标属性的值
+
+如果 `target.property` 不可配置且 `[[Set]]` 特性为 `undefined`，则不能修改目标的值
+
+在严格模式下，处理程序中返回 `false` 会抛出 `TypeError`
+
