@@ -770,3 +770,42 @@ Object.getPrototypeOf(proxy);
 #### 4. 捕获器不变式
 
 如果 `target` 不可扩展，则 `Object.getPrototypeOf(proxy)` 唯一有效的返回值就是 `Object.getPrototypeOf(target)` 的返回值就是 `Object.getPrototypeOf(target)` 的返回值
+
+### 9.2.10 isExtensible()
+
+`isExtensible()` 捕获器会在 `Object.isExtensible()` 中被调用。对应的反射 API 方法 `Reflect.isExtensible()`
+
+```js
+const myTarget = {};
+
+const proxy = new Proxy(myTarget, {
+    isExtensible(target) {
+        console.log('isExtensible()');
+        return Reflect.isExtensible(...arguments);
+    }
+});
+
+Object.isExtensible(proxy);
+// isExtensible()
+```
+
+#### 1. 返回值
+
+`isExtensible()` 必须返回布尔值，表示 `target` 是否可扩展。返回非布尔值会被转型为布尔值
+
+#### 2.拦截的操作
+
+#### 返回l`
+
+- `Object.isExtensible(proxy)`
+- `Relfect.isExtensible(proxy)`
+
+#### 3. 捕获器处理程序参数
+
+- `target` 目标对象
+
+#### 4. 捕获器不变式
+
+如果 `target` 可扩展，则处理程序必须返回 `true`
+
+如果 `target` 不可扩展，则处理程序必须返回 `false`
