@@ -484,3 +484,21 @@ proxy.foo;
 
 如果 `target.property` 不可配置且 `[[Get]]` 特性为 `undefined`，处理程序的返回值也必须是 `undefined`
 
+### 9.2.2 set()
+
+`set()` 捕获器会在设置属性值的操作中被调用。对应的反射 API 方法为 `Reflect.set()`
+
+```js
+const myTarget = {};
+
+const proxy = new Proxy(myTarget, {
+    set(target, property, value, receiver) {
+        console.log('set()');
+        return Reflect.set(...arguments);
+    }
+});
+
+proxy.foo = 'bar';
+// set()
+```
+
