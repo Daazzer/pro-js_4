@@ -528,3 +528,21 @@ proxy.foo = 'bar';
 
 在严格模式下，处理程序中返回 `false` 会抛出 `TypeError`
 
+### 9.2.3 has()
+
+`has()` 捕获器会在 `in` 操作符中被调用。对应的反射 API 方法 `Reflect.has()`
+
+```js
+const myTarget = {};
+
+const proxy = new Proxy(myTarget, {
+    has(target, property) {
+        console.log('has()');
+        return Reflect.set(...arguments);
+    }
+});
+
+'foo' in proxy;
+// has()
+```
+
