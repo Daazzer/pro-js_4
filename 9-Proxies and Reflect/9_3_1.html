@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>跟踪属性访问</title>
+</head>
+<body>
+  <script>
+    const user = {
+      name: 'Jake'
+    };
+
+    const proxy = new Proxy(user, {
+      get(target, property, receiver) {
+        console.log(`Getting ${property}`);
+
+        return Reflect.get(...arguments);
+      },
+      set(target, property, value, receiver) {
+        console.log(`Setting ${property}=${value}`);
+
+        return Reflect.set(...arguments);
+      }
+    });
+
+    proxy.name;  // Getting name
+    proxy.age = 27;  // Setting age=27
+  </script>
+</body>
+</html>

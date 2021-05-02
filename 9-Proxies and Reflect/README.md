@@ -920,3 +920,34 @@ new proxy();
 #### 4. 捕获器不变式
 
 `target` 必须可以用作构造函数
+
+
+
+## 9.3 代理模式
+
+### 9.3.1 跟踪属性访问
+
+捕获 `get` `set` `has` 等操作，可以知道对象属性什么时候被访问、被查阅。
+
+```js
+const user = {
+    name: 'Jake'
+};
+
+const proxy = new Proxy(user, {
+    get(target, property, receiver) {
+        console.log(`Getting ${property}`);
+
+        return Reflect.get(...arguments);
+    },
+    set(target, property, value, receiver) {
+        console.log(`Setting ${property}=${value}`);
+
+        return Reflect.set(...arguments);
+    }
+});
+
+proxy.name;  // Getting name
+proxy.age = 27;  // Setting age=27
+```
+
