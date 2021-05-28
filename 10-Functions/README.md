@@ -32,3 +32,60 @@ let sum = (num1, num2) => {
 let sum = new Function("num1", "num2", "return num1 + num2");  // 不推荐
 ```
 
+
+
+## 10.1 箭头函数
+
+ES6 新增了使用胖箭头 (=>) 语法定义函数表达式的能力
+
+```js
+let arrowSum = (a, b) => {
+    return a + b;
+};
+
+let functionExpressionSum = function(a, b) {
+    return a + b;
+};
+
+console.log(arrowSum(5, 8));  // 13
+console.log(functionExpressionSum(5, 8));  // 13
+```
+
+箭头函数非常适合嵌入函数的场景
+
+```js
+let ints = [1, 2, 3];
+
+console.log(ints.map(function(i) { return i + 1; }));  // [2, 3, 4]
+console.log(ints.map((i) => { return i + 1; }));  // [2, 3, 4]
+```
+
+只有一个参数可以省略括号
+
+```js
+let triple = x => { return 3 + x; };
+
+// 没有参数需要括号
+let getRandom = () => { return Math.random(); };
+
+// 多个参数需要括号
+let sum = (a, b) => { return a + b; };
+```
+
+
+
+箭头函数可以省略花括号，如果省略后面就只能跟着一行代码，会直接返回后面一行代码的表达式结果
+
+```js
+let double = x => 3 * x;
+
+// 可以赋值
+let value = {};
+let setName = x => x.name = "Matt";
+setName(value);
+console.log(value.name);  // "Matt"
+```
+
+
+
+但是，箭头函数不能使用 `arguments`、`super` 和 `new.target`，也不能用作构造函数。此外，箭头函数也没有 `prototype` 属性
