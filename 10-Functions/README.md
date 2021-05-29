@@ -149,3 +149,33 @@ console.log(propertyDiscriptor.get.name);  // get age
 console.log(propertyDiscriptor.set.name);  // set age
 ```
 
+
+
+## 10.3 理解参数
+
+ECMAScript 函数既不关心传入参数的个数，也不关心参数的数据类型。
+
+因为参数在函数内部表现为一个数组。
+
+可以在函数内部访问 `arguments` 对象，是一个类数组对象（但不是 `Array` 实例）
+
+```js
+function sayHi() {
+    console.log("Hello " + arguments[0] + ", " + arguments[1]);
+}
+```
+
+ECMAScript 不存在验证命名参数的机制
+
+`arguments` 对象可以跟命名参数混合使用
+
+`arguments` 对象值始终会与对应的命名参数同步
+
+```js
+function doAdd(num1, num2) {
+    arguments[1] = 10;
+    console.log(arguments[0] + num2);
+}
+```
+
+但是修改命名参数的值，不会影响 `arguments` 对象中相应的值
