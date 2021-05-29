@@ -89,3 +89,63 @@ console.log(value.name);  // "Matt"
 
 
 但是，箭头函数不能使用 `arguments`、`super` 和 `new.target`，也不能用作构造函数。此外，箭头函数也没有 `prototype` 属性
+
+
+
+## 10.2 函数名
+
+函数名就是指向函数的指针，所以它们跟其他包含对象指针的变量具有相同的行为
+
+```js
+// 一个函数可以有多个名称
+function sum(num1, num2) {
+    return num1 + num2;
+}
+
+console.log(sum(10, 10));  // 20
+
+let anotherSum = sum;
+console.log(anotherSum(10, 10));  // 20
+
+sum = null;
+console.log(anotherSum(10, 10));  // 20
+```
+
+
+
+ES6 所有的函数对象都会暴露一个只读的 `name` 属性，保存的就是一个函数标识符，字符串话的变量名，即使函数没有名称也会显示成空串
+
+```js
+function foo() {}
+let bar = function() {};
+let baz = () => {};
+
+console.log(foo.name);  // foo
+console.log(bar.name);  // bar
+console.log(baz.name);  // baz
+console.log((() => {}).name);  // ""
+console.log((new Function()).name);  // anonymous
+```
+
+获取函数、设置函数、或者 `bind()` 实例化，那么标识符前面会加上一个前缀
+
+```js
+function foo() {}
+
+console.log(foo.bind(null).name);  // bound foo
+
+let dog = {
+    years: 1,
+    get age() {
+        return this.years;
+    },
+    set age(newAge) {
+        this.years = newAge;
+    }
+};
+
+let propertyDiscriptor = Object.getOwnPropertyDescriptor(dog, 'age');
+console.log(propertyDiscriptor.get.name);  // get age
+console.log(propertyDiscriptor.set.name);  // set age
+```
+
