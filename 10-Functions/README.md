@@ -179,3 +179,24 @@ function doAdd(num1, num2) {
 ```
 
 但是修改命名参数的值，不会影响 `arguments` 对象中相应的值
+
+### 箭头函数中的参数
+
+传给函数的参数不能使用 `arguments` 访问
+
+```js
+let bar = () => {
+    console.log(arguments[0]);
+};
+bar(5);  // ReferenceError: arguments is not defined
+
+// 可以包装函数中提供给箭头函数
+function foo() {
+    let bar = () => {
+        console.log(arguments[0]);  // 5
+    };
+    bar();
+}
+foo(5);
+```
+
