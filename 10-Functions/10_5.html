@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>默认参数值</title>
+</head>
+<body>
+  <script>
+    function makeKing(name = 'Henry', numerals = 'Ⅷ') {
+      return `King ${name} ${numerals}`;
+    }
+    console.log(makeKing());  // King Henry Ⅷ
+    console.log(makeKing('Louis'));  // King Louis Ⅷ
+    console.log(makeKing(undefined, 'Ⅵ'));  // King Henry Ⅵ
+  </script>
+
+  <script>
+    function makeKing2(name = 'Henry') {
+      name = 'Louis';
+      return `King ${arguments[0]}`;
+    }
+
+    console.log(makeKing2());  // 'King undefined'
+    console.log(makeKing2('Louis'));  // 'King Louis'
+  </script>
+
+  <script>
+    let romanNumerals = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ']
+    let ordinality = 0;
+
+    function getNumerals() {
+      return romanNumerals[ordinality++];
+    }
+
+    function makeKing3(name = 'Henry', numerals = getNumerals()) {
+      return `King ${name} ${numerals}`;
+    }
+
+    console.log(makeKing3());  // King Henry Ⅰ
+    console.log(makeKing3('Louis', 'ⅩⅥ'));  // King Louis ⅩⅥ
+    console.log(makeKing3());  // King Henry Ⅱ
+    console.log(makeKing3());  // King Henry Ⅲ
+  </script>
+</body>
+</html>

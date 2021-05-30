@@ -235,3 +235,79 @@ addSomeNumber = function(num) {
 let result = addSomeNumber(100);  // 300
 ```
 
+## 10.5 默认参数值
+
+在 ECMAScript 5.1 以前，实现默认参数的一种常用方式就是检测某个参数是否等于 `undefined`
+
+```js
+function makeKing(name) {
+    name = (typeof name !== 'undefined') ? name : 'Henry';
+    return `king ${name} Ⅷ`;
+}
+
+console.log(makeKing());  // 'King Henry Ⅷ';
+console.log(makeKing('Louis'));  // 'King Louis Ⅷ';
+```
+
+ECMAScript 6 支持显式定义默认参数
+
+```js
+function makeKing(name = 'Henry') {
+    return `King ${name} Ⅷ`;
+}
+
+console.log(makeKing());  // 'King Henry Ⅷ';
+console.log(makeKing('Louis'));  // 'King Louis Ⅷ';
+```
+
+给参数传 `undefined` 相当于没有传值
+
+```js
+function makeKing(name = 'Henry', numerals = 'Ⅷ') {
+    return `King ${name} ${numerals}`;
+}
+console.log(makeKing());  // King Henry Ⅷ
+console.log(makeKing('Louis'));  // King Louis Ⅷ
+console.log(makeKing(undefined, 'Ⅵ'));  // King Henry Ⅵ
+```
+
+使用默认参数，`arguments` 对象的值不反映参数的默认值，值反映传给函数的参数，修改命名参数也不会影响 `arguments` 对象，它始终以调用函数时传入的值为准
+
+```js
+function makeKing(name = 'Henry') {
+    name = 'Louis';
+    return `King ${arguments[0]}`;
+}
+
+console.log(makeKing());  // 'King undefined'
+console.log(makeKing('Louis'));  // 'King Louis'
+```
+
+默认参数支持变量
+
+```js
+let romanNumerals = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ']
+let ordinality = 0;
+
+function getNumerals() {
+    return romanNumerals[ordinality++];
+}
+
+function makeKing(name = 'Henry', numerals = getNumerals()) {
+    return `King ${name} ${numerals}`;
+}
+
+console.log(makeKing());  // King Henry Ⅰ
+console.log(makeKing('Louis', 'ⅩⅥ'));  // King Louis ⅩⅥ
+console.log(makeKing());  // King Henry Ⅱ
+console.log(makeKing());  // King Henry Ⅲ
+```
+
+箭头函数也支持默认参数，但是只有一个参数时不能省略括号
+
+```js
+let makeKing = (name = 'Henry') => `King ${name}`;
+
+console.log(makeKing());  // King Henry
+```
+
