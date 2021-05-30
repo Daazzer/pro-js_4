@@ -352,3 +352,50 @@ function makeKing(name = 'Henry', numerals = defaultNumeral) {
 
 ECMAScript 6 新增了扩展操作符，既可用于调用函数时传参，也可以用于定义函数参数
 
+### 10.6.1 扩展参数
+
+传入多个参数
+
+```js
+let values = [1, 2, 3, 4];
+
+function getSum() {
+    let sum = 0;
+    for (let i = 0; i < arguments.length; i++) {
+        sum += arguments[i];
+    }
+    return sum;
+}
+
+// ES5
+console.log(getSum.apply(null, values));  // 10
+// ES6
+console.log(getSum(...values));  // 10
+// 在扩展操作符前后再加值
+console.log(getSum(-1, ...values));  // 9
+console.log(getSum(...values, 5));  // 15
+console.log(getSum(-1, ...values, 5));  // 14
+console.log(getSum(...values, ...[5, 6, 7]));  // 28
+```
+
+箭头函数也支持扩展操作符
+
+```js
+// 扩展操作符与参数默认值混合使用
+function getProduct(a, b, c = 1) {
+    return a * b * c;
+}
+
+let getSum = (a, b, c = 0) => {
+    return a + b + c;
+};
+
+console.log(getProduct(...[1, 2]));  // 2
+console.log(getProduct(...[1, 2, 3]));  // 6
+console.log(getProduct(...[1, 2, 3, 4]));  // 6
+
+console.log(getSum(...[0, 1]));  // 1
+console.log(getSum(...[0, 1, 2]));  // 3
+console.log(getSum(...[0, 1, 2, 3]));  // 3
+```
+
