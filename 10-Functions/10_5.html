@@ -43,5 +43,15 @@
     console.log(makeKing3());  // King Henry Ⅱ
     console.log(makeKing3());  // King Henry Ⅲ
   </script>
+
+  <script>
+    // 参数也存在于自己的作用域中，它们不能引用函数体的作用域
+    function makeKing4(name = 'Henry', numerals = defaultNumeral) {  // 报错
+      var defaultNumeral = 'Ⅷ';
+      return `King ${name} ${numerals}`;
+    }
+
+    makeKing4();
+  </script>
 </body>
 </html>

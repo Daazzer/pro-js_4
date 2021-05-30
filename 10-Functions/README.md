@@ -311,3 +311,38 @@ let makeKing = (name = 'Henry') => `King ${name}`;
 console.log(makeKing());  // King Henry
 ```
 
+
+
+### 默认参数作用域与临时性死区
+
+给多个参数定义默认值实际上跟使用 `let` 关键字顺序声明变量一样
+
+参数是按顺序初始化的，所以后定义默认值的参数可以引用先定义的参数
+
+```js
+function makeKing(name = 'Henry', numerals = name) {
+    return `King ${name} ${numerals}`;
+}
+
+console.log(makeKing());  // King Henry Henry
+```
+
+前面定义的参数不能引用后定义的参数，否则会抛错
+
+```js
+// 报错
+function makeKing(name = numerals, numerals = 'Ⅷ') {
+    return `King ${name} ${numerals}`;
+}
+```
+
+参数也存在于自己的作用域中，它们不能引用函数体的作用域
+
+```js
+// 报错
+function makeKing(name = 'Henry', numerals = defaultNumeral) {
+    var defaultNumeral = 'Ⅷ';
+    return `King ${name} ${numerals}`;
+}
+```
+
