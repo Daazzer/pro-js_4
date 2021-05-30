@@ -399,3 +399,52 @@ console.log(getSum(...[0, 1, 2]));  // 3
 console.log(getSum(...[0, 1, 2, 3]));  // 3
 ```
 
+### 10.6.2 收集参数
+
+可以用扩展操作符把不同长度的独立参数组合为一个数组。收集到的参数的结果会得到一个 `Array` 实例
+
+```js
+function getSum(...values) {
+    return values.reduce((x, y) => x + y, 0);
+}
+
+console.log(getSum(1, 2, 3));  // 6
+```
+
+收集参数只能作为最后一个参数，如果没有其余的参数则为空数组
+
+```js
+// 不可以
+function getProduct(...values, lastValue) {}
+// 可以
+function ignoreFirst(firstValue, ...values) {
+    console.log(values);
+}
+ignoreFirst();  // []
+ignoreFirst(1);  // []
+ignoreFirst(1, 2);  // [2]
+ignoreFirst(1, 2, 3);  // [2, 3]
+```
+
+利用收集参数，可以让箭头函数实现与 `arguments` 一样的逻辑
+
+```js
+let getSum = (...values) => {
+    return values.reduce((x, y) => x + y, 0);
+}
+
+console.log(getSum(1, 2, 3));  // 6
+```
+
+使用收集参数不影响 `arguments` 对象，它仍然反映调用时传给函数的参数
+
+```js
+function getSum(...values) {
+    console.log(arguments.length);  // 3
+    console.log(arguments);  // [1, 2, 3]
+    console.log(values);  // [1, 2, 3]
+}
+
+console.log(getSum(1, 2, 3));
+```
+
