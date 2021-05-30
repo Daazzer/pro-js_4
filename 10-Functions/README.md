@@ -200,3 +200,38 @@ function foo() {
 foo(5);
 ```
 
+
+
+## 10.4 没有重载
+
+ECMAScript 函数没有签名，因为参数是由包含零个或多个值的数组表示的。没有函数签名，自然就没有重载
+
+如果在 ECMAScript 中定义了两个同名函数，则后定义的会覆盖先定义
+
+```js
+function addSomeNumber(num) {
+    return num + 100;
+}
+
+function addSomeNumber(num) {
+    return num + 200;
+}
+
+let result = addSomeNumber(100);  // 300
+```
+
+第二个覆盖第一个定义
+
+```js
+// 类似例子
+let addSomeNumber = function(num) {
+    return num + 100;
+};
+
+addSomeNumber = function(num) {
+    return num + 200;
+};
+
+let result = addSomeNumber(100);  // 300
+```
+
