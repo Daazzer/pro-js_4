@@ -346,3 +346,9 @@ function makeKing(name = 'Henry', numerals = defaultNumeral) {
 }
 ```
 
+
+
+## 10.6 参数扩展与收集
+
+ECMAScript 6 新增了扩展操作符，既可用于调用函数时传参，也可以用于定义函数参数
+
