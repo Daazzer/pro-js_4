@@ -448,3 +448,32 @@ function getSum(...values) {
 console.log(getSum(1, 2, 3));
 ```
 
+
+
+## 10.7 函数声明与函数表达式
+
+JavaScript 引擎在加载数据时对函数声明和函数表达式是区别对待的。在任何代码执行前，会先读取函数声明，而函数表达式必须等到代码执行到它那一行才会在执行上下文中生成函数定义
+
+```js
+// 正常
+console.log(sum(10, 10));
+function sum(num1, num2) {
+    return num1 + num2;
+}
+```
+
+函数声明会在任何代码执行之前先被读取并添加到执行上下文。这个过程叫做**函数声明提升**(function declaration hoisting)
+
+但是函数表达式就不能这样
+
+```js
+// 报错
+console.log(sum(10, 10));
+let sum = function(num1, num2) {
+    return num1 + num2;
+}
+
+// 即使使用了 var 声明也一样
+```
+
+> **注意** 在使用函数表达式初始化变量时，可以给函数一个名称 `let sum = function sum() {};`
