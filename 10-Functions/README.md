@@ -502,3 +502,32 @@ let result2 = callSomeFunction(getGreeting, "Nicholas");
 console.log(result2);  // "Hello, Nicholas"
 ```
 
+从一个函数返回另一个函数
+
+```js
+function createComparisonFunction(propertyName) {
+    return function(object1, object2) {
+        let value1 = object1[propertyName];
+        let value2 = object2[propertyName];
+        
+        if (value1 < value2) {
+            return -1;
+        } else if (value1 > value2) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+}
+
+const data = [
+    { name: "Zachary", age: 28 },
+    { name: "Nicholas", age: 29 }
+];
+
+data.sort(createComparisonFunction("name"));
+console.log(data[0].name);  // Nicholas
+data.sort(createComparisonFunction("age"));
+console.log(data[0].name);  // Zachary
+```
+
