@@ -537,3 +537,37 @@ ES5：函数内部存在两个特殊对象，`arguments` 和 `this`
 
 ES6：新增 `new.target` 属性
 
+### 10.9.1 arguments
+
+一个类数组对象，包含调用时传入的所有参数。这个对象只有以 `function` 关键字定义函数时才会有（也就是箭头函数没有）
+
+`arguments` 对象还有一个 `callee` 属性，是一个指向 `arguments` 对象所在函数的指针
+
+```js
+// 阶乘函数，如果使用函数名进行递归就需要函数名一致才行
+function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * factorial(num - 1);
+    }
+}
+
+// 使用 arguments.callee 进行解耦
+function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * arguments.callee(num - 1);
+    }
+}
+
+let trueFactorial = factorial;
+factorial = function() {
+    return 0;
+};
+
+console.log(trueFactorial(5));  // 120
+console.log(factorial(5));  // 0
+```
+
