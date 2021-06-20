@@ -531,3 +531,9 @@ data.sort(createComparisonFunction("age"));
 console.log(data[0].name);  // Zachary
 ```
 
+## 10.9 函数内部
+
+ES5：函数内部存在两个特殊对象，`arguments` 和 `this`
+
+ES6：新增 `new.target` 属性
+
