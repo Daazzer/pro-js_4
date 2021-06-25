@@ -571,3 +571,62 @@ console.log(trueFactorial(5));  // 120
 console.log(factorial(5));  // 0
 ```
 
+### 10.9.2 this
+
+在标准函数和箭头函数中有不同的行为
+
+- **标准函数** `this` 引用的是把函数当前方法调用的上下文对象(在网页的全局上下文中调用函数时，`this` 指向 `windows`)
+- **箭头函数** `this` 引用的是定义箭头函数的上下文
+
+```js
+window.color = 'red';
+let o = {
+    color: 'blue'
+};
+
+// 标准函数
+function sayColor() {
+    console.log(this.color);
+}
+
+sayColor();  // 'red'
+
+o.sayColor = sayColor;
+o.sayColor();  // 'blue'
+```
+```js
+window.color = 'red';
+let o = {
+    color: 'blue'
+};
+// 箭头函数
+let sayColor = () => console.log(this.color);
+
+sayColor();  // 'red'
+
+o.sayColor = sayColor;
+o.sayColor();  // 'red'
+```
+
+- **在事件回调或定时器中** `this` 指向并非想要的对象，此时将箭头函数写成函数就可以解决问题
+
+```js
+function King() {
+    this.royaltyName = 'Henry';
+    // this 引用 King 的实例
+    setTimeout(() => console.log(this.royaltyName), 1000);
+}
+
+function Queen() {
+    this.royaltyName = 'Elizabeth';
+    
+    // this 引用 window 对象
+    setTimeout(function() { console.log(this.royaltyName); }, 1000);
+}
+new King();  // Henry
+new Queen();  // undefined
+```
+
+
+
+> **注意** 函数名只是保存指针的变量。
