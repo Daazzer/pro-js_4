@@ -630,3 +630,25 @@ new Queen();  // undefined
 
 
 > **注意** 函数名只是保存指针的变量。
+
+
+
+### 10.9.3 caller
+
+ES5 给函数对象上添加一个属性：`caller`
+
+```js
+function outer() {
+    inner();
+}
+
+function inner() {
+    console.log(inner.caller);
+}
+
+outer();
+```
+
+如果要解耦，可以使用 `arguments.callee.caller` 来引用同样的值
+
+在严格模式下访问 `arguments.callee` 会报错                                                               
