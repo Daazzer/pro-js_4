@@ -651,4 +651,22 @@ outer();
 
 如果要解耦，可以使用 `arguments.callee.caller` 来引用同样的值
 
-在严格模式下访问 `arguments.callee` 会报错                                                               
+在严格模式下访问 `arguments.callee` 会报错
+
+### 10.9.4 new.target
+
+ECMAScript 中的函数始终可以作为构造函数实例化一个新对象，也可以作为普通函数被调用
+
+如果函数被正常调用，则 `new.target` 的值是 `undefined` 如果是 `new` 关键字调用的，则 `new.target` 将引用被调用的构造函数
+
+```js
+function King() {
+    if (!new.target) {
+        throw 'King must be instantiated using "new"';
+    }
+    console.log('King instantiated using "new"');
+}
+new King();  // King instantiated using "new"
+King();  // Error: King must be instantiated using "new"
+```
+
