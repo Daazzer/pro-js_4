@@ -670,3 +670,50 @@ new King();  // King instantiated using "new"
 King();  // Error: King must be instantiated using "new"
 ```
 
+## 10.10 函数属性与方法
+
+ECMAScript 中函数是对象。每个函数都有两个属性
+
+- `length` 保存函数定义的命名参数的个数
+- `prototype` 保存引用类型所有实例方法的地方
+
+函数两个方法
+
+- `call()` 改变函数体上下文中的 `this`
+- `apply()` 改变函数体上下文中的 `this`
+
+```js
+window.color = 'red';
+let o = {
+    color: 'blue'
+};
+
+function sayColor() {
+    console.log(this.color);
+}
+
+sayColor();  // red
+
+sayColor.call(this);  // red
+sayColor.call(window);  // red
+sayColor.call(o);  // blue
+```
+
+ES5 新函数方法
+
+- `bind()` 返回新函数实例，其 `this` 值会被绑定到传给 `bind()` 的对象
+
+```js
+window.color = 'red';
+let o = {
+    color: 'blue'
+};
+
+function sayColor() {
+    console.log(this.color);
+}
+
+let objectSayColor = sayColor.bind(o);
+objectSayColor();  // blue
+```
+
