@@ -1081,3 +1081,45 @@ function assignHandler() {
 }
 ```
 
+
+
+## 10.15 立即调用的函数表达式
+
+**立即调用函数表达式**（IIFE，Immediately Invoked Function Expression）
+
+可以模拟块级作用域
+
+ES5 块级作用域
+
+```js
+(function() {
+    // 块级作用域
+    for (var i = 0; i < count; i++) {
+        console.log(i);
+    }
+})();
+
+console.log(i);  // 抛出错误
+```
+
+ES6 块级作用域
+
+```js
+// 内嵌块级作用域
+{
+    let i;
+    for (i = 0; i < count; i++) {
+        console.log(i);
+    }
+}
+console.log(i);  // 抛出错误
+```
+
+```js
+// 循环的块级作用域
+for (let i = 0; i < count; i++) {
+    console.log(i);
+}
+console.log(i);  // 抛出错误
+```
+
