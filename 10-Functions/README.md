@@ -779,3 +779,50 @@ if (condiction) {
 }
 ```
 
+
+
+## 10.12 递归
+
+**递归函数**通常的形式是一个函数通过名称调用自己
+
+```js
+function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * factorial(num - 1);
+    }
+}
+
+// 如果把这个函数赋值给其它变量就会出问题
+let anotherFactorial = factorial;
+factorial = null;
+console.log(anotherFactorial(4));  // 报错
+```
+
+可以用 `arguments.callee` 解决
+
+```js
+function factorial(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * arguments.callee(num - 1);
+    }
+}
+```
+
+但是严格模式下不能访问 `arguments.callee`
+
+可以用命名函数表达式（named function expression）达到目的，在严格模式和非严格模式都能使用
+
+```js
+const factorial = (function f(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * f(num - 1);
+    }
+});
+```
+
