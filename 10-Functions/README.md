@@ -903,3 +903,99 @@ function fibImpl(a, b, n) {
 console.log(fib(1000));  // 4.346655768693743e+208
 ```
 
+## 10.14 闭包
+
+**闭包**指的是哪些引用了另一个函数作用域中变量的函数
+
+```js
+function createComparisonFunction(propertyName) {
+    return function(object1, object2) {
+        let value1 = object1[propertyName];
+        let value2 = object2[propertyName];
+        
+        if (value1 < value2) {
+            return -1;
+        } else if (value1 > value2) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+```
+
+外部函数的活动对象是内部函数作用域链上的第二个对象。这个作用域链一直向外串起了所有包含函数的活动对象，直到全局执行上下文才终止
+
+```mermaid
+classDiagram
+    class compare函数的执行上下文 {
+        作用域链
+    }
+    class 作用域链 {
+        0
+        1
+    }
+    class 全局变量对象 {
+        compare()
+        result undefined
+    }
+    class compare函数的活动对象 {
+        arguments [5, 10]
+        value1 5
+        value2 10
+    }
+    compare函数的执行上下文 --> 作用域链 : 作用域链
+    作用域链 --> compare函数的活动对象 : 0
+    作用域链 --> 全局变量对象 : 1
+    全局变量对象 --> compare函数的执行上下文 : compare()
+```
+
+在一个函数内部定义的函数会把其包含函数的活动对象添加到自己的作用域链中
+
+```js
+let compare = createComparisonFunction('name');
+let result = compare({ name: 'Nicholas' }, { name: 'Greg' });
+```
+
+
+
+```mermaid
+classDiagram
+	class createComparisonFunction函数的执行上下文 {
+		(作用域链)
+	}
+	class 匿名函数的执行上下文 {
+		(作用域链)
+	}
+	class createComparisonFunction函数的执行上下文作用域链 {
+		0
+		1
+	}
+	class 匿名函数的执行上下文作用域链 {
+		0
+		1
+		2
+	}
+	class 全局变量对象 {
+		createComparisonFunction()
+		result undefined
+	}
+	class createComparisonFunction的活动对象 {
+		arguments ["name"]
+		propertyName "name"
+	}
+	class 闭包的活动对象 {
+		Object[] arguments
+		object1
+		object2
+	}
+	createComparisonFunction函数的执行上下文 --> createComparisonFunction函数的执行上下文作用域链 : (作用域链)
+	匿名函数的执行上下文 --> 匿名函数的执行上下文作用域链 : (作用域链)
+	createComparisonFunction函数的执行上下文作用域链 --> createComparisonFunction的活动对象 : 0
+	createComparisonFunction函数的执行上下文作用域链 --> 全局变量对象 : 1
+	匿名函数的执行上下文作用域链 --> 闭包的活动对象 : 0
+	匿名函数的执行上下文作用域链 --> createComparisonFunction的活动对象 : 1
+	匿名函数的执行上下文作用域链 --> 全局变量对象 : 2
+```
+
+> **注意** 因为闭包会保留它们包含函数的作用域，所以比其他函数更占用内存。过渡使用闭包可能会导致内存过渡占用，因此建议仅在十分必要时使用。
