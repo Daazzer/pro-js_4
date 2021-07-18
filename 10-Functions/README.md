@@ -826,3 +826,30 @@ const factorial = (function f(num) {
 });
 ```
 
+
+
+## 10.13 尾调用优化
+
+ES6 规范新增了一项内存管理优化机制，让 JavaScript 引擎在满足条件时可重用栈帧。
+
+非常适合“尾调用”，即外部函数的返回值是一个内部函数的返回值
+
+```js
+function outerFunction() {
+    return innerFunction();  // 尾调用
+}
+```
+
+
+
+在ES6优化后，执行这个例子会在内存中发生如下操作
+
+1. 执行到 `outerFunction` 函数体，第一个栈帧被推到栈上。
+2. 执行 `outerFunction` 函数体，到达 `return` 语句。为求值返回语句，必须先求 `innerFunction`。
+3. 引擎发现把第一个栈帧弹出栈外也没问题，因为 `innerFunction` 的返回值也是 `outerFunction` 的返回值。
+4. 弹出 `outerFunction` 的栈帧。
+5. 执行到 `innerFunction` 的函数体，栈帧被推到栈上。
+6. 执行 `innerFunction` 函数体，计算其返回值。
+7. 将 `innerFunction` 的栈帧弹出栈外。
+
+这种优化无论调用多少次嵌套函数，都只有一个栈帧
