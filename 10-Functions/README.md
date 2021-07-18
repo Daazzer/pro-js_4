@@ -1208,3 +1208,43 @@ console.log(person2.getName());  // 'Michael'
 ```
 
 > **注意** 使用闭包和私有变量会导致作用域链边长，影响性能
+
+
+
+### 10.16.2 模块模式
+
+单例对象（singleton）就是只有一个实例的对象
+
+```js
+let singleton = {
+    name: value,
+    method() {
+        // 方法的代码
+    }
+};
+```
+
+模块模式是在单例对象基础上加以扩展，使其通过作用域链来关联私有变量和特权方法
+
+```js
+let singleton = function() {
+    // 私有变量和私有函数
+    let privateVariable = 10;
+    
+    function privateFunction() {
+        return false;
+    }
+    
+    // 特权/公有方法和属性
+    return {
+        publicProperty: true,
+        
+        publicMethod() {
+            privateVariable++;
+            return privateFunction();
+        }
+    };
+}();
+```
+
+对象字面量定义了单例对象的公共接口。如果单例对象需要进行某种初始化，并且需要访问私有变量，那就可以采用这个模式
