@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>this对象</title>
+</head>
+<body>
+  <script>
+    window.indentity = 'The Window';
+
+    let object = {
+      indentity: 'My Object',
+      getIndentity() {
+        return this.indentity;
+      }
+    };
+
+    console.log(object.getIndentity());  // 'My Object'
+    console.log((object.getIndentity)());  // 'My Object'
+    // 赋值表达式的值是函数，括号中返回了一个函数，this 不再与任何对象绑定，执行了一次赋值，如果去掉括号，则还是 My Object
+    console.log((object.getIndentity = object.getIndentity)());  // 'The Window'
+  </script>
+</body>
+</html>

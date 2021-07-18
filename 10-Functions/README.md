@@ -999,3 +999,59 @@ classDiagram
 ```
 
 > **注意** 因为闭包会保留它们包含函数的作用域，所以比其他函数更占用内存。过渡使用闭包可能会导致内存过渡占用，因此建议仅在十分必要时使用。
+
+
+
+### 10.14.1 this 对象
+
+闭包函数里面的 `this` 默认指向 `window`，严格模式下为 `undefined`
+
+```js
+window.indentity = 'The Window';
+
+let object = {
+    indentity: 'My Object',
+    getIndentityFunc() {
+        return function() {
+            return this.indentity;
+        };
+    }
+};
+
+console.log(object.getIndentityFunc()());  // 'The Window'
+```
+
+由于 `this` 是指向函数调用时的对象，所以是 `window`
+
+```js
+window.indentity = 'The Window';
+
+let object = {
+    indentity: 'My Object',
+    getIndentityFunc() {
+        let that = this;
+        return function() {
+            return that.indentity;
+        };
+    }
+};
+
+console.log(object.getIndentityFunc()());  // 'My Object'
+```
+
+```js
+window.indentity = 'The Window';
+
+let object = {
+    indentity: 'My Object',
+    getIndentity() {
+        return this.indentity;
+    }
+};
+
+console.log(object.getIndentity());  // 'My Object'
+console.log((object.getIndentity)());  // 'My Object'
+// 赋值表达式的值是函数，括号中返回了一个函数，this 不再与任何对象绑定，执行了一次赋值，如果去掉括号，则还是 My Object
+console.log((object.getIndentity = object.getIndentity)());  // 'The Window'
+```
+
