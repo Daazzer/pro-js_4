@@ -1055,3 +1055,29 @@ console.log((object.getIndentity)());  // 'My Object'
 console.log((object.getIndentity = object.getIndentity)());  // 'The Window'
 ```
 
+
+
+### 10.14.2 内存泄漏
+
+IE9 之前如果把 HTML 元素保存在某个闭包的作用域，该元素就不能销毁
+
+```js
+function assignHandler() {
+    let element = document.getElementById('someElement');
+    element.onclick = () => console.log(element.id);
+}
+```
+
+修复上述问题
+
+```js
+function assignHandler() {
+    let element = document.getElementById('someElement');
+    let id = element.id;
+
+    element.onclick = () => console.log(id);
+    
+    element = null;
+}
+```
+
