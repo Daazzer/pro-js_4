@@ -1123,3 +1123,55 @@ for (let i = 0; i < count; i++) {
 console.log(i);  // 抛出错误
 ```
 
+
+
+## 10.16 私有变量
+
+严格来讲 JavaScript 没有私有成员的概念，但是有**私有**变量的概念
+
+任何定义在函数或块中的变量，都可以认为是私有的
+
+- **特权方法（privileged method）**是能够访问函数私有变量的公有方法
+
+  - 构造函数实现
+
+    ```js
+    function MyObject() {
+        // 私有变量和私有函数
+        let privateVariable = 10;
+        
+        function privateFunction() {
+            return false;
+        }
+        
+        // 特权方法
+        this.publicMethod = function() {
+            privateVariable++;
+            return privateFunction();
+        };
+    }
+    ```
+
+    定义私有变量和特权方法
+
+    ```js
+    function Person(name) {
+        this.getName = function() {
+            return name;
+        };
+        
+        this.setName = function(value) {
+            name = value;
+        };
+    }
+    
+    let person = new Person('Nicholas');
+    console.log(person.getName());  // 'Nicholas'
+    person.setName('Greg');
+    console.log(person.getName());  // 'Greg'
+    ```
+
+构造函数模式的缺点是每个实例都会重新创建一遍新方法。使用静态私有变量实现特权方法可以避免这种个问题
+
+
+
