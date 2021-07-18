@@ -9,3 +9,5 @@
 - [第 7 章 集合引用类型](./7-Iterators_and_Generators)
 - [第 8 章 对象、类与面向对象编程](./8-Objects_Classes_and_Object-Oriented_Programming)
 - [第 9 章 代理与反射](./9-Proxies_and_Reflect)
+- [第 10 章 函数](./10-Functions)
+
