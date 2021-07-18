@@ -717,3 +717,65 @@ let objectSayColor = sayColor.bind(o);
 objectSayColor();  // blue
 ```
 
+
+
+## 10.11 函数表达式 
+
+定义函数的两种方式
+
+- 函数声明
+- 函数表达式
+
+函数声明会**函数声明提升**
+
+```js
+function functionName(arg0, arg1, arg2) {
+    // 函数体
+}
+
+sayHi();
+function sayHi() {
+    console.log("Hi");
+}
+```
+
+函数表达式
+
+```js
+let functionName = function(arg0, arg1, arg2) {
+    // 函数体
+}
+```
+
+函数表达式所创建的函数为**匿名函数（anonymous function）**
+
+函数声明用在条件判断可能会有坑
+
+```js
+// 浏览器可能会在 condition 为 true 时直接返回第二个函数
+if (condiction) {
+    function sayHi() {
+        console.log("Hi");
+    }
+} else {
+    function sayHi() {
+        console.log("Yo!");
+    }
+}
+```
+
+换成函数表达式可解决
+
+```js
+let sayHi;
+if (condiction) {
+    sayHi = function() {
+        console.log("Hi");
+    }
+} else {
+    sayHi = function() {
+        console.log("Yo!");
+    }
+}
+```
+
