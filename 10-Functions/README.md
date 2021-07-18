@@ -1175,3 +1175,36 @@ console.log(i);  // 抛出错误
 
 
 
+### 10.16.1 静态私有变量
+
+私有作用域定义私有变量和函数来实现
+
+```js
+let Person;
+(function() {
+    let name = '';
+    
+    Person = function(value) {
+        name = value;
+    };
+    
+    Person.property.getName = function() {
+        return name;
+    };
+    
+    Person.property.setName = function(value) {
+        name = value;
+    };
+})();
+
+let person1 = new Person('Nicholas');
+console.log(person1.getName());  // 'Nicholas'
+person1.setName('Matt');
+console.log(person1.getName());  // 'Matt'
+
+let person2 = new Person('Michael');
+console.log(person1.getName());  // 'Michael'
+console.log(person2.getName());  // 'Michael'
+```
+
+> **注意** 使用闭包和私有变量会导致作用域链边长，影响性能
