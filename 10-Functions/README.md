@@ -860,3 +860,46 @@ function outerFunction() {
 - 外部函数的返回值是对尾调用函数的调用
 - 尾调用函数返回后不需要执行额外的逻辑
 - 尾调用函数不是引用外部函数作用域中自由变量的闭包
+
+### 10.13.2 尾调用优化的代码
+
+```js
+function fib(n) {
+    if (n < 2) {
+        return n;
+    }
+
+    return fib(n - 1) + fib(n - 2);  // 不符合尾调用优化的条件，因为有相加操作
+}
+
+console.log(fib(0));  // 0
+console.log(fib(1));  // 1
+console.log(fib(2));  // 1
+console.log(fib(3));  // 2
+console.log(fib(4));  // 3
+console.log(fib(5));  // 5
+console.log(fib(6));  // 8
+console.log(fib(1000));  // 崩溃
+```
+
+优化后
+
+```js
+// 优化后
+"use strict";
+
+// 基础框架
+function fib(n) {
+    return fibImpl(0, 1, n);
+}
+
+function fibImpl(a, b, n) {
+    if (n === 0) {
+        return a;
+    }
+    return fibImpl(b, a + b, n - 1);
+}
+
+console.log(fib(1000));  // 4.346655768693743e+208
+```
+
