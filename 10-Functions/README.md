@@ -1248,3 +1248,33 @@ let singleton = function() {
 ```
 
 对象字面量定义了单例对象的公共接口。如果单例对象需要进行某种初始化，并且需要访问私有变量，那就可以采用这个模式
+
+### 10.16.3 模块增强模式
+
+适合单例对象需要是某个特定类型的实例，但又必须给它添加额外属性或方法的场景
+
+```js
+let singleton = function() {
+    // 私有变量和私有函数
+    let privateVariable = 10;
+    
+    function privateFunction() {
+        return false;
+    }
+    
+    // 创建对象
+    let object = new CustomType();
+    
+    // 添加特权/公有属性和方法
+    object.publicProperty = true;
+    
+    object.publicMethod = function() {
+        privateVariable++;
+        return privateFunction();
+    };
+    
+    // 返回对象
+    return object;
+}();
+```
+
