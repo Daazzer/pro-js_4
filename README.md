@@ -10,4 +10,5 @@
 - [第 8 章 对象、类与面向对象编程](./8-Objects_Classes_and_Object-Oriented_Programming)
 - [第 9 章 代理与反射](./9-Proxies_and_Reflect)
 - [第 10 章 函数](./10-Functions)
+- [第 11 章 期约与异步函数](./11-Promises_and_Async_Functions)
 
