@@ -92,3 +92,6 @@ double(3, successCallback, failureCallback);
 
 一种异步程序执行机制
 
+### 11.2.1 Promise/A+规范
+
+ES6 增加了对 Promise/A+ 规范的完善支持，即 `Promise` 类型
