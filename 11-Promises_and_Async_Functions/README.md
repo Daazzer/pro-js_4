@@ -31,3 +31,32 @@ double(3, x => console.log(`I was given: ${x}`));
 // I was given: 6 (大约 1000 毫秒之后)
 ```
 
+#### 2.失败处理
+
+成功回调与失败回调
+
+```js
+function double(value, success, failure) {
+    setTimeout(() => {
+        try {
+            if (typeof value !== 'number') {
+                throw 'Must provide number as first argument';
+            }
+            success(2 * value);
+        } catch (err) {
+            failure(err);
+        }
+    }, 1000);
+}
+
+const successCallback = x => console.log(`Success: ${x}`);
+const failureCallback = err => console.log(`Failure: ${err}`);
+
+double(3, successCallback, failureCallback);
+double('b', successCallback, failureCallback);
+
+// Success: 6
+// Failure: Must provide number as first argument
+```
+
+此模式已经不可取了，因为必须在初始化异步操作时定义回调
