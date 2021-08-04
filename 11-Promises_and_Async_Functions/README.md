@@ -18,3 +18,16 @@ ES6 新增 `Promise` (期约) 引用类型。在未来几个版本添加了 `asy
 
 `setTimeout` 可以定义一个在指定时间之后会被调度执行的回调函数
 
+#### 1.异步返回值
+
+给异步传一个回调，这个回调中包含要使用异步返回值的代码（作为回调的参数）
+
+```js
+function double(value, callback) {
+    setTimeout(() => callback(value * 2), 1000);
+}
+
+double(3, x => console.log(`I was given: ${x}`));
+// I was given: 6 (大约 1000 毫秒之后)
+```
+
