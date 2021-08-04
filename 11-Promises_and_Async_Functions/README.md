@@ -95,3 +95,16 @@ double(3, successCallback, failureCallback);
 ### 11.2.1 Promise/A+规范
 
 ES6 增加了对 Promise/A+ 规范的完善支持，即 `Promise` 类型
+
+### 11.2.2 期约基础
+
+ES6 新增引用类型 `Promise`，可以通过 `new` 操作符来实例化，创建时需要传入执行器(executor)函数作为参数
+
+```js
+let p = new Promise(() => {});
+
+setTimeout(console.log, 0, p);  // Promise <pending>
+```
+
+
+
