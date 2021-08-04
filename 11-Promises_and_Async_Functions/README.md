@@ -60,3 +60,31 @@ double('b', successCallback, failureCallback);
 ```
 
 此模式已经不可取了，因为必须在初始化异步操作时定义回调
+
+#### 3.嵌套异步回调
+
+异步返回值又依赖另一个异步返回值，容易造成回调地狱
+
+```js
+function double(value, success, failure) {
+    setTimeout(() => {
+        try {
+            if (typeof value !== 'number') {
+                throw 'Must provide number as first argument';
+            }
+            success(2 * value);
+        } catch (err) {
+            failure(err);
+        }
+    }, 1000);
+}
+
+const successCallback = x => {
+    double(x, y => console.log(`Success: ${y}`));
+};
+const failureCallback = err => console.log(`Failure: ${err}`);
+
+double(3, successCallback, failureCallback);
+// Success: 12
+```
+
