@@ -88,3 +88,7 @@ double(3, successCallback, failureCallback);
 // Success: 12
 ```
 
+## 11.2 期约
+
+一种异步程序执行机制
+
