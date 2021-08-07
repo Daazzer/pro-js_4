@@ -106,5 +106,20 @@ let p = new Promise(() => {});
 setTimeout(console.log, 0, p);  // Promise <pending>
 ```
 
+#### 1.期约状态机
 
+把一个期约实例传给 `console.log`，控制台输出表示实例处于**待定(pending)**状态
 
+期约是一个有状态的对象
+
+- 待定(pending)
+- 兑现(fulfilled，有时候也称为“解决”，resolve)
+- 拒绝(rejected)
+
+**待定(pending)**是期约最初始的状态。可以落定为代表成功的**兑现(fulfilled)**状态，或者代表失败的**拒绝(rejected)**状态
+
+落定为某种状态之后不可逆
+
+期约状态也不能被外部 JavaScript 代码修改
+
+#### 
