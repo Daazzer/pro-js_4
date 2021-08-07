@@ -129,3 +129,49 @@ setTimeout(console.log, 0, p);  // Promise <pending>
 - **拒绝**表示没有成功完成
   - 只要状态为拒绝，就会有一个私有的内部**理由(reason)**
 
+#### 3.通过执行函数控制期约状态
+
+由于期约的状态是私有的，所以只能在内部操作
+
+控制期约状态的转换是通过调用它的两个函数参数实现的：
+
+- `resolve()`  调用会把状态切换为兑现
+- `reject()` 调用会把状态切换为拒绝
+
+```js
+let p1 = new Promise((resolve, reject) => resolve());
+setTimeout(console.log, 0, p1);  // Promise <resolved>
+
+let p2 = new Promise((resolve, reject) => reject());
+setTimeoout(console.log, 0, p2);  // Promise <rejected>
+// Uncaught error (in promise)
+```
+
+执行器函数是**同步**执行的，是期约的初始化程序
+
+```js
+new Promise(() => setTimeout(console.log, 0, 'executor'));
+setTimeout(console.log, 0, 'promise initialized');
+// executor
+// promise initialized
+```
+
+```js
+let p = new Promise((resolve, reject) => setTimeout(resolve, 1000));
+
+// 在 console.log 打印期约实例的时候，还没到执行超时回调的时候(即 resolve())
+setTimeout(console.log, 0, p);  // Promise <pending>
+```
+
+无论 `resolve()` 和 `reject()` 中的那个被调用，状态转换都不可撤销了，继续修改状态会静默失败
+
+```js
+let p = new Promise((resolve, reject) => {
+    resolve();
+    reject();  // 没有效果
+});
+
+setTimeout(console.log, 0, p);  // Promise <resolved>
+```
+
+如果执行器中的代码在超时之前已经解决或拒绝，超时回调再次尝试拒绝也会静默失败

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通过执行函数控制期约状态</title>
+</head>
+<body>
+  <script>
+    new Promise(() => setTimeout(console.log, 0, 'executor'));
+    setTimeout(console.log, 0, 'promise initialized');
+    // executor
+    // promise initialized
+  </script>
+
+  <script>
+    let p = new Promise((resolve, reject) => setTimeout(resolve, 1000));
+
+    // 在 console.log 打印期约实例的时候，还没到执行超时回调的时候(即 resolve())
+    setTimeout(console.log, 0, p);  // Promise <pending>
+  </script>
+
+  <script>
+    p = new Promise((resolve, reject) => setTimeout(reject, 10000));
+
+    setTimeout(console.log, 0, p);  // Promise <pending>
+    setTimeout(console.log, 11000, p);  // 11 秒后再检查状态
+
+    // (10秒后) Uncaught error
+    // (11秒后) Promise <rejected>
+  </script>
+</body>
+</html>
