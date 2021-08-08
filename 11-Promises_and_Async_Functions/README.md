@@ -346,3 +346,19 @@ p2.finally(onFinally);  // Finally
 
 多数情况下都会原样后传父期约
 
+返回待定期约的情景并不常见，因为只要期约一解决，新期约仍然会原样后传初始的期约
+
+```js
+let p1 = Promise.resolve('foo');
+
+// 忽略解决的值
+let p2 = p1.finally(() => new Promise((resolve, reject) => setTimeout(() => resolve('bar'), 100)));
+
+setTimeout(console.log, 0, p2);  // Promise <pending>
+
+setTimeout(() => setTimeout(console.log, 0, p2), 200);
+
+// 200毫秒后
+// Promise <resolved>: foo
+```
+

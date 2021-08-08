@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise.prototype.finally</title>
+</head>
+<body>
+  <script>
+    let p1 = Promise.resolve('foo');
+    
+    // 忽略解决的值
+    let p2 = p1.finally(() => new Promise((resolve, reject) => setTimeout(() => resolve('bar'), 100)));
+
+    setTimeout(console.log, 0, p2);  // Promise <pending>
+
+    setTimeout(() => setTimeout(console.log, 0, p2), 200);
+
+    // 200毫秒后
+    // Promise <resolved>: foo
+  </script>
+</body>
+</html>
