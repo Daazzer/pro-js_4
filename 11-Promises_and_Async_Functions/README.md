@@ -175,3 +175,29 @@ setTimeout(console.log, 0, p);  // Promise <resolved>
 ```
 
 如果执行器中的代码在超时之前已经解决或拒绝，超时回调再次尝试拒绝也会静默失败
+
+#### 4.Promise.resolve()
+
+通过调用 `Promise.resolve()` 静态方法，可以实例化一个解决的期约
+
+```js
+let p1 = new Promise((resolve, reject) => resolve());
+let p2 = Promise.resolve();
+```
+
+多余的参数会忽略
+
+```js
+setTimeout(console.log, 0, Promise.resolve(4, 5, 6));
+// Promise <resolved>: 4
+```
+
+传入的参数是一个期约
+
+```js
+let p = Promise.resolve(7);
+
+setTimeout(console.log, 0, p === Promise.resolve(p));
+// true
+```
+
