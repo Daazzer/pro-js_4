@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>非重入期约方法</title>
+</head>
+<body>
+  <script>
+    let synchronousResolve;
+    
+    // 创建一个期约并将解决函数保存在一个局部变量中
+    let p = new Promise(resolve => {
+      synchronousResolve = () => {
+        console.log('1: invoking resolve()');
+        resolve();
+        console.log('2: resolve() returns');
+      };
+    });
+
+    p.then(() => console.log('4: then() handler executes'));
+
+    synchronousResolve();
+    console.log('3: synchronousResolve() returns');
+
+    // 实际的输出:
+    // 1: invoking resolve()
+    // 2: resolve() returns
+    // 3: synchronousResolve() returns
+    // 4: then() handler executes
+  </script>
+</body>
+</html>

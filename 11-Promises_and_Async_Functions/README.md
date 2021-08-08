@@ -362,3 +362,33 @@ setTimeout(() => setTimeout(console.log, 0, p2), 200);
 // Promise <resolved>: foo
 ```
 
+#### 5.非重入期约方法
+
+当期约进入落定状态时，与该状态相关的处理程序仅仅会被**排期**，而非立即执行
+
+在一个解决期约上调用 `then()` 会把 `onResolved` 处理程序推进消息队列。但这个处理程序在当前线程上的同步代码执行完成前不会执行
+
+```js
+let synchronousResolve;
+
+// 创建一个期约并将解决函数保存在一个局部变量中
+let p = new Promise(resolve => {
+    synchronousResolve = () => {
+        console.log('1: invoking resolve()');
+        resolve();
+        console.log('2: resolve() returns');
+    };
+});
+
+p.then(() => console.log('4: then() handler executes'));
+
+synchronousResolve();
+console.log('3: synchronousResolve() returns');
+
+// 实际的输出:
+// 1: invoking resolve()
+// 2: resolve() returns
+// 3: synchronousResolve() returns
+// 4: then() handler executes
+```
+
