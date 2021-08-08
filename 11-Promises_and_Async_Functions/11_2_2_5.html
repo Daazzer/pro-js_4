@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promise.reject</title>
+</head>
+<body>
+  <script>
+    let p = Promise.reject(3);
+
+    setTimeout(console.log, 0, p);  // Promise <rejected>: 3
+
+    p.then(null, err => setTimeout(console.log, 0, err));  // 3
+  </script>
+</body>
+</html>
