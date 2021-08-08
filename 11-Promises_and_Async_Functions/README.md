@@ -220,3 +220,24 @@ setTimeout(console.log, 0, p);  // Promise <rejected>: 3
 p.then(null, err => setTimeout(console.log, 0, err));  // 3
 ```
 
+#### 6.同步/异步执行的二元性
+
+```js
+try {
+    throw new Error('foo');
+} catch (e) {
+    console.log(e);  // foo
+}
+
+try {
+    Promise.reject(new Error('bar'));
+} catch (e) {
+    console.log(e);
+}
+
+// Uncaught (in promise) Error: bar
+```
+
+拒绝期约没有抛到同步代码的线程里，而是通过浏览器异步消息队列来处理的
+
+唯一与之交互的方式就是使用异步结构——更具体地说，就是期约的方法
