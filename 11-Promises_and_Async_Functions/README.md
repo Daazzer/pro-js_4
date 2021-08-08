@@ -321,3 +321,8 @@ let p2 = p1.then();
 setTimeout(console.log, 0, p2);  // Promise <rejected>: foo
 ```
 
+#### 3.Promise.prototype.catch()
+
+这个方法实际上是一个语法糖，相当于 `Promise.prototype.then(null, onRejected)`
+
+`Promise.prototype.catch()` 返回一个新的期约实例
