@@ -326,3 +326,23 @@ setTimeout(console.log, 0, p2);  // Promise <rejected>: foo
 这个方法实际上是一个语法糖，相当于 `Promise.prototype.then(null, onRejected)`
 
 `Promise.prototype.catch()` 返回一个新的期约实例
+
+#### 4.Promise.prototype.finally()
+
+用于给期约添加 `onFinally` 处理程序，这个处理程序无论期约是决绝或拒绝都会执行
+
+```js
+let p1 = Promise.resolve();
+let p2 = Promise.reject();
+let onFinally = () => {
+    setTimeout(console.log, 0, 'Finally');
+};
+
+p1.finally(onFinally);  // Finally
+p2.finally(onFinally);  // Finally
+```
+
+`Promise.prototype.finally()` 返回一个新的期约实例
+
+多数情况下都会原样后传父期约
+
