@@ -254,3 +254,70 @@ class MyThenable {
 }
 ```
 
+#### 2.Promise.prototype.then()
+
+这个 `then()` 方法接收最多两个参数：`onResolved` 处理程序和 `onRejected` 处理程序
+
+两个参数都是可选的，在期约分别进入 “兑现” 和 “拒绝” 状态时执行
+
+```js
+function onResolved(id) {
+    setTimeout(console.log, 0, id, 'resolved');
+}
+
+function onRejected(id) {
+    setTimeout(console.log, 0, id, 'rejected');
+}
+
+let p1 = new Promise((resolve, reject) => setTimeout(resolve, 3000));
+let p2 = new Promise((resolve, reject) => setTimeout(reject, 3000));
+
+p1.then(() => onResolved('p1'),
+        () => onRejected('p1'));
+p2.then(() => onResolved('p2'),
+        () => onRejected('p2'));
+// (3秒后)
+// p1 resolved
+// p2 rejected
+```
+
+因为期约只能转换为最终状态一次，所以这两个操作一定是互斥的(只能执行一种)
+
+传给 `then()` 的任何非函数类型的参数都会被静默忽略
+
+如果有显式的返回值，则 `Promise.resolve()` 会包装这个值
+
+```js
+let p1 = Promise.resolve('foo');
+let p3 = p1.then(() => undefined);
+let p4 = p1.then(() => {});
+let p5 = p1.then(() => Promise.resolve());
+
+setTimeout(console.log, 0, p3);  // Promise <resolved>: undefined
+setTimeout(console.log, 0, p4);  // Promise <resolved>: undefined
+setTimeout(console.log, 0, p5);  // Promise <resolved>: undefined
+
+let p6 = p1. then(() => 'bar');
+let p7 = p1. then(() => Promise.resolve('bar'));
+
+setTimeout(console.log, 0, p6);  // Promise <resolved>: bar
+setTimeout(console.log, 0, p7);  // Promise <resolved>: bar
+```
+
+抛错会返回拒绝期约
+
+```js
+let p10 = p1.then(() => { throw 'baz'; });
+// Uncaught (in promise) baz
+
+setTimeout(console.log, 0, p10);  // Promise <rejected> baz
+```
+
+调用 `then()` 是不传处理程序则原样向后传
+
+```js
+let p2 = p1.then();
+// Uncaught (in promise) foo
+setTimeout(console.log, 0, p2);  // Promise <rejected>: foo
+```
+
