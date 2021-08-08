@@ -444,3 +444,35 @@ let p2 = Promise.reject('bar');
 p1.catch(reason => console.log(reason));  // bar
 ```
 
+#### 8.拒绝期约与拒绝错误处理
+
+在期约中抛出错误时，因为错误实际上是从消息队列中异步抛出的，所以并不会阻止运行时继续执行同步指令
+
+```js
+let p1 = new Promise((resolve, reject) => reject(Error('foo')));
+let p2 = new Promise((resolve, reject) => { throw Error('foo'); });
+let p3 = Promise.resolve().then(() => { throw Error('foo'); });  // 最后才出现此错误，因为需要在消息队列中添加处理程序，在最终抛出未捕获错误之前它还会创建另一个期约
+let p4 = Promise.reject(Error('foo'));
+
+setTimeout(console.log, 0, p1);  // Promise <rejected>: Error: foo
+setTimeout(console.log, 0, p2);  // Promise <rejected>: Error: foo
+setTimeout(console.log, 0, p3);  // Promise <rejected>: Error: foo
+setTimeout(console.log, 0, p4);  // Promise <rejected>: Error: foo
+```
+
+异步错误只能通过异步的 `onRejected` 处理程序捕获
+
+执行函数中的错误仍然可以使用 `try/catch` 捕获
+
+```js
+let p = new Promise((resolve, reject) => {
+    try {
+        throw new Error('foo')
+    } catch (err) {}
+    
+    resolve('bar');
+});
+
+setTimeout(console.log, 0, p);  // Promise <resolved>: bar
+```
+
