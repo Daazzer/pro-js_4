@@ -422,3 +422,25 @@ p1.finally(() => setTimeout(console.log, 0, 8));
 // 8
 ```
 
+#### 7.传递解决值和拒绝理由
+
+在执行函数中，解决值和拒绝的理由是分别作为 `resolve()` 和 `reject()` 的第一个参数往后传的
+
+```js
+let p1 = new Promise((resolve, reject) => resolve('foo'));
+p1.then(value => console.log(value));  // foo
+
+let p2 = new Promise((resolve, reject) => reject('bar'));
+p1.catch(reason => console.log(reason));  // bar
+```
+
+`Promise.resolve()` 和 `Promise.reject()` 在调用时就会接收解决值和拒绝理由
+
+```js
+let p1 = Promise.resolve('foo');
+p1.then(value => console.log(value));  // foo
+
+let p2 = Promise.reject('bar');
+p1.catch(reason => console.log(reason));  // bar
+```
+
