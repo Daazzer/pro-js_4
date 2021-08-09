@@ -542,3 +542,40 @@ p.catch(() => console.log('reject handler'))
 // finally handler
 ```
 
+#### 2.期约图
+
+期约连锁可以构建**有向非循环图**的结构
+
+二叉树例子
+
+```js
+/*
+      A
+    /   \
+   B      C
+ /   \   /   \
+D    E   F    G
+*/
+let A = new Promise((resolve, reject) => {
+    console.log('A');
+    resolve();
+});
+
+let B = A.then(() => console.log('B'));
+let C = A.then(() => console.log('C'));
+
+B.then(() => console.log('D'));
+B.then(() => console.log('E'));
+C.then(() => console.log('F'));
+C.then(() => console.log('G'));
+
+// A
+// B
+// C
+// D
+// E
+// F
+// G
+```
+
+期约的处理程序是**先**添加到消息队列，**然后**才逐个执行，因此构成了层序遍历
