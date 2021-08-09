@@ -476,3 +476,8 @@ let p = new Promise((resolve, reject) => {
 setTimeout(console.log, 0, p);  // Promise <resolved>: bar
 ```
 
+### 11.2.4 期约连锁与期约合成
+
+- 期约连锁：一个期约接一个期约拼接
+- 期约合成：多个期约组合成一个期约
+
