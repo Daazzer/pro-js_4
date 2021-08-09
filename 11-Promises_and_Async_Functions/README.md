@@ -481,3 +481,64 @@ setTimeout(console.log, 0, p);  // Promise <resolved>: bar
 - 期约连锁：一个期约接一个期约拼接
 - 期约合成：多个期约组合成一个期约
 
+#### 1.期约连锁
+
+```js
+let p = new Promise((resolve, reject) => {
+    console.log('first');
+    resolve();
+});
+
+p.then(() => console.log('second'))
+ .then(() => console.log('third'))
+ .then(() => console.log('fourth'));
+
+// first
+// second
+// third
+// fourth
+```
+
+串行化异步任务
+
+```js
+let p1 = new Promise((resolve, reject) => {
+    console.log('p1 executor');
+    setTimeout(resolve, 1000);
+});
+
+p1.then(() => new Promise((resolve, reject) => {
+    console.log('p2 executor');
+    setTimeout(resolve, 1000);
+})).then(() => new Promise((resolve, reject) => {
+    console.log('p3 executor');
+    setTimeout(resolve, 1000);
+})).then(() => new Promise((resolve, reject) => {
+    console.log('p4 executor');
+    setTimeout(resolve, 1000);
+}));
+
+// p1 executor (1秒后)
+// p2 executor (2秒后)
+// p3 executor (3秒后)
+// p4 executor (4秒后)
+```
+
+`then()`、`catch()`、`finally()` 都返回期约，所以串联这些方法也很直观
+
+```js
+let p = new Promise((resolve, reject) => {
+    console.log('initial promise rejects');
+	reject();
+});
+
+p.catch(() => console.log('reject handler'))
+ .then(() => console.log('resolve handler'))
+ .finally(() => console.log('finally handler'));
+
+// initial promise rejects
+// reject handler
+// resolve handler
+// finally handler
+```
+
