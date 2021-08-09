@@ -555,7 +555,7 @@ p.catch(() => console.log('reject handler'))
    B      C
  /   \   /   \
 D    E   F    G
-*/
+ */
 let A = new Promise((resolve, reject) => {
     console.log('A');
     resolve();
