@@ -579,3 +579,54 @@ C.then(() => console.log('G'));
 ```
 
 期约的处理程序是**先**添加到消息队列，**然后**才逐个执行，因此构成了层序遍历
+
+#### 3.Promise.all() 和 Promise.race()
+
+两个将多个期约实例组合成一个期约的静态方法
+
+- `Promise.all()` 
+
+  会在一组期约全部解决之后再解决，这个方法接收一个可迭代对象，返回一个新期约
+
+  ```js
+  let p1 = Promise.all([
+      Promise.resolve(),
+      Promise.resolve()
+  ]);
+  
+  // 可迭代对象中的元素会通过 Promise.resolve() 转换为期约
+  let p2 = Promise.all([3, 4]);
+  ```
+
+  合成的期约只会在每个包含的期约都解决之后才解决
+
+  ```js
+  let p = Promise.all([
+      Promise.resolve(),
+      new Promise((resolve, reject) => setTimeout(resolve, 1000))
+  ]);
+  
+  setTimeout(console.log, 0, p);  // Promise <pending>
+  
+  p.then(() => setTimeout(console.log, 0, 'all() resolved!'));
+  
+  // all() resolved! (大概一秒后)
+  ```
+
+  如果有一个包含的期约拒绝，则合成期约也会拒绝
+
+  ```js
+  let p2 = Promise.all([
+      Promise.resolve(),
+      Promise.reject(),
+      Promise.resolve()
+  ]);
+  setTimeout(console.log, 0, p2);  // Promise <rejected>
+  
+  // Uncaught (in promise) undefined
+  ```
+
+  合成的期约会静默处理所有包含期约的拒绝操作
+
+`Promise.race()`
+
