@@ -626,7 +626,29 @@ C.then(() => console.log('G'));
   // Uncaught (in promise) undefined
   ```
 
-  合成的期约会静默处理所有包含期约的拒绝操作
+  合成的期约会静默处理所有包含期约的拒绝操作 (一旦设置了 `catch()`)
 
-`Promise.race()`
+- `Promise.race()`
+
+  返回一个包装期约，是一组集合中最先解决或拒绝的期约的镜像
+
+  `Promise.race()` 不会对解决或拒绝的期约区别对待。无论是拒绝还是解决，只要是第一个落定的期约，`Promise.race()` 就会包装其解决值或拒绝理由并返回新期约
+
+  ```js
+  // 解决先发生，超时后的拒绝被忽略
+  let p1 = Promise.race([
+      Promise.resolve(3),
+      new Promise((resolve, reject) => setTimeout(reject, 1000))
+  ]);
+  setTimeout(console.log, 0, p1);  // Promise <resolved>: 3
+  
+  // 拒绝先发生，超时后的解决被忽略
+  let p2 = Promise.race([
+      Promise.reject(4),
+      new Promise((resolve, reject) => setTimeout(resolve, 1000))
+  ]);
+  setTimeout(console.log, 0, p2);  // Promise <rejected>: 4
+  ```
+
+  与 `Promise.all()` 类似，合成的期约会静默处理所有包含期约的拒绝操作 (一旦设置了 `catch()`)
 
