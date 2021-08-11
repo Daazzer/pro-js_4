@@ -692,5 +692,9 @@ const addTen = compose(addTwo, addThree, addFive);
 addTen(8).then(console.log);  // 18
 ```
 
+### 11.2.5 期约扩展
 
+期约的不足之处：
 
+- 期约取消
+- 进度追踪
