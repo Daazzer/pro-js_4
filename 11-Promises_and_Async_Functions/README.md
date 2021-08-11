@@ -698,3 +698,55 @@ addTen(8).then(console.log);  // 18
 
 - 期约取消
 - 进度追踪
+
+#### 1.期约取消
+
+```js
+class CancelToken {
+    constructor(cancelFn) {
+        this.promise = new Promise(resolve => {
+            const cancelCallback = () => {
+                setTimeout(console.log, 0, 'delay cancelled');
+                resolve(cancelCallback);
+            }
+            cancelFn(cancelCallback);
+        });
+    }
+}
+
+const startButton = document.querySelector('#start');
+const cancelButton = document.querySelector('#cancel');
+
+function cancellableDelayedResolve(delay) {
+    setTimeout(console.log, 0, 'set delay');
+
+    return new Promise(resolve => {
+        const id = setTimeout(() => {
+            setTimeout(console.log, 0, 'delay resolve');
+            resolve();
+        }, delay);
+        /* 
+        只是清除了定时器，感觉上中断了 Promise
+        实际是同时建立了两个 Promise，用于手动中断的那个用事件处理器暂时保存着
+        如果不手动中断，则事件处理器永远保存着另外的那个 Promise
+         */
+        const cancelToken = new CancelToken(cancelCallback => cancelButton.addEventListener('click', cancelCallback));
+
+        cancelToken.promise.then(cancelCallback => {
+            clearTimeout(id);
+            // 清除点击事件，防止无限绑定
+            cancelButton.removeEventListener('click', cancelCallback);
+        });
+    });
+}
+
+startButton.addEventListener('click', () => {
+    const p = cancellableDelayedResolve(1000);
+    /*
+    问题是，如果中途中断了，那么原本的函数返回的 Promise 还是 pending 状态
+    如果不中断才是 fulfilled 状态
+     */
+    setTimeout(console.log, 2000, p);
+});
+```
+
