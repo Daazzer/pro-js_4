@@ -750,3 +750,50 @@ startButton.addEventListener('click', () => {
 });
 ```
 
+#### 2.期约进度通知
+
+ES6 期约并不支持进度追踪，手动封装
+
+```js
+class TrackablePromise extends Promise {
+    constructor(executor) {
+        const notifyHandlers = [];
+
+        super((resolve, reject) => {
+            return executor(resolve, reject, status => {
+                notifyHandlers.forEach(handler => handler(status));
+            });
+        });
+
+        this.notifyHandlers = notifyHandlers;
+    }
+
+    notify(notifyHandler) {
+        this.notifyHandlers.push(notifyHandler);
+        return this;
+    }
+}
+
+const p = new TrackablePromise((resolve, reject, notify) => {
+    const countdown = x => {
+        if (x > 0) {
+            notify(`${20 * x}% remaining`);
+            setTimeout(() => countdown(--x), 1000);
+        } else {
+            resolve();
+        }
+    }
+
+    countdown(5);
+});
+
+p.notify(x => setTimeout(console.log, 0, 'progress:', x))
+    .notify(x => setTimeout(console.log, 0, 'a:', x));  // 连锁调用
+p.then(() => setTimeout(console.log, 0, 'completed'));
+// (约1秒后) progress: 80% remaining
+// (约2秒后) progress: 60% remaining
+// (约3秒后) progress: 40% remaining
+// (约4秒后) progress: 20% remaining
+// (约5秒后) completed
+```
+
