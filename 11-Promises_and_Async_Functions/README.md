@@ -652,3 +652,45 @@ C.then(() => console.log('G'));
 
   与 `Promise.all()` 类似，合成的期约会静默处理所有包含期约的拒绝操作 (一旦设置了 `catch()`)
 
+#### 4.串行期约合成
+
+基于后续期约使用之前期约的返回值来串联期约是期约的基本功能。这很像**函数合成**，即将多个函数合成一个函数
+
+```js
+const addTwo = x => x + 2;
+const addThree = x => x + 3;
+const addFive = x => x + 5;
+
+const addTen = x => Promise.resolve(x)
+.then(addTwo)
+.then(addThree)
+.then(addFive);
+
+addTen(8).then(console.log);  // 18
+```
+
+使用 `Array.prototype.reduce()` 重构
+
+```js
+const addTwo = x => x + 2;
+const addThree = x => x + 3;
+const addFive = x => x + 5;
+const addTen = x => [addTwo, addThree, addFive]
+.reduce((promise, fn) => promise.then(fn), Promise.resolve(x));
+
+addTen(8).then(console.log);  // 18
+```
+
+提炼出一个通用函数
+
+```js
+const addTwo = x => x + 2;
+const addThree = x => x + 3;
+const addFive = x => x + 5;
+const compose = (...fns) => x => fns.reduce((promise, fn) => promise.then(fn), Promise.resolve(x));
+const addTen = compose(addTwo, addThree, addFive);
+addTen(8).then(console.log);  // 18
+```
+
+
+

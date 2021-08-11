@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>串行期约合成</title>
+</head>
+<body>
+  <script>
+    // 把任意多个函数作为处理程序合成一个连续传值的期约连锁
+    const addTwo = x => x + 2;
+    const addThree = x => x + 3;
+    const addFive = x => x + 5;
+    const compose = (...fns) => x => fns.reduce((promise, fn) => promise.then(fn), Promise.resolve(x));
+    const addTen = compose(addTwo, addThree, addFive);
+    addTen(8).then(console.log);  // 18
+  </script>
+</body>
+</html>
