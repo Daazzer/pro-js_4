@@ -797,3 +797,11 @@ p.then(() => setTimeout(console.log, 0, 'completed'));
 // (约5秒后) completed
 ```
 
+## 11.3 异步函数
+
+`async/await`，是ES6期约模式在函数中的应用
+
+`async/await` 是 ES8 规范新增的，让同步的代码能够异步执行
+
+
+
