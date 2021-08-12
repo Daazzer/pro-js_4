@@ -807,5 +807,104 @@ p.then(() => setTimeout(console.log, 0, 'completed'));
 
 `async/await` 解决利用异步结构组织代码的问题
 
+#### 1.async
+
+`async` 关键字用于声明异步函数，可以用在函数声明，函数表达式，箭头函数和方法上
+
+```js
+async function foo() {}
+
+let bar = async function() {};
+
+let baz = async () => {};
+
+class Qux {
+    async qux() {}
+}
+```
+
+异步函数如果使用 `return` 关键字返回了值(如果没有 `return` 则返回 `undefined`)，这个值被 `Promise.resolve()` 包装成了一个期约对象，异步函数始终返回期约对象
+
+```js
+async function foo() {
+    console.log(1);
+    return 3;
+}
+
+foo.then(console.log);
+
+console.log(2);
+
+// 1
+// 2
+// 3
+```
+
+直接返回一个期约对象也是一样的
+
+```js
+async function foo() {
+    console.log(1);
+    return Promise.resolve(3);
+}
+
+foo.then(console.log);
+
+console.log(2);
+
+// 1
+// 2
+// 3
+```
+
+异步函数返回值期待(但实际上并不要求)一个实现 `thenable` 接口的对象，但常规值也可以
+
+如果返回的是实现 `thenable` 接口的对象，则这个对象可以由提供给 `then()` 的处理程序“解包”。如果不是，则返回的值就被当作已经解决的期约
+
+```js
+async function baz() {
+    const thenable = {
+        then(callback) { callback('baz'); }
+    };
+    
+    return thenable;
+}
+
+baz().then(console.log);
+// baz
+```
+
+在异步函数中抛出的错误会返回拒绝的期约
+
+```js
+async function foo() {
+	console.log(3);
+    throw 3;
+}
+
+// 给返回的期约添加一个拒绝处理程序
+foo().catch(console.log);
+console.log(2);
+// 1
+// 2
+// 3
+```
+
+拒绝期约的错误不会被异步函数捕获
+
+```js
+async function foo() {
+    console.log(1);
+    Promise.reject(3);
+}
+
+foo().catch(console.log);
+console.log(2);
+
+// 1
+// 2
+// Uncaught (in promise): 3
+```
+
 
 
