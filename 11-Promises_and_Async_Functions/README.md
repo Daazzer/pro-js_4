@@ -803,5 +803,9 @@ p.then(() => setTimeout(console.log, 0, 'completed'));
 
 `async/await` 是 ES8 规范新增的，让同步的代码能够异步执行
 
+### 11.3.1 异步函数
+
+`async/await` 解决利用异步结构组织代码的问题
+
 
 
