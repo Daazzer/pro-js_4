@@ -1123,7 +1123,7 @@ foo();
 // 1502
 ```
 
-#### 2.利用平行执行
+#### 2.利用并行执行
 
 ```js
 async function randomDelay(id) {
@@ -1188,4 +1188,6 @@ foo();
 // 3 finished
 // 877ms elapsed
 ```
+
+#### 3.串行执行期约
 
