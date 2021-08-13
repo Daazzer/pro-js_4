@@ -1103,3 +1103,23 @@ console.log(5);
 
 ### 11.3.3 异步函数策略
 
+#### 1.实现 sleep()
+
+实现类似于 Java 中的 `Tread.sleep()` 之类的函数，基本上通过 `setTimeout()` 利用 JavaScript 运行时的行为来实现的
+
+有了异步函数之后可以
+
+```js
+async function sleep(delay) {
+    return new Promise(resolve => setTimeout(resolve, delay));
+}
+
+async function foo() {
+    const t0 = Date.now();
+    await sleep(1500);  // 暂停约 1500 毫秒
+    console.log(Date.now() - t0);
+}
+foo();
+// 1502
+```
+
