@@ -1007,3 +1007,97 @@ console.log(2);
 必须在异步函数中使用，不能在顶级上下文中使用
 
 在同步函数内部使用 `await` 会抛出 `SyntaxError`
+
+### 11.3.2 停止和恢复执行
+
+以下的3个异步函数输出结果是相反的
+
+```js
+async function foo() {
+    console.log(await Promise.resolve('foo'));
+}
+
+async function bar() {
+	console.log(await 'bar');
+}
+
+async function baz() {
+    console.log('baz');
+}
+
+foo();
+bar();
+baz();
+
+// baz
+// bar
+// foo
+```
+
+异步函数如果不包含 `await` 关键字，基本上与同步函数没什么区别
+
+```js
+async function foo() {
+    console.log(2);
+}
+
+console.log(1);
+foo();
+console.log(3);
+
+// 1
+// 2
+// 3
+```
+
+JavaScript 运行时在碰到 `await` 关键字时，会记录在哪里暂停执行。等到 `await` 右边的值可用了，JavaScript 运行时会向消息队列中推送一个任务，这个任务会回复异步函数的执行
+
+```js
+async function foo() {
+    console.log(2);
+    await null;
+    console.log(4);
+}
+
+console.log(1);
+foo();
+console.log(3);
+
+// 1
+// 2
+// 3
+// 4
+```
+
+如果 `await` 后面是一个期约，此时，为了执行异步函数，实际上会有两个任务被添加到消息队列并被异步求值
+
+```js
+async function foo() {
+    console.log(2);
+    console.log(await Promise.resolve(8));  // 期约立即落定，把给 await 提供值的任务添加到消息队列
+    console.log(9);
+}
+
+async function bar() {
+    console.log(4);
+    console.log(await 6);
+    console.log(7);
+}
+
+console.log(1);
+foo();
+console.log(3);
+bar();
+console.log(5);
+
+// 1
+// 2
+// 3
+// 4
+// 5
+// 6
+// 7
+// 8
+// 9
+```
+
