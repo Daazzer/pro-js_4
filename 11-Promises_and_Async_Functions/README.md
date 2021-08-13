@@ -906,5 +906,99 @@ console.log(2);
 // Uncaught (in promise): 3
 ```
 
+#### 2.await
 
+使用 `await` 关键字可以暂停异步函数代码的执行
+
+```js
+async function foo() {
+    let p = new Promise(resolve => setTimeout(resolve, 1000, 3));
+    console.log(await p);
+}
+
+foo();
+// 3
+```
+
+`await` 关键字会暂停异步函数后面的代码，`await` 关键字同样是尝试“解包”对象的值
+
+```js
+async function foo() {
+    console.log(await Promise.resolve('foo'));
+}
+foo();
+// foo
+
+async function bar() {
+    return await Promise.resolve('bar');
+}
+bar().then(console.log);
+// bar
+
+// 1000 毫秒后打印"baz"
+async function baz() {
+    await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+    console.log('baz');
+}
+
+baz();
+// baz (1000ms后)
+```
+
+`await` 关键字期待(但实际上并不要求)一个实现 `thenable` 接口的对象，但常规值也可以，如果是，则对这个对象“解包”
+
+```js
+// 等待一个原始值
+async function foo() {
+    console.log(await 'foo');
+}
+
+foo();
+// foo
+
+// 等待一个实现了 thenable 接口的非期约对象
+async function baz() {
+    const thenable = {
+        then(callback) { callback('baz'); }
+    };
+    console.log(await thenable);
+}
+
+baz();
+// baz
+```
+
+等待会抛出错误的同步操作，会返回拒绝期约
+
+```js
+async function foo() {
+    console.log(1);
+    await (() => { throw 3; })();
+}
+
+// 给返回的期约添加一个拒绝处理程序
+foo().catch(console.log);
+console.log(2);
+
+// 1
+// 2
+// 3
+```
+
+拒绝的期约使用 `await` 会释放(unwrap)错误值
+
+```js
+async function foo() {
+    console.log(1);
+    await Promise.reject(3);
+    console.log(4);  // 这行代码不会执行
+}
+
+foo().catch(console.log);
+console.log(2);
+
+// 1
+// 2
+// 3
+```
 
