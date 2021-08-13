@@ -1206,3 +1206,21 @@ async function addTen(x) {
 addTen(9).then(console.log);  // 19
 ```
 
+#### 4.栈追踪与内存管理
+
+```js
+function fooPromiseExecutor(resolve, reject) {
+    setTimeout(reject, 1000, 'bar');
+}
+
+async function foo() {
+    await new Promise(fooPromiseExecutor);
+}
+foo();
+
+// Uncaught (in promise) bar
+// foo
+// async function (async)
+// foo
+```
+
