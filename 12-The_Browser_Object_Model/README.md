@@ -157,3 +157,24 @@ wroxWin.close();
 #### 2.安全限制
 
 在网页加载过程中调用 `window.open()` 没有效果
+
+#### 3.弹窗屏蔽程序
+
+检测 `window.open()` 是否返回 `null` 就知道弹窗是否被屏蔽了
+
+```js
+let blocked = false;
+
+try {
+    let wroxWin = window.open("http://www.wrox.com", "_blank");
+    if (wroxWin == null) {
+        blocked = true
+    }
+} catch (ex) {
+    blocked = true;
+}
+if (blocked) {
+    alert("The popup was blocked");
+}
+```
+
