@@ -131,3 +131,26 @@ CSS 像素是 Web 开发中使用的统一像素单位。这个单位的背后�
 
 第二个参数也可以是一个特殊的窗口名，比如 `_self`，`_parent`，`_top`，`_blank`
 
+#### 1.弹出窗口
+
+如果 `window.open()` 第二个参数不是已有窗口，则会打开一个新窗口或标签。第三个参数，即特性字符串，用于指定新窗口的配置
+
+```js
+window.open("http://www.wrox.com",
+           "wroxWindow",
+           "height=400,width=400,top=10,left=10,resizable=yes");
+```
+
+返回一个对新建窗口的引用
+
+还可以用 `close()` 方法关闭新打开的窗口
+
+```js
+const wroxWin = window.open("http://www.wrox.com",
+           "wroxWindow",
+           "height=400,width=400,top=10,left=10,resizable=yes");
+wroxWin.close();
+```
+
+`window.opener` 指向打开它的窗口
+
