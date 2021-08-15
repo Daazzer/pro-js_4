@@ -83,3 +83,43 @@ CSS 像素是 Web 开发中使用的统一像素单位。这个单位的背后�
 - `resizeBy()` 将浏览器从当前大小再扩展缩放
 
 与移动窗口方法一样，缩放窗口可能会被浏览器禁用
+
+### 12.1.5 视口位置
+
+- 度量文档相对于视口滚动距离的属性
+  - `window.pageXOffset`/`window.scrollX`
+  - `window.pageYOffset`/`window.scrollY`
+
+- 滚动页面方法
+  - `scroll()` 与 `scrollTo()` 效果一样
+  - `scrollTo()`
+  - `scrollBy()`
+
+  三个方法都接收表示相对视口距离的 `x` 和 `y` 坐标
+
+  ```js
+  // 相对于当前视口向下滚动 100 像素
+  window.scrollBy(0, 100);
+  
+  // 滚动到页面左上角
+  window.scrollTo(0, 0);
+  ```
+
+  这几个方法都接收一个 `ScrollToOptions` 字典，还可以通过 `behavior` 属性告诉浏览器是否平滑滚动
+
+  ```js
+  // 正常滚动
+  window.scrollTo({
+      left: 100,
+      top: 100,
+      behavior: 'auto'
+  });
+  
+  // 平滑滚动
+  window.scrollTo({
+      left: 100,
+      top: 100,
+      behavior: 'smooth'
+  });
+  ```
+
