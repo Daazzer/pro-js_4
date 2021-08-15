@@ -293,3 +293,21 @@ for (let param of searchParams) {
 // ["num", "10"]
 ```
 
+### 12.2.2 操作地址
+
+`location` 对象修改浏览器地址
+
+- `location.assign()`
+- `location.href` 最常见
+- `window.location`
+- `location.replace()` 接收一个 URL，但重新加载后不会添加历史记录
+- `location.reload()` 重新加载当前页面
+
+```js
+window.location = "http://www.wrox.com";
+location.href = "http://www.wrox.com";
+
+location.reload();  // 重新加载，可能是重缓存加载
+location.reload(true);  // 重新加载，从服务器加载
+```
+
