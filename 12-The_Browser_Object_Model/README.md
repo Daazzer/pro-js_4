@@ -154,3 +154,6 @@ wroxWin.close();
 
 `window.opener` 指向打开它的窗口
 
+#### 2.安全限制
+
+在网页加载过程中调用 `window.open()` 没有效果
