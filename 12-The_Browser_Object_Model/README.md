@@ -311,3 +311,6 @@ location.reload();  // 重新加载，可能是重缓存加载
 location.reload(true);  // 重新加载，从服务器加载
 ```
 
+## 12.3 navigator 对象
+
+`navigator` 对象的属性通常用于确定浏览器类型
