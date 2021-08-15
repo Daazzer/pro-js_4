@@ -314,3 +314,32 @@ location.reload(true);  // 重新加载，从服务器加载
 ## 12.3 navigator 对象
 
 `navigator` 对象的属性通常用于确定浏览器类型
+
+### 12.3.1 检测插件
+
+- `navigator.plugins`
+  - 返回一个插件数组，每一项都包含以下属性
+    - `name` 插件名
+    - `filename` 插件的文件名
+    - `length` 当前插件处理的 MIME 类型数量
+
+#### 旧版本 IE 中的插件检测
+
+```js
+function hasIEPlugin(name) {
+    try {
+        new ActiveXObject(name);
+        return true;
+    } catch (err) {
+        return false;
+    }
+}
+
+// 检测 Flash
+alert(hasIEPlugin("ShockwaveFlash.ShockwaveFlash"));
+
+// 检测 QuickTime
+alert(hasIEPlugin("QuickTime.QuickTime"));
+```
+
+> **注意** `plugins` 有一个 `refresh()` 方法，接收一个布尔值，如果传入 `true` 则刷新插件和页面，否则只刷新插件
