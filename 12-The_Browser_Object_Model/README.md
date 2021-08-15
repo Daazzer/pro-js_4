@@ -354,3 +354,6 @@ navigator.registerProtocolHandler("mailto",
                                  "Some Mail Client");
 ```
 
+## 12.4 screen 对象
+
+保存了浏览器窗口外面的客户端显示器信息
