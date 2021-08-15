@@ -256,3 +256,40 @@ if (blocked) {
 
 `location.search` 返回了从问号开始直到 URL 末尾的所有内容，但没有办法访问每个查询参数
 
+#### URLSearchParams
+
+`URLSearchParams` 提供了一组标准 API 方法，通过它们可以检查和修改查询字符串，给此构造函数传入一个查询字符串，就可以创建一个实例
+
+返回一个可迭代对象
+
+这个实例上暴露了
+
+- `get()`
+- `set()`
+- `delete()`
+
+```js
+let qs = "?q=javascript&num=10";
+let searchParams = new URLSearchParams(qs);
+
+searchParams.has("num");  // true
+searchParams.get("num");  // 10
+
+searchParams.set("page", "3");
+searchParams.delete("q");
+console.log(searchParams.toString());  // " num=10&page=3"
+```
+
+可迭代对象
+
+```js
+let qs = "?q=javascript&num=10";
+let searchParams = new URLSearchParams(qs);
+
+for (let param of searchParams) {
+    console.log(param);
+}
+// ["q", "javascript"]
+// ["num", "10"]
+```
+
