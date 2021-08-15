@@ -343,3 +343,14 @@ alert(hasIEPlugin("QuickTime.QuickTime"));
 ```
 
 > **注意** `plugins` 有一个 `refresh()` 方法，接收一个布尔值，如果传入 `true` 则刷新插件和页面，否则只刷新插件
+
+### 12.3.2 注册处理程序
+
+- `navigator.registerProtocolHandler()` 吧一个网站注册为处理某种特定类型信息应用程序，接收3个参数：要处理的协议、处理该协议的 URL、应用名称
+
+```js
+navigator.registerProtocolHandler("mailto",
+                                 "http://www.somemailclient.com?cmd=%s",
+                                 "Some Mail Client");
+```
+
