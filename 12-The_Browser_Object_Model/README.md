@@ -247,3 +247,7 @@ if (blocked) {
   - 单击了取消，返回 `null`
 - `find()` 浏览器菜单上的查找，异步显示
 - `print()` 浏览器打印窗口
+
+## 12.2 location 对象
+
+`location` 提供了当前窗口中加载文档的信息，以及通常的导航功能，它既是 `window` 属性，也是 `document` 的属性
