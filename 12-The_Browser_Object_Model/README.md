@@ -251,3 +251,8 @@ if (blocked) {
 ## 12.2 location 对象
 
 `location` 提供了当前窗口中加载文档的信息，以及通常的导航功能，它既是 `window` 属性，也是 `document` 的属性
+
+### 12.2.1 查询字符串
+
+`location.search` 返回了从问号开始直到 URL 末尾的所有内容，但没有办法访问每个查询参数
+
