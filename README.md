@@ -11,4 +11,5 @@
 - [第 9 章 代理与反射](./9-Proxies_and_Reflect)
 - [第 10 章 函数](./10-Functions)
 - [第 11 章 期约与异步函数](./11-Promises_and_Async_Functions)
+- [第 12 章 BOM](./12-The_Browser_Object_Model)
 
