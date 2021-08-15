@@ -39,3 +39,8 @@ var newValue = oldValue;  // 抛错
 var newValue = window.oldValue;  // undefined
 ```
 
+### 12.1.2 窗口关系
+
+`top` 对象始终指向最上层（最外层）窗口，即浏览器窗口本身。而 `parent` 对象则始终指向当前窗口的父窗口。如果当前窗口是最上层窗口，则 `parent` 等于 `top`
+
+还有一个 `self` 对象，它是终极的 `window` 属性
