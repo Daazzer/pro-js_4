@@ -357,3 +357,8 @@ navigator.registerProtocolHandler("mailto",
 ## 12.4 screen 对象
 
 保存了浏览器窗口外面的客户端显示器信息
+
+## 12.5 history 对象
+
+表示当前窗口首次使用以来用户的导航历史记录
+
