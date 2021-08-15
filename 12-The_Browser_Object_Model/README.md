@@ -362,3 +362,8 @@ navigator.registerProtocolHandler("mailto",
 
 表示当前窗口首次使用以来用户的导航历史记录
 
+### 12.5.1 导航
+
+- `history.go()` 接收一个参数，正值表示向前导航多少步，负值表示向后导航多少步
+- `history.back()` 相当于点击了浏览器的后退按钮
+- `history.forward()` 相当于点击了浏览器的前进按钮
