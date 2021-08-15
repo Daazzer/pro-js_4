@@ -69,3 +69,17 @@ CSS 像素是 Web 开发中使用的统一像素单位。这个单位的背后�
 物理像素与 CSS 像素之间的转换比率由 `window.devicePixelRatio` 属性提供，实际上与每英寸像素数（DPI，dots per inch）是对应的
 
 例如：1920x1080 转换为 640x320 的设备，`window.devicePixelRatio` 的值就是 3
+
+### 12.1.4 窗口大小
+
+- `outerWidth` 返回浏览器自身宽度
+- `outerHeight` 返回浏览器自身高度
+- `innerWidth` 返回浏览器页面视口宽度（不包含浏览器边框和工具栏）
+- `innerHeight` 返回浏览器页面视口高度（不包含浏览器边框和工具栏）
+
+在移动设备上，`window.innerWidth` 和 `window.innerHeight` 返回视口的大小，也就是页面可视区域的大小，但是 `document.documentElement.clientWidth` 和 `document.documentElement.clientHeight` 中提供了相同的信息
+
+- `resizeTo()` 将浏览器缩放到传入的参数的大小
+- `resizeBy()` 将浏览器从当前大小再扩展缩放
+
+与移动窗口方法一样，缩放窗口可能会被浏览器禁用
