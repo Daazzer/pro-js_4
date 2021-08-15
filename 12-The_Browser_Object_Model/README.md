@@ -178,3 +178,62 @@ if (blocked) {
 }
 ```
 
+### 12.1.7 定时器
+
+- `setTimeout()` 在一定时间后执行某些代码
+
+  - 返回一个表示该超时排期的数值 ID。这个超时 ID 是被排期执行代码的唯一标识符，可以用于取消该任务
+
+- `setInterval()` 用于指定每隔一段时间执行某些代码
+
+  - 返回一个循环定时 ID
+
+- `clearTimeout()` 取消等待中的排期任务，传入超时 ID
+
+  ```js
+  // 设置超时任务
+  let timeoutId = setTimeout(() => alert("Hello world!"), 1000);
+  
+  // 取消超时任务
+  clearTimeout(timeoutId);
+  ```
+
+- `clearInterval()` 用于取消定时器，传入定时器 ID
+
+  ```js
+  let num = 0, intervalId = null;
+  let max = 10;
+  
+  let incrementNumber = function() {
+      num++;
+      
+      // 如果达到最大值，则取消定时器
+      if (num == max) {
+          clearInterval(intervalId);
+      } else {
+          alert("Done");
+      }
+  };
+  ```
+
+  使用 `setTimeout()` 实现，推荐做法
+
+  ```js
+  let num = 0;
+  let max = 10;
+  let incrementNumber = function() {
+      num++;
+  
+      // 如果没有达到最大值，再设置一个超时任务
+      if (num < max) {
+          setTimeout(incrementNumber, 500);
+      } else {
+          alert("Done");
+      }
+  };
+  
+  setTimeout(incrementNumber, 500);
+  ```
+
+  在实践中很少用 `setInterval()`，不推荐使用
+
