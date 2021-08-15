@@ -367,3 +367,20 @@ navigator.registerProtocolHandler("mailto",
 - `history.go()` 接收一个参数，正值表示向前导航多少步，负值表示向后导航多少步
 - `history.back()` 相当于点击了浏览器的后退按钮
 - `history.forward()` 相当于点击了浏览器的前进按钮
+
+### 12.5.2 历史状态管理
+
+- 早期点击前进后退按钮改变页面状态通过 `hashchange` 事件解决，会在页面的 URL 的散列变化时被触发
+
+- `history.pushState()` 接收三个参数：一个 `state` 对象，一个新状态的标题和一个(可选的)相对 `URL`
+
+  - 执行后，状态信息会被推到历史记录中，浏览器地址栏也会改变以反映新的相对 URL，即使 `location.href` 返回的是地址栏中的内容，浏览器页不会向服务器发送请求。为防止滥用，这个状态的对象大小是有限的，通常在 500KB~1MB 之内
+
+  ```js
+  let stateObject = { foo: "bar" };
+  history.pushState(stateObject, "My title", "baz.html");
+  ```
+
+- `history.replaceState()` 传入与 `history.pushState()` 相同的参数，但是不会创建新的历史记录
+
+- `history.state` 获取当前的状态对象
