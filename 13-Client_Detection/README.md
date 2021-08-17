@@ -4,4 +4,9 @@
 
 只需检测自己关心的能力是否存在即可
 
-- IE5前：`document.all` 替代 `document.getElementById()`
+IE5前：`document.all` 替代 `document.getElementById()`
+
+两个重要概念
+
+- 先检测最常用的方式
+- 必须检测切实需要的特性
