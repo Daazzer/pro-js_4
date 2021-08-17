@@ -24,3 +24,12 @@ function isSortable(object) {
 
 ### 13.1.2 基于能力检测
 
+#### 1.检测特性
+
+如果你的程序需要使用特定的浏览器能力，最好集中检测
+
+```js
+// 检测是否具有 DOM Level 1 能力
+let hasDOM1 = !!(document.getElementById && document.createElement && document.getElementByTagName);
+```
+
