@@ -33,3 +33,8 @@ function isSortable(object) {
 let hasDOM1 = !!(document.getElementById && document.createElement && document.getElementByTagName);
 ```
 
+#### 2.检测浏览器
+
+用于确认用户使用的什么浏览器
+
+`navigator.userAgent` 属性
