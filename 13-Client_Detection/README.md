@@ -10,3 +10,15 @@ IE5前：`document.all` 替代 `document.getElementById()`
 
 - 先检测最常用的方式
 - 必须检测切实需要的特性
+
+### 13.1.1 安全能力检测
+
+尽量使用 `typeof` 操作符
+
+```js
+// 检测 sort 是不是函数
+function isSortable(object) {
+    return typeof object.sort == "function";
+}
+```
+
