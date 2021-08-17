@@ -22,3 +22,5 @@ function isSortable(object) {
 }
 ```
 
+### 13.1.2 基于能力检测
+
