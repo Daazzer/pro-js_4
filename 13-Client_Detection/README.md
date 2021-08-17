@@ -38,3 +38,7 @@ let hasDOM1 = !!(document.getElementById && document.createElement && document.g
 用于确认用户使用的什么浏览器
 
 `navigator.userAgent` 属性
+
+#### 3.能力检测的局限
+
+检测一种或一组能力，并不总能确定使用的是哪种浏览器
