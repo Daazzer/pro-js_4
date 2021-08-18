@@ -175,3 +175,6 @@ console.log(window.navigator.userAgent);
 
 检测操作系统/系统架构信息
 
+#### 2.navigator.vendor
+
+浏览器开发商信息
