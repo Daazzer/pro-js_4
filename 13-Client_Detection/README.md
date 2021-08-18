@@ -54,3 +54,29 @@ let hasDOM1 = !!(document.getElementById && document.createElement && document.g
 HTTP 规范(1.0和1.1)要求浏览器应该向服务器发送包含浏览器名称和版本信息的简短字符串
 
 这个规范进一步要求用户代理字符串应该是“标记/版本”形式的产品列表
+
+#### 1.早期浏览器
+
+- 1993 年 Mosaic：`Mosaic/0.9`
+
+- Netscape Navigator 2：`Mozilla/Version [language] (platform; Encryption)`
+
+  - Language: 语言代码
+
+  - Platform: 浏览器所在的操作系统平台
+
+  - Encryption: 安全加密类型
+
+    `Mozilla/2.02 [fr] (WinNT; I)`
+
+#### 2.Netscape Navigator 3 和 IE3
+
+- 1996 Netscape Navigator 3：`Mozilla/Version [language] (platform; Encryption[; OS-or-CPU description])`
+
+  `Mozilla/3.0 (Win95; U)`
+
+- IE3：`Mozilla/2.0 (compatible; MSIE Version; Operating System)`
+
+  `Mozilla/2.0 (compatible; MSIE 3.02; Windows 95)`
+
+  IE 将自己伪造成 Mozilla，结果引发了争议，违反了浏览器标识初衷
