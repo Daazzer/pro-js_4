@@ -193,3 +193,7 @@ console.log(window.navigator.userAgent);
 
 ### 13.3.2 浏览器元数据
 
+#### 1.Geolocation API
+
+`navigator.geolocation` 暴露了 Geolocation API，让浏览器脚本感知当前设备位置信息，返回一个 `Geolocation `
+
