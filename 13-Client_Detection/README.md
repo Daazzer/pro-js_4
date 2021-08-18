@@ -212,3 +212,6 @@ console.log(window.navigator.userAgent);
 
 `navigator.hardwareConcurrency` 返回浏览器支持的逻辑处理器核心数量
 
+#### 2.设备内存大小
+
+`navigator.deviceMemory`
