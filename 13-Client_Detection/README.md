@@ -96,3 +96,14 @@ Gecko 渲染引擎是 Firefox 的核心
 
 - Netscape6：`Mozilla/MozillaVersion (platform; Encryption; Os-or-CPU; Language; PrereleaseVersion)Gecko/GeckoVersion ApplicationProduct/ApplicationProductionVersion`
 
+#### 5.Webkit
+
+2003 年苹果发布 Safari，Safari 的渲染引擎叫 Webkit，是基于 Linux 平台浏览器 Konqueror 使用的渲染引擎 KHTML 开发的
+
+- Safari：`Mozilla/5.0 (Platform; Encryption; Os-or-CPU; Language) AppleWebkit/AppleWebkitVersion (KHTML, like Gecko) Safari/SafariVersion`
+
+#### 6.Konqueror
+
+Linux 桌面环境打包发布的浏览器，基于开源引擎 `KHTML`
+
+- Konqueror 3.2：`Mozilla/5.0 (compatible; Konqueror/KonquerorVersion; Os-or-CPU) KHTML/KHTMLVersion(KHTML, like Gecko)`
