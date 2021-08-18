@@ -215,3 +215,8 @@ console.log(window.navigator.userAgent);
 #### 2.设备内存大小
 
 `navigator.deviceMemory`
+
+#### 3.最大触点数
+
+`navigator.maxTouchPoints`
+
