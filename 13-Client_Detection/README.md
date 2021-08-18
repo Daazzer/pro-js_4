@@ -168,3 +168,10 @@ console.log(window.navigator.userAgent);
 ## 13.3 软件与硬件检测
 
 暴露在 `window.navigator` 上
+
+### 13.3.1 识别浏览器与操作系统
+
+#### 1.navigator.oscpu
+
+检测操作系统/系统架构信息
+
