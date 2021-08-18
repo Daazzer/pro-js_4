@@ -178,3 +178,7 @@ console.log(window.navigator.userAgent);
 #### 2.navigator.vendor
 
 浏览器开发商信息
+
+#### 3.navigator.platform
+
+浏览器所在的操作系统
