@@ -197,3 +197,8 @@ console.log(window.navigator.userAgent);
 
 `navigator.geolocation` 暴露了 Geolocation API，让浏览器脚本感知当前设备位置信息，返回一个 `Geolocation `
 
+#### 2.Connection State 和 NetworkInformation API
+
+- 表示网络连接状态：`navigator.onLine`
+- 连接状态：`navigator.connection`
+
