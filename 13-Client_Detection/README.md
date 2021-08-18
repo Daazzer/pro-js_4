@@ -42,3 +42,12 @@ let hasDOM1 = !!(document.getElementById && document.createElement && document.g
 #### 3.能力检测的局限
 
 检测一种或一组能力，并不总能确定使用的是哪种浏览器
+
+## 13.2 用户代码检测
+
+通过用户代理字符串确定使用的是什么浏览器。通过 `navigator.userAgent` 访问
+
+在客户端，用户代理检测被认为是不可靠的，只应该在没有其他选项时再考虑
+
+
+
