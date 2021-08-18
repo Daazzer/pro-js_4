@@ -80,3 +80,13 @@ HTTP 规范(1.0和1.1)要求浏览器应该向服务器发送包含浏览器名�
   `Mozilla/2.0 (compatible; MSIE 3.02; Windows 95)`
 
   IE 将自己伪造成 Mozilla，结果引发了争议，违反了浏览器标识初衷
+
+#### 3.Netscape Communicator 4 和 IE4~8
+
+- 1997 年 8 月，Netscape Communicator 4：`Mozilla/Version (platform; Encryption [; Os-or-CPU description])`
+- IE4：`Mozilla/4.0 (compatible; MSIE Version; Operating System)`
+  - IE4 ~ IE7 Mozilla 版本号没变过，只有 Version 变
+- IE8：`Mozilla/4.0 (compatible; MSIE Version; Operating System; Trident/TridentVersion)`
+  - "Trident" 是浏览器引擎的代号，为了让开发者知道什么时候 IE8 运行兼容模式
+- IE9：`Mozilla/5.0 (compatible; MSIE Version; Operating System; Trident/TridentVersion)`
+
