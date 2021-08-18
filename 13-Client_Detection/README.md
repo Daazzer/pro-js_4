@@ -114,3 +114,14 @@ Blink 作为渲染引擎，V8 作为 JavaScript 引擎，包好了所有 Webkit 
 
 `Mozilla/5.0 (Platform; Encryption; Os-or-CPU; Language) AppleWebkit/AppleWebkitVersion (KHTML, like Gecko) Chrome/ChromeVersion Safari/SafariVersion`
 
+#### 8.Opera
+
+- Opera 8 之前：`Opera/Version (Os-or-CPU; Encryption) [Language]`
+- Opera 8：`Opera/Version (Os-or-CPU; Encryption; Language)`
+- Opera 9：
+  - `Mozilla/5.0 (Windows NT 5.1; U; en; rv: 1.8.1) Gecko/20061208 Firefox/2.0.0 Opera 9.50`
+  - `Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.50`
+- Opera 10：`Opera/9.80 (OS-or-CPU; Encryption; Language) Presto/PrestoVersion Version/Version`
+  - Presto 是 Opera 的渲染引擎
+- Opera52：`Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebkit/537.36 (KHTML, Like Gecko) Chrome/65.0.3325.181 Safari/537.36 OPR/52.0.2871.64`
+
