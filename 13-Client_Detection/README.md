@@ -145,3 +145,22 @@ console.log(window.navigator.userAgent);
 // foobar
 ```
 
+#### 2.分析浏览器
+
+- 浏览器
+- 浏览器版本
+- 浏览器渲染引擎
+- 设备类型（桌面/移动）
+- 设备生产商
+- 设备型号
+- 操作系统
+- 操作系统版本
+
+第三方用户代理解析程序
+
+- [Bowser](https://github.com/lancedikson/bowser)
+- [UAParser.js](https://github.com/faisalman/ua-parser-js)
+- [Platform.js](https://github.com/bestiejs/platform.js)
+- [CURRENT-DEVICE](https://github.com/matthewhudson/current-device)
+- [Google Closure](https://github.com/google/closure-library)
+- [Mootools](https://github.com/mootools/mootools-core)
