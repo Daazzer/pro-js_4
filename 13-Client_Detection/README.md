@@ -182,3 +182,8 @@ console.log(window.navigator.userAgent);
 #### 3.navigator.platform
 
 浏览器所在的操作系统
+
+#### 4.screen.colorDepth 和 screen.pixelDepth
+
+显示器每像素颜色的位深
+
