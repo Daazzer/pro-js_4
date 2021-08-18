@@ -132,3 +132,7 @@ Blink 作为渲染引擎，V8 作为 JavaScript 引擎，包好了所有 Webkit 
 - iOS：`Mozilla/5.0 (Platform; Encryption; Os-or-CPU Like Mac OS X; Language) AppleWebkit/AppleWebkitVersion (KHTML, like Gecko) Version/BrowserVersion Mobile/MobileVersion Safari/SafariVersion`
 - Android(没有 `Mobile` 后面的版本号)：`Mozilla/5.0 (Platform; Encryption; Os-or-CPU Like Mac OS X; Language) AppleWebkit/AppleWebkitVersion (KHTML, like Gecko) Version/BrowserVersion Mobile Safari/SafariVersion`
 
+### 13.2.2 浏览器分析
+
+`window.navigator.userAgent`
+
