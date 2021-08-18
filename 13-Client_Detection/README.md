@@ -202,3 +202,7 @@ console.log(window.navigator.userAgent);
 - 表示网络连接状态：`navigator.onLine`
 - 连接状态：`navigator.connection`
 
+#### 3.Battery Status API
+
+表示设备电池及充电状态 `navigator.getBattery()`
+
