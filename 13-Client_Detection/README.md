@@ -107,3 +107,10 @@ Gecko 渲染引擎是 Firefox 的核心
 Linux 桌面环境打包发布的浏览器，基于开源引擎 `KHTML`
 
 - Konqueror 3.2：`Mozilla/5.0 (compatible; Konqueror/KonquerorVersion; Os-or-CPU) KHTML/KHTMLVersion(KHTML, like Gecko)`
+
+#### 7.Chrome
+
+Blink 作为渲染引擎，V8 作为 JavaScript 引擎，包好了所有 Webkit 信息，加上 Chrome 及版本信息
+
+`Mozilla/5.0 (Platform; Encryption; Os-or-CPU; Language) AppleWebkit/AppleWebkitVersion (KHTML, like Gecko) Chrome/ChromeVersion Safari/SafariVersion`
+
