@@ -90,3 +90,9 @@ HTTP 规范(1.0和1.1)要求浏览器应该向服务器发送包含浏览器名�
   - "Trident" 是浏览器引擎的代号，为了让开发者知道什么时候 IE8 运行兼容模式
 - IE9：`Mozilla/5.0 (compatible; MSIE Version; Operating System; Trident/TridentVersion)`
 
+#### 4.Gecko
+
+Gecko 渲染引擎是 Firefox 的核心
+
+- Netscape6：`Mozilla/MozillaVersion (platform; Encryption; Os-or-CPU; Language; PrereleaseVersion)Gecko/GeckoVersion ApplicationProduct/ApplicationProductionVersion`
+
