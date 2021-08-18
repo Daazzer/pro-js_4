@@ -187,3 +187,7 @@ console.log(window.navigator.userAgent);
 
 显示器每像素颜色的位深
 
+#### 5.screen.orientation
+
+返回 `ScreenOrientation` API，表示屏幕方向信息
+
