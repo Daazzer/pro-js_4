@@ -206,3 +206,5 @@ console.log(window.navigator.userAgent);
 
 表示设备电池及充电状态 `navigator.getBattery()`
 
+### 13.3.3 硬件
+
