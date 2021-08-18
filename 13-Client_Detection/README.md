@@ -208,3 +208,7 @@ console.log(window.navigator.userAgent);
 
 ### 13.3.3 硬件
 
+#### 1.处理器核心数
+
+`navigator.hardwareConcurrency` 返回浏览器支持的逻辑处理器核心数量
+
