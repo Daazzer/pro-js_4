@@ -136,3 +136,12 @@ Blink 作为渲染引擎，V8 作为 JavaScript 引擎，包好了所有 Webkit 
 
 `window.navigator.userAgent`
 
+#### 1.伪造用户代理
+
+```js
+window.navigator.__defineGetter__('userAgent', () => 'foobar');
+
+console.log(window.navigator.userAgent);
+// foobar
+```
+
