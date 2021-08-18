@@ -191,3 +191,5 @@ console.log(window.navigator.userAgent);
 
 返回 `ScreenOrientation` API，表示屏幕方向信息
 
+### 13.3.2 浏览器元数据
+
