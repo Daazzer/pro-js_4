@@ -164,3 +164,7 @@ console.log(window.navigator.userAgent);
 - [CURRENT-DEVICE](https://github.com/matthewhudson/current-device)
 - [Google Closure](https://github.com/google/closure-library)
 - [Mootools](https://github.com/mootools/mootools-core)
+
+## 13.3 软件与硬件检测
+
+暴露在 `window.navigator` 上
