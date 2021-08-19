@@ -27,18 +27,18 @@ DOM Level 1 描述了名为 `Node` 的接口，所有 DOM 节点类型都必须�
 
 12 种节点类型：
 
-- `Node.ELEMENT_NODE`(1)
-- `Node.ATTRIBUTE_NODE`(2)
-- `Node.TEXT_NODE`(3)
-- `Node.CDATA_SECTION_NODE`(4)
-- `Node.ENTITY_REFERENCE_NODE`(5)
-- `Node.ENTITY_NODE`(6)
-- `Node.PROCESSING_INSTRUCTION_NODE`(7)
-- `Node.COMMENT_NODE`(8)
-- `Node.DOCUMENT_NODE`(9)
-- `Node.DOCUMENT_TYPE_NODE`(10)
-- `Node.DOCUMENT_FRAGMENT_NODE`(11)
-- `Node.NOTATION_NODE`(12)
+- `Node.ELEMENT_NODE` (1)
+- `Node.ATTRIBUTE_NODE` (2)
+- `Node.TEXT_NODE` (3)
+- `Node.CDATA_SECTION_NODE` (4)
+- `Node.ENTITY_REFERENCE_NODE` (5)
+- `Node.ENTITY_NODE` (6)
+- `Node.PROCESSING_INSTRUCTION_NODE` (7)
+- `Node.COMMENT_NODE` (8)
+- `Node.DOCUMENT_NODE` (9)
+- `Node.DOCUMENT_TYPE_NODE` (10)
+- `Node.DOCUMENT_FRAGMENT_NODE` (11)
+- `Node.NOTATION_NODE` (12)
 
 #### 1.nodeName 与 nodeValue
 
