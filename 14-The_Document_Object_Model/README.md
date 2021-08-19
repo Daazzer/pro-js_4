@@ -16,3 +16,27 @@ DOM Level 1 在 1998 年成为 W3C 推荐标准
 - XML 任何文档元素都可能成为文档元素
 
 DOM 中共有 12 种节点类型
+
+### 14.1.1 Node 类型
+
+DOM Level 1 描述了名为 `Node` 的接口，所有 DOM 节点类型都必须实现的。在 JavaScript 中被实现为 `Node` 类型
+
+所有节点类型都继承 `Node` 类型，因此所有类型都共享相同的基本属性方法
+
+每个节点都有 `nodeType` 属性，表示节点的类型
+
+12 种节点类型：
+
+- `Node.ELEMENT_NODE`(1)
+- `Node.ATTRIBUTE_NODE`(2)
+- `Node.TEXT_NODE`(3)
+- `Node.CDATA_SECTION_NODE`(4)
+- `Node.ENTITY_REFERENCE_NODE`(5)
+- `Node.ENTITY_NODE`(6)
+- `Node.PROCESSING_INSTRUCTION_NODE`(7)
+- `Node.COMMENT_NODE`(8)
+- `Node.DOCUMENT_NODE`(9)
+- `Node.DOCUMENT_TYPE_NODE`(10)
+- `Node.DOCUMENT_FRAGMENT_NODE`(11)
+- `Node.NOTATION_NODE`(12)
+
