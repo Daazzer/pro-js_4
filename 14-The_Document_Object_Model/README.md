@@ -61,20 +61,14 @@ let count = someNode.childNodes.length;
 每个节点都有：
 
 - `parentNode` 属性，指向其 DOM 树中的父元素。`childNodes` 中的所有节点都有同一个父元素
-
 - `childNodes` 列表中的每个节点都是同一列表中其他节点的同胞节点。使用 `previousSibling` 和 `nextSibling` 可以在这个列表的节点间导航，第一个节点的 `previousSibling` 和最后一个节点的 `nextSibling` 都是 `null`
-
 -  `firstChild` 与 `lastChild` 表示第一个与最后一个子节点
-
 - `hasChildNodes()` 方法检测当前节点是否含有子节点
-
 - 所有节点都有一个 `ownerDocument` 属性，指向文档节点
 
 #### 3.操纵节点
 
 - `appendChild` 用于在 `childNodes` 列表末尾添加节点，如果把文档中已存在的节点传给 `appendChild()`，则这个节点会从之前的位置被转移到新位置
-
 - `insertBefore()` 接收两个参数，要插入的节点与参照节点，将节点变为参照节点的前一个同胞，如果参照节点为 `null` 则效果与 `appendChild()` 相同
-
 - `replaceChild()` 接收两个参数，要插入的节点与要替换的节点。要替换的节点会被返回并从文档树中删除
 - `removeChild()` 接收一个参数，要删除的节点。用于移除文档中的节点
