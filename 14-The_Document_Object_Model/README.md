@@ -43,3 +43,30 @@ DOM Level 1 描述了名为 `Node` 的接口，所有 DOM 节点类型都必须�
 #### 1.nodeName 与 nodeValue
 
 对元素节点而言，`nodeName` 始终等于元素的标签名，`nodeValue` 始终等于 `null`
+
+#### 2.节点关系
+
+父子关系与兄弟关系
+
+每个节点都有一个 `childNodes` 属性，其中包好一个 `NodeList` 实例（一个类数组对象），用于存储可以按位置存取的有序节点。
+
+`NodeList` 是实时的活动对象，不是内容快照
+
+使用中括号或 `item()` 方法访问 `NodeList` 中的元素
+
+```js
+let firstChild = someNode.childNodes[0];
+let secondChild = someNode.childNodes.item(1);
+let count = someNode.childNodes.length;
+```
+
+每个节点都有一个 `parentNode` 属性，指向其 DOM 树中的父元素。`childNodes` 中的所有节点都有同一个父元素
+
+`childNodes` 列表中的每个节点都是同一列表中其他节点的同胞节点。使用 `previousSibling` 和 `nextSibling` 可以在这个列表的节点间导航，第一个节点的 `previousSibling` 和最后一个节点的 `nextSibling` 都是 `null`
+
+父节点的 `firstChild` 与 `lastChild` 表示第一个与最后一个子节点
+
+节点的 `hasChildNodes()` 方法检测当前节点是否含有子节点
+
+所有节点都有一个 `ownerDocument` 属性，指向文档节点
+
