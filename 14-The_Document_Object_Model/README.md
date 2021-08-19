@@ -40,3 +40,6 @@ DOM Level 1 描述了名为 `Node` 的接口，所有 DOM 节点类型都必须�
 - `Node.DOCUMENT_FRAGMENT_NODE`(11)
 - `Node.NOTATION_NODE`(12)
 
+#### 1.nodeName 与 nodeValue
+
+对元素节点而言，`nodeName` 始终等于元素的标签名，`nodeValue` 始终等于 `null`
