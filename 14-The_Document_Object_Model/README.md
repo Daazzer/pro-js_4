@@ -92,3 +92,10 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 - `document.childNodes` 属性，含有 `documentElement` 元素
 - `document.body` 属性，直接指向 `<body>` 元素
 - `document.doctype` 属性，表示文档的声明 `<!doctype>`
+
+#### 2.文档信息
+
+- `document.title` 表示浏览器标签页标题，可读写
+- `document.URL` 表示页面的完整 url
+- `document.domain` 表示页面的域名
+- `document.referrer` 表示来源，如果当前页面没有来源，则返回空串
