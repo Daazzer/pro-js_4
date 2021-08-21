@@ -79,3 +79,7 @@ let count = someNode.childNodes.length;
 - `normalize()` 处理文档子树中的文本节点，如果发现空文本节点，则将其删除；如果两个同胞节点是相邻的，则将其合并为一个文本节点
 
 > **注意** `cloneNode()` 方法不会复制添加到 DOM 节点的 JavaScript 属性，比如事件处理程序。只复制 HTML 属性，以及可选的复制子节点。IE 在很长一段时间会复制事件处理程序，所以推荐在复制前先删除事件处理程序
+
+### 14.1.2 Document 类型
+
+JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML 页面或其他 XML 文档
