@@ -99,3 +99,68 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 - `document.URL` 表示页面的完整 url
 - `document.domain` 表示页面的域名
 - `document.referrer` 表示来源，如果当前页面没有来源，则返回空串
+
+#### 3.定位元素
+
+获取元素的引用
+
+- `document.getElementById()` 接收一个参数，要获取元素的 ID
+
+- `document.getElementsByTagName()` 接收一个参数，要获取元素的标签名，返回一个 `HTMLCollection`
+
+  - `document.getElementsByTagName('*')` 返回文档所有元素
+
+- `document.getElementsByName()` 返回具有给定 `name` 属性的所有元素，常用于单选按钮
+
+  ```html
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>定位元素</title>
+    </head>
+    <body>
+      <fieldset>
+        <legend>Which color do you prefer?</legend>
+        <ul>
+          <li>
+            <input type="radio" value="red" name="color" id="colorRed">
+            <label for="colorRed">Red</label>
+          </li>
+          <li>
+            <input type="radio" value="green" name="color" id="colorGreen">
+            <label for="colorGreen">Green</label>
+          </li>
+          <li>
+            <input type="radio" value="blue" name="color" id="colorBlue">
+            <label for="colorBlue">Blue</label>
+          </li>
+        </ul>
+      </fieldset>
+      <script>
+        const radios = document.getElementsByName('color');
+        console.log(radios);
+      </script>
+    </body>
+  </html>
+  ```
+
+  这种情况下 `HTMLCollection` 的 `namedItem()` 方法只会取得第一项 
+
+`HTMLCollection` 方法
+
+- `HTMLCollection` 与 `NodeList` 一样支持 `item()`
+
+- `namedItem()` 通过标签的 `name` 属性取得某一项的引用，或者使用对象形式访问
+
+  ```js
+  const images = document.getElementsByTagName('img');
+  // 设置了 name 属性的元素可以通过对象形式访问
+  const myImage = images.myImage;
+  const myImage1 = images.namedItem('myImage');  // 与上面一样
+  console.log(myImage);
+  console.log(myImage1);
+  ```
+
