@@ -83,3 +83,12 @@ let count = someNode.childNodes.length;
 ### 14.1.2 Document 类型
 
 JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML 页面或其他 XML 文档
+
+#### 1.文档子节点
+
+访问 `Document` 子节点属性
+
+- `document.documentElement` 属性，始终指向 HTML 页面的 `<html>` 元素
+- `document.childNodes` 属性，含有 `documentElement` 元素
+- `document.body` 属性，直接指向 `<body>` 元素
+- `document.doctype` 属性，表示文档的声明 `<!doctype>`
