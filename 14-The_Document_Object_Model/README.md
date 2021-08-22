@@ -299,3 +299,6 @@ const textNode = div.firstChild;
 textNode.nodeValue = 'Some <strong>other</strong> message';
 ```
 
+#### 1.创建文本节点
+
+- `document.createTextNode()` 接收一个参数，要插入节点的文本
