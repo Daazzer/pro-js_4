@@ -260,4 +260,6 @@ div.getAttribute('myNum');  // null
   const id = element.attribute.getNamedItem('id').nodeValue;
   ```
 
-  
+#### 5.创建元素
+
+`document.createElement()` 接收一个参数，元素的标签名。注意，在 HTML 中，标签名不区分大小写，而 XML 文档中是区分的
