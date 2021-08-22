@@ -164,3 +164,12 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
   console.log(myImage1);
   ```
 
+#### 4.特殊集合
+
+访问文档公共部分的快捷方式
+
+- `document.anchor` 包含文档中所有带 `name` 属性的 `<a>` 元素
+- `doument.applets` 包含文档中所有 `<applet>` 元素，目前已经废弃
+- `documet.forms` 包含文档中所有 `<form>` 元素
+- `document.images` 包含文档中所有 `<img>` 元素
+- `document.links` 包含文档中所有带 `href` 属性的 `<a>` 元素
