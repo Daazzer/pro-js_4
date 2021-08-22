@@ -206,3 +206,23 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 - `className` 相当于 `class` 属性，用于指定元素的 CSS 类（因为 `class` 是 ECMAScript 关键字，所以不能直接用这个名字）
 
 所有 HTML 元素都是 `HTMLElement` 或其子类型的实例
+
+#### 2.取得属性
+
+与属性相关的 DOM 方法
+
+- `element.getAttribute(attrName)` 获取当前元素的某个属性
+- `element.setAttribute(attrName, attrValue)` 给元素的某个属性设置值
+- `element.removeAttribute(attrName)` 删除元素的某个属性
+
+```js
+const div = document.getElementById('myDiv');
+console.log(div.getAttribute('id'));
+// 可以获取自定义属性
+console.log(div.getAttribute('my-special-attribute'));
+```
+
+根据 HTML5 规范，自定义属性名应该前缀 `data-` 以方便验证
+
+`getAttribute()` 通常用于取得自定义属性的值，其他属性会使用对象属性来访问
+
