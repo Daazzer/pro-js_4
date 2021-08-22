@@ -302,3 +302,9 @@ textNode.nodeValue = 'Some <strong>other</strong> message';
 #### 1.创建文本节点
 
 - `document.createTextNode()` 接收一个参数，要插入节点的文本
+
+#### 2.规范化文本节点
+
+- `node.normalize()` 用于合并相邻的文本节点
+
+浏览器在解析文档时，永远不会创建同胞文本节点。同胞文本节点只会出现在 DOM 脚本生成的文档树中
