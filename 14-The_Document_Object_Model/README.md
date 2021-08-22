@@ -263,3 +263,9 @@ div.getAttribute('myNum');  // null
 #### 5.创建元素
 
 `document.createElement()` 接收一个参数，元素的标签名。注意，在 HTML 中，标签名不区分大小写，而 XML 文档中是区分的
+
+#### 6.元素后代
+
+`node.childNodes` 属性包含元素所有的子节点
+
+`node.getElementsByTagName` 用于获取某个元素下面的所有层级子节点
