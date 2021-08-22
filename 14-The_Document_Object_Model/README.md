@@ -308,3 +308,9 @@ textNode.nodeValue = 'Some <strong>other</strong> message';
 - `node.normalize()` 用于合并相邻的文本节点
 
 浏览器在解析文档时，永远不会创建同胞文本节点。同胞文本节点只会出现在 DOM 脚本生成的文档树中
+
+#### 3.拆分文本节点
+
+与 `normalize()` 完全相反的方法
+
+- `node.splitText()` 可以在指定的偏移位置拆分 `nodeValue`
