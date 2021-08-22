@@ -269,3 +269,33 @@ div.getAttribute('myNum');  // null
 `node.childNodes` 属性包含元素所有的子节点
 
 `node.getElementsByTagName` 用于获取某个元素下面的所有层级子节点
+
+### 14.1.4 Text 类型
+
+表示包含按字面解释的纯文本，也可能包含转义后的 HTML 字符串，但不含 HTML 代码
+
+操作文本的方法
+
+- `appendData(text)` 向节点末尾添加文本 `text`
+- `deleteData(offset, count)` 从位置 `offset` 开始删除 `count` 个字符
+- `insertData(offset, text)` 在位置 `offset` 插入 `text`
+- `replaceData(offset, count, text)` 用 `text` 替换从位置 `offset` 到 `offset` + `count` 的文本
+- `splitText(offset)` 在位置 `offset` 将当前文本节点拆分为两个文本节点
+- `substringData(offset, count)` 提取从位置 `offset` 到 `offset` + `count` 的文本
+
+```html
+<!-- 没有内容，因此没有文本节点 -->
+<div></div>
+<!-- 有空格，有一个文本节点 -->
+<div> </div>
+<!-- 有内容，有一个文本节点 -->
+<div>Hello World!</div>
+```
+
+可以通过 `nodeValue` 属性修改文本节点内容
+
+```js
+const textNode = div.firstChild;
+textNode.nodeValue = 'Some <strong>other</strong> message';
+```
+
