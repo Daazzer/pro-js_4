@@ -173,3 +173,12 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 - `documet.forms` 包含文档中所有 `<form>` 元素
 - `document.images` 包含文档中所有 `<img>` 元素
 - `document.links` 包含文档中所有带 `href` 属性的 `<a>` 元素
+
+#### 5.DOM 兼容性检测
+
+- `document.implementation` 提供了与浏览器 DOM 实现相关的信息和能力
+
+  - `document.implementation.hasFeature()` 接收两个参数，特性名称和 DOM 版本，返回一个布尔值，表示是否支持该特性
+
+    由于实现不一致，此方法不可靠
+
