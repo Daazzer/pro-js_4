@@ -213,7 +213,7 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 
 - `element.getAttribute(attrName)` 获取当前元素的某个属性
 - `element.setAttribute(attrName, attrValue)` 给元素的某个属性设置值
-- `element.removeAttribute(attrName)` 删除元素的某个属性
+- `element.removeAttribute(attrName)` 删除元素的某个属性，整个删掉
 
 ```js
 const div = document.getElementById('myDiv');
@@ -225,4 +225,17 @@ console.log(div.getAttribute('my-special-attribute'));
 根据 HTML5 规范，自定义属性名应该前缀 `data-` 以方便验证
 
 `getAttribute()` 通常用于取得自定义属性的值，其他属性会使用对象属性来访问
+
+#### 3.设置属性
+
+`element.setAttribute()` 同样适用于自定义属性，设置的属性名会规范未小写形式，因此 `ID` 会变成 `id`
+
+**注意** 在 DOM 对象上自定义属性，不会自动让它变成元素的属性
+
+```js
+div.setAttribute('my-color', 'red');
+div.getAttribute('my-color');  // red
+div.myNum = 12;
+div.getAttribute('myNum');  // null
+```
 
