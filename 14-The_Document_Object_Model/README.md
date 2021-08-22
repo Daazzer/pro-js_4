@@ -182,3 +182,9 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 
     由于实现不一致，此方法不可靠
 
+#### 6.文档写入
+
+- `document.write()` 接收一个字符串，可以将这个字符串写入到网页中
+- `document.writeln()` 接收一个字符串，可以将这个字符串写入到网页中，还会在末尾添加一个 `\n` 换行符
+- `document.open()` 打开网页输出流
+- `document.close()` 关闭网页输出流
