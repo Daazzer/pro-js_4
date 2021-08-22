@@ -192,3 +192,17 @@ JavaScript 中表示文档节点的类型。`Document` 类型可以表示 HTML �
 ### 14.1.3 Element 类型
 
 `Element` 类型表示 XML 或 HTML 元素
+
+#### 1.HTML 元素
+
+所有 HTML 元素都通过 `HTMLElement` 类型表示，包括直接实例和间接实例。`HTMLElement` 直接继承 `Element` 并增加了一些属性
+
+标准属性
+
+- `id` 元素在文档中的唯一标识符
+- `title` 包含元素的额外信息，通常以提示条形式展示
+- `lang` 元素内容的语言代码（很少用）
+- `dir` 语言的书写方向（"ltr" 从左到右，"rtl" 从右到左）
+- `className` 相当于 `class` 属性，用于指定元素的 CSS 类（因为 `class` 是 ECMAScript 关键字，所以不能直接用这个名字）
+
+所有 HTML 元素都是 `HTMLElement` 或其子类型的实例
