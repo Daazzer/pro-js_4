@@ -239,3 +239,25 @@ div.myNum = 12;
 div.getAttribute('myNum');  // null
 ```
 
+#### 4.attributes 属性
+
+`attributes` 属性包含一个 `NamedNodeMap` 实例，是一个类似 `NodeList` 的”实时“集合。元素的每个属性都表示为一个 `Attr` 节点
+
+`NamedNodeMap` 方法
+
+- `getNamedItem(name)` 返回 `nodeName` 属性等于 `name` 的节点
+- `removeNamedItem(name)` 删除 `nodeName` 属性等于 `name` 的节点
+- `setNamedItem(node)` 向列表中添加 `node` 节点，以其 `nodeName` 为索引
+- `item(pos)` 返回索引位置 `pos` 处的节点
+
+`NamedNodeMap` 中每个节点的属性
+
+- `nodeName` 属性名字
+
+- `nodeValue` 属性值
+
+  ```js
+  const id = element.attribute.getNamedItem('id').nodeValue;
+  ```
+
+  
