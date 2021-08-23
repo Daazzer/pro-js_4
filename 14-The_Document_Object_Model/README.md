@@ -356,3 +356,29 @@ for (let i = 0; i < 3; i++) {
 
 ul.appendChild(fragment);
 ```
+
+### 14.1.9 Attr 类型
+
+表示 DOM 中的 `attributes` 属性中的节点，在 HTML 中不支持子节点；在 XML 中子节点可以是 `Text` 或 `EntityReference`
+
+通常是使用 `getAttribute()`、`removeAttribute()`、`setAttribute()` 方法操作属性
+
+属性
+
+- `name` 属性名（与 nodeName 一样）
+- `value` 属性值 （与 nodeValue 一样）
+- `specified` 布尔值，表示属性使用的是默认值还是被指定的值
+
+`document.createAttribute()` 创建 `Attr` 节点
+
+```js
+const attr = document.createAttribute('align');  // 直接可以设置节点的 name 属性
+attr.value = 'left';
+element.setAttributeNode(attr);
+
+alert(element.attributes['align'].value);  // 'left'
+alert(element.getAttributeNode('align').value);  // 'left'
+alert(element.getAttribute('align'));  // 'left'
+```
+
+> **注意** 推荐使用 `getAttribute()`、`removeAttribute()`、`setAttribute()` 方法操作属性，而不是直接操作属性节点
