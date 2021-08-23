@@ -325,3 +325,11 @@ textNode.nodeValue = 'Some <strong>other</strong> message';
 
 - `comment.splitText()` 拆分注释，与 `text.splitText()` 类似
 - `comment.data` 访问注释内容
+
+### 14.1.6  CDATASection 类型
+
+表示 XML 中特有的 CDATA 区块。不支持子节点
+
+CDATA 区块只在 XML 文档中有效
+
+在真正的 XML 文档中，可以使用 `document.createCDataSection()`
