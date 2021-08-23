@@ -333,3 +333,26 @@ textNode.nodeValue = 'Some <strong>other</strong> message';
 CDATA 区块只在 XML 文档中有效
 
 在真正的 XML 文档中，可以使用 `document.createCDataSection()`
+
+### 14.1.8 DocumentFragment 类型
+
+文档片段是“轻量级”文档，能够包含和操作节点，却没有完整文档那样额外的消耗
+
+不能直接把文档片段添加到文档。文档片段的作用是充当其他要被添加到文档的节点的仓库
+
+使用 `document.createDocumentFragment()`
+
+可以通过 `appendChild()` 或 `insertBefore()` 方法将文档片段的内容添加到文档
+
+```js
+const fragment = document.createDocumentFragment();
+const ul = document.getElementById('myList');
+
+for (let i = 0; i < 3; i++) {
+	const li = document.createElement('li');
+  li.appendChild(document.createTextNode(`Item ${i + 1}`));
+  fragment.appendChild(li);
+}
+
+ul.appendChild(fragment);
+```
