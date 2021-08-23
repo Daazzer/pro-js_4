@@ -314,3 +314,14 @@ textNode.nodeValue = 'Some <strong>other</strong> message';
 与 `normalize()` 完全相反的方法
 
 - `node.splitText()` 可以在指定的偏移位置拆分 `nodeValue`
+
+### 14.1.5 Comment 类型
+
+表示 DOM 中的注释，不支持子节点
+
+`document.createComment()` 创建一个注释节点
+
+属性与方法
+
+- `comment.splitText()` 拆分注释，与 `text.splitText()` 类似
+- `comment.data` 访问注释内容
