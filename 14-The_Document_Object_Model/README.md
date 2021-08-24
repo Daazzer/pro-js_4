@@ -382,3 +382,7 @@ alert(element.getAttribute('align'));  // 'left'
 ```
 
 > **注意** 推荐使用 `getAttribute()`、`removeAttribute()`、`setAttribute()` 方法操作属性，而不是直接操作属性节点
+
+## 14.2 DOM 编程
+
+通过 JavaScript 实现 DOM 操作
