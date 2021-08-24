@@ -392,7 +392,19 @@ alert(element.getAttribute('align'));  // 'left'
 两种方式通过 `<script>` 动态为网页添加脚本
 
 - 通过 `src` 引入外部文本
-- 直接掺入源代码
+- 直接插入源代码
+
+```html
+<script src="foo.js"></script>
+```
+
+通过 js 创建
+
+```js
+const script = document.createElement('script');
+script.src = 'foo.js';
+document.body.appendChild(script);
+```
 
 通过 `innerHTML` 创建的 `<script>` 元素永远不会执行
 
