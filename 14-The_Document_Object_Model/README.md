@@ -386,3 +386,13 @@ alert(element.getAttribute('align'));  // 'left'
 ## 14.2 DOM 编程
 
 通过 JavaScript 实现 DOM 操作
+
+### 14.2.1 动态脚本
+
+两种方式通过 `<script>` 动态为网页添加脚本
+
+- 通过 `src` 引入外部文本
+- 直接掺入源代码
+
+通过 `innerHTML` 创建的 `<script>` 元素永远不会执行
+
