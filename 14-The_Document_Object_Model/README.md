@@ -396,3 +396,26 @@ alert(element.getAttribute('align'));  // 'left'
 
 通过 `innerHTML` 创建的 `<script>` 元素永远不会执行
 
+### 14.2.2 动态样式
+
+CSS 在 HTML 中两种方法加载
+
+- `<link>` 元素引用外部文件
+- `<style>` 元素用于添加嵌入样式
+
+```html
+<link rel="stylesheet" type="text/css" href="styles.css">
+```
+
+使用 js 创建
+
+```js
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = 'style.css';
+const head = document.getElementsByTagName('head')[0];
+head.appendChild(link);
+```
+
+外部文件加载样式是一个异步过程。与 JavaScript 代码加载并没有先后顺序
