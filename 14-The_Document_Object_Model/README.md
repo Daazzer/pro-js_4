@@ -465,3 +465,30 @@ const table = document.createElement('table');
 - `cells` 包含 `<tr>` 元素所有表元的 `HTMLCollection`
 - `deleteCell(pos)` 删除给定位置的表元
 - `insertCell(pos)` 在表元集合给定位置插入一个表元，返回该表元的引用
+
+### 14.2.4 使用 NodeList
+
+`NodeList` 相关的 `NamedNodeMap`、`HTMLCollection`。这3个集合都是实时的，文档变化会实时更新
+
+迭代 `NodeList` 而不导致无限循环
+
+```js
+const divs = document.getElementsByTagName('div');
+
+for (let i = 0, len = divs.length; i < len; i++) {
+  const div = document.createElement('div');
+  document.body.appendChild(div);
+}
+```
+
+如果不想多初始化一个变量，还可以反向迭代集合
+
+```js
+const divs = document.getElementsByTagName('div');
+
+for (let i = divs.length - 1; i <= 0; i--) {
+  const div = document.createElement('div');
+  document.body.appendChild(div);
+}
+```
+
