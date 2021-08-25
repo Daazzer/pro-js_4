@@ -431,3 +431,37 @@ head.appendChild(link);
 ```
 
 外部文件加载样式是一个异步过程。与 JavaScript 代码加载并没有先后顺序
+
+### 14.2.3 操作表格
+
+DOM 创建 `<table>` 元素
+
+```js
+const table = document.createElement('table');
+```
+
+`<table>` 元素的属性和方法
+
+- `caption` 指向 `<caption>` 元素的指针
+- `tBodies` 包含 `<tbody>` 元素的 `HTMLCollection`
+- `tFoot` 指向 `<tfoot>` 元素
+- `tHead` 指向 `<thead>` 元素
+- `rows` 包含所有行的 `HTMLCollection`
+- `createTHead()` 创建 `<thead>` 元素，放到表格中，返回引用
+- `createTFoot()` 创建 `<tfoot>` 元素，放到表格中，返回引用
+- `createCaption()` 创建 `<caption>` 元素，放到表格中，返回引用
+- `deleteTHead()` 删除 `<thead>` 元素
+- `deleteRow(pos)` 删除给定位置的行
+- `insertRow(pos)` 在集合中给定位置插入一行
+
+`<tbody>` 元素的属性方法
+
+- `rows` 包含 `<tbody>` 中所有行的 `HTMLCollection`
+- `deleteRow(pos)` 删除给定位置的行
+- `insertRow(pos)` 在集合中给定位置插入一行
+
+`<tr>` 元素属性方法
+
+- `cells` 包含 `<tr>` 元素所有表元的 `HTMLCollection`
+- `deleteCell(pos)` 删除给定位置的表元
+- `insertCell(pos)` 在表元集合给定位置插入一个表元，返回该表元的引用
