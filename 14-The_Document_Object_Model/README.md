@@ -492,3 +492,8 @@ for (let i = divs.length - 1; i <= 0; i--) {
 }
 ```
 
+## 14.3 MutationObserver 接口
+
+`MutationObserver` 接口可以在 DOM 被修改时异步执行回调，可以用于观察整个文档、DOM 数的一部分，或某个元素
+
+> **注意** 新引进的 `MutationObserver` 接口是为了取代废弃的 `MutationEvent`
