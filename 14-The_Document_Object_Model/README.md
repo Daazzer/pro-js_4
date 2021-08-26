@@ -505,3 +505,22 @@ for (let i = divs.length - 1; i <= 0; i--) {
 ```js
 const observer = new MutationObserver(() => console.log('DOM was mutated!'));
 ```
+
+#### 1.observe() 方法
+
+使用 `observe()` 方法将 `MutationObserver` 实例与 DOM 关联起来
+
+```js
+const observer = new MutationObserver(() => console.log('<body> attributes changed'));
+
+observer.observe(document.body, { attributes: true });
+// 执行以上代码，<body> 元素上任何属性发送变化都会被这个 MutationObserver 实例发现
+
+document.body.className = 'foo';
+
+console.log('Changed body class');
+
+// Changed body class
+// <body> attributes changed
+```
+
