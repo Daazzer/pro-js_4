@@ -693,3 +693,7 @@ document.body.setAttribute('foo', 'qux');
 - `subtree` 属性设置为 `true`
 
 被观察的子树被移出子树之后仍然能触发变化事件。
+
+### 14.3.3 异步回调与记录队列
+
+每次的变化信息都保存在 `MutationRecord` 实例中，然后添加到**记录队列**
