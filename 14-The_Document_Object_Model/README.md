@@ -576,3 +576,26 @@ document.body.className = 'bar';
 // 没有日志输出
 ```
 
+#### 4.复用 MutationObserver
+
+多次调用 `observer()` 方法，可以复用一个 `MutationObserver` 对象观察多个不同的目标节点
+
+```js
+const observer = new MutationObserver(mutationRecords => console.log(mutationRecords.map(x => x.target)));
+
+// 向页面主体添加两个子节点
+const childA = document.createElement('div'),
+      childB = document.createElement('span');
+document.body.appendChild(childA);
+document.body.appendChild(childB);
+
+observer.observe(childA, { attributes: true });
+observer.observe(childB, { attributes: true });
+
+childA.setAttribute('foo', 'bar');
+childB.setAttribute('foo', 'bar');
+
+// [<div>, <span>]
+```
+
+`disconnect()` 方法是一刀切的方案，它会停止观察所有目标
