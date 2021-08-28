@@ -631,3 +631,6 @@ setTimeout(() => {
 // <body> attributes changed
 ```
 
+### 14.3.2 MutationObserverInit 与观察范围
+
+用于控制对目标节点的观察范围，也就是 `MutationObserver` 构造器的第二个参数的配置对象
