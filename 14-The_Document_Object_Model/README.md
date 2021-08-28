@@ -701,3 +701,7 @@ document.body.setAttribute('foo', 'qux');
 #### 1.记录队列
 
 仅当前没有已排期的微任务回调时，才会将观察者注册的回调作为微任务调度到任务队列上。回调要负责处理这个数组的每一个实例，因为函数退出之后这些实现就不存在了。
+
+#### 2.takeRecords() 方法
+
+调用 `MutationObserver` 实例的 `takeRecords()` 方法可以清空记录队列，取出并返回其中的所有 `MutationRecord` 实例
