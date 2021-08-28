@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>回调与MutationRecord</title>
+</head>
+<body>
+  <script>
+    const observer = new MutationObserver(mutationRecords => console.log(mutationRecords));
+    observer.observe(document.body, { attributes: true });
+    document.body.setAttribute('foo', 'bar');
+    // [
+    //   {
+    //     addedNodes: NodeList [],
+    //     attributeName: "foo",
+    //     attributeNamespace: null,
+    //     nextSibling: null,
+    //     oldValue: null,
+    //     previousSibling: null,
+    //     removedNodes: NodeList [],
+    //     target: body,
+    //     type: "attributes"
+    //   }
+    // ]
+  </script>
+</body>
+</html>

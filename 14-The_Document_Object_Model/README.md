@@ -524,3 +524,37 @@ console.log('Changed body class');
 // <body> attributes changed
 ```
 
+#### 2.回调与 MutationRecord
+
+每次回调执行都会传入一个包含按顺序入队的 `MutationRecord` 实例的数组
+
+```js
+const observer = new MutationObserver(mutationRecords => console.log(mutationRecords));
+observer.observe(document.body, { attributes: true });
+document.body.setAttribute('foo', 'bar');
+// [
+//   {
+//     addedNodes: NodeList [],
+//     attributeName: "foo",
+//     attributeNamespace: null,
+//     nextSibling: null,
+//     oldValue: null,
+//     previousSibling: null,
+//     removedNodes: NodeList [],
+//     target: body,
+//     type: "attributes"
+//   }
+// ]
+```
+
+连续修改会生成多个 `MutationRecord` 实例，下次回调执行时就会收到包含所有这些实例的数组
+
+传给回调的第二个参数就是观察变化的 `MutationRecord` 实例
+
+```js
+const observer = new MutationObserver((mutationRecords, mutationObserver) => console.log(mutationRecords, mutationObserver));
+observer.observe(document.body, { attributes: true });
+document.body.className = 'foo';
+// [MutationRecord], MutationObserver
+```
+
