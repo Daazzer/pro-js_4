@@ -599,3 +599,35 @@ childB.setAttribute('foo', 'bar');
 ```
 
 `disconnect()` 方法是一刀切的方案，它会停止观察所有目标
+
+#### 5.重用 MutationObserver
+
+`disconnect()` 方法不会结束 `MutationObserver` 的生命。还可以重新调用
+
+```js
+const observer = new MutationObserver(() => console.log('<body> attributes changed'));
+
+observer.observe(document.body, { attributes: true });
+
+// 这行代码会触发变化事件
+document.body.setAttribute('foo', 'bar');
+
+setTimeout(() => {
+  observer.disconnect();
+  
+  // 这行代码不会触发变化事件
+  document.body.setAttribute('bar', 'baz');
+});
+
+setTimeout(() => {
+  // 重用
+  observer.observe(document.body, { attributes: true });
+
+  // 这行代码会触发变化事件
+  document.body.setAttribute('baz', 'qux');
+});
+
+// <body> attributes changed
+// <body> attributes changed
+```
+
