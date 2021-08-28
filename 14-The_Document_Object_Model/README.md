@@ -677,3 +677,7 @@ document.body.setAttribute('foo', 'qux');
 // [null, 'bar', 'baz']
 ```
 
+#### 2.观察字符数据
+
+- `characterData` 属性设置为 `true` 用于观察文本节点
+- `characterDataOldValue` 设置为 `true` 用于记录上次的值
