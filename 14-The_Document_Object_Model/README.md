@@ -687,3 +687,9 @@ document.body.setAttribute('foo', 'qux');
 - `childList` 属性设置为 `true`
 
 对子节点**重新排序**会报告两次变化事件，因为技术上会涉及先移除和再添加
+
+#### 4.观察子树
+
+- `subtree` 属性设置为 `true`
+
+被观察的子树被移出子树之后仍然能触发变化事件。
