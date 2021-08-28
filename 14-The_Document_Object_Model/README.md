@@ -681,3 +681,9 @@ document.body.setAttribute('foo', 'qux');
 
 - `characterData` 属性设置为 `true` 用于观察文本节点
 - `characterDataOldValue` 设置为 `true` 用于记录上次的值
+
+#### 3.观察子节点
+
+- `childList` 属性设置为 `true`
+
+对子节点**重新排序**会报告两次变化事件，因为技术上会涉及先移除和再添加
