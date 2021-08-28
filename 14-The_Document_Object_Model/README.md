@@ -715,3 +715,7 @@ document.body.setAttribute('foo', 'qux');
 `MutataionObserver` 拥有对观察目标的弱引用，不妨碍垃圾回收
 
 然而，目标节点却对 `MutationObserver` 的强引用
+
+#### 2.MutationRecord 的引用
+
+如果需要尽快地释放内存，建议从每个 `MutationRecord` 中抽取出最有用的信息，然后保存到一个新对象中，最后抛弃 `MutationRecord`
