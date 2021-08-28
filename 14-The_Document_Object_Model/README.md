@@ -705,3 +705,7 @@ document.body.setAttribute('foo', 'qux');
 #### 2.takeRecords() 方法
 
 调用 `MutationObserver` 实例的 `takeRecords()` 方法可以清空记录队列，取出并返回其中的所有 `MutationRecord` 实例
+
+### 14.3.4 性能、内存与垃圾回收
+
+理解使用 `MutationObserver` 带来的代价
