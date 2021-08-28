@@ -558,3 +558,21 @@ document.body.className = 'foo';
 // [MutationRecord], MutationObserver
 ```
 
+#### 3.disconnect() 方法
+
+要提前终止回调执行，可以调用 `disconnect()` 方法
+
+```js
+const observer = new MutationObserver(() => console.log('<body> attributes changed'));
+
+observer.observe(document.body, { attributes: true });
+
+document.body.className = 'foo';
+
+observer.disconnect();
+
+document.body.className = 'bar';
+
+// 没有日志输出
+```
+
