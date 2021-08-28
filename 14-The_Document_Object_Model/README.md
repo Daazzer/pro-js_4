@@ -634,3 +634,46 @@ setTimeout(() => {
 ### 14.3.2 MutationObserverInit 与观察范围
 
 用于控制对目标节点的观察范围，也就是 `MutationObserver` 构造器的第二个参数的配置对象
+
+#### 1.观察属性
+
+将 `attributes` 属性改为 `true`
+
+```js
+const observer = new MutationObserver(mutataionRecords => console.log(mutataionRecords));
+
+observer.observe(document.body, { attributes: true });
+```
+
+`attributeFilter` 属性用于设置白名单
+
+```js
+const observer = new MutationObserver(mutataionRecords => console.log(mutataionRecords));
+
+observer.observe(document.body, { attributeFilter: ['foo'] });
+
+// 白名单属性
+document.body.setAttribute('foo', 'bar');
+
+// 被排除的属性
+document.body.setAttribute('baz', 'qux');
+
+// 只有foo属性变化被记录了
+// [MutationRecord]
+```
+
+`attributeOldValue` 属性用于保存属性原来的值
+
+```js
+const observer = new MutationObserver(mutataionRecords => console.log(mutataionRecords.map(x => x.oldValue)));
+
+observer.observe(document.body, { attributeOldValue: true });
+
+document.body.setAttribute('foo', 'bar');
+document.body.setAttribute('foo', 'baz');
+document.body.setAttribute('foo', 'qux');
+
+// 每次变化都保留了上一次的值
+// [null, 'bar', 'baz']
+```
+
