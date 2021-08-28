@@ -709,3 +709,9 @@ document.body.setAttribute('foo', 'qux');
 ### 14.3.4 性能、内存与垃圾回收
 
 理解使用 `MutationObserver` 带来的代价
+
+#### 1.MutationObserver 的引用
+
+`MutataionObserver` 拥有对观察目标的弱引用，不妨碍垃圾回收
+
+然而，目标节点却对 `MutationObserver` 的强引用
