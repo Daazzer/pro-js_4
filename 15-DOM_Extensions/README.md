@@ -96,3 +96,10 @@ HTML5 新增了一些特性以方便使用 CSS 类
 - `complete` 表示文档加载完成
 
 通常要依赖 `onload` 事件处理程序设置一个标记，表示文档加载完毕了
+
+#### 2.compatMode 属性
+
+`document.compatMode` 这个属性唯一的任务就是指示浏览器当前处于什么渲染模式
+
+- 标准模式，值为 `CSS1Compat`
+- 混杂模式下，值为 `BackCompat`
