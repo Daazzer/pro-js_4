@@ -34,3 +34,15 @@ const img = document.body.querySelector('img.button');
 ### 15.1.3 mathces()
 
 `mathces()` 接收一个 CSS 选择符参数，如果元素匹配则选择符返回 `true`，否则返回 `false`
+
+## 15.2 元素遍历
+
+Element Traversal API 为 DOM 元素添加了 5 个属性：
+
+- `childElementCount` 返回子元素数量（不包含文本节点和注释）
+- `firstElementChild` 指向第一个 `Element` 类型的子元素（`Element` 版 `firstChild`）
+- `lastElementChild` 指向最后一个 `Element` 类型 的子元素（`Element` 版 `lastChild`）
+- `previousElementSibling` 指向前一个 `Element` 类型的同胞元素（`Element` 版 `previousSibling`）
+- `nextElementSibling` 指向后一个 `Element` 类型的同胞元素（`Element` 版 `nextSibling`）
+
+以上属性就可以在开发时节省了节点类型判断的代码
