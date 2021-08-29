@@ -78,3 +78,10 @@ HTML5 新增了一些特性以方便使用 CSS 类
 - `toggle(value)` 如果类名列表中已存在指定的 `value` ，则删除；如果不存在，则添加
 
 除非是完全重写 `class` 属性，否则 `className` 属性用不到了
+
+### 15.3.2 焦点管理
+
+- `document.activeElement` 包含当前拥有焦点的 DOM 元素，默认情况下，在页面加载完成之后会设置为 `document.body`。而在页面完全加载之前，是 `null`
+- `document.hasFocus()` 方法，返回布尔值，表示文档是否拥有焦点
+
+主要应用于无障碍使用
