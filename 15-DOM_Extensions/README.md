@@ -54,3 +54,9 @@ HTML5 包含了与标记相关的大量 JavaScript API 定义
 ### 15.3.1 CSS 类扩展
 
 HTML5 新增了一些特性以方便使用 CSS 类
+
+#### 1.getElementByClassName()
+
+`getElementByClassName()` 接收一个参数，即包含一个或多个类名的字符串，返回类名中包含相应类的元素的 `NodeList`
+
+这个方法只会返回以调用它的对象为根元素的子树中所有匹配的元素，返回一个动态 `NodeList`
