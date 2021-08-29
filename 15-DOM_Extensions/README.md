@@ -20,3 +20,14 @@ const img = document.body.querySelector('img.button');
 ```
 
 如果选择符有语法错误或碰到不支持的选择符，则 `querySelector()` 方法会抛出错误
+
+### 15.1.2 querySelectorAll()
+
+`querySelectorAll()` 接收一个查询的参数，会返回一个 `NodeList` 的静态实例，避免了使用 `NodeList` 对象可能造成的性能问题
+
+如果没有匹配项，则返回空的 `NodeList` 实例
+
+与 `querySelector()` 一样，也可以在 `Document`、`DocumentFragment`、`Element` 类型上使用
+
+遇到的选择符有语法错误的或不支持的，则会报错
+
