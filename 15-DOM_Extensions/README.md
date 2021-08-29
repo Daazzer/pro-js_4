@@ -88,3 +88,11 @@ HTML5 新增了一些特性以方便使用 CSS 类
 
 ### 15.3.3 HTMLDocument 扩展
 
+#### 1.readyState 属性
+
+`document.readyState` 属性有两个可能的值
+
+- `loading` 表示文档正在加载
+- `complete` 表示文档加载完成
+
+通常要依赖 `onload` 事件处理程序设置一个标记，表示文档加载完毕了
