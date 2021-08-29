@@ -85,3 +85,6 @@ HTML5 新增了一些特性以方便使用 CSS 类
 - `document.hasFocus()` 方法，返回布尔值，表示文档是否拥有焦点
 
 主要应用于无障碍使用
+
+### 15.3.3 HTMLDocument 扩展
+
