@@ -103,3 +103,7 @@ HTML5 新增了一些特性以方便使用 CSS 类
 
 - 标准模式，值为 `CSS1Compat`
 - 混杂模式下，值为 `BackCompat`
+
+#### 3.head 属性
+
+`document.head` 属性指向文档的 `<head>` 元素
