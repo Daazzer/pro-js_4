@@ -50,3 +50,7 @@ Element Traversal API 为 DOM 元素添加了 5 个属性：
 ## 15.3 HTML5
 
 HTML5 包含了与标记相关的大量 JavaScript API 定义
+
+### 15.3.1 CSS 类扩展
+
+HTML5 新增了一些特性以方便使用 CSS 类
