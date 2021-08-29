@@ -107,3 +107,7 @@ HTML5 新增了一些特性以方便使用 CSS 类
 #### 3.head 属性
 
 `document.head` 属性指向文档的 `<head>` 元素
+
+### 15.3.4 字符集属性
+
+`document.characterSet` 属性表示文档实际使用的字符集。默认值是 `"UTF-16"`，但是也可以通过 `<meta>` 元素或响应头以及新增的 `characterSet` 属性来修改
