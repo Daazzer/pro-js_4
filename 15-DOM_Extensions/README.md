@@ -111,3 +111,25 @@ HTML5 新增了一些特性以方便使用 CSS 类
 ### 15.3.4 字符集属性
 
 `document.characterSet` 属性表示文档实际使用的字符集。默认值是 `"UTF-16"`，但是也可以通过 `<meta>` 元素或响应头以及新增的 `characterSet` 属性来修改
+
+### 15.3.5 自定义数据属性
+
+HTML5 允许给元素定义非标准的属性，但要使用前缀 `data-` 以便告诉浏览器，这些属性既不包含与渲染有关的信息，也不包含元素的语义信息，`data-` 后面跟什么都可以
+
+```html
+<div id="myDiv" data-appId="12345" data-myname="Nicholas"></div>
+```
+
+定义了自定义数据属性以后，可以通过元素的 `dataset` 属性来访问。`dataset` 属性是一个 `DOMStringMap` 实例，包含一组键/值对映射
+
+```js
+const div = document.getElementById('myDiv');
+
+const appId = div.dataset.appId;
+const myName = div.dataset.myname;
+
+// 设置自定义数据属性的值
+div.dataset.appId = 23456;
+div.dataset.myname = "Michael";
+```
+
