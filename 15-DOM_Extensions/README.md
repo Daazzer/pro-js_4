@@ -46,3 +46,7 @@ Element Traversal API 为 DOM 元素添加了 5 个属性：
 - `nextElementSibling` 指向后一个 `Element` 类型的同胞元素（`Element` 版 `nextSibling`）
 
 以上属性就可以在开发时节省了节点类型判断的代码
+
+## 15.3 HTML5
+
+HTML5 包含了与标记相关的大量 JavaScript API 定义
