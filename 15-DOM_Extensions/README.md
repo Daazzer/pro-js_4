@@ -31,3 +31,6 @@ const img = document.body.querySelector('img.button');
 
 遇到的选择符有语法错误的或不支持的，则会报错
 
+### 15.1.3 mathces()
+
+`mathces()` 接收一个 CSS 选择符参数，如果元素匹配则选择符返回 `true`，否则返回 `false`
