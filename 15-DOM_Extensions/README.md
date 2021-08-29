@@ -60,3 +60,21 @@ HTML5 新增了一些特性以方便使用 CSS 类
 `getElementByClassName()` 接收一个参数，即包含一个或多个类名的字符串，返回类名中包含相应类的元素的 `NodeList`
 
 这个方法只会返回以调用它的对象为根元素的子树中所有匹配的元素，返回一个动态 `NodeList`
+
+#### 2.classList 属性
+
+`classList` 是一个新的集合类型 `DOMTokenList` 的实例。
+
+属性
+
+- `length` 表示有多少个类名
+
+方法
+
+- `item()` 取得元素
+- `add(value)` 向类名列表添加指定的字符串值 `value`，如果这个值已存在，则什么也不做
+- `contains(value)` 返回布尔值，表示给定的 `value` 是否存在
+- `remove(value)` 从类名列表中删除指定的字符串值 `value`
+- `toggle(value)` 如果类名列表中已存在指定的 `value` ，则删除；如果不存在，则添加
+
+除非是完全重写 `class` 属性，否则 `className` 属性用不到了
