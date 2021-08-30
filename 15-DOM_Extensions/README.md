@@ -167,3 +167,18 @@ div.innerHTML = '<input type=\"hidden\"><script defer>console.log(\'hi\');<\/scr
 
 写入 `outerHTML` 属性时，则调用它的元素及整个后代元素都被取代
 
+#### 4.insertAdjacentHTML() 与 insertAdjacentText()
+
+它们都接收两个参数：要插入标记的位置和要插入的 HTML 或文本。
+
+第一个参数的枚举值
+
+- `"beforebegin"` 插入当前元素前面，作为前一个同胞节点
+- `"afterbegin"` 插入当前元素内部，作为新子节点或放在第一个子节点前面
+- `"beforeend"` 插入当前元素内部，作为新子节点或放在最后一个子节点前面
+- `"afterend"` 插入当前元素后面，作为下一个同胞节点
+
+```js
+element.insertAdjacentHTML('beforebegin', '<p>Hello world!</p>');
+element.insertAdjacentText('beforebegin', 'Hello world!');
+```
