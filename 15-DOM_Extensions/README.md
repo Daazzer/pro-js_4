@@ -249,3 +249,6 @@ document.documentElement.contains(document.body);  // true
 
 `innerText` 属性对应元素中包含的所有文本内容，无论文本在子树中哪个层级，设置 `innerText` 只能在容器中生成一个文本节点
 
+#### 2.outerText 属性
+
+读取 `outerText` 时与 `innerText` 效果一样，写入 `outerText` 时，会替换整个元素，非标准属性
