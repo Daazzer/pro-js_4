@@ -216,3 +216,7 @@ ul.innerHTML = values.map(value => `<li>${value}</li>`).join('');
   - `behavior` 定义过渡动画，可取值为 `"smooth"`、`"auto"`，默认 `"auto"`
   - `block` 定义垂直方向的对齐，可取值 `"start"`、`"center"`、`"end"`、`"nearest"`，默认 `"start"`
   - `inline` 定义水平方向的对齐，可取值 `"start"`、`"center"`、`"end"`、`"nearest"`，默认 `"nearest"`
+
+## 15.4 专有扩展
+
+由部分浏览器专有和采用的 API
