@@ -148,3 +148,15 @@ div.innerHTML = 'Hello world!';
 ```
 
 设置 `innerHTML` 属性后，页面返回的字符串是将原始字符串对应的 DOM 子树序列化之后的结果
+
+#### 2.旧 IE 中的 innerHTML
+
+现代浏览器中，通过 `innerHTML` 插入的 `<script>` 标签是不会执行的。如要需要可执行，则必须在 `<script>` 前面加上一个受控元素。而在 IE8 及之前的版本中，只要插入的 `<script>` 指定了 `defer` 属性，且 `<script>` 之前是 “受控元素”（scoped element），那就是可执行的
+
+```js
+div.innerHTML = '_<script defer>console.log(\'hi\');<\/script>';
+div.innerHTML = '<div>&nbsp;</div><script defer>console.log(\'hi\');<\/script>';
+div.innerHTML = '<input type=\"hidden\"><script defer>console.log(\'hi\');<\/script>';
+```
+
+在 IE 中，通过 `innerHTML` 插入 `<style>` 也会有类似的问题
