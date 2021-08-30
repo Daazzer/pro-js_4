@@ -252,3 +252,7 @@ document.documentElement.contains(document.body);  // true
 #### 2.outerText 属性
 
 读取 `outerText` 时与 `innerText` 效果一样，写入 `outerText` 时，会替换整个元素，非标准属性
+
+### 15.4.4 滚动
+
+其他浏览器可能还有滚动的专有方法，如 `scrollIntoViewIfNeeded()`
