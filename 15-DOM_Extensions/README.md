@@ -182,3 +182,19 @@ div.innerHTML = '<input type=\"hidden\"><script defer>console.log(\'hi\');<\/scr
 element.insertAdjacentHTML('beforebegin', '<p>Hello world!</p>');
 element.insertAdjacentText('beforebegin', 'Hello world!');
 ```
+
+#### 5.内存与性能问题
+
+如果被移除的子树元素中之前有关联的事件处理程序或其他 JavaScript 对象，那他们之间的绑定关系会滞留在内存中。如果这种替换操作频繁发生，页面的内存占用就会持续攀升。最好限制使用 `innerHTML` 和 `outerHTML` 的次数
+
+```js
+// 不直接设置 innerHTML 的循环操作
+let itemsHtml = '';
+for (let value of values) {
+  itemsHtml += `<li>${value}</li>`;
+}
+ul.innerHTML = itemsHtml;
+
+// 或者
+ul.innerHTML = values.map(value => `<li>${value}</li>`).join('');
+```
