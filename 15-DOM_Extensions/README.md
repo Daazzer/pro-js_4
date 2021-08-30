@@ -136,3 +136,15 @@ div.dataset.myname = "Michael";
 ### 15.3.6 插入标记
 
 直接向文档中插入一个 HTML 字符串
+
+#### 1.innerHTML 属性
+
+读取 `innerHTML` 属性时，会返回元素所有后代的 HTML 字符串，包括元素、注释和文本节点。而在写入 `innerHTML` 时，则会根据提供的字符串值以新的 DOM 子树替代元素中原来包含的所有节点
+
+如果赋值中不包含任何 HTML 标签，则直接生成一个文本节点
+
+```js
+div.innerHTML = 'Hello world!';
+```
+
+设置 `innerHTML` 属性后，页面返回的字符串是将原始字符串对应的 DOM 子树序列化之后的结果
