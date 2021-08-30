@@ -224,3 +224,22 @@ ul.innerHTML = values.map(value => `<li>${value}</li>`).join('');
 ### 15.4.1 children 属性
 
 `children` 属性是一个 `HTMLCollection`，只包含元素的 `Element` 类型子节点
+
+### 15.4.2 contains() 方法
+
+确定一个元素是不是另一个元素的后代，如果目标节点是被搜索节点的后代，`contains()` 返回 `true`，否则返回 `false`
+
+```js
+document.documentElement.contains(document.body);  // true
+```
+
+另外，使用 DOM Level 3 的 `compareDocumentPosition()` 方法也可以确定节点间的关系。这个方法会返回表示两个节点关系的位掩码
+
+| 掩码   | 节点关系                                      |
+| ------ | --------------------------------------------- |
+| `0x1`  | 断开（传入的节点不再文档中）                  |
+| `0x2`  | 领先（传入的节点在 DOM 树中位于参考节点之前） |
+| `0x4`  | 随后（传入的节点在 DOM 树中位于参考节点之后） |
+| `0x8`  | 包含（传入的几点是参考节点的祖先）            |
+| `0x10` | 被包含（传入的节点是参考节点的后代）          |
+
