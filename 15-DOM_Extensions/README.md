@@ -198,3 +198,7 @@ ul.innerHTML = itemsHtml;
 // 或者
 ul.innerHTML = values.map(value => `<li>${value}</li>`).join('');
 ```
+
+#### 6.跨站点脚本
+
+虽然 `innerHTML` 使用方便，但是很容易受到 XSS 攻击。一定要隔离插入的数据。使用相关的库给它们转义
