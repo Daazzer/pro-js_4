@@ -202,3 +202,17 @@ ul.innerHTML = values.map(value => `<li>${value}</li>`).join('');
 #### 6.跨站点脚本
 
 虽然 `innerHTML` 使用方便，但是很容易受到 XSS 攻击。一定要隔离插入的数据。使用相关的库给它们转义
+
+### 15.3.7 scrollIntoView()
+
+`scrollIntoView()` 方法存在于所有的 HTML 元素上，可以滚动浏览器窗口或容器元素以便包含元素进入视口
+
+参数：
+
+- `alignToTop` 布尔值
+  - `true` 窗口滚动后元素的顶部与视口顶部对齐
+  - `false` 窗口滚动后元素的底部与视口底部对齐
+- `scrollIntoViewOptions` 是一个选项对象
+  - `behavior` 定义过渡动画，可取值为 `"smooth"`、`"auto"`，默认 `"auto"`
+  - `block` 定义垂直方向的对齐，可取值 `"start"`、`"center"`、`"end"`、`"nearest"`，默认 `"start"`
+  - `inline` 定义水平方向的对齐，可取值 `"start"`、`"center"`、`"end"`、`"nearest"`，默认 `"nearest"`
