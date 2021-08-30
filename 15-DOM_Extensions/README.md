@@ -133,3 +133,6 @@ div.dataset.appId = 23456;
 div.dataset.myname = "Michael";
 ```
 
+### 15.3.6 插入标记
+
+直接向文档中插入一个 HTML 字符串
