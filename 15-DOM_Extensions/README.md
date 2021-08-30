@@ -220,3 +220,7 @@ ul.innerHTML = values.map(value => `<li>${value}</li>`).join('');
 ## 15.4 专有扩展
 
 由部分浏览器专有和采用的 API
+
+### 15.4.1 children 属性
+
+`children` 属性是一个 `HTMLCollection`，只包含元素的 `Element` 类型子节点
