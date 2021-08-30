@@ -245,3 +245,7 @@ document.documentElement.contains(document.body);  // true
 
 ### 15.4.3 插入标记
 
+#### 1.innerText 属性
+
+`innerText` 属性对应元素中包含的所有文本内容，无论文本在子树中哪个层级，设置 `innerText` 只能在容器中生成一个文本节点
+
