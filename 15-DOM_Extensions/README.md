@@ -160,3 +160,10 @@ div.innerHTML = '<input type=\"hidden\"><script defer>console.log(\'hi\');<\/scr
 ```
 
 在 IE 中，通过 `innerHTML` 插入 `<style>` 也会有类似的问题
+
+#### 3.outerHTML 属性
+
+读取 `outerHTML` 属性，会返回调用它的元素（及所有后代元素）的 HTML  字符串
+
+写入 `outerHTML` 属性时，则调用它的元素及整个后代元素都被取代
+
