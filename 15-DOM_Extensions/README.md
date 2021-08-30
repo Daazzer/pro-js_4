@@ -243,3 +243,5 @@ document.documentElement.contains(document.body);  // true
 | `0x8`  | 包含（传入的几点是参考节点的祖先）            |
 | `0x10` | 被包含（传入的节点是参考节点的后代）          |
 
+### 15.4.3 插入标记
+
