@@ -109,3 +109,19 @@ DOM2 Core 对 `Element` 类型新增的方法
 ### 16.1.2 其他变化
 
 DOM2 Core 还对 DOM API 的完整性与可靠性进行更新
+
+#### 1.DocumentType 变化
+
+`DocumentType` 新增 3 个属性
+
+- `publicId` 表示文档声明中有效但无法使用 DOM1 API 访问的数据 `"-// W3C// DTD HTML 4.01// EN"`
+- `systemId` 表示文档声明中有效但无法使用 DOM1 API 访问的数据 `"http://www.w3.org/TR/html4/strict.dtd"`
+- `internamSubset` 用于访问文档类型声明中可能包含的额外定义  `[<!ELEMENT name (#PCDATA)>]`
+
+```xml
+<!DOCTYPE HTML PUBLIC 
+  "-// W3C// DTD HTML 4.01// EN"
+  "http://www.w3.org/TR/html4/strict.dtd"
+  [<!ELEMENT name (#PCDATA)>]
+>
+```
