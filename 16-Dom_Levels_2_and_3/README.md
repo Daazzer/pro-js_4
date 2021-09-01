@@ -75,3 +75,13 @@ DOM3 新增的相关方法：
 - `isDefaultNamespace(namespaceURI)` 返回布尔值，表示 `namespaceURI` 是否为节点的默认命名空间
 - `lookupNamespaceURI(prefix)` 返回给定 `prefix` 的命名空间 URI
 - `lookupPrefix(namespaceURI)` 返回给定 `namespaceURI` 的前缀
+
+#### 2.Document 的变化
+
+DOM2 在 `Document` 类型上新增了以下命名空间特定的方法
+
+- `createElementNS(namespaceURI, tagName)` 以给定的标签名 `tagName` 创建指定命名空间 `namespaceURI` 的一个元素
+- `createAttributeNS(namespaceURI, attributeName)` 以给定的属性名 `attributeName` 创建指定命名空间 `namespaceURI` 的一个新属性
+- `getElementsByTagNameNS(namespaceURI, tarName)` 返回给定命名空间 `namespaceURI` 中所有标签名为 `tagName` 的元素 `NodeList`
+
+这些命名空间特定的方法只在文档中包含两个或两个以上命名空间时才有用
