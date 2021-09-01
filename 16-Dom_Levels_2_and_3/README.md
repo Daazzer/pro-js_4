@@ -105,3 +105,7 @@ DOM2 Core 对 `Element` 类型新增的方法
 - `getNamedItemNS(namespaceURI, localName)`
 - `removeNamedItemNS(namespaceURI, localName)`
 - `setNamedItemNS(node)`
+
+### 16.1.2 其他变化
+
+DOM2 Core 还对 DOM API 的完整性与可靠性进行更新
