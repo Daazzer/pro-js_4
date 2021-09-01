@@ -97,3 +97,11 @@ DOM2 Core 对 `Element` 类型新增的方法
 - `removeAttributeNS(namespaceURI, value)` 删除指定命名空间 `namespaceURI` 中名为 `localName` 的属性
 - `setAttributeNS(namespaceURI, qualifiedName, value)` 设置指定命名空间 `namespaceURI` 中名为 `qualifiedName` 的属性为 `value`
 - `setAttributeNodeNS(attNode)` 为元素设置包含命名空间信息的属性节点 `attNode` 这些方法与 DOM1 中对应的方法行为相同，除 `setAttributeNodeNS()` 之外多了一个命名空间参数
+
+#### 4.NamedNodeMap 的变化
+
+`NamedNodeMap` 新增了以下方法
+
+- `getNamedItemNS(namespaceURI, localName)`
+- `removeNamedItemNS(namespaceURI, localName)`
+- `setNamedItemNS(node)`
