@@ -62,3 +62,16 @@ XML 命名空间可以实现在一个格式规范的文档中混用不同的 XML
 </html>
 ```
 
+#### 1.Node 的变化
+
+DOM2 中 `Node` 类型包含以下特定于命名空间的属性：
+
+- `localName` 不包含命名空间前缀的节点名
+- `namespaceURI` 节点命名空间的 URL，如果未指定则为 `null`
+- `prefix` 命名空间的前缀，如果未指定则为 `null`
+
+DOM3 新增的相关方法：
+
+- `isDefaultNamespace(namespaceURI)` 返回布尔值，表示 `namespaceURI` 是否为节点的默认命名空间
+- `lookupNamespaceURI(prefix)` 返回给定 `prefix` 的命名空间 URI
+- `lookupPrefix(namespaceURI)` 返回给定 `namespaceURI` 的前缀
