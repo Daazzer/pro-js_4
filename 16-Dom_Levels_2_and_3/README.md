@@ -333,3 +333,16 @@ function getElementLeft(element) {
 - `clientHeight` 内容器高度加上、下内边距高度
 
 ![dimensions-client](./i/dimensions-client.png)
+
+#### 3.滚动尺寸
+
+提供了元素内容滚动距离的信息。
+
+- `scrollHeight` 没有滚动条出现时，元素内容的总高度
+- `scrollLeft` 内容区左侧隐藏的像素数，设置这个属性可以改变元素的滚动位置
+- `scrollTop` 内容区顶部隐藏的像素数，设置这个属性可以改变元素的滚动位置
+- `scrollWidth` 没有滚动条出现时，元素内容的总宽度（也就是整个元素连同隐藏部分的宽度）
+
+![scrollheight](./i/scrollheight.png)
+
+`scrollHeight`、`scrollWidth` 在没有滚动条的情况下与 `clientHeight`、`clientWidth` 是分不清的，但是如果有滚动条，那么 `clientHeight` 与 `clientWidth` 等于视口的大小，`scrollWidth` 和 `scrollHeight` 等于文档大小
