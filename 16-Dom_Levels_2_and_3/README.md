@@ -162,3 +162,13 @@ DOM2 Core 还对 DOM API 的完整性与可靠性进行更新
 #### 4.内嵌窗格的变化
 
 - `contentDocument` 属性，`HTMLFrameElement`  类型的属性，包含代表子内嵌窗格中内容的 `document` 对象指针
+
+## 16.2 样式
+
+HTML 中的 3 中定义样式：
+
+- 外部样式表，`<link>` 元素
+- 文档样式表，`<style>` 元素
+- 元素特定样式，`style` 属性。
+
+DOM2 为这 3 中应用样式的机制都提供了 API
