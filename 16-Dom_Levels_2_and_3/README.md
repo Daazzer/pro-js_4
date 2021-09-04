@@ -323,3 +323,13 @@ function getElementLeft(element) {
 }
 ```
 
+
+
+#### 2.客户端尺寸
+
+包含元素内容及其内边距所占用的空间。
+
+- `clientWidth` 内容区宽度加左、右内边距宽度
+- `clientHeight` 内容器高度加上、下内边距高度
+
+![dimensions-client](./i/dimensions-client.png)
