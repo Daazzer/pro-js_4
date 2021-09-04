@@ -272,3 +272,14 @@ console.log(rule.style.height);  // "200px"
 rule.style.backgroundColor = 'red';  // 也可以修改样式
 ```
 
+
+
+#### 2.创建规则
+
+- `insertRule()` 向样式表中添加新规则，接收两个参数，规则的文本和表示插入位置的索引值
+
+  ```js
+  sheet.insertRule('body { background-color: silver; }', 0);  // 使用 DOM 方法
+  ```
+
+  
