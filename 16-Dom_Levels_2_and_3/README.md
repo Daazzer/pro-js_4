@@ -125,3 +125,30 @@ DOM2 Core 还对 DOM API 的完整性与可靠性进行更新
   [<!ELEMENT name (#PCDATA)>]
 >
 ```
+
+#### 2.Document 的变化
+
+- `importNode()` 从其他文档获取一个节点并导入到新文档，以便将其插入新文档，接收两个参数，要复制的节点和表示是否同时复制子树的布尔值
+
+- `defaultView` 属性，是一个指向拥有当前文档的窗口（或窗格 `<iframe>` ）的指针
+
+- `document.implementation.createDocumentType()` 创建 `DocumentType` 类型的新方法，接收三个参数：文档类型名称、`publicId` 和 `systemId`
+
+  ```js
+  let doctype = document.implementation.createDocumentType('html', '-// W3C// DTD HTML 4.01// EN', 'http://www.w3.org/TR/html4/strict.dtd');
+  ```
+
+- `document.implementation.createDocument()`  接收3个参数：文档元素的 `namespaceURI`、文档元素的标签名和文档类型
+
+  ```js
+  let doc = document.implementation.createDocument('', 'root', null);
+  ```
+
+- `document.implementation.createHTMLDocument()` 创建一个完整的 HTML 文档，接收一个参数，创建文档的标题（放到 `<title>` 元素中）
+
+  ```js
+  let htmldoc = document.implementation.createHTMLDocument('New Doc');
+  console.log(htmldoc.title);  // 'New Doc'
+  console.log(typeof htmldoc.body);  // 'object'
+  ```
+
