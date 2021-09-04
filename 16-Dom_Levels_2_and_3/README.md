@@ -205,3 +205,21 @@ myDiv.style.border = '1px solid black';
 #### 2.计算样式
 
 - `document.defaultView.getComputedStyle()` 接收两个参数：要取得计算样式的元素和伪元素字符串，返回一个 `CSSStyleDeclaration` 对象，也就是获得不是在 `style` 属性上的样式
+
+### 16.2.2 操作样式表
+
+`CSSStyleSheet` 类型表示 CSS 样式表，包括 `<link>` 引入和 `<style>` 元素定义的样式表，继承自 `StyleSheet`
+
+属性和方法
+
+- `disabled`
+- `href`
+- `media`
+- `ownerNode`
+- `parentStyleSheet`
+- `title`
+- `type`
+- `cssRules`
+- `ownerRule`
+- `deleteRule(index)`
+- `insertRule(rule, index)`
