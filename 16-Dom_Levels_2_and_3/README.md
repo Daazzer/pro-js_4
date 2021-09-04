@@ -201,3 +201,7 @@ myDiv.style.border = '1px solid black';
 - `item(index)` 返回索引为 `index` 的 CSS 属性名
 - `removeProperty(propertyName)` 从样式中删除 CSS 属性 `propertyName`
 - `setProperty(propertyName, value, priority)` 设置 CSS 属性 `propertyName` 的值为 `value`、`priority` 是 `"important"` 或空字符串
+
+#### 2.计算样式
+
+- `document.defaultView.getComputedStyle()` 接收两个参数：要取得计算样式的元素和伪元素字符串，返回一个 `CSSStyleDeclaration` 对象，也就是获得不是在 `style` 属性上的样式
