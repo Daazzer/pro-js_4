@@ -190,3 +190,14 @@ myDiv.style.height = '200px';
 myDiv.style.border = '1px solid black';
 ```
 
+#### 1.DOM 样式属性和方法
+
+- `cssText` 包含 `style` 属性中的 CSS 代码
+- `length` 应用给元素的 CSS 属性数量
+- `parentRule` 表示 CSS 信息的 `CSSRule` 对象
+- `getPropertyCSSValue(propertyName)`  返回包含CSS属性 `propertyName` 值的 `CSSValue` 对象，已废弃
+- `getPropertyPriority(propertyName)` 如果使用了 `!important` 则返回 `"important"`，否则返回空字符串
+- `getPropertyValue(propertyName)` 返回树形 `propertyName` 的字符串值
+- `item(index)` 返回索引为 `index` 的 CSS 属性名
+- `removeProperty(propertyName)` 从样式中删除 CSS 属性 `propertyName`
+- `setProperty(propertyName, value, priority)` 设置 CSS 属性 `propertyName` 的值为 `value`、`priority` 是 `"important"` 或空字符串
