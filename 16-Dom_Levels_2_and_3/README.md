@@ -294,3 +294,32 @@ rule.style.backgroundColor = 'red';  // 也可以修改样式
 
 ### 16.2.3 元素尺寸
 
+#### 1.偏移尺寸
+
+4 个偏移尺寸的属性
+
+- `offsetHeight` 元素在垂直方向上占用的像素尺寸，包括它的高度、水平滚动条高度（如果可见）和上、下边框的高度
+- `offsetLeft` 元素左边框外侧距离包含距离包含元素左边框内侧的像素数
+- `offsetTop` 元素上边框外侧距离包含元素上边框内侧的像素数
+- `offsetWidth` 元素在水平方向上占用的像素尺寸，包括它的宽度、垂直滚动条宽度（如果可见）和左、右边框宽度
+
+`offsetLeft`、`offsetTop` 是相对于包含元素的，包含元素保存在 `offsetParent` 属性中
+
+![dimensions-offset](./i/dimensions-offset.png)
+
+例子，确定一个元素在页面中的偏移量，一直加到根元素
+
+```js
+function getElementLeft(element) {
+  let actualLeft = element.offsetLeft;
+  let current = element.offsetParent;
+  
+  while (current !== null) {
+    actualLeft += current.offsetLeft;
+    current = current.offsetParent;
+  }
+  
+  return actualLeft;
+}
+```
+
