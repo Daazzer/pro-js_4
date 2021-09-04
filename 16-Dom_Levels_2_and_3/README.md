@@ -172,3 +172,21 @@ HTML 中的 3 中定义样式：
 - 元素特定样式，`style` 属性。
 
 DOM2 为这 3 中应用样式的机制都提供了 API
+
+### 16.2.1 存取样式
+
+`style` 属性是 `CSSStyleDeclaration` 类型实例
+
+在 CSS 中属性名是连字符表示法，但是到了 JavaScript 中需要使用驼峰法
+
+```js
+const myDiv = document.getElementById('myDiv');
+
+myDiv.style.backgroundColor = 'red';
+
+myDiv.style.width = '100px';
+myDiv.style.height = '200px';
+
+myDiv.style.border = '1px solid black';
+```
+
