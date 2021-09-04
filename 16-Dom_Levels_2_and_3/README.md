@@ -282,4 +282,12 @@ rule.style.backgroundColor = 'red';  // 也可以修改样式
   sheet.insertRule('body { background-color: silver; }', 0);  // 使用 DOM 方法
   ```
 
+#### 3.删除规则
+
+- `deleteRule()` 接收一个参数，要删除规则的索引
+
+  ```js
+  sheet.deleteRule(0);
+  ```
+
   
