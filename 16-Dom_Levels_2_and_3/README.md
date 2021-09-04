@@ -223,3 +223,52 @@ myDiv.style.border = '1px solid black';
 - `ownerRule`
 - `deleteRule(index)`
 - `insertRule(rule, index)`
+
+`document.styleSheets` 表示文档中可用的样式表集合。
+
+```js
+let sheet = null;
+for (let i = 0, len = document.styleSheets.length; i < len; i++) {
+  sheet = document.styleSheets[i];
+  console.log(sheet.href);
+}
+```
+
+
+
+#### 1.CSS 规则
+
+`CSSStyleRule` 继承自 `CSSRule`
+
+可用的属性
+
+- `cssText`
+- `parentRule`
+- `parentStyleSheet`
+- `selectorText`
+- `style`
+- `type`
+
+```css
+div.box {
+  background-color: blue;
+  width: 100px;
+  height: 200px;
+}
+```
+
+
+
+```js
+let sheet = document.styleSheets[0];
+let rules = sheet.cssRules || sheet.rules;
+let rule = rules[0];
+console.log(rule.selectorText);  // "div.box"
+console.log(rule.style.cssText);  // 完整的 CSS 代码
+console.log(rule.style.backgroundColor);  // "blue"
+console.log(rule.style.width);  // "100px"
+console.log(rule.style.height);  // "200px"
+
+rule.style.backgroundColor = 'red';  // 也可以修改样式
+```
+
