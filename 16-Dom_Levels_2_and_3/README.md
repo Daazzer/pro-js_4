@@ -346,3 +346,17 @@ function getElementLeft(element) {
 ![scrollheight](./i/scrollheight.png)
 
 `scrollHeight`、`scrollWidth` 在没有滚动条的情况下与 `clientHeight`、`clientWidth` 是分不清的，但是如果有滚动条，那么 `clientHeight` 与 `clientWidth` 等于视口的大小，`scrollWidth` 和 `scrollHeight` 等于文档大小
+
+#### 4.确定元素尺寸
+
+每个元素上暴露了
+
+- `getBoundingClientRect()` 方法，返回一个 `DOMRect` 对象，包含6个属性，表示元素在页面中相对于视口的位置
+  - `left`
+  - `top`
+  - `right`
+  - `bottom`
+  - `height`
+  - `width`
+
+![element-box-diagram](./i/element-box-diagram.png)
