@@ -578,3 +578,7 @@ let range = document.createRange();
 范围没有选择文档中的任何部分，则称为**折叠(collapsed)**
 
 - `collapse()` 接收一个参数：布尔值，表示折叠到范围哪一端，`true` 表示起点，`false` 表示终点
+
+### 16.4.7 范围比较
+
+- `compareBoundaryPoints()` 确定范围之间是否存在公共的边界，接收两个参数，要比较的范围和一个常量值
