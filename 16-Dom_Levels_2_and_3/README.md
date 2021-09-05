@@ -555,3 +555,9 @@ let range = document.createRange();
 </html>
 ```
 
+### 16.4.3 复杂选择
+
+要创建复杂范围，需要：
+
+- `setStart()` 接收两个参数：参照节点和偏移量
+- `setEnd()` 接收两个参数：参照节点和偏移量
