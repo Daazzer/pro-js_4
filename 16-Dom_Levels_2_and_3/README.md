@@ -591,3 +591,12 @@ let range = document.createRange();
 let newRange = range.cloneRange();
 ```
 
+### 16.4.9 清理
+
+从创建它的文档中剥离
+
+```js
+range.detach();  // 从文档中剥离范围
+range = null;  // 解除引用
+```
+
