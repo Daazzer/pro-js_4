@@ -520,3 +520,38 @@ let range = document.createRange();
 - `endContainer`
 - `endOffset`
 - `commonAncestorContainer`
+
+### 16.4.2 简单选择
+
+范围方法
+
+- `selectNode()` 接收一个节点参数，选择整个节点，包括后代
+- `selectNodeContents()` 接收一个节点参数，只选择其后代节点
+- `setStartBefore(refNode)`
+- `setStartAfter(refNode)`
+- `setEndBefore(refNode)`
+- `setEndAfter(refNode)`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简单选择</title>
+  </head>
+  <body>
+    <p id="p1"><b>Hello</b> world!</p>
+
+    <script>
+      const range1 = document.createRange(),
+            range2 = document.createRange(),
+            p1 = document.getElementById('p1');
+      range1.selectNode(p1);
+      range2.selectNode(p1);
+    </script>
+  </body>
+</html>
+```
+
