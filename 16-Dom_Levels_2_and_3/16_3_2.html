@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TreeWalker</title>
+</head>
+<body>
+  <div id="div1">
+    <p><b>Hello</b> world!</p>
+    <ul>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+  </div>
+
+  <script>
+    const div = document.getElementById('div1');
+    let walker = document.createTreeWalker(div, NodeFilter.SHOW_ELEMENT, null, false);
+    
+    walker.firstChild();  // 前往 <p>
+    walker.nextSibling();  // 前往 <li>
+
+    let node = walker.firstChild();
+    while (node !== null) {
+      console.log(node.tagName);
+      node = walker.nextSibling();
+    }
+    // LIx3
+  </script>
+</body>
+</html>

@@ -450,3 +450,53 @@ const iterator = document.createNodeIterator(root, NodeFilter.SHOW_ELEMENT, filt
 </html>
 ```
 
+### 16.3.2 TreeWalker
+
+使用 `document.createTreeWalker()` 创建，接收与 `NodeIterator` 同样的参数
+
+除了包含与 `NodeIterator` 的 `nextNode()`、`previousNode()` 方法，还有
+
+- `parentNode()` 遍历到当前节点的父节点
+- `firstChild()` 遍历到当前节点的第一个子节点
+- `lastChild()` 遍历到当前节点的最后一个子节点
+- `nextSibling()` 遍历到当前节点的下一个同胞节点
+- `previousSibling()` 遍历到当前节点的上一个同胞节点
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TreeWalker</title>
+  </head>
+  <body>
+    <div id="div1">
+      <p><b>Hello</b> world!</p>
+      <ul>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+      </ul>
+    </div>
+
+    <script>
+      const div = document.getElementById('div1');
+      let walker = document.createTreeWalker(div, NodeFilter.SHOW_ELEMENT, null, false);
+
+      walker.firstChild();  // 前往 <p>
+      walker.nextSibling();  // 前往 <li>
+
+      let node = walker.firstChild();
+      while (node !== null) {
+        console.log(node.tagName);
+        node = walker.nextSibling();
+      }
+      // LIx3
+    </script>
+  </body>
+</html>
+```
+
+相比起 `NodeIterator`，`TreeWalker` 类型提供更大的灵活性
