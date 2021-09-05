@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NodeIterator</title>
+</head>
+<body>
+  <div id="div1">
+    <p><b>Hello</b> world!</p>
+    <ul>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      <li>List item 3</li>
+    </ul>
+  </div>
+
+  <script>
+    const div = document.getElementById('div1');
+    const iterator = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, null, false);
+    let node = iterator.nextNode();
+
+    while (node !== null) {
+      console.log(node.tagName);
+      node = iterator.nextNode();
+    }
+    // DIV
+    // P
+    // B
+    // UL
+    // LIx3
+  </script>
+
+  <script>
+    // 只想遍历 li
+    const filter = node => node.tagName.toLowerCase() == 'li'
+      ? NodeFilter.FILTER_ACCEPT
+      : NodeFilter.FILTER_SKIP;
+    
+    const iterator1 = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, filter, false);
+
+    node = iterator1.nextNode();
+
+    while (node !== null) {
+      console.log(node.tagName);
+      node = iterator1.nextNode();
+    }
+    // LIx3
+  </script>
+</body>
+</html>

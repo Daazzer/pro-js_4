@@ -364,3 +364,89 @@ function getElementLeft(element) {
 ## 16.3 遍历
 
 两个用于辅助顺序遍历 DOM 结构的类型：`NodeIterator`、`TreeWalker` 从某个起点开始执行对 DOM 结构的深度优先遍历
+
+### 16.3.1 NodeIterator
+
+通过 `document.createNodeIterator()` 创建，接收 4 个参数：
+
+- `root` 作为遍历根节点的节点
+- `whatToShow` 数值代码，表示应该访问那些节点
+- `filter`，`NodeFilter` 对象或函数，表示是否接收或跳过特定节点
+- `entityReferenceExpansion` 布尔值，表示是否扩展实体引用。这个参数在 HTML 文档中没有效果，因为实体引用永远不扩展
+
+定义只接收 `<p>` 元素的节点过滤对象
+
+```js
+const filter = {
+  acceptNode(node) {
+    return node.tagName.toLowerCase() == 'p'
+    	? NodeFilter.FILTER_ACCEPT
+    	: NodeFilter.FILTER_SKIP;
+  }
+}
+
+const iterator = document.createNodeIterator(root, NodeFilter.SHOW_ELEMENT, filter, false);
+```
+
+
+
+`NodeIterator` 主要方法
+
+- `nextNode()` 在遍历中前进一步
+- `previousNode()` 在遍历中后退一步
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NodeIterator</title>
+  </head>
+  <body>
+    <div id="div1">
+      <p><b>Hello</b> world!</p>
+      <ul>
+        <li>List item 1</li>
+        <li>List item 2</li>
+        <li>List item 3</li>
+      </ul>
+    </div>
+
+    <script>
+      const div = document.getElementById('div1');
+      const iterator = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, null, false);
+      let node = iterator.nextNode();
+
+      while (node !== null) {
+        console.log(node.tagName);
+        node = iterator.nextNode();
+      }
+      // DIV
+      // P
+      // B
+      // UL
+      // LIx3
+    </script>
+
+    <script>
+      // 只想遍历 li
+      const filter = node => node.tagName.toLowerCase() == 'li'
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_SKIP;
+
+      const iterator1 = document.createNodeIterator(div, NodeFilter.SHOW_ELEMENT, filter, false);
+
+      node = iterator1.nextNode();
+
+      while (node !== null) {
+        console.log(node.tagName);
+        node = iterator1.nextNode();
+      }
+      // LIx3
+    </script>
+  </body>
+</html>
+```
+
