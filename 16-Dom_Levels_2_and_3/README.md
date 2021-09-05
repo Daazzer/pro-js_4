@@ -504,3 +504,19 @@ const iterator = document.createNodeIterator(root, NodeFilter.SHOW_ELEMENT, filt
 ## 16.4 范围
 
 可用于在文档中选择内容
+
+### 16.4.1 DOM 范围
+
+每个范围都是 `Range` 类型的实例
+
+```js
+let range = document.createRange();
+```
+
+属性
+
+- `startContainer`
+- `startOffset`
+- `endContainer`
+- `endOffset`
+- `commonAncestorContainer`
