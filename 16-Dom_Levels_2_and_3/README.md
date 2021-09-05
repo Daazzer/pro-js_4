@@ -567,3 +567,8 @@ let range = document.createRange();
 - `deleteContents()` 从文档中删除范围包含的节点
 - `extractContents()` 返回删除的范围，也就是从文档中剪切出对应的文档范围
 - `cloneContents()` 复制范围
+
+### 16.4.5 范围插入
+
+- `insertNode()` 在范围选区的开始位置插入一个节点
+- `surroundContents()` 插入包含范围的内容，接收一个参数，包含范围内容的节点
