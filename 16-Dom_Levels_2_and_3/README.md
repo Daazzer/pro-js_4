@@ -500,3 +500,7 @@ const iterator = document.createNodeIterator(root, NodeFilter.SHOW_ELEMENT, filt
 ```
 
 相比起 `NodeIterator`，`TreeWalker` 类型提供更大的灵活性
+
+## 16.4 范围
+
+可用于在文档中选择内容
