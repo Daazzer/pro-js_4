@@ -572,3 +572,9 @@ let range = document.createRange();
 
 - `insertNode()` 在范围选区的开始位置插入一个节点
 - `surroundContents()` 插入包含范围的内容，接收一个参数，包含范围内容的节点
+
+### 16.4.6 范围折叠
+
+范围没有选择文档中的任何部分，则称为**折叠(collapsed)**
+
+- `collapse()` 接收一个参数：布尔值，表示折叠到范围哪一端，`true` 表示起点，`false` 表示终点
