@@ -561,3 +561,9 @@ let range = document.createRange();
 
 - `setStart()` 接收两个参数：参照节点和偏移量
 - `setEnd()` 接收两个参数：参照节点和偏移量
+
+### 16.4.4 操作范围
+
+- `deleteContents()` 从文档中删除范围包含的节点
+- `extractContents()` 返回删除的范围，也就是从文档中剪切出对应的文档范围
+- `cloneContents()` 复制范围
