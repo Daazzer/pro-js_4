@@ -582,3 +582,12 @@ let range = document.createRange();
 ### 16.4.7 范围比较
 
 - `compareBoundaryPoints()` 确定范围之间是否存在公共的边界，接收两个参数，要比较的范围和一个常量值
+
+### 16.4.8 复制范围
+
+创建调用它的范围的副本
+
+```js
+let newRange = range.cloneRange();
+```
+
