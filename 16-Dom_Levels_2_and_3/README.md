@@ -360,3 +360,7 @@ function getElementLeft(element) {
   - `width`
 
 ![element-box-diagram](./i/element-box-diagram.png)
+
+## 16.3 遍历
+
+两个用于辅助顺序遍历 DOM 结构的类型：`NodeIterator`、`TreeWalker` 从某个起点开始执行对 DOM 结构的深度优先遍历
