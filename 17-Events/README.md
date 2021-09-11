@@ -65,3 +65,26 @@ HTML 属性形式来指定事件处理程序
 
 使用 HTML 指定时间会导致 HTML 与 JavaScript 强耦合
 
+### 17.2.2 DOM0 事件处理程序
+
+每个元素（包括 `window`、`document`）都有小写的事件处理程序属性，如 `onclick` ，只要把这个属性赋值为一个函数
+
+```js
+const btn = document.getElementById('myBtn');
+btn.onclick = function() {
+  console.log('Clicked');
+};
+```
+
+事件处理程序会在元素的作用域中执行
+
+```js
+const btn = document.getElementById('myBtn');
+btn.onclick = function() {
+  console.log(this.id);  // "myBtn"
+};
+
+// 移除事件处理程序
+btn.onclick = null;
+```
+
