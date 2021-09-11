@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOM2 事件处理程序</title>
+</head>
+<body>
+  <button id="myBtn">Click Me</button>
+  <script>
+    const btn = document.getElementById('myBtn');
+    btn.addEventListener('click', function() {
+      console.log(this.id);  // "myBtn"
+    }, false);
+
+    btn.addEventListener('click', () => {
+      console.log('Hello world!');
+    }, false);
+  </script>
+</body>
+</html>

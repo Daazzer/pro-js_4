@@ -88,3 +88,40 @@ btn.onclick = function() {
 btn.onclick = null;
 ```
 
+### 17.2.3 DOM2 事件处理程序
+
+接收3个参数：事件名、事件处理函数、一个布尔值，`true` 表示在捕获阶段调用事件处理程序，`false` (默认值) 表示在冒泡阶段调用事件处理程序
+
+- `addEventListener()`
+- `removeEventListener()`
+
+```js
+const btn = document.getElementById('myBtn');
+btn.addEventListener('click', function() {
+  console.log(this.id);  // "myBtn"
+}, false);
+```
+
+使用 DOM2 事件处理程序的优势是可以为同一个事件添加多个处理程序
+
+```js
+const btn = document.getElementById('myBtn');
+btn.addEventListener('click', function() {
+  console.log(this.id);
+}, false);
+btn.addEventListener('click', () => {
+  console.log('Hello world!');
+}, false);
+```
+
+`removeEventListener()` 无法移除 `addEventListener()` 添加的匿名函数，只能移除具名函数
+
+```js
+const btn = document.getElementById('myBtn');
+function handler() {
+	console.log(this.id);
+}
+btn.addEventListener('click', handler, false);
+btn.removeEventListener('click', handler, false);
+```
+
