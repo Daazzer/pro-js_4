@@ -161,3 +161,31 @@ btn.attachEvent('onclick', handler);
 btn.detachEvent('onclick', handler);
 ```
 
+### 17.2.5 跨浏览器事件处理程序
+
+兼容DOM0、DOM2、IE 事件处理程序
+
+```js
+var EventUtil = {
+  addHandler: function(element, type, handler) {
+    if (element.addEventListener) {
+      element.addEventListener(type, handler, false);
+    } else if (element.attachEvent) {
+      element.attachEvent('on' + type, handler);
+    } else {
+      element['on' + type] = handler;
+    }
+  },
+  
+ 	removeHandler: function(element, type, handler) {
+    if (element.removeEventListener) {
+      element.removeEventListener(type, handler, false);
+    } else if (element.detachEvent) {
+      element.detachEvent('on' + type, handler);
+    } else {
+      element['on' + type] = null;
+    }
+  }
+};
+```
+
