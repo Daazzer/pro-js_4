@@ -36,3 +36,32 @@ DOM2 Events 规范规定事件流分为 3 个阶段：
 ## 17.2 事件处理程序
 
 为响应事件而调用的函数被称为**事件处理程序**(或**事件监听器**)。名字以 `on` 开头，例如 `click` 事件的处理程序叫 `onclick`
+
+### 17.2.1 HTML 事件处理程序
+
+HTML 属性形式来指定事件处理程序
+
+```html
+<input type="button" value="Click Me" onclick="console.log('Clicked')" />
+```
+
+也可以调用页面其他地方定义的脚本
+
+```html
+<script>
+  function showMessage() {
+    console.log('Hello world!');
+  }
+</script>
+<input type="button" value="Click Me" onclick="showMessage()" />
+```
+
+这个函数有一个特殊的局部变量 `event`，其中保存的就是 `event` 对象
+
+```html
+<!-- 输出 "click" -->
+<input type="button" value="Click Me" onclick="console.log(event.type)" />
+```
+
+使用 HTML 指定时间会导致 HTML 与 JavaScript 强耦合
+
