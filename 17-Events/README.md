@@ -125,3 +125,39 @@ btn.addEventListener('click', handler, false);
 btn.removeEventListener('click', handler, false);
 ```
 
+### 17.2.4 IE 事件处理程序
+
+两个方法接受两个同样的参数：事件处理程序的名字和事件处理函数
+
+- `attachEvent()`
+- `detachEvent()`
+
+```js
+var btn = document.getElementById('myBtn');
+btn.attachEvent('onclick', function() {
+  console.log('Clicked');
+});
+```
+
+使用 `attachEvent()` 时，事件处理程序是在全局作用域中运行
+
+```js
+var btn = document.getElementById('myBtn');
+btn.attachEvent('onclick', function() {
+  console.log(this === window);  // true
+});
+```
+
+`attachEvent()` 同样可以绑定多个处理程序，但是会以添加它们的顺序反向触发
+
+`detachEvent()` 同样不能移除匿名函数，可以移除具名函数
+
+```js
+var btn = document.getElementById('myBtn');
+function handler() {
+	console.log('Clicked');
+}
+btn.attachEvent('onclick', handler);
+btn.detachEvent('onclick', handler);
+```
+
