@@ -192,3 +192,33 @@ var EventUtil = {
 ## 17.3 事件对象
 
 在 DOM 中发生事件时，所有相关信息都会被收集并存储在一个名为 `event` 的对象中
+
+### 17.3.1 DOM 事件对象
+
+`event` 对象是传给事件处理程序的唯一参数。
+
+```js
+const btn = document.getElementById('myBtn');
+btn.onclick = function(event) {
+  console.log(event.type);  // "click"
+};
+
+btn.addEventListener('click', event => {
+  console.log(event.type);  // "click"
+}, false);
+```
+
+在事件处理程序内部，`this` 对象始终等于 `currentTarget` 的值，而 `target` 只包含事件的实际目标（也就是事件传播阶段的目标），常用于**事件委托**
+
+`preventDefault()` 方法用于阻止特定事件的默认动作。比如，链接的默认行为就是在被单击时导航到 `href` 属性指定的 URL
+
+```js
+const link = document.getElementById('myLink');
+link.onclick = function(event) {
+  event.preventDefault();
+};
+```
+
+`stopPropagation()` 方法用于立即阻止事件流在 DOM 结构中传播，取消后续的事件捕获或冒泡
+
+`eventPhase` 属性可用于确定事件流当前所处的阶段
