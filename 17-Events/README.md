@@ -456,3 +456,9 @@ div.addEventListener('click', event => {
 #### 7.额外事件信息
 
 - `event.detail`
+
+#### 8.mousewheel 事件
+
+在用户使用鼠标滚轮时触发
+
+- `event.wheelDelta` 表示滚动的方向
