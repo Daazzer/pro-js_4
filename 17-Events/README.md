@@ -452,3 +452,7 @@ div.addEventListener('click', event => {
   - `0` 表示鼠标主键
   - `1` 表示鼠标中键
   - `2` 表示鼠标副键
+
+#### 7.额外事件信息
+
+- `event.detail`
