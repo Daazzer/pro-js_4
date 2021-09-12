@@ -445,3 +445,10 @@ div.addEventListener('click', event => {
 #### 5.相关元素
 
 - `event.relatedTarget` 属性提供了相关元素信息，`mouseover` 和 `mouseout` 发生时才包含值
+
+#### 6.鼠标按键
+
+- `event.button` 定义了3个值
+  - `0` 表示鼠标主键
+  - `1` 表示鼠标中键
+  - `2` 表示鼠标副键
