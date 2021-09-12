@@ -507,3 +507,7 @@ div.addEventListener('click', event => {
 
 - `event.data`
 - `event.inputMethod`
+
+#### 5.设备上的键盘事件
+
+任天堂 Wii 遥控器会触发键盘事件
