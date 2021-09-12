@@ -441,3 +441,7 @@ div.addEventListener('click', event => {
 - `event.ctrlKey`
 - `event.altKey`
 - `event.metaKey`
+
+#### 5.相关元素
+
+- `event.relatedTarget` 属性提供了相关元素信息，`mouseover` 和 `mouseout` 发生时才包含值
