@@ -388,3 +388,16 @@ DOM3 Events 定义的鼠标事件
 - `mouseout`
 - `mouseover`
 - `mouseup`
+
+#### 1.客户端坐标
+
+- `event.clientX`
+- `event.clientY`
+
+```js
+const div = document.getElementById('myDiv');
+div.addEventListener('click', event => {
+  console.log(`Client coordinates: ${event.clientX}, ${event.clientY}`);
+});
+```
+
