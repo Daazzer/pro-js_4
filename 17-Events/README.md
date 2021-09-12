@@ -462,3 +462,7 @@ div.addEventListener('click', event => {
 在用户使用鼠标滚轮时触发
 
 - `event.wheelDelta` 表示滚动的方向
+
+#### 9.触摸屏幕设备
+
+不支持 `dbclick`
