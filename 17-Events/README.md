@@ -413,7 +413,21 @@ div.addEventListener('click', event => {
 ```js
 const div = document.getElementById('myDiv');
 div.addEventListener('click', event => {
-  console.log(`page coordinates: ${event.pageX}, ${event.pageY}`);
+  console.log(`Page coordinates: ${event.pageX}, ${event.pageY}`);
+});
+```
+
+#### 3.屏幕坐标
+
+光标在整个屏幕中的坐标
+
+- `event.screenX`
+- `event.screenY`
+
+```js
+const div = document.getElementById('myDiv');
+div.addEventListener('click', event => {
+  console.log(`Screen coordinates: ${event.screenX}, ${event.screenY}`);
 });
 ```
 
