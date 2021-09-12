@@ -374,3 +374,17 @@ UI 事件类型
 - `focus`
 - `focusin`
 - `focusout`
+
+### 17.4.3 鼠标和滚轮事件
+
+DOM3 Events 定义的鼠标事件
+
+- `click`
+- `dbclick`
+- `mousedown`
+- `mouseenter`
+- `mouseleave`
+- `mousemove`
+- `mouseout`
+- `mouseover`
+- `mouseup`
