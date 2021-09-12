@@ -4,6 +4,8 @@ JavaScript 与 HTML 交互是通过**事件**实现的
 
 可以使用仅在事件发生时执行的**监听器**（也叫处理程序）订阅事件。在传统软件工程领域，这个模型叫“观察者模式”
 
+[`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event)
+
 ## 17.1 事件流
 
 **事件流**描述了页面接收事件的顺序
@@ -310,4 +312,18 @@ var EventUtil = {
   }
 };
 ```
+
+
+
+## 17.4 事件类型
+
+DOM3 Event 定义了如下事件类型
+
+- **用户界面事件**（[`UIEvent`](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent)）：设计与 BOM 交互的通用浏览器事件
+- **焦点事件**（[`FocusEvent`](https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent)）：在元素获得和失去焦点时触发
+- **鼠标事件**（[`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)）：使用鼠标在页面上执行某些操作时触发
+- **滚轮事件**（[`WheelEvent`](https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent)）：使用鼠标滚轮（或类似设备）时触发
+- **输入事件**（[`InputEvent`](https://developer.mozilla.org/en-US/docs/Web/API/InputEvent)）：向文档中输入文本时触发
+- **键盘事件**（[`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)）：使用键盘在页面上执行某些操作时触发
+- **合成事件**（[`CompositionEvent`](https://developer.mozilla.org/en-US/docs/Web/API/CompositionEvent)）：在使用某种 IME（Input Method Editor，输入法编辑器）输入字符时触发
 
