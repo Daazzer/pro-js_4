@@ -500,3 +500,10 @@ div.addEventListener('click', event => {
 - `event.keyIdentifier` Safari、Chrome 支持，不建议使用
 - `event.keyLocation` 兼容性差
 - `event.location` 兼容性差
+
+#### 4.textInput 事件
+
+在字符被输入到可编辑区域时触发
+
+- `event.data`
+- `event.inputMethod`
