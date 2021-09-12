@@ -222,3 +222,42 @@ link.onclick = function(event) {
 `stopPropagation()` 方法用于立即阻止事件流在 DOM 结构中传播，取消后续的事件捕获或冒泡
 
 `eventPhase` 属性可用于确定事件流当前所处的阶段
+
+### 17.3.2 IE 事件对象
+
+IE 事件对象可以基于事件处理程序被指定的方式以不同方式来访问
+
+如果使用 DOM0 事件处理程序，则 `event` 对象只是 `window` 对象的一个属性
+
+```js
+var btn = document.getElementById('myBtn');
+btn.onclick = function() {
+  var event = window.event;
+  console.log(event.type);  // "click"
+};
+```
+
+`attachEvent()` 指定的，则 `event` 对象会作为唯一的参数传给处理函数
+
+```js
+var btn = document.getElementById('myBtn');
+btn.attachEvent('onclick', function(event) {
+  console.log(event.type);  // "click"
+});
+```
+
+HTML 属性指定的事件可以通过 `event` 变量访问
+
+```html
+<input type="button" value="Click Me" onclick="console.log(event.type)" />
+```
+
+`returnValue` 设置为 `false` 可以取消事件默认行为
+
+```js
+var link = document.getElementById('myLink');
+link.onclick = function() {
+  window.event.returnValue = false;
+};
+```
+
