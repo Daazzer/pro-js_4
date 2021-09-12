@@ -472,3 +472,11 @@ div.addEventListener('click', event => {
 使用 `click` 事件执行代码
 
 屏幕阅读器无法触发 `mousedown`、`dbclick` 事件
+
+### 14.4.4 键盘与输入事件
+
+**键盘事件**是用户操作键盘时触发
+
+- `keydown`
+- `keypress` DOM3 Event 废弃，推荐使用 `textInput` 事件
+- `keyup`
