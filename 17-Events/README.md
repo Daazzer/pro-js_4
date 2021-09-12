@@ -492,3 +492,11 @@ div.addEventListener('click', event => {
 `keypress` 触发时
 
 - `event.charCode`
+
+#### 3.DOM3 的变化
+
+- `event.key`
+- `event.code`
+- `event.keyIdentifier` Safari、Chrome 支持，不建议使用
+- `event.keyLocation` 兼容性差
+- `event.location` 兼容性差
