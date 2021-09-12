@@ -431,3 +431,13 @@ div.addEventListener('click', event => {
 });
 ```
 
+#### 4.修饰键
+
+键盘上的**修饰键** Shift、Ctrl、Alt、Meta
+
+4个属性表示这几个修饰键的状态，`true` 为按下，`false` 为没按下
+
+- `event.shiftKey`
+- `event.ctrlKey`
+- `event.altKey`
+- `event.metaKey`
