@@ -391,6 +391,8 @@ DOM3 Events 定义的鼠标事件
 
 #### 1.客户端坐标
 
+浏览器视口中的坐标
+
 - `event.clientX`
 - `event.clientY`
 
@@ -398,6 +400,20 @@ DOM3 Events 定义的鼠标事件
 const div = document.getElementById('myDiv');
 div.addEventListener('click', event => {
   console.log(`Client coordinates: ${event.clientX}, ${event.clientY}`);
+});
+```
+
+#### 2.页面坐标
+
+光标在文档页中的坐标，而非视口
+
+- `event.pageX`
+- `event.pageY`
+
+```js
+const div = document.getElementById('myDiv');
+div.addEventListener('click', event => {
+  console.log(`page coordinates: ${event.pageX}, ${event.pageY}`);
 });
 ```
 
