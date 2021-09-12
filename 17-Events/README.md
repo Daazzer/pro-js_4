@@ -366,3 +366,11 @@ UI 事件类型
 
 文档滚动时触发
 
+### 17.4.2 焦点事件
+
+- `blur`
+- `DOMFocusIn` DOM3 Event 废弃了
+- `DOMFocusOut` DOM3 Event 废弃了
+- `focus`
+- `focusin`
+- `focusout`
