@@ -327,3 +327,16 @@ DOM3 Event 定义了如下事件类型
 - **键盘事件**（[`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)）：使用键盘在页面上执行某些操作时触发
 - **合成事件**（[`CompositionEvent`](https://developer.mozilla.org/en-US/docs/Web/API/CompositionEvent)）：在使用某种 IME（Input Method Editor，输入法编辑器）输入字符时触发
 
+### 17.4.1 用户界面事件
+
+UI 事件类型
+
+- `DOMActive` 在 DOM3 Event 中废弃
+- `load`
+- `unload`
+- `abort`
+- `error`
+- `select`
+- `resize`
+- `scroll`
+
