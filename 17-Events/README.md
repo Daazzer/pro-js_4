@@ -480,3 +480,9 @@ div.addEventListener('click', event => {
 - `keydown`
 - `keypress` DOM3 Event 废弃，推荐使用 `textInput` 事件
 - `keyup`
+
+#### 1.键码
+
+对于 `keydown` 与 `keyup`
+
+- `event.keyCode` 属性会保存一个键码
