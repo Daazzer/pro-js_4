@@ -466,3 +466,9 @@ div.addEventListener('click', event => {
 #### 9.触摸屏幕设备
 
 不支持 `dbclick`
+
+#### 10.无障碍问题
+
+使用 `click` 事件执行代码
+
+屏幕阅读器无法触发 `mousedown`、`dbclick` 事件
