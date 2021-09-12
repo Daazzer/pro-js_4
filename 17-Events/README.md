@@ -486,3 +486,9 @@ div.addEventListener('click', event => {
 对于 `keydown` 与 `keyup`
 
 - `event.keyCode` 属性会保存一个键码
+
+#### 2.字符编码
+
+`keypress` 触发时
+
+- `event.charCode`
