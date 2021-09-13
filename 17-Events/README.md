@@ -562,3 +562,7 @@ window.addEventListener('beforeunload', event => {
 #### 3.DOMContentLoaded 事件
 
 会在 DOM 树构建完成后立即触发，而不用等待图片、JavaScript 文件、CSS 文件或其他资源加载完成
+
+#### 4.readystatechange 事件
+
+文档加载时触发，并提供加载状态信息，但是行为不太稳定。支持 `readystatechange` 事件的每个对象都有一个 `readyState` 属性表示所处的阶段
