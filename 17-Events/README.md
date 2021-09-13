@@ -546,3 +546,16 @@ DOM 规范并未涵盖浏览器都支持的所有事件
 在 Windows 上右击鼠标展开上下文菜单触发
 
 在 Mac 上 Ctrl+单击 触发
+
+#### 2.beforeunload 事件
+
+在页面即将从浏览器卸载时触发。这个事件会向用户显示一个确认框，请求用户确认是希望关闭页面，还是继续留在页面上
+
+```js
+window.addEventListener('beforeunload', event => {
+  const message = 'I\'m really going to miss you if you go.';
+  event.returnValue = message;
+  return message;  // 提示信息作为函数值返回
+});
+```
+
