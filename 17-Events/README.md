@@ -473,7 +473,7 @@ div.addEventListener('click', event => {
 
 屏幕阅读器无法触发 `mousedown`、`dbclick` 事件
 
-### 14.4.4 键盘与输入事件
+### 17.4.4 键盘与输入事件
 
 **键盘事件**是用户操作键盘时触发
 
@@ -511,3 +511,25 @@ div.addEventListener('click', event => {
 #### 5.设备上的键盘事件
 
 任天堂 Wii 遥控器会触发键盘事件
+
+### 17.4.5 合成事件
+
+通常用于处理 IME 输入是的复杂输入序列。也就是类似于调用输入法之类的软件触发的事件
+
+- `compositionstart`
+- `compositionupdate`
+- `compositionend`
+
+```js
+const textBox = document.getElementById('myText');
+textBox.addEventListener('compostionstart', event => {
+  console.log(event.data);
+});
+textBox.addEventListener('compostionupdate', event => {
+  console.log(event.data);
+});
+textBox.addEventListener('compostionend', event => {
+  console.log(event.data);
+});
+```
+
