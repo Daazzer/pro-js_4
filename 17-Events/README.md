@@ -559,3 +559,6 @@ window.addEventListener('beforeunload', event => {
 });
 ```
 
+#### 3.DOMContentLoaded 事件
+
+会在 DOM 树构建完成后立即触发，而不用等待图片、JavaScript 文件、CSS 文件或其他资源加载完成
