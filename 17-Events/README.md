@@ -540,3 +540,9 @@ DOM2 的**变化事件**（Mutation Events）目前已被废弃，被 Mutation O
 ### 17.4.7 HTML5 事件
 
 DOM 规范并未涵盖浏览器都支持的所有事件
+
+#### 1.contextmenu 事件
+
+在 Windows 上右击鼠标展开上下文菜单触发
+
+在 Mac 上 Ctrl+单击 触发
