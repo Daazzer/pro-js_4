@@ -536,3 +536,7 @@ textBox.addEventListener('compostionend', event => {
 ### 17.4.6 变化事件
 
 DOM2 的**变化事件**（Mutation Events）目前已被废弃，被 Mutation Observers 所取代
+
+### 17.4.7 HTML5 事件
+
+DOM 规范并未涵盖浏览器都支持的所有事件
