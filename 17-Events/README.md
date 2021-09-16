@@ -580,3 +580,25 @@ URL 散列值（URL最后 `#` 后面的部分）发生变化时触发，必须�
 
 - `event.oldURL` 变化前的 URL
 - `event.newURL` 变化后的 URL
+
+### 17.4.8 设备事件
+
+可以用于确定用户使用设备的方式
+
+#### 1.orientationchange 事件
+
+设备的屏幕方向变化时触发
+
+`window.orientation` 表示设备是垂直模式还是水平模式
+
+```js
+window.addEventListener('load', event => {
+  let div = document.getElementById('myDiv');
+  div.innerHTML = 'Current orientation is ' + window.orientation;
+
+  window.addEventListener('orientationchange', event => {
+    div.innerHTML = 'Current orientation is ' + window.orientation;
+  });
+});
+```
+
