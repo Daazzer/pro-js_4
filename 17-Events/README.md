@@ -566,3 +566,17 @@ window.addEventListener('beforeunload', event => {
 #### 4.readystatechange 事件
 
 文档加载时触发，并提供加载状态信息，但是行为不太稳定。支持 `readystatechange` 事件的每个对象都有一个 `readyState` 属性表示所处的阶段
+
+#### 5.pageshow 和 pagehide 事件
+
+- `pageshow` 页面显示时触发，会在 `load` 事件之后触发
+  - `event.persisted` 页面是否存储在往返缓存，布尔值
+- `pagehide` 在页面从浏览器卸载后触发，在 `unload` 事件之前触发
+  - `event.persisted` 是否在往返缓存中加载的，布尔值
+
+#### 6.hashchange 事件
+
+URL 散列值（URL最后 `#` 后面的部分）发生变化时触发，必须添加给 `window`
+
+- `event.oldURL` 变化前的 URL
+- `event.newURL` 变化后的 URL
