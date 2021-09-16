@@ -628,3 +628,12 @@ window.addEventListener('load', event => {
 ### 17.4.9 触摸及手势事件
 
 设备上的事件
+
+#### 1.触摸事件
+
+当手指放在屏幕上、在屏幕上滑动或从屏幕上移开就会触发
+
+- `touchstart`
+- `touchmove`
+- `touchend`
+- `touchcancel`
