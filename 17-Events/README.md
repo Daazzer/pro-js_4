@@ -606,10 +606,21 @@ window.addEventListener('load', event => {
 
 #### 2.deviceorientation 事件
 
-设备方向传感器输出新数据的时候触发
+设备方向传感器输出新数据的时候触发（设备朝向）
 
 - `event.alpha` 0~360 表示设备围绕 z 轴旋转时 y 轴的度数 （左右转）
 - `event.beta` -180~180 表示设备围绕 x 轴旋转时 z 轴的度数 （前后转）
 - `event.gamma`  -90~90 表示设备围绕 y 轴旋转时 z 轴的度数 （扭转）
 - `event.absolute` 布尔值，表示设备是否返回绝对值
 - `event.compassCalibrated` 布尔值，表示设备的指南针是否正确校准
+
+#### 3.devicemotion 事件
+
+设备移动的时候触发
+
+`event` 属性
+
+- `acceleration`
+- `accelerationIncludingGravity`
+- `interval`
+- `rotationRate`
