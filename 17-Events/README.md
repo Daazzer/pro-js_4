@@ -645,3 +645,8 @@ window.addEventListener('load', event => {
 - `gesturestart`
 - `gesturechange`
 - `gestureend`
+
+### 17.4.10 事件参考
+
+[EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
+
