@@ -624,3 +624,7 @@ window.addEventListener('load', event => {
 - `accelerationIncludingGravity`
 - `interval`
 - `rotationRate`
+
+### 17.4.9 触摸及手势事件
+
+设备上的事件
