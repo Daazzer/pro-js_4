@@ -637,3 +637,11 @@ window.addEventListener('load', event => {
 - `touchmove`
 - `touchend`
 - `touchcancel`
+
+#### 2.手势事件
+
+手指触碰屏幕且相对距离或旋转角度变化时触发
+
+- `gesturestart`
+- `gesturechange`
+- `gestureend`
