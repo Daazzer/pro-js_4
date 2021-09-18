@@ -729,7 +729,7 @@ btn.dispatchEvent(event);  // 触发事件
 #### 2.模拟键盘事件
 
 ```js
-let textBox = document.getElementById('myTextBox');
+const textBox = document.getElementById('myTextBox');
 let event;
 
 if (document.implementation.hasFeature('keyboardEvents'), '3.0') {
@@ -739,5 +739,13 @@ if (document.implementation.hasFeature('keyboardEvents'), '3.0') {
 }
 
 textBox.dispatchEvent(event);
+```
+
+#### 3.模拟其他事件
+
+```js
+const event = document.createEvent('HTMLEvents');
+event.initEvent('focus', true, false);
+target.dispatchEvent(event);
 ```
 
