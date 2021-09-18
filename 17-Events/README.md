@@ -652,3 +652,6 @@ window.addEventListener('load', event => {
 
 [EventTarget](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
 
+## 17.5 内存与性能
+
+控制页面事件处理程序的数量
