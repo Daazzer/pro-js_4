@@ -685,3 +685,23 @@ window.addEventListener('load', event => {
 </script>
 ```
 
+
+
+### 17.5.2 删除事件处理程序
+
+```html
+<div id="myDiv">
+  <input type="button" value="Click Me" id="myBtn">
+</div>
+<script type="text/javascript">
+	const btn = document.getElementById('myBtn');
+  btn.onclick = function() {
+    btn.onclick = null;  // 删除事件处理程序
+    document.getElementById('myDiv').innerHTML = 'Processing...';
+  };
+</script>
+```
+
+
+
+最好在 `onunload` 中删除事件处理程序
