@@ -726,3 +726,18 @@ event.initMouseEvent('click', true, true, document.defaultView, 0, 0, 0, 0, 0, f
 btn.dispatchEvent(event);  // 触发事件
 ```
 
+#### 2.模拟键盘事件
+
+```js
+let textBox = document.getElementById('myTextBox');
+let event;
+
+if (document.implementation.hasFeature('keyboardEvents'), '3.0') {
+  event = document.createEvent('keyboardEvents');
+  
+  event.initKeyboardEvent('keydown', true, true, document.defaultView, 'a', 0, 'Shift', 0);
+}
+
+textBox.dispatchEvent(event);
+```
+
