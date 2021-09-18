@@ -655,3 +655,33 @@ window.addEventListener('load', event => {
 ## 17.5 内存与性能
 
 控制页面事件处理程序的数量
+
+### 17.5.1 事件委托
+
+事件委托利用事件冒泡
+
+```html
+<ul id="myLinks">
+  <li id="goSomewhere">Go somewhere</li>
+  <li id="doSomething">Do something</li>
+  <li id="sayHi">Say hi</li>
+</ul>
+<script>
+	const list = document.getElementById('myLinks');
+  list.addEventListener('click', event => {
+    const target = event.target;
+    switch(target.id) {
+      case 'doSomething':
+        document.title = 'I change the document\'s title';
+        break;
+      case 'goSomewhere':
+        location.href = 'http://www.wrox.com';
+        break;
+      case 'sayHi':
+        console.log('hi');
+        break;
+    }
+  });
+</script>
+```
+
