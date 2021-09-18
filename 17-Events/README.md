@@ -772,3 +772,34 @@ if (document.implementation.hasFeature('CustomEvents', '3.0')) {
 
 
 
+### 17.6.2 IE 事件模拟
+
+- `document.createEventObject()` 创建
+- `element.fireEvent()` 触发
+
+```js
+var btn = document.getElementById('myBtn');
+
+var event = document.createEventObject();
+
+// 初始化事件对象
+var eventOptionMap = {
+  screenX: 100,
+  screenY: 0,
+  clientX: 0,
+  clientY: 0,
+  ctrlKey: false,
+  altKey: false,
+  shiftKey: false,
+  button: 0
+};
+
+for (var key in eventOptionMap) {
+  var value = eventProps[key]
+  event[key] = value
+}
+
+// 触发事件
+btn.fireEvent('onclick', event);
+```
+
