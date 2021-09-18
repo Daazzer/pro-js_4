@@ -709,3 +709,20 @@ window.addEventListener('load', event => {
 ## 17.6 模拟事件
 
 DOM3 规范指明了模拟特定类型事件的方式
+
+### 17.6.1 DOM 事件模拟
+
+`document.createEvent()` 可以创建一个 `event` 对象，此方法已被废弃，使用 [`CustomEvent`](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) 替代
+
+#### 1.模拟鼠标事件
+
+```js
+const btn = document.getElementById('myBtn');
+
+const event = document.createEvent('MouseEvents');
+
+event.initMouseEvent('click', true, true, document.defaultView, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+btn.dispatchEvent(event);  // 触发事件
+```
+
