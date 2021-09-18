@@ -705,3 +705,7 @@ window.addEventListener('load', event => {
 
 
 最好在 `onunload` 中删除事件处理程序
+
+## 17.6 模拟事件
+
+DOM3 规范指明了模拟特定类型事件的方式
