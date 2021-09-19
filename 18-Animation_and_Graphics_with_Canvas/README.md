@@ -37,3 +37,35 @@
 - Firefox 和 Safari 约 10ms
 - Chrome 4ms
 
+### 18.1.3 requestAnimationFrame
+
+目前，所有浏览器都支持 `requestAnimationFrame()`，接收一个参数，要在重绘屏幕前调用的函数
+
+为了实现动画循环，可以把多个 `requestAnimationFrame()` 串联起来
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>requestAnimationFrame</title>
+  </head>
+  <body>
+    <div id="status" style="background-color: red; height: 30px; width: 10px;"></div>
+    <script>
+      function updateProgress() {
+        const div = document.getElementById('status');
+        div.style.width = (parseInt(div.style.width, 10) + 5) + '%';
+        if (div.style.left != '100%') {
+          requestAnimationFrame(updateProgress);
+        }
+      }
+
+      requestAnimationFrame(updateProgress);
+    </script>
+  </body>
+</html>
+```
+
