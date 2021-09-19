@@ -69,3 +69,17 @@
 </html>
 ```
 
+
+
+### 18.1.4 cancelAnimationFrame
+
+与 `setTimeout()` 类似，`requestAnimationFrame()` 也返回一个 ID，可以用 `cancelAnimationFrame()` 来取消重绘任务
+
+```js
+const requestID = window.requestAnimationFrame(() => {
+  console.log('Repaint!');
+});
+
+window.cancelAnimationFrame(requestID);
+```
+
