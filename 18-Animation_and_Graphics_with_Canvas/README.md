@@ -120,3 +120,70 @@ window.addEventListener('scroll', () => {
 });
 ```
 
+
+
+## 18.2 基本的画布功能
+
+`<canvas>` 元素至少要设置 `width` 与 `height` 属性，表示绘制图的大小
+
+- `getContext()` 获取对绘图上下文的引用
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>基本的画布功能</title>
+    </head>
+    <body>
+      <canvas id="drawing" width="200" height="200">
+        A drawing of something.
+      </canvas>
+      <script>
+        const drawing = document.getElementById('drawing');
+  
+        // 确保浏览器支持 <canvas>
+        if (drawing.getContext) {
+          const context = drawing.getContext('2d');  // 创建 2d 上下文
+        }
+      </script>
+    </body>
+  </html>
+  ```
+
+- `toDataURL()` 导出 `<canvas>` 元素上的图像。接收一个参数：要生成图像的 MIME 类型
+
+  ```html
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>基本的画布功能</title>
+    </head>
+    <body>
+      <canvas id="drawing" width="200" height="200">
+        A drawing of something.
+      </canvas>
+      <script>
+        const drawing = document.getElementById('drawing');
+  
+        // 确保浏览器支持 <canvas>
+        if (drawing.getContext) {
+          const context = drawing.getContext('2d');  // 创建 2d 上下文
+          const imgURI = drawing.toDataURL('image/png');  // 取得图像的数据 URI
+  
+          // 显示图片
+          const image = document.createElement('img');
+          image.src = imgURI;
+          document.body.appendChild(image);
+        }
+      </script>
+    </body>
+  </html>
+  ```
+
+  
