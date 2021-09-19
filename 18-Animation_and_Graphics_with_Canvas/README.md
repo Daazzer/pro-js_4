@@ -83,3 +83,40 @@ const requestID = window.requestAnimationFrame(() => {
 window.cancelAnimationFrame(requestID);
 ```
 
+
+
+### 18.1.5 通过 requestAnimationFrame 节流
+
+支持这个方法的浏览器实际会暴露出作为钩子的回调队列。所谓钩子（hook），就是浏览器在执行下一次重绘之前的一个点。
+
+通过 `requestAnimationFrame()` 递归地向队列中加入回调函数，可以保证每次重绘最多调用一次回调函数。
+
+```js
+// 把所有回调的执行集中在重绘的钩子，但不会过滤掉每次重绘的多余调用
+function expensiveOperation() {
+  console.log('Invoked at', Date.now());
+}
+
+window.addEventListener('scroll', () => {
+  window.requestAnimationFrame(expensiveOperation);
+});
+```
+
+将回调限制为不超过 50 毫秒执行一次
+
+```js
+let enabled = false;
+
+function expensiveOperaion() {
+  console.log('Invoked at', Date.now());
+}
+
+window.addEventListener('scroll', () => {
+  if (enabled) {
+    enabled = false;
+    window.requestAnimationFrame(expensiveOperation);
+    window.setTimeout(() => enabled = true, 50);
+  }
+});
+```
+
