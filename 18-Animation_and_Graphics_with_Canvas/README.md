@@ -361,3 +361,72 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.3 绘制路径
+
+要绘制路径，必须首先调用 `beginPath()` 方法表示开始绘制路径，然后调用下列方法绘制路径
+
+- `arc(x, y, radius, startAngle, endAngle, counterclockwise)` 以坐标 `(x, y)` 为圆心，以 `radius` 为半径绘制一条弧线，起始角度为 `startAngle` 单位为弧度，结束角度为 `endAngle`，单位为弧度。最后一个参数 `counterclockwise` 表示是否逆时针计算起始角度和结束角度（默认为顺时针）
+- `arcTo(x1, y1, x2, y2, radius)` 以给定半径 `radius`，经由 `(x1, y1)` 绘制一条从上一点到 `(x2, y2)` 的弧线
+- `bazierCurveTo(c1x, c1y, c2x, c2y, x, y)` 以 `(c1x, c1y)` 和 `(c2x, c2y)` 为控制点，绘制一条从上一点到 `(x, y)` 的弧线（三次贝塞尔曲线）
+- `lineTo(x, y)` 绘制一条从上一点到 `(x, y)` 的直线
+- `moveTo(x, y)` 不绘制线条，只把绘制光标移动到 `(x, y)`
+- `quadraticCurveTo(cx, cy, x, y)` 以 `(cx, cy)` 为控制点，绘制一条从上一点到 `(x, y)` 的弧线（二次贝塞尔曲线）
+- `rect(x, y, width, height)` 以给定宽高在坐标点 `(x, y)` 绘制一个矩形。这个方法与 `strokeRect()` 和 `fillRect()` 的区别在于，它创建的是一条路径，而不是独立的图形
+- `closePath()` 创建路径之后，此方法可以绘制一条返回起点的线
+- `fill()` 创建路径之后，可以选择配合 `fillStyle` 来填充路径
+- `stroke()` 创建路径之后，可以选择配合 `strokeStyle` 来描画路径
+- `clip()` 基于已有路径创建一个新剪切区域
+- `isPointInPath(x, y)` 确定指定的点 `(x, y)` 是否在路径上
+
+绘制一个不带数字的表盘
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制路径</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        // 创建路径
+        context.beginPath();
+
+        // 绘制外圆
+        context.arc(100, 100, 99, 0, 2 * Math.PI, false);
+
+        // 绘制内圆
+        context.moveTo(194, 100);
+        context.arc(100, 100, 94, 0, 2 * Math.PI, false);
+
+        // 绘制分针
+        context.moveTo(100, 100);
+        context.lineTo(100, 15);
+
+        // 绘制时针
+        context.moveTo(100, 100);
+        context.lineTo(35, 100);
+
+        // 描画路径(使路径在视图上显示)
+        context.stroke();
+
+        if (context.isPointInPath(100, 100)) {
+          console.log('Point (100, 100) is in the path.');
+        }
+      }
+    </script>
+  </body>
+</html>
+```
+
