@@ -224,3 +224,140 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.2 绘制矩形
+
+与绘制矩形相关的方法有 3 个，这些方法都接收 4 个参数，矩形 x 坐标、矩形 y 坐标、矩形宽度和矩形高度，参数单位都是像素：
+
+- `fillRect()`
+- `strokeRect()`
+- `clearRect()`
+
+描绘填充矩形
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制矩形</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>
+    <!-- 填充矩形 -->
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+      /**
+       * 引自 MDN 文档
+       */
+
+        // 绘制红色矩形
+        context.fillStyle = '#ff0000';
+        context.fillRect(10, 10, 50, 50);
+
+        // 绘制半透明蓝色矩形
+        context.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        context.fillRect(30, 30, 50, 50);
+      }
+    </script>
+  </body>
+</html>
+```
+
+
+
+描绘描边矩形
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制矩形</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>
+    <!-- 描边矩形 -->
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+      /**
+       * 引自 MDN 文档
+       */
+
+        // 绘制红色轮廓的矩形
+        context.strokeStyle = '#ff0000';
+        context.strokeRect(10, 10, 50, 50);
+
+        // 绘制半透明蓝色轮廓矩形
+        context.strokeStyle = 'rgba(0, 0, 255, 0.5)';
+        context.strokeRect(30, 30, 50, 50);
+      }
+    </script>
+  </body>
+</html>
+```
+
+描边矩形属性补充
+
+- `lineWidth` 设置描边宽度，可以是任意整数
+- `lineCap` 设置线条端点
+- `lineJoin` 设置线条交点的形状
+
+
+
+擦除矩形区域
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制矩形</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>
+    <!-- 擦除某个矩形区域 -->
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+      /**
+       * 引自 MDN 文档
+       */
+
+        // 绘制红色矩形
+        context.fillStyle = '#ff0000';
+        context.fillRect(10, 10, 50, 50);
+
+        // 绘制半透明蓝色矩形
+        context.fillStyle = 'rgba(0, 0, 255, 0.5)';
+        context.fillRect(30, 30, 50, 50);
+
+        // 在前两个矩形重叠的区域擦除一个矩形区域
+        context.clearRect(40, 40, 10, 10);
+      }
+    </script>
+  </body>
+</html>
+```
+
