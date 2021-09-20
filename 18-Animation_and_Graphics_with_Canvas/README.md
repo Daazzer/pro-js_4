@@ -192,3 +192,35 @@ window.addEventListener('scroll', () => {
 
 2D 上下文原点 (0, 0) 在 `<canvas>` 元素的左上角。默认情况下，`width` 和 `height` 表示两个方向上像素的最大值
 
+### 18.3.1 填充和描边
+
+以下两个属性可以是字符串（可以是 CSS 支持的格式）、渐变对象或图案对象。
+
+- `fillStyle` 填充以指定样式（颜色、渐变或图像）自动填充形状
+- `strokeStyle` 描边只为图形边界着色
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>填充和描边</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+        context.strokeStyle = 'red';
+        context.fillStyle = '#0000ff';
+      }
+    </script>
+  </body>
+</html>
+```
+

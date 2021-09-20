@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>填充和描边</title>
+</head>
+<body>
+  <canvas id="drawing" width="200" height="200">A drawing of something.</canvas>
+  <script>
+    const drawing = document.getElementById('drawing');
+    
+    // 确保浏览器支持 <canvas>
+    if (drawing.getContext) {
+      const context = drawing.getContext('2d');
+      context.strokeStyle = 'red';
+      context.fillStyle = '#0000ff';
+    }
+  </script>
+</body>
+</html>
