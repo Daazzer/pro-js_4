@@ -187,3 +187,8 @@ window.addEventListener('scroll', () => {
 ```
 
   
+
+## 18.3 2D 绘画上下文
+
+2D 上下文原点 (0, 0) 在 `<canvas>` 元素的左上角。默认情况下，`width` 和 `height` 表示两个方向上像素的最大值
+
