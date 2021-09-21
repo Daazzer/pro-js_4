@@ -543,3 +543,81 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.5 变换
+
+改变绘制上下文的变换矩阵方法
+
+- `rotate(angle)` 围绕原点把图像旋转 `angle` 弧度
+
+- `scale(scalex, scaleY)` 通过在 x 轴乘以 `scaleX`、在 y 轴乘以 `scaleY` 来缩放图像。`scaleX` 和 `scaleY` 的默认值都是 1.0
+
+- `translate(x, y)` 把原点移动到 `(x, y)` 执行这个操作后，坐标 (0, 0) 就会变成 `(x, y)`
+
+- `transform(m1_1, m1_2, m2_1, m2_2, dx, dy)` 像下面通过矩阵乘法直接修改矩阵
+
+  ```matlab
+  m1_1 m1_2 dx
+  m2_1 m2_2 dy
+  0    0    1
+  ```
+
+- `setTransform(m1_1, m1_2, m2_1, m2_2, dx, dy)` 把矩阵重置为默认值，再以传入的参数调用 `transform()`
+
+- `save()` 保存当前的属性和变换状态，所有这一时刻的设置会被放到一个暂存栈中
+
+- `restore()` 系统地恢复之前保存的设置
+
+前面的表盘例子，把坐标原点移动到表盘中心，再绘制表针那就简单了
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>变换</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        // 创建路径
+        context.beginPath();
+
+        // 绘制外圆
+        context.arc(100, 100, 99, 0, 2 * Math.PI, false);
+
+        // 绘制内圆
+        context.moveTo(194, 100);
+        context.arc(100, 100, 94, 0, 2 * Math.PI, false);
+
+        // 移动原点到表盘中心
+        context.translate(100, 100);
+
+        // 旋转表针
+        context.rotate(1);
+
+        // 绘制分针
+        context.moveTo(0, 0);
+        context.lineTo(0, -85);
+
+        // 绘制时针
+        context.moveTo(0, 0);
+        context.lineTo(-65, 0);
+
+        // 描画路径(使路径在视图上显示)
+        context.stroke();
+      }
+    </script>
+  </body>
+</html>
+```
+
