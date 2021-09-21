@@ -430,3 +430,116 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.4 绘制文本
+
+绘制文本的方法，都接收 4 个参数：要绘制的字符串、x 坐标、y 坐标和可选的最大像素宽度
+
+- `fillText()`
+- `strokeText()`
+
+上面方法的绘制结果都取决于以下属性
+
+- `font` 以 CSS 语法指定的字体样式、大小、字体族等，比如 `"10px Arial"`
+- `textAlign` 指定文本的对齐方式，可能的值包括 `"start"`、`"end"`、`"left"`、`"right"`、`"center"`，推荐使用 `"start"` 和 `"end"`
+- `textBaseLine` 指定文本的基线，可能的值包括 `"top"`、`"hanging"`、`"middle"`、`"alphabetic"`、`"ideographic"`、`"bottom"`
+
+确定文本大小的方法
+
+- `measureText()` 接收一个参数，要绘制的文本。返回一个 `TextMetrics` 对象，此对象用 `width` 属性来确定文本大小
+
+表盘顶部绘制数字
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制文本</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        // 创建路径
+        context.beginPath();
+
+        // 绘制外圆
+        context.arc(100, 100, 99, 0, 2 * Math.PI, false);
+
+        // 绘制内圆
+        context.moveTo(194, 100);
+        context.arc(100, 100, 94, 0, 2 * Math.PI, false);
+
+        // 绘制分针
+        context.moveTo(100, 100);
+        context.lineTo(100, 15);
+
+        // 绘制时针
+        context.moveTo(100, 100);
+        context.lineTo(35, 100);
+
+        // 描画路径(使路径在视图上显示)
+        context.stroke();
+
+        // 正常
+        context.font = 'bold 14px Arial';
+        context.textAlign = 'center';
+        context.textBaseLine = 'middle';
+        context.fillText('12', 100, 20);
+
+        // 与开头对齐
+        context.textAlign = 'start';
+        context.fillText('12', 100, 40);
+
+        // 与末尾对齐
+        context.textAlign = 'end';
+        context.fillText('12', 100, 60);
+      }
+    </script>
+  </body>
+</html>
+```
+
+计算文本大小判断
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>绘制文本</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        let fontSize = 100;
+        context.font = fontSize + 'px Arial';
+        while (context.measureText('Hello world!').width > 140) {
+          fontSize--;
+          context.font = fontSize + 'px Arial';
+        }
+        context.fillText('Hello world!', 10, 30);
+        context.fillText('Font size is' + fontSize + 'px', 10, 70);
+      }
+    </script>
+  </body>
+</html>
+```
+
