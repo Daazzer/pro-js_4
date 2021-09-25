@@ -904,3 +904,32 @@ if (drawing.getContext) {
 }
 ```
 
+
+
+### 18.4.2 WebGL 基础
+
+因为 WebGL 是 OpenGL ES 2.0 的 Web 版，所以实际上是 JavaScript 所实现的 OpenGL 概念
+
+调用 `getContext()` 创建 WebGL 上下文时，第二个参数为配置选项，选项有以下属性
+
+- `alpha` 布尔值，表示是否为上下文创建透明通道缓冲区，默认为 `true`
+- `depth` 布尔值，表示是否使用 16 位深缓冲区，默认为 `true`
+- `stencil` 布尔值，表示是否使用 8 位模板缓冲区，默认为 `false`
+- `antialias` 布尔值，表示是否使用默认机制执行抗锯齿操作，默认为 `true`
+- `premultipliedAlpha` 布尔值，表示绘图缓冲区是否预乘透明度，默认为 `true`
+- `preserveDrawingBuffer` 布尔值，表示绘图完成后是否保留绘图缓冲区，默认为 `false`
+
+传入配置对象
+
+```js
+const drawing = document.getElementById('drawing');
+
+// 确保浏览器支持 <canvas>
+if (drawing.getContext) {
+  const gl = drawing.getContext('webgl1', { alpha: false });
+  if (gl) {
+    // 使用 WebGL
+  }
+}
+```
+
