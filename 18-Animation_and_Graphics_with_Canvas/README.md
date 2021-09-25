@@ -883,3 +883,24 @@ WebGL 是画布的 3D 上下文，WebGL 不是 W3C 制定的标准，而是 Khro
 
 > **注意** 定型数组是在 WebGL 中执行操作的重要数据结构。
 
+### 18.4.1 WebGL 上下文
+
+- WebGL 2.0 上下文名字叫 `webgl2`
+- WebGL 1.0 上下文名字叫 `webgl1`
+
+如果浏览器不支持 WebGL，则访问 WebGL 上下文会返回 `null`
+
+检测返回值是否存在
+
+```js
+const drawing = document.getElementById('drawing');
+
+// 确保浏览器支持 <canvas>
+if (drawing.getContext) {
+  const gl = drawing.getContext('webgl1');
+  if (gl) {
+    // 使用 WebGL
+  }
+}
+```
+
