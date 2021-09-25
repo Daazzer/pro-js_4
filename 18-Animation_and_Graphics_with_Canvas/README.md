@@ -793,3 +793,63 @@ context.fillStyle = pattern;
 context.fillRect(10, 10, 150, 150);
 ```
 
+
+
+### 18.3.10 图像数据
+
+获取原始图像数据
+
+- `getImageData()` 接收 4 个参数：要取得数据中第一个像素的左上角坐标和要取得的像素宽度及高度，返回一个 `ImageData` 实例，包含三个属性
+  - `width`
+  - `height`
+  - `data` 数组中都由 4 个值表示，代表红、绿、蓝、透明度每个值都在 0~255 范围内
+- `putImageData()` 将图像数据设置到上下文中
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图像数据</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        // 绘制红色矩形
+        context.fillStyle = '#ff0000';
+        context.fillRect(10, 10, 50, 50);
+
+        const imageData = context.getImageData(0, 0, 50, 50);
+        const data = imageData.data;
+        for (let i = 0, len = data.length; i < len; i += 4) {
+          const red = data[i];
+          const green = data[i + 1];
+          const blue = data[i + 2];
+          const alpha = data[i + 3];
+
+          // 取得 RGB 平均值
+          average = Math.floor((red + green + blue) / 3);
+
+          // 设置颜色，不管透明度
+          data[i] = average;
+          data[i + 1] = average;
+          data[i + 2] = average;
+        }
+
+        // 将修改后的数据写回 ImageData 并应用到画布上显示出来
+        imageData.data = data;
+        context.putImageData(imageData, 0, 0);
+      }
+    </script>
+  </body>
+</html>
+```
+
