@@ -776,3 +776,20 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.9 图案
+
+用于填充和描画的重复图像
+
+- `createPattern()` 方法并传入两个参数：一个 HTML `<img>` 元素（也可以是 `<video>` 或另一个 `<canvas>`）和一个表示该如何重复图像的字符串。第二个参数可取值 `"repeat"`、`"repeat-x"`、`"repeat-y"`、`"no-repeat"`
+
+```js
+const image = document.images[0];
+const pattern = context.createPattern(image, 'repeat');
+
+// 绘制矩形
+context.fillStyle = pattern;
+context.fillRect(10, 10, 150, 150);
+```
+
