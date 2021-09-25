@@ -190,6 +190,8 @@ window.addEventListener('scroll', () => {
 
 ## 18.3 2D 绘画上下文
 
+[`CanvasRenderingContext2D`](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+
 2D 上下文原点 (0, 0) 在 `<canvas>` 元素的左上角。默认情况下，`width` 和 `height` 表示两个方向上像素的最大值
 
 ### 18.3.1 填充和描边
@@ -852,4 +854,24 @@ context.fillRect(10, 10, 150, 150);
   </body>
 </html>
 ```
+
+
+
+### 18.3.11 合成
+
+- `globalAlpha` 范围在 0~1 的值，用于指定所有绘制内容的透明度，默认值为 0
+- `globalCompositeOperation` 表示新绘制的形状如何与上下文中已有的形状融合，为字符串，可取值如下
+  - `source-over`
+  - `source-in`
+  - `source-out`
+  - `source-atop`
+  - `destination-over`
+  - `destination-in`
+  - `destination-out`
+  - `destination-atop`
+  - `lighter`
+  - `copy`
+  - `xor`
+
+> **注意** `globalCompositeOperation` 在不同浏览器上可能存在差异
 
