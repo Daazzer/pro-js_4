@@ -650,3 +650,51 @@ window.addEventListener('scroll', () => {
 
 - `toDataURL()` 方法获取图像绘制的结果，如果绘制的图像来自其他域而非当前页面，则不能获取其数据
 
+
+
+### 18.3.7 阴影
+
+以下属性的值可以自动为已有形状或路径生成阴影
+
+- `shadowColor` CSS 颜色值，表示要绘制的阴影颜色，默认为黑色
+- `shadowOffsetX` 阴影相对于形状或路径的 `x` 坐标的偏移量，默认为 0
+- `shadowOffsetY` 阴影相对于形状或路径的 `y` 坐标的偏移量，默认为 0
+- `shadowBlur` 像素，表示阴影的模糊量。默认值为 0，表示不模糊
+
+设置两个矩形，使用相同的阴影样式
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阴影</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        // 设置阴影
+        context.shadowOffsetX = 5;
+        context.shadowOffsetY = 5;
+        context.shadowBlur = 4;
+        context.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        // 绘制红色矩形
+        context.fillStyle = '#ff0000';
+        context.fillRect(10, 10, 50, 50);
+        // 绘制蓝色矩形
+        context.fillStyle = '#0000ff';
+        context.fillRect(30, 30, 50, 50);
+      }
+    </script>
+  </body>
+</html>
+```
+
