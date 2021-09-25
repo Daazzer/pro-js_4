@@ -698,3 +698,81 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.8 渐变
+
+渐变通过 `CanvasGradient` 的实例表示，通过调用上下文的 `createLinearGradient()` 方法创建
+
+- `createLinearGradient()` 接收 4 个参数：起点 `x` 坐标、起点 `y` 坐标、终点 `x` 坐标、终点 `y` 坐标，返回的 `gradient` 实例有以下方法
+  - `addColorStop()` 为渐变指定色标，接收 2 个参数：色标位置(0~1范围值)、CSS 颜色字符串
+- `createRadialGradient()` 方法创建径向渐变。接收 6 个参数：分别为两个圆形圆形的坐标和半径。前 3 个参数指定起点圆形中心的 `x`、`y` 坐标和半径，后 3 个参数指定终点圆形中心的 `x`、`y` 坐标和半径
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+
+        // 绘制红色矩形
+        context.fillStyle = '#ff0000';
+        context.fillRect(10, 10, 50, 50);
+        // 绘制渐变矩形
+        const gradient = context.createLinearGradient(30, 30, 70, 70);
+        gradient.addColorStop(0, 'white');
+        gradient.addColorStop(1, 'black');
+        context.fillStyle = gradient;
+        context.fillRect(30, 30, 50, 50);
+      }
+    </script>
+  </body>
+</html>
+```
+
+创建起点圆心在形状中心并向外扩散的径向渐变，将两个圆形设置为同心圆
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变</title>
+  </head>
+  <body>
+    <canvas id="drawing" width="200" height="200"></canvas>
+    <script>
+      const drawing = document.getElementById('drawing');
+
+      // 确保浏览器支持 <canvas>
+      if (drawing.getContext) {
+        const context = drawing.getContext('2d');
+        const gradient = context.createRadialGradient(55, 55, 10, 55, 55, 30);
+        gradient.addColorStop(0, 'white');
+        gradient.addColorStop(1, 'black');
+
+        // 绘制红色矩形
+        context.fillStyle = '#ff0000';
+        context.fillRect(10, 10, 50, 50);
+        // 绘制渐变矩形
+        context.fillStyle = gradient;
+        context.fillRect(30, 30, 50, 50);
+      }
+    </script>
+  </body>
+</html>
+```
+
