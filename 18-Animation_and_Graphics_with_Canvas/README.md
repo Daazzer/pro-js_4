@@ -875,3 +875,11 @@ context.fillRect(10, 10, 150, 150);
 
 > **注意** `globalCompositeOperation` 在不同浏览器上可能存在差异
 
+## 18.4 WebGL
+
+WebGL 是画布的 3D 上下文，WebGL 不是 W3C 制定的标准，而是 Khronos Group 的标准。
+
+要使用 WebGL 最好熟悉 OpenGL ES 2.0，因为很多概念可以照搬过来
+
+> **注意** 定型数组是在 WebGL 中执行操作的重要数据结构。
+
