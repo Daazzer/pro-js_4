@@ -621,3 +621,32 @@ window.addEventListener('scroll', () => {
 </html>
 ```
 
+
+
+### 18.3.6  绘制图像
+
+操作图像方法
+
+- `drawImage()` 接收 3 组不同的参数
+
+  - 传入 HTML 的 `<img>` 元素
+
+    ```js
+    const image = document.images[0];
+    context.drawImage(image, 10, 10);  // 传入图像并且设置 x y 坐标
+    ```
+
+  - 缩放图像
+
+    ```js
+    context.drawImage(image, 50, 10, 20, 30);  // 图像缩放到 20 像素宽、30 像素高
+    ```
+
+  - 只把图像绘制到上下文中的一个区域，给 `drawImage()` 提供 9 个参数：要绘制的图像、源图像 `x` 坐标、源图像 `y` 坐标、源图像宽度、源图像高度、目标图像 `x` 坐标、目标图像 `y` 坐标、目标图像区域宽度和目标图像区域高度
+
+    ```js
+    context.drawImage(image, 0, 10, 50, 50, 0, 100, 40, 60);
+    ```
+
+- `toDataURL()` 方法获取图像绘制的结果，如果绘制的图像来自其他域而非当前页面，则不能获取其数据
+
