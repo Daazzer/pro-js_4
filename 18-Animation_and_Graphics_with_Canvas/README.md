@@ -964,4 +964,15 @@ gl.viewPort(0, 0, drawing.width, drawing.height);
 - `bindBuffer()` 方法将缓冲区绑定到 WebGL 上下文
 - `bufferData()`
 
- 
+####  6.错误
+
+- `getError()` 返回一个常量，表示发生的错误类型
+
+#### 7.着色器
+
+两种着色器：
+
+- 顶点着色器
+- 片段（或像素）着色器
+
+不是 JavaScript 实现的，而是使用 GLSL(OpenGL Shading Language) 写的
