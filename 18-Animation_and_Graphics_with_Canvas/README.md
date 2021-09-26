@@ -984,3 +984,7 @@ gl.viewPort(0, 0, drawing.width, drawing.height);
 - `drawArrays()` 使用数组缓冲区
 - `drawElements()` 操作元素数组缓冲区
 
+#### 9.纹理
+
+- `createTexture()` 方法创建新的纹理
+
