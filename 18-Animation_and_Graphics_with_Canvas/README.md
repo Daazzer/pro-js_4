@@ -933,3 +933,9 @@ if (drawing.getContext) {
 }
 ```
 
+
+
+#### 1.常量
+
+使用与 OpenGL 类似的常量，如 `gl.COLOR_BUFFER_BIT`
+
