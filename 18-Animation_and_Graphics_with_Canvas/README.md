@@ -992,3 +992,7 @@ gl.viewPort(0, 0, drawing.width, drawing.height);
 
 - `readPixels()` 方法与 OpenGL 中的方法有同样的参数，包括 x 和 y 坐标、宽度、高度、图像格式、类型和定型数组
 
+### 18.4.3 WebGL1 和 WebGL2
+
+WebGL1 代码几乎与 WebGL2 完全兼容。在 WebGL2 中，很多扩展都变成了默认功能
+
