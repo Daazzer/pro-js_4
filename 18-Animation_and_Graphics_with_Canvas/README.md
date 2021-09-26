@@ -988,3 +988,7 @@ gl.viewPort(0, 0, drawing.width, drawing.height);
 
 - `createTexture()` 方法创建新的纹理
 
+#### 10.读取像素
+
+- `readPixels()` 方法与 OpenGL 中的方法有同样的参数，包括 x 和 y 坐标、宽度、高度、图像格式、类型和定型数组
+
