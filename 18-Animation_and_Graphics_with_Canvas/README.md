@@ -976,3 +976,11 @@ gl.viewPort(0, 0, drawing.width, drawing.height);
 - 片段（或像素）着色器
 
 不是 JavaScript 实现的，而是使用 GLSL(OpenGL Shading Language) 写的
+
+#### 8.绘图
+
+使用
+
+- `drawArrays()` 使用数组缓冲区
+- `drawElements()` 操作元素数组缓冲区
+
