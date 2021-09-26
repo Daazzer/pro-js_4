@@ -939,3 +939,29 @@ if (drawing.getContext) {
 
 使用与 OpenGL 类似的常量，如 `gl.COLOR_BUFFER_BIT`
 
+#### 2.方法命名
+
+表示数据类型的字符串（"f" 表示浮点数，"i" 表示整数）。如 `gl.uniform4f()`、`gl.uniform3i()`
+
+#### 3.准备绘图
+
+- `clearColor()` 接收 4 个参数，表示红、绿、蓝、透明度值
+
+```js
+gl.clearColor(0, 0, 0, 1);  // 黑色
+gl.clear(gl.COLOR_BUFFER_BIT);
+```
+
+#### 4.视口与坐标
+
+```js
+gl.viewPort(0, 0, drawing.width, drawing.height);
+```
+
+#### 5.缓冲区
+
+- `createBuffer()` 方法创建缓冲区
+- `bindBuffer()` 方法将缓冲区绑定到 WebGL 上下文
+- `bufferData()`
+
+ 
