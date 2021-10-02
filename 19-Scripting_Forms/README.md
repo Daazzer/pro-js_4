@@ -37,5 +37,47 @@ JavaScript 较早的一个用途是承担一部分服务器表单处理的责任
   const myForm = document.forms.form2;  // 也可以通过 document.form2 访问，但是不推荐
   ```
 
-  
+
+
+
+### 19.1.1 提交表单
+
+提交按钮可以使用 `type` 属性为 `"submit"` 的 `<input>` 或 `<button>` 元素定义，图片按钮可以使用 `type` 属性为 `"image"` 的 `<input>` 元素定义。
+
+```html
+<!-- 通用提交按钮 -->
+<input type="submit" value="Submit Form">
+
+<!-- 自定义按钮提交 -->
+<button type="submit">Submit Form</button>
+
+<!-- 图片按钮 -->
+<input type="image" src="graphic.gif">
+```
+
+
+
+如果表单中有上述任何一个按钮，且焦点在表单中某个控件上，则按回车键也可以提交表单
+
+以这种方式提交表单会在向服务器发送请求之前触发 `submit` 事件。阻止这个事件默认行为可以取消表单提交
+
+```js
+const form = document.getElementById('myForm');
+
+form.addEventListener('submit', event => {
+  // 阻止表单提交
+  event.preventDefault();
+});
+```
+
+
+
+也可以调用 `submit()` 方法提交表单，此方法不会触发 `submit` 事件
+
+```js
+const form = document.getElementById('myForm');
+
+// 提交表单
+form.submit();
+```
 
