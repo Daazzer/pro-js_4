@@ -81,3 +81,37 @@ const form = document.getElementById('myForm');
 form.submit();
 ```
 
+
+
+### 19.1.2 重置表单
+
+重置按钮可以用 `type` 为 `"reset"` 的 `<input>` 或 `<button>` 元素来创建
+
+表单重置后，所有表单字段都会重置回页面第一次渲染时各自拥有的值
+
+单击重置按钮会触发 `reset` 事件
+
+阻止重置表单示例
+
+```js
+const form = document.getElementById('myForm');
+
+form.addEventListener('reset', event => {
+  event.preventDefault();
+});
+```
+
+
+
+调用 `reset()` 方法重置表单
+
+```js
+const form = document.getElementById('myForm');
+
+form.reset();
+```
+
+
+
+> **注意** 在实际开发中，不推荐使用重置表单功能，因为会使用户感到厌烦
+
