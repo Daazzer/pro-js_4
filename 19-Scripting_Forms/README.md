@@ -115,3 +115,57 @@ form.reset();
 
 > **注意** 在实际开发中，不推荐使用重置表单功能，因为会使用户感到厌烦
 
+### 19.1.3 表单字段
+
+所有表单元素都是表单 `elements` 属性（元素集合）中包含的一个值。这个 `elements` 集合是一个有序列表，包含表单中所有字段的引用，包括 `<input>`、`<textarea>`、`<button>`、`<select>` 和 `<fieldset>` 元素，可以通过索引或 `name` 属性来访问
+
+```js
+const form = document.getElementById('form1');
+
+// 取得表单中的第一个字段
+const field1 = form.elements[0];
+
+// 取得表单中名为"textbox"的字段
+const field2 = form.elements.textbox1;
+
+// 取得字段的数量
+const fieldCount = form.elements.length;
+```
+
+
+
+如果多个表单控件使用了同一个 `name`，则会返回包含所有同名元素的 `HTMLCollection`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表单字段</title>
+  </head>
+  <body>
+    <form action="" id="myForm" method="post">
+      <ul>
+        <li><input type="radio" name="color" value="red">Red</li>
+        <li><input type="radio" name="color" value="green">Green</li>
+        <li><input type="radio" name="color" value="blue">Blue</li>
+      </ul>
+    </form>
+
+    <script>
+      const form = document.getElementById('myForm');
+
+      const colorFields = form.elements.color;
+
+      console.log(colorFields.length);  // 3
+
+      const firstColorField = colorFields[0];
+      const firstFormField = form.elements[0];
+      console.log(firstColorField === firstFormField);  // true
+    </script>
+  </body>
+</html>
+```
+

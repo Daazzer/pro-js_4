@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单字段</title>
+</head>
+<body>
+  <form action="" id="myForm" method="post">
+    <ul>
+      <li><input type="radio" name="color" value="red">Red</li>
+      <li><input type="radio" name="color" value="green">Green</li>
+      <li><input type="radio" name="color" value="blue">Blue</li>
+    </ul>
+  </form>
+
+  <script>
+    const form = document.getElementById('myForm');
+
+    const colorFields = form.elements.color;
+
+    console.log(colorFields.length);  // 3
+
+    const firstColorField = colorFields[0];
+    const firstFormField = form.elements[0];
+    console.log(firstColorField === firstFormField);  // true
+  </script>
+</body>
+</html>
