@@ -187,3 +187,10 @@ const fieldCount = form.elements.length;
 
 - `focus()` 把浏览器焦点设置到表单字段，这意味着该字段会变成活动字段并可以响应键盘事件。
 - `blur()` 将焦点从某个字段上移除
+
+#### 3.表单字段的公共事件
+
+- `blur` 在字段失去焦点时触发
+- `change` 在 `<input>` 和 `<textarea>` 元素的 `value` 发生变化且失去焦点时触发，或者在 `<select>` 元素中选中项发生变化时触发
+- `focus` 在字段获得焦点时触发
+
