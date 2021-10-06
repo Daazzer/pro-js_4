@@ -489,3 +489,26 @@ if (document.forms[0].checkValidity()) {
 
 
 
+#### 6.禁用验证
+
+- `novalidate` 属性可以禁止对表单进行任何验证
+- `formNoValidate` 在某个提交按钮上的属性，禁用验证
+
+```html
+<form method="post" action="/signup" novalidate>
+  <!-- 表单元素 -->
+  <input type="submit" value="Regular Submit">
+  <input type="submit" formnovalidate name="btnNoValidate" value="Non-validating Submit">
+</form>
+```
+
+
+
+或者
+
+```js
+document.forms[0].noValidate = true;
+
+document.forms[0].elements.btnNoValidate.formNoValidate = true;
+```
+
