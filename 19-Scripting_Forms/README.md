@@ -405,3 +405,9 @@ function setClipboardText(event, value) {
 </html>
 ```
 
+
+
+### 19.2.4 HTML5 约束验证 API
+
+可以使用 HTML 标记指定对特定字段的约束，然后浏览器会根据这些约束自动执行表单验证
+
