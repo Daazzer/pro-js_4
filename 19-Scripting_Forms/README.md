@@ -417,3 +417,9 @@ function setClipboardText(event, value) {
 
 - `required` 属性，任何此属性为 `true` 的表单字段都必须有值，否则无法提交表单
 
+#### 2.更多输入类型
+
+- `type` 属性扩展的值
+  - `"email"`
+  - `"url"`
+
