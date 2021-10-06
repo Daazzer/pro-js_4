@@ -314,3 +314,38 @@ textbox.addEventListener('keypress', event => {
 });
 ```
 
+
+
+#### 2.处理剪贴板
+
+与剪贴板相关的 6 个事件
+
+- `beforecopy` 复制操作发生前触发
+- `copy` 复制操作发生时触发
+- `beforecut` 剪切操作发生前触发
+- `cut` 剪切操作发生时触发
+- `beforepaste` 粘贴操作发生前触发
+- `paste` 粘贴操作发生时触发
+
+剪贴板上的数据
+
+- `event.clipboardData` 对象来获取（IE 则通过 `window.clipboardData`）
+  - `getData()` 接收一个参数，要检索的数据的格式，从剪贴板检索字符串数据
+  - `setData()` 接收两个参数，数据的类型，要放到剪贴板上的文本
+  - `clearData()` 清空剪贴板
+
+```js
+function getClipboardText(event) {
+  var clipboardData = (event.clipboardData || window.clipboardData);
+  return clipboardData.getData('text');
+}
+
+function setClipboardText(event, value) {
+  if (event.clipboardData) {
+    return event.clipboardData.setData('text/plain', value);
+  } else {
+    return window.clipboardData.setData('text', value);
+  }
+}
+```
+
