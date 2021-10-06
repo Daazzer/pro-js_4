@@ -242,3 +242,8 @@ const fieldCount = form.elements.length;
 </html>
 ```
 
+
+
+#### 1.select 事件
+
+当选中文本框中的文本是，会触发 `select` 事件
