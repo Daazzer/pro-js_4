@@ -267,3 +267,30 @@ function getSelectedText(textbox) {
 }
 ```
 
+
+
+#### 3.部分选中文本
+
+- `setSelectionRange()` 方法，接收两个参数，要选择的第一个字符的索引和停止选择的字符索引
+
+```js
+textbox.value = 'Hello world!';
+
+// 选择所有文本
+textbox.setSelectionRange(0, textbox.value.length);  // "Hello world!"
+
+// 选择前 3 个字符
+textbox.setSelectionRange(0, 3);  // "Hel"
+
+// 选择第 4~6 个字符
+textbox.setSelectionRange(4, 7);  // "o w"
+```
+
+
+
+IE 8 及更早
+
+- `createTextRange()` 创建一个范围
+- `moveStart()` 把范围放到起点
+- `moveEnd()` 把范围放到终点
+
