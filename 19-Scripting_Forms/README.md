@@ -194,3 +194,17 @@ const fieldCount = form.elements.length;
 - `change` 在 `<input>` 和 `<textarea>` 元素的 `value` 发生变化且失去焦点时触发，或者在 `<select>` 元素中选中项发生变化时触发
 - `focus` 在字段获得焦点时触发
 
+## 19.2 文本框编程
+
+两种表示文本框的方式：
+
+- 单行 `<input>` 元素
+  - `type` 属性，默认是 `text`
+  - `size` 属性，指定文本框宽度
+  - `value` 属性，指定文本框的初始值
+  - `maxLength` 属性，指定文本框允许最多字符数
+- 多行 `<textarea>` 元素
+  - `rows` 属性，指定这个文本框的高度，以字符数计量
+  - `cols` 属性，指定以字符数计量的文本框宽度
+  - `size` 属性，指定文本框宽度
+
