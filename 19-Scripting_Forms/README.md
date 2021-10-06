@@ -208,3 +208,37 @@ const fieldCount = form.elements.length;
   - `cols` 属性，指定以字符数计量的文本框宽度
   - `size` 属性，指定文本框宽度
 
+### 19.2.1 选择文本
+
+两种文本框都支持：
+
+- `select()` 方法，用于全选文本框中的文本
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择文本</title>
+  </head>
+  <body>
+    <form action="" name="myForm1">
+      <textarea name="textbox1" id="textbox1" cols="30" rows="10">
+        csacscsacsacsac
+        csacacascascascsaca
+        csacascascsa
+      </textarea>
+    </form>
+    <script>
+      const textbox1 = document.forms.myForm1.elements.textbox1;
+
+      textbox1.addEventListener('focus', event => {
+        event.target.select();
+      });
+    </script>
+  </body>
+</html>
+```
+
