@@ -446,3 +446,15 @@ input.setDown();  // 减 1
 input.setDown(10);  // 减 10
 ```
 
+
+
+#### 4.输入模式
+
+文本字段新增属性
+
+- `pattern` 用户输入的文本必须与之匹配，不会阻止用户输入无效内容，只能用于给浏览器检测是否有效
+
+```html
+<input type="text" pattern="\d+" name="count">
+```
+
