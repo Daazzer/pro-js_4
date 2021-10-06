@@ -411,3 +411,9 @@ function setClipboardText(event, value) {
 
 可以使用 HTML 标记指定对特定字段的约束，然后浏览器会根据这些约束自动执行表单验证
 
+#### 1.必填字段
+
+表单字段的
+
+- `required` 属性，任何此属性为 `true` 的表单字段都必须有值，否则无法提交表单
+
