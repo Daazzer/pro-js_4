@@ -423,3 +423,26 @@ function setClipboardText(event, value) {
   - `"email"`
   - `"url"`
 
+#### 3.数值范围
+
+- `type` 属性扩展的值
+  - `"number"`
+  - `"range"`
+  - `"datetime"`
+  - `"datetime-local"`
+  - `"date"`
+  - `"month"`
+  - `"week"`
+
+字段方法
+
+- `setUp()` 接收一个参数，从当前值加上数值
+- `setDown()` 接收一个参数，从当前值减去数值
+
+```js
+input.setUp();  // 加 1
+input.setUp(5);  // 加 5
+input.setDown();  // 减 1
+input.setDown(10);  // 减 10
+```
+
