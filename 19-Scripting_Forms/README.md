@@ -298,3 +298,19 @@ IE 8 及更早
 
 不同文本框经常需要保证输入特定类型或格式的数据
 
+#### 1.屏蔽字符
+
+输入事件
+
+- `keypress` 事件
+
+只允许输入数字代码
+
+```js
+textbox.addEventListener('keypress', event => {
+  if (!/\d/.test(String.fromCharCode(event.charCode))) {
+    event.preventDefault();
+  }
+});
+```
+
