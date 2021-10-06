@@ -247,3 +247,23 @@ const fieldCount = form.elements.length;
 #### 1.select 事件
 
 当选中文本框中的文本是，会触发 `select` 事件
+
+#### 2.取得选中文本
+
+HTML5 文本框添加的两个属性：
+
+- `selectionStart` 表示文本选区的起点偏移量（从 0 开始）
+- `selectionEnd` 表示文本选区的终点偏移量（从 0 开始）
+
+老 IE 中有一个包含整个文档选择信息的 `document.selection` 对象
+
+```js
+function getSelectedText(textbox) {
+  if (typeof textbox.selectionStart === 'number') {
+    return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);
+  } else if (document.selection) {
+    return document.selection.createRange().text;
+  }
+}
+```
+
