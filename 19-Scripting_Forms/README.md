@@ -349,3 +349,59 @@ function setClipboardText(event, value) {
 }
 ```
 
+
+
+### 19.2.3 自动切换
+
+在当前字段完成时自动切换到下一个字段
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动切换</title>
+  </head>
+  <body>
+    <form>
+      <input type="text" id="txtTel1" name="tel1" maxLength="3">
+      <input type="text" id="txtTel2" name="tel2" maxLength="3">
+      <input type="text" id="txtTel3" name="tel3" maxLength="4">
+    </form>
+
+    <script>
+      function tabForward(event) {
+        const target = event.target;
+
+        if (target.value.length === target.maxLength) {
+          const form = target.form;
+          for (let i = 0, len = form.elements.length; i < len; i++) {
+            if (form.elements[i] == target) {
+              const nextElements = form.elements[i + 1];
+              if (nextElements) {
+                nextElements.focus();
+                nextElements.select();
+              }
+              return;
+            }
+          }
+        }
+      }
+
+      const inputIds = ['txtTel1', 'txtTel2', 'txtTel3'];
+
+      inputIds.forEach(id => {
+        const textbox = document.getElementById(id);
+        textbox.addEventListener('keyup', tabForward);
+      });
+
+      const textbox1 = document.getElementById('txtTel1');
+      const textbox2 = document.getElementById('txtTel2');
+      const textbox3 = document.getElementById('txtTel3');
+    </script>
+  </body>
+</html>
+```
+
