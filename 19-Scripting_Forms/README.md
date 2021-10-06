@@ -458,3 +458,34 @@ input.setDown(10);  // 减 10
 <input type="text" pattern="\d+" name="count">
 ```
 
+
+
+#### 5.检测有效性
+
+设置了 `pattern` 的字段可以用
+
+- `checkValidity()` 检测表单中的字段是否有效，有效则返回 `true` 否则为 `false`，也可以检测整个表单
+- `validity` 属性告诉我们字段为什么有效或无效
+
+```js
+if (document.forms[0].elements[0].checkValidity()) {
+  // 字段有效
+} else {
+  // 字段无效
+}
+```
+
+
+
+检测整个表单
+
+```js
+if (document.forms[0].checkValidity()) {
+  // 表单有效
+} else {
+  // 表单无效
+}
+```
+
+
+
