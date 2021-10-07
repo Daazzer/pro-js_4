@@ -722,3 +722,10 @@ richedit.contentEditable = "true";
 
 接收三个可能的值：`"true"` 表示开启，`"false"` 表示关闭，`"inherit"` 表示继承父元素的设置
 
+### 19.5.2 与富文本交互
+
+- `document.execCommand()` 接收三个参数：要执行的命令、表示浏览器是否为命令提供用户界面的布尔值和执行命令必须的值（如果不需要则为 `null`）
+- `document.queryCommandEnabled()` 用于确定对当前选中文本或光标所在位置是否可以执行相关命令。接收一个参数，要检查的命令名
+- `document.queryCommandState()` 用于确定相关命令是否应用到了当前文本选区。
+- `document.queryCommandValue()` 返回执行命令时使用的值
+
