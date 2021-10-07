@@ -512,3 +512,57 @@ document.forms[0].noValidate = true;
 document.forms[0].elements.btnNoValidate.formNoValidate = true;
 ```
 
+
+
+## 19.3 选择框编程
+
+选择框是使用 `<select>` 和 `<option>` 元素创建的
+
+`HTMLSelectElement` 类型在所有表单字段的公共能力之外又提供了一下属性和方法
+
+- `add(newOption, relOption)` 在 `relOption` 之前向控件中添加新的 `<option>`
+- `multiple` 布尔值，表示是否允许多选，等价于 HTML 的 `multiple` 属性
+- `options` 控件中所有 `<option>` 元素的 `HTMLCollection`
+- `remove(index)` 移除给定位置的选项
+- `selectedIndex` 选中项基于 0 的索引值，如果没有选中项则为 -1。对于允许多选的列表，始终是第一个选项的索引
+- `size` 选择框中可见的行数，等价于 HTML 的 `size` 属性
+
+每个 `<option>` 元素在 DOM 中都由一个 `HTMLOptionElement` 对象表示。`HTMLOptionElement` 类型为方便数据存取添加了以下属性
+
+- `index` 选项在 `options` 集合中的索引
+- `label` 选项的标签，等价于 HTML 的 `label` 属性
+- `selected` 布尔值，表示是否选中了当前选项。把这个属性设置为 `true` 会选中当前选项
+- `text` 选项的文本
+- `value` 选项的值（等价于 HTML 的 `value` 属性）
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选择框编程</title>
+  </head>
+  <body>
+    <form>
+      <select name="location" id="selLocation">
+        <option value="Sunnyvale, CA">Sunnyvale</option>
+        <option value="Los Angeles, CA">Los Angeles</option>
+        <option value="Mountain View, CA">Mountain View</option>
+        <option value="">China</option>
+        <option>Australia</option>
+      </select>
+    </form>
+    <script>
+      const selectbox = document.forms[0].elements.location;
+
+      const text = selectbox.options[0].text;  // 选项文本
+      const value = selectbox.options[0].value;  // 选项值
+
+      console.log(text, value);
+    </script>
+  </body>
+</html>
+```
+
