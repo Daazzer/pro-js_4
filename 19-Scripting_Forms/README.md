@@ -758,3 +758,15 @@ richedit.contentEditable = "true";
 
   - `toString()` 返回选区中的文本内容
 
+### 19.5.4 通过表单提交富文本
+
+必须要手动提取 HTML 并自己提交。通常的解决方案是在表单中添加一个隐藏字段，使用内嵌窗格或 `contenteditable` 元素的 HTML 更新它的值
+
+```js
+form.addEventListener('submit', event => {
+  const target = event.target;
+  
+  target.elements.comments.value = frames.richedit.document.body.innerHTML;
+});
+```
+
