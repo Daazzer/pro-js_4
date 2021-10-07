@@ -624,3 +624,39 @@ selectbox.options[0].selected = true;
 </html>
 ```
 
+
+
+### 19.3.3 移除选项
+
+使用选择框的 `remove()` 方法
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>移除选项</title>
+  </head>
+  <body>
+    <form>
+      <select name="location" id="selLocation">
+        <option value="Sunnyvale, CA">Sunnyvale</option>
+        <option value="Los Angeles, CA">Los Angeles</option>
+        <option value="Mountain View, CA">Mountain View</option>
+        <option value="">China</option>
+        <option>Australia</option>
+      </select>
+    </form>
+    <script>
+      const selectbox = document.forms[0].elements.location;
+
+      selectbox.remove(0);
+
+      selectbox.options[0] = null;  // 还可以
+    </script>
+  </body>
+</html>
+```
+
