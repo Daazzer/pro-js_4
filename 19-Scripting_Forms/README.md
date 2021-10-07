@@ -1,4 +1,4 @@
-# 第 19 章 表单脚本
+# ，第 19 章 表单脚本
 
 JavaScript 较早的一个用途是承担一部分服务器表单处理的责任，既做表单验证，又用于增强标准表单控件的默认行为
 
@@ -258,13 +258,7 @@ HTML5 文本框添加的两个属性：
 老 IE 中有一个包含整个文档选择信息的 `document.selection` 对象
 
 ```js
-function getSelectedText(textbox) {
-  if (typeof textbox.selectionStart === 'number') {
-    return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);
-  } else if (document.selection) {
-    return document.selection.createRange().text;
-  }
-}
+function getSelectedText(textbox) {  if (typeof textbox.selectionStart === 'number') {    return textbox.value.substring(textbox.selectionStart, textbox.selectionEnd);  } else if (document.selection) {    return document.selection.createRange().text;  }}
 ```
 
 
@@ -274,16 +268,7 @@ function getSelectedText(textbox) {
 - `setSelectionRange()` 方法，接收两个参数，要选择的第一个字符的索引和停止选择的字符索引
 
 ```js
-textbox.value = 'Hello world!';
-
-// 选择所有文本
-textbox.setSelectionRange(0, textbox.value.length);  // "Hello world!"
-
-// 选择前 3 个字符
-textbox.setSelectionRange(0, 3);  // "Hel"
-
-// 选择第 4~6 个字符
-textbox.setSelectionRange(4, 7);  // "o w"
+textbox.value = 'Hello world!';// 选择所有文本textbox.setSelectionRange(0, textbox.value.length);  // "Hello world!"// 选择前 3 个字符textbox.setSelectionRange(0, 3);  // "Hel"// 选择第 4~6 个字符textbox.setSelectionRange(4, 7);  // "o w"
 ```
 
 
@@ -728,4 +713,48 @@ richedit.contentEditable = "true";
 - `document.queryCommandEnabled()` 用于确定对当前选中文本或光标所在位置是否可以执行相关命令。接收一个参数，要检查的命令名
 - `document.queryCommandState()` 用于确定相关命令是否应用到了当前文本选区。
 - `document.queryCommandValue()` 返回执行命令时使用的值
+
+### 19.5.3 富文本选择
+
+暴露在 `document` 和 `window` 上的方法
+
+- `getSelection()` 方法获得富文本编辑器的选区，返回表示当前选中文本的 `Selection` 对象，有以下属性
+
+  - `anchorNode` 选区开始的节点
+
+  - `anchorOffset` 在 `anchorNode` 中，从开头到选区开始跳过的字符数
+
+  - `focusNode` 选区结束的节点
+
+  - `focusOffset` `focusNode` 中包含在选区的字符数
+
+  - `isCollapsed` 布尔值，表示选区起点和终点是否在同一个地方
+
+  - `rangeCount` 选区中包含的 DOM 范围数量
+
+    选区的方法
+
+  - `addRange(range)` 把给定的 DOM 范围添加到选区
+
+  - `collapse(node, offset)` 将选区折叠到给定节点中给定的文本偏移处
+
+  - `collapseToEnd()` 将选区折叠到终点
+
+  - `collapseToStart()` 将选区折叠到起点
+
+  - `containsNode(node)` 确定给节点是否包含在选区中
+
+  - `deleteFormDocument()` 从文档删除选区文本。与执行 `execCommand("delete", false, null)` 命令结果相同
+
+  - `extend(node, offset)` 通过将 `focusNode` 和 `focusOffset` 移动到指定值来扩展选区
+
+  - `getRangeAt(index)` 返回选区中指定索引处的 DOM 范围
+
+  - `removeAllRanges()` 从选区中移除所有 DOM 范围。这实际上会移除选区，因为选区中至少要包含一个范围
+
+  - `removeRange(range)` 从选区中移除指定的 DOM 范围
+
+  - `selectAllChildren(node)` 清除选区并选择给定节点的所有子节点
+
+  - `toString()` 返回选区中的文本内容
 
