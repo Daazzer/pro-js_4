@@ -683,3 +683,23 @@ selectbox.insertBefore(optionToMove, selectbox.options[optionToMove.index - 1]);
 
 基本技术就是在空白 HTML 文件中嵌入一个 `<iframe>`。通过 `document.designMode` 设置为 `"on"` 使整个文档都变成可编辑
 
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>富文本编辑</title>
+  </head>
+  <body>
+    <iframe frameborder="0" name="richedit" style="height: 100%; width: 100px;"></iframe>
+    <script>
+      window.addEventListener('load', () => {
+        frames.richedit.document.designMode = 'on';
+      });
+    </script>
+  </body>
+</html>
+```
+
