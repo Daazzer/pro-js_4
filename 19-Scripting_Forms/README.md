@@ -566,3 +566,26 @@ document.forms[0].elements.btnNoValidate.formNoValidate = true;
 </html>
 ```
 
+
+
+### 19.3.1 选项处理
+
+获取选中项，使用 `selectedIndex`
+
+```js
+const { selectedIndex } = selectbox;
+const selectedOption = selectbox.options[selectedIndex];
+
+console.log(`Selected index: ${selectedIndex}\n`+
+						`Selected text: ${selectedOption.text}\n` +
+            `Selected value: ${selectedOption.value}`);
+```
+
+
+
+设置选中项可以设置某个选项的 `selected` 为 `true` 来实现
+
+```js
+selectbox.options[0].selected = true;
+```
+
