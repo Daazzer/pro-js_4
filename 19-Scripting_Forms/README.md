@@ -660,3 +660,14 @@ selectbox.options[0].selected = true;
 </html>
 ```
 
+
+
+### 19.3.4 移动和重排选项
+
+将一个选项在选择框中前移一个位置
+
+```js
+const optionToMove = selectbox.options[1];
+selectbox.insertBefore(optionToMove, selectbox.options[optionToMove.index - 1]);
+```
+
