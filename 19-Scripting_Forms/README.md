@@ -679,3 +679,7 @@ selectbox.insertBefore(optionToMove, selectbox.options[optionToMove.index - 1]);
 
 配合 Ajax 发送表单数据给后端，具体要看接口数据结构
 
+## 19.5 富文本编辑
+
+基本技术就是在空白 HTML 文件中嵌入一个 `<iframe>`。通过 `document.designMode` 设置为 `"on"` 使整个文档都变成可编辑
+
