@@ -671,3 +671,9 @@ const optionToMove = selectbox.options[1];
 selectbox.insertBefore(optionToMove, selectbox.options[optionToMove.index - 1]);
 ```
 
+
+
+## 19.4 表单序列化
+
+需要理解浏览器如何确定在提交表单时要把什么发送到服务器
+
