@@ -703,3 +703,22 @@ selectbox.insertBefore(optionToMove, selectbox.options[optionToMove.index - 1]);
 </html>
 ```
 
+
+
+### 19.5.1 使用 contenteditable
+
+给页面中任何元素指定 `contenteditable` 属性，然后该元素会立即被用户编辑，可以不需要额外的 `<iframe>`
+
+```html
+<div class="editable" id="richedit" contenteditable></div>
+```
+
+或者
+
+```js
+const div = document.getElementById('richedit');
+richedit.contentEditable = "true";
+```
+
+接收三个可能的值：`"true"` 表示开启，`"false"` 表示关闭，`"inherit"` 表示继承父元素的设置
+
