@@ -677,3 +677,5 @@ selectbox.insertBefore(optionToMove, selectbox.options[optionToMove.index - 1]);
 
 需要理解浏览器如何确定在提交表单时要把什么发送到服务器
 
+配合 Ajax 发送表单数据给后端，具体要看接口数据结构
+
