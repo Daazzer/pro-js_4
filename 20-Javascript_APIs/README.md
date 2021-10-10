@@ -122,3 +122,6 @@ const encodedText = textEncoder.encode(decodedText);
 
 - `getReader()`
 
+### 20.3.2 文本解码
+
+将定型数组转换为字符串的方式：分为批量解码和流解码
