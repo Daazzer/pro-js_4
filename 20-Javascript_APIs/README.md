@@ -45,3 +45,11 @@ Atomics API 可以保证 `SharedArrayBuffer` 上的 JavaScript 操作线程是�
 - `Atomics.exchange()`
 - `Atomics.compareExchange()`
 
+#### 4.原子 Futex 操作与加锁
+
+> **注意** 所有原子 Futex 操作只能用于 `Int32Array` 视图。而且，也只能用在工作线程内部
+
+- `Atomics.wait()`
+- `Atomics.notify()`
+- `Atomics.isLockFree()`
+
