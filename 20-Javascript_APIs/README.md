@@ -38,3 +38,10 @@ Atomics API 可以保证 `SharedArrayBuffer` 上的 JavaScript 操作线程是�
 
 `Atomics.load()` 和 `Atomics.store()` 还可以构建“代码围栏”。JavaScript 引擎保证非原子指令可以相对于 `load()` 和 `store()` **本地**重排，但这个重排不会侵犯原子读/写的边界
 
+#### 3.原子交换
+
+为了保证连续、不间断的先读后写。Atomics API 提供了两种方法：
+
+- `Atomics.exchange()`
+- `Atomics.compareExchange()`
+
