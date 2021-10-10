@@ -19,3 +19,4 @@
 - [第 17 章 事件](./17-Events)
 - [第 18 章 动画与 Canvas 图形](./18-Animation_and_Graphics_with_Canvas)
 - [第 19 章 表单脚本](./19-Scripting_Forms)
+- [第 20 章 JavaScript API](./20-Javascript_APIs)
