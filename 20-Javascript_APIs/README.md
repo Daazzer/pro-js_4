@@ -22,3 +22,13 @@ Atomics API 可以保证 `SharedArrayBuffer` 上的 JavaScript 操作线程是�
 
 任何上下文中都有 `Atomics` 对象，这个对象上暴露了用于执行线程安全操作的一套静态方法
 
+#### 1.算术及位操作方法
+
+在 ECMA 规范中，这些方法被定义为 `AtomicReadModifyWrite` 操作。在底层，这些方法都会从 `SharedArrayBuffer` 中某个位置读取值，然后执行算术或位操作，最后再把计算结果写回相同的位置。
+
+- `Atomics.add()`
+- `Atomics.sub()`
+- `Atomics.or()`
+- `Atomics.and()`
+- `Atomics.xor()`
+
