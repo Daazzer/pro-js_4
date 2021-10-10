@@ -125,3 +125,17 @@ const encodedText = textEncoder.encode(decodedText);
 ### 20.3.2 文本解码
 
 将定型数组转换为字符串的方式：分为批量解码和流解码
+
+#### 1.批量解码
+
+`TextDecoder` 实例
+
+- `decode()`
+
+```js
+const textDecoder = new TextDecoder();
+const encodedText = Unit8Array.of(102, 111, 111);
+const decodedText = textDecoder.decode(encodedText);
+console.log(decodedText);  // foo
+```
+
