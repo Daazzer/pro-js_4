@@ -120,8 +120,6 @@ const encodedText = textEncoder.encode(decodedText);
 
 `TextEncoderStream` 就是 `TransformStream` 形式的 `TextEncoder`
 
-- `getReader()`
-
 ### 20.3.2 文本解码
 
 将定型数组转换为字符串的方式：分为批量解码和流解码
@@ -139,3 +137,6 @@ const decodedText = textDecoder.decode(encodedText);
 console.log(decodedText);  // foo
 ```
 
+#### 2.流解码
+
+`TextDecoderStream` 其实就是 `TransformStream` 形式的 `TextDecoder`。将编码后的文本流通过管道输入流解码器会得到解码后文本块的流
