@@ -32,3 +32,9 @@ Atomics API 可以保证 `SharedArrayBuffer` 上的 JavaScript 操作线程是�
 - `Atomics.and()`
 - `Atomics.xor()`
 
+#### 2.原子读和写
+
+浏览器的 JavaScript 编译器和 CPU 架构本身都有权限重排指令以提升程序执行效率。正常情况下， JavaScript 的单线程环境试可以随时进行这种优化的。但多线程下的指令重排可能导致资源争用，而且极难排错
+
+`Atomics.load()` 和 `Atomics.store()` 还可以构建“代码围栏”。JavaScript 引擎保证非原子指令可以相对于 `load()` 和 `store()` **本地**重排，但这个重排不会侵犯原子读/写的边界
+
