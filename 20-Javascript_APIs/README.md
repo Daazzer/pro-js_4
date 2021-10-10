@@ -116,3 +116,9 @@ const encodedText = textEncoder.encode(decodedText);
 
 
 
+#### 2.流编码
+
+`TextEncoderStream` 就是 `TransformStream` 形式的 `TextEncoder`
+
+- `getReader()`
+
