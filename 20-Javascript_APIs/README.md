@@ -18,3 +18,7 @@ Atomics API 可以保证 `SharedArrayBuffer` 上的 JavaScript 操作线程是�
 
 > **注意** `SharedArrayBuffer` API 等同于 `ArrayBuffer` API
 
+### 20.1.2 原子操作基础
+
+任何上下文中都有 `Atomics` 对象，这个对象上暴露了用于执行线程安全操作的一套静态方法
+
