@@ -101,3 +101,18 @@ window.addEventListener('message', event => {
 
 批量编码和流编码
 
+#### 1.批量编码
+
+`TextEncoder` 实现
+
+- `encode()` 接收一个字符串参数，并以 `Unit8Array` 格式返回每个字符的 UTF-8 编码
+- `encodeInto()` 接收一个字符串和目标 `Unit8Array`，返回一个字典，该字典包含 `read` 和 `written` 属性。如果定型数组空间不够，编码就会提前终止
+
+```js
+const textEncoder = new TextEncoder();
+const decodedText = 'foo';
+const encodedText = textEncoder.encode(decodedText);
+```
+
+
+
