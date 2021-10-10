@@ -86,3 +86,14 @@ window.addEventListener('message', event => {
 });
 ```
 
+
+
+## 20.3 Encoding API
+
+主要用于实现字符串与定型数组之间的转换。新增了 4 个用于执行转换的全局类
+
+- `TextEncoder`
+- `TextEncoderStream`
+- `TextDecoder`
+- `TextDecoderStream`
+
