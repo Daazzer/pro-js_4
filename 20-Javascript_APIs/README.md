@@ -97,3 +97,7 @@ window.addEventListener('message', event => {
 - `TextDecoder`
 - `TextDecoderStream`
 
+### 20.3.1 文本编码
+
+批量编码和流编码
+
