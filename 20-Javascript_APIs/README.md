@@ -209,3 +209,8 @@ blob 表示**二进制大对象(binary larget object)**，是 JavaScript 对不�
 
 `Blob` 对象有一个 `size` 属性和 `type` 属性，还有一个 `slice()` 方法用于进一步切分数据。另外也可以使用 `FileReader` 从 `Blob` 中读取数据
 
+### 20.4.5 对象 URL 与 Blob
+
+- `window.URL.createObjectURL()` 方法传入 `File` 或 `Blob` 对象，就可以创建对象 URL
+- `window.URL.revokeObjectURL()` 可以卸载对象 URL 释放内存
+
