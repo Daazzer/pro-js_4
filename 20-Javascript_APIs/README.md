@@ -201,3 +201,11 @@ filesList.addEventListener('change', event => {
 
 `FileReaderSync` 只在工作线程中可用，是 `FileReader` 的**同步**版本，因为如果读取整个文件耗时太长则会影响全局
 
+### 20.4.4 Blob 与部分读取
+
+`File` 对象提供一个 `slice()` 方法，接收两个参数：起始字节和要读取额字节数。返回一个 `Blob` 实例
+
+blob 表示**二进制大对象(binary larget object)**，是 JavaScript 对不可修改的二进制数据的封装类型。包含字符串数组、`ArrayBuffer`、`ArrayBufferViews`，甚至其它 `Blob` 都可以用来创建 blob。`Blob` 构造函数可以接收一个 `options` 参数，并在其指定 MIME 类型
+
+`Blob` 对象有一个 `size` 属性和 `type` 属性，还有一个 `slice()` 方法用于进一步切分数据。另外也可以使用 `FileReader` 从 `Blob` 中读取数据
+
