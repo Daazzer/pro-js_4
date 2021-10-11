@@ -140,3 +140,8 @@ console.log(decodedText);  // foo
 #### 2.流解码
 
 `TextDecoderStream` 其实就是 `TransformStream` 形式的 `TextDecoder`。将编码后的文本流通过管道输入流解码器会得到解码后文本块的流
+
+## 20.4 File API 与 Blob API
+
+File API 与 Blob API 是为了让 Web 开发者能以安全的方式访问客户端机器上的文件，从而更好地与这些文件交互而设计的
+
