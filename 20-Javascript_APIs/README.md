@@ -197,3 +197,7 @@ filesList.addEventListener('change', event => {
 - `abort` 在读取中断时触发
 - `loadend` 所有读取操作都已结束时触发
 
+### 20.4.3 FileReaderSync 类型
+
+`FileReaderSync` 只在工作线程中可用，是 `FileReader` 的**同步**版本，因为如果读取整个文件耗时太长则会影响全局
+
