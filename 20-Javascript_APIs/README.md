@@ -173,3 +173,27 @@ filesList.addEventListener('change', event => {
 });
 ```
 
+
+
+### 20.4.2 FileReader 类型
+
+`FileReader` 类型表示一种异步文件读取机制。提供了几个读取文件数据的方法
+
+- `readAsText(file, encoding)` 从文件中读取纯文本内容并保存在 `result` 属性中。第二个参数表示编码，是可选的
+- `readAsDataURL(file)` 读取文件并将内容的数据 URI 保存在 `result` 属性中
+- `readAsBinaryString(file)` 读取文件并将每个字符的二进制数据保存在 `result` 属性中
+- `readAsArrayBuffer(file)` 读取文件并将文件内容以 `ArrayBuffer` 形式保存在 `result` 属性中
+- `abort()` 中断读取操作，触发 `abort` 事件
+
+`FileReader` 发布的几个事件
+
+- `progress` 进度事件，表示还有更多数据，每 50 毫秒触发一次
+  - `lengthComputable`
+  - `loaded`
+  - `total`
+- `error` 发生错误时触发
+  - `code` 属性，1：未找到文件、2：安全错误、3：读取被中断、4：文件不可读、5：编码错误
+- `load` 读取完成时触发
+- `abort` 在读取中断时触发
+- `loadend` 所有读取操作都已结束时触发
+
