@@ -214,3 +214,7 @@ blob 表示**二进制大对象(binary larget object)**，是 JavaScript 对不�
 - `window.URL.createObjectURL()` 方法传入 `File` 或 `Blob` 对象，就可以创建对象 URL
 - `window.URL.revokeObjectURL()` 可以卸载对象 URL 释放内存
 
+### 20.4.6 读取拖放文件
+
+在 `drop` 事件的 `event.dataTransfer.files` 可以读取文件，这个属性保存着一组 `File` 对象
+
