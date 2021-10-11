@@ -145,3 +145,31 @@ console.log(decodedText);  // foo
 
 File API 与 Blob API 是为了让 Web 开发者能以安全的方式访问客户端机器上的文件，从而更好地与这些文件交互而设计的
 
+### 20.4.1 File 类型
+
+HTML5 在 DOM 上为文件输入元素添加了 `files` 集合。当用户在文件字段中选择一个或多个文件时，这个 `files` 集合中会包含一组 `File` 对象，表示被选中的文件。
+
+每个 `File` 对象有一些只读属性
+
+- `name` 本地系统中的文件名
+- `size` 以字节计的文件大小
+- `type` 包含文件 MIME 类型的字符串
+- `lastModifiedDate` 表示文件最后修改时间的字符串。这个属性只有 Chrome 实现了
+
+例如通过监听 `change` 事件然后遍历 `files` 集合可以取得每个选中文件的信息
+
+```js
+const filesList = document.getElementById('files-list');
+filesList.addEventListener('change', event => {
+  let files = event.target.files,
+        i = 0,
+        len = files.length;
+
+  while (i < len) {
+    const file = files[i];
+    console.log(`${file.name} (${file.type}, ${file.size} bytes)`);
+    i++;
+  }
+});
+```
+
