@@ -250,5 +250,9 @@ HTML5 的 `<audio>` 和 `<video>` 元素
 
 `<audio>` 和 `<video>` 的 JavaScript 接口
 
-[`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)
+[`HTMLMediaElement` 属性](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement#properties)
+
+### 20.5.2 事件
+
+[`HTMLMediaElement` 事件](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement#events)
 
