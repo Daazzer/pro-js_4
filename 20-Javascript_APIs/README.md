@@ -256,3 +256,8 @@ HTML5 的 `<audio>` 和 `<video>` 元素
 
 [`HTMLMediaElement` 事件](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement#events)
 
+### 20.5.3 自定义媒体播放器
+
+- `play()` 手动播放
+- `pause()` 手动暂停
+
