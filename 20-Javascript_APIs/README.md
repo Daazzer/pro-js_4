@@ -271,3 +271,20 @@ if (audio.canPlayType("audio/oggl codecs=\"vorbis\"")) {
 }
 ```
 
+
+
+### 20.5.5 音频类型
+
+`<audio>` 元素还有一个名为 `Audio` 的原生 JavaScript 构造函数，支持在任何时候播放音频。
+
+```js
+const audio = new Audio("sound.mp3");
+audio.addEventListener('canplaythrough', event => {
+  audio.play();
+});
+```
+
+
+
+在 iOS 中调用 `play()` 方法会弹出一个对话框，请求用户授权播放声音。为了连续播放，必须在 `onfinish` 事件处理程序中立即调用 `play()`
+
