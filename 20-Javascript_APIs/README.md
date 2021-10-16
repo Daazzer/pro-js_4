@@ -367,3 +367,14 @@ HTML5 在所有元素上添加了
 <div draggable="true">...</div>
 ```
 
+
+
+### 20.6.6 其他成员
+
+`dataTransfer` 对象还定义了以下方法：
+
+- `addElement(element)` 为拖动操作添加元素。
+- `clearData(format)` 清除以特定格式存储的数据
+- `setDragImage(element, x, y)` 允许指定拖动发生时显示在光标下面的图片。接收三个参数：要显示的 HTML 元素及标识光标位置的图片上的 x 和 y 坐标。
+- `types` 当前存储的数据类型列表
+
