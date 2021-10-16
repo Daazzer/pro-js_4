@@ -218,3 +218,29 @@ blob 表示**二进制大对象(binary larget object)**，是 JavaScript 对不�
 
 在 `drop` 事件的 `event.dataTransfer.files` 可以读取文件，这个属性保存着一组 `File` 对象
 
+## 20.5 媒体元素
+
+HTML5 的 `<audio>` 和 `<video>` 元素
+
+```html
+<video src="conference.mpg" id="myVideo">Video player not avaliable.</video>
+<audio src="song.mp3" id="myAudio">Audio player not avaliable.</audio>
+```
+
+提供不同的格式兼容
+
+```html
+<video id="myVideo">
+	<source src="conference.webm" type="video/webm; codecs='vp8, vorbis'">
+	<source src="conference.ogv" type="video/ogg; codecs='theora, vorbis'">
+	<source src="conference.mpg">
+  Video player not avaliable.
+</video>
+
+<audio id="myAudio">
+  <source src="song.ogg" type="audio/ogg">
+  <source src="song.mp3" type="audio/mpeg">
+  Audio player not avaliable.
+</audio>
+```
+
