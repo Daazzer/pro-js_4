@@ -347,3 +347,9 @@ event.dataTransfer.setData('URL', 'http://www.wrox.com/');
 const url = event.dataTransfer.getData('URL');
 ```
 
+
+
+### 20.6.4 dropEffect 与 effectAllowed
+
+- `dropEffect` 属性可以告诉浏览器允许哪种放置行为，要同时设置 `effectAllowed` 才生效
+- `effectAllowed` 属性表示对被拖动元素是否允许 `dropEffect`
