@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>拖放事件</title>
+  <style>
+    #drag, #dragTarget {
+      display: inline-block;
+      margin: 0 10px;
+      width: 50px;
+      height: 50px;
+    }
+    #drag {
+      background-color: red;
+    }
+    #dragTarget {
+      background-color: blue;
+    }
+  </style>
+</head>
+<body>
+  <div id="drag"></div>
+  <div id="dragTarget"></div>
+
+  <script>
+    const dragEl = document.querySelector('#drag');
+    const dragTargetEl = document.querySelector('#dragTarget');
+
+    dragEl.addEventListener('dragstart', ev => {
+      console.log('dragstart');
+    });
+    dragEl.addEventListener('drag', ev => {
+      console.log('drag');
+    });
+    dragEl.addEventListener('dragend', ev => {
+      console.log('dragend');
+    });
+
+    dragTargetEl.addEventListener('dragenter', ev => {
+      ev.preventDefault();
+      console.log('dragenter');
+    });
+    dragTargetEl.addEventListener('dragover', ev => {
+      ev.preventDefault();
+      console.log('dragover');
+    });
+    dragTargetEl.addEventListener('dragleave', ev => {
+      console.log('dragleave');
+    });
+    dragTargetEl.addEventListener('drop', ev => {
+      console.log('drop');
+    });
+  </script>
+</body>
+</html>
