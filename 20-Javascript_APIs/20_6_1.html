@@ -6,50 +6,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>拖放事件</title>
   <style>
-    #drag, #dragTarget {
+    #dragTarget, #dropTarget {
       display: inline-block;
       margin: 0 10px;
       width: 50px;
       height: 50px;
     }
-    #drag {
+    #dragTarget {
       background-color: red;
     }
-    #dragTarget {
+    #dropTarget {
       background-color: blue;
     }
   </style>
 </head>
 <body>
-  <div id="drag"></div>
   <div id="dragTarget"></div>
+  <div id="dropTarget"></div>
 
   <script>
-    const dragEl = document.querySelector('#drag');
-    const dragTargetEl = document.querySelector('#dragTarget');
+    const dragTarget = document.querySelector('#dragTarget');
+    const dropTarget = document.querySelector('#dropTarget');
 
-    dragEl.addEventListener('dragstart', ev => {
+    dragTarget.addEventListener('dragstart', ev => {
       console.log('dragstart');
     });
-    dragEl.addEventListener('drag', ev => {
+    dragTarget.addEventListener('drag', ev => {
       console.log('drag');
     });
-    dragEl.addEventListener('dragend', ev => {
+    dragTarget.addEventListener('dragend', ev => {
       console.log('dragend');
     });
 
-    dragTargetEl.addEventListener('dragenter', ev => {
+    dropTarget.addEventListener('dragenter', ev => {
       ev.preventDefault();
       console.log('dragenter');
     });
-    dragTargetEl.addEventListener('dragover', ev => {
+    dropTarget.addEventListener('dragover', ev => {
       ev.preventDefault();
       console.log('dragover');
     });
-    dragTargetEl.addEventListener('dragleave', ev => {
+    dropTarget.addEventListener('dragleave', ev => {
       console.log('dragleave');
     });
-    dragTargetEl.addEventListener('drop', ev => {
+    dropTarget.addEventListener('drop', ev => {
       console.log('drop');
     });
   </script>

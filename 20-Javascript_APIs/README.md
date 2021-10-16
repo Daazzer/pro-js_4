@@ -311,3 +311,19 @@ audio.addEventListener('canplaythrough', event => {
 
 这些事件的目标是放置目标元素
 
+### 20.6.2 自定义放置目标
+
+通过覆盖 `dragenter` 和 `dragover` 事件的默认行为，可以把任何元素转换为有效的放置目标
+
+```js
+const droptarget = document.getElementById('droptarget');
+
+droptarget.addEventListener('dragover', event => {
+  event.preventDefault();
+});
+
+droptarget.addEventListener('dragenter', event => {
+  event.preventDefault();
+});
+```
+
