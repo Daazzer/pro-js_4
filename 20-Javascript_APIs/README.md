@@ -392,3 +392,23 @@ HTML5 在所有元素上添加了
 页面可以使用 `Notification` 全局对象向用户请求通知权限。
 
 - `requestPemission()` 返回一个 `Promise` 用户在执行操作后，这个 `Promise` 会解决
+
+### 20.7.2 显示和隐藏通知
+
+`Notification` 构造函数用于创建和显示通知
+
+```js
+new Notification('Title text!', {
+  body: 'Body text',
+  image: 'path/to/image.png',
+  vibrate: true
+});
+```
+
+- `close()` 可以关闭显示的通知
+
+```js
+const n = new Notification('I will close in 1000ms');
+setTimeout(() => n.close(), 1000);
+```
+
