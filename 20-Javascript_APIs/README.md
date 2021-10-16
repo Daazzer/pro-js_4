@@ -244,3 +244,11 @@ HTML5 的 `<audio>` 和 `<video>` 元素
 </audio>
 ```
 
+
+
+### 20.5.1 属性
+
+`<audio>` 和 `<video>` 的 JavaScript 接口
+
+[`HTMLMediaElement`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)
+
