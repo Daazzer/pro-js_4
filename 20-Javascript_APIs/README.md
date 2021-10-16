@@ -327,3 +327,23 @@ droptarget.addEventListener('dragenter', event => {
 });
 ```
 
+
+
+### 20.6.3 dataTransfer 对象
+
+`event` 对象上的
+
+- `dataTransfer` 属性
+  - `getData()` 获取值，接收一个参数，表示数据类型
+  - `setData()` 第一个参数表示设置的数据类型：`"text"` 或 `"URL"`，第二个参数是设置的值
+
+```js
+// 传递文本
+event.dataTransfer.setData('text', 'some text');
+const text = event.dataTransfer.getData('text');
+
+// 传递 URL
+event.dataTransfer.setData('URL', 'http://www.wrox.com/');
+const url = event.dataTransfer.getData('URL');
+```
+
