@@ -261,3 +261,13 @@ HTML5 的 `<audio>` 和 `<video>` 元素
 - `play()` 手动播放
 - `pause()` 手动暂停
 
+### 20.5.4 检测编解码器
+
+- `canPlayType()` 接收一个格式/编解码器字符串，返回一个字符串值：`"probably"`、`"maybe"` 或 `""`
+
+```js
+if (audio.canPlayType("audio/oggl codecs=\"vorbis\"")) {
+  // 执行某些操作
+}
+```
+
