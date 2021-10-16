@@ -412,3 +412,23 @@ const n = new Notification('I will close in 1000ms');
 setTimeout(() => n.close(), 1000);
 ```
 
+
+
+### 20.7.3 通知生命周期回调
+
+4 个添加回调的生命周期方法：
+
+- `onshow` 在通知显示时触发
+- `onclick` 在通知被点击时触发
+- `onclose` 在通知消失或通过 `close()` 关闭时触发
+- `onerror` 在发生错误阻止通知显示时触发
+
+```js
+const n = new Notification('foo');
+
+n.onshow = () => console.log('Notification was shown!');
+n.onclick = () => console.log('Notification was clicked!');
+n.onclose = () => console.log('Notification was closed!');
+n.onerror = () => console.log('Notification experienced an error!');
+```
+
