@@ -353,3 +353,17 @@ const url = event.dataTransfer.getData('URL');
 
 - `dropEffect` 属性可以告诉浏览器允许哪种放置行为，要同时设置 `effectAllowed` 才生效
 - `effectAllowed` 属性表示对被拖动元素是否允许 `dropEffect`
+
+### 20.6.5 可拖动能力
+
+HTML5 在所有元素上添加了
+
+- `draggable` 属性，表示元素是否可拖动
+
+```html
+<!-- 禁止拖动图片 -->
+<img src="smile.gif" draggable="false" alt="Smiley face">
+<!-- 让元素可以拖动 -->
+<div draggable="true">...</div>
+```
+
