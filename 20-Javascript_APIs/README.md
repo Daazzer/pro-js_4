@@ -432,3 +432,17 @@ n.onclose = () => console.log('Notification was closed!');
 n.onerror = () => console.log('Notification experienced an error!');
 ```
 
+
+
+## 20.8 Page Visibility API
+
+为开发者提供页面对用户是否可见的信息
+
+- `document.visiblityState` 值，表示下面 4 中状态之一
+  - 页面在后台标签页或浏览器中最小化了
+  - 页面在前台标签页中
+  - 实际页面隐藏了，但对页面的预览是可见的
+  - 页面在屏外预渲染
+- `visiblitychange` 事件，该事件会在文档从隐藏可见或触发
+- `document.hidden` 布尔值，表示页面是否隐藏。这可能意味着页面在后台标签页或浏览器中被最小化了。这个值是为了向后兼容才继续被浏览器支持的，应该优先使用 `document.visiblityState` 检测页面可见性
+
