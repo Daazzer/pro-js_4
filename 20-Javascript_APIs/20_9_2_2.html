@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReadableStreamDefaultReader</title>
+</head>
+<body>
+  <script>
+    // 创建一个生成器，这个生成器的值可以通过可读流的控制器传入可读流
+    async function* ints() {
+      for (let i = 0; i < 5; i++) {
+        yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+      }
+    }
+
+    // 通过创建 ReadableStream 实例访问控制器
+    const readableStream = new ReadableStream({
+      // 调用控制器的 enqueue() 方法可以把值传入控制器。所有值都有传完之后，调用 close() 关闭流
+      async start(controller) {
+        for await (const chunk of ints()) {
+          controller.enqueue(chunk);
+        }
+
+        controller.close();
+      }
+    });
+
+    // 通过流的 getReader() 方法获取 StreamDefaultReader 实例，调用这个方法会获得流的锁，保证只有这个读取器可以从流中读取值
+    console.log(readableStream.locked);  // false
+    const readableStreamDefaultReader = readableStream.getReader();
+    console.log(readableStream.locked);  // true
+
+    // 消费者使用这个读取实例的 read() 方法可以读出值
+    (async () => {
+      while (true) {
+        const { done, value } = await readableStreamDefaultReader.read();
+        if (done) {
+          break;
+        } else {
+          console.log(value);
+        }
+      }
+    })();
+
+    // 0
+    // 1
+    // 2
+    // 3
+    // 4
+  </script>
+</body>
+</html>
