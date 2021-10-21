@@ -481,3 +481,39 @@ Stream API 定义了三种流
 
 可读流是对底层数据源的封装。底层数据源可以将数据填充到流中，允许消费者通过流的公共接口读取数据。
 
+#### 1.ReadableStreamDefaultController
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReadableStreamDefaultController</title>
+  </head>
+  <body>
+    <script>
+      // 创建一个生成器，这个生成器的值可以通过可读流的控制器传入可读流
+      async function* ints() {
+        for (let i = 0; i < 5; i++) {
+          yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+        }
+      }
+
+      // 通过创建 ReadableStream 实例访问控制器
+      const readableStream = new ReadableStream({
+        // 调用控制器的 enqueue() 方法可以把值传入控制器。所有值都有传完之后，调用 close() 关闭流
+        async start(controller) {
+          for await (const chunk of ints()) {
+            controller.enqueue(chunk);
+          }
+
+          controller.close();
+        }
+      });
+    </script>
+  </body>
+</html>
+```
+
