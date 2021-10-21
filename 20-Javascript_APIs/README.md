@@ -614,3 +614,56 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 2.WritableStreamDefaultWriter
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WritableStreamDefaultWriter</title>
+  </head>
+  <body>
+    <script>
+      async function* ints() {
+        for (let i = 0; i < 5; i++) {
+          yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+        }
+      }
+
+      // 通过可写流的公共接口可以写入流。在传给 WriteableStream 构造函数的 underlyingSink 参数中，通过实现 write() 方法可以获得写入的数据
+      const writableStream = new WritableStream({
+        write(value) {
+          console.log(value);
+        }
+      });
+
+      /*
+      要把获得的数据写入流，可以通过流的 getWriter() 方法获取 WritableStreamDefaultWriter 的实例。
+      这样会获得流的锁，确保只有一个写入器可以向流写入数据
+       */
+      console.log(writableStream.locked);  // false
+      const writableStreamDefaultWriter = writableStream.getWriter();
+      console.log(writableStream.locked);  // true
+
+      /*
+      在向流写入数据前，生产者必须确保写入器可以接收值。
+      WritableStreamDefaultWriter.read 返回一个 Promise，此 Promise 会在能够向流中写入数据时解决
+       */
+      (async () => {
+        for await (const chunk of ints()) {
+          await writableStreamDefaultWriter.ready;
+          writableStreamDefaultWriter.write(chunk);
+        }
+
+        writableStreamDefaultWriter.close();
+      })();
+    </script>
+  </body>
+</html>
+```
+
