@@ -584,3 +584,33 @@ Stream API 定义了三种流
 
 可写流是底层数据槽的封装。底层数据槽处理通过流的公共接口写入的数据。
 
+#### 1.创建 WriteableStream
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建 WriteableStream</title>
+  </head>
+  <body>
+    <script>
+      async function* ints() {
+        for (let i = 0; i < 5; i++) {
+          yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+        }
+      }
+
+      // 通过可写流的公共接口可以写入流。在传给 WriteableStream 构造函数的 underlyingSink 参数中，通过实现 write() 方法可以获得写入的数据
+      const writableStream = new WritableStream({
+        write(value) {
+          console.log(value);
+        }
+      });
+    </script>
+  </body>
+</html>
+```
+
