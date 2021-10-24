@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加 Web 组件内容</title>
+</head>
+<body>
+  <template id="x-foo-tpl">
+    <p>I'm inside a custom element template!</p>
+  </template>
+  <x-foo></x-foo>
+  <script>
+    const template = document.querySelector('#x-foo-tpl');
+
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+  </script>
+</body>
+</html>

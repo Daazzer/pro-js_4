@@ -1442,3 +1442,76 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 2.添加 Web 组件内容
+
+每次将自定义元素添加到 DOM 中会调用其构造函数。虽然不能在构造函数中添加子 DOM，但可以为自定义元素添加影子 DOM 并将内容添加到这个影子 DOM 中
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加 Web 组件内容</title>
+</head>
+<body>
+  <x-foo></x-foo>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+
+        // this 引用 web 组件节点
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `
+          <p>I'm inside a custom element!</p>
+        `;
+      }
+    }
+    customElements.define('x-foo', FooElement);
+  </script>
+</body>
+</html>
+```
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>添加 Web 组件内容</title>
+</head>
+<body>
+  <template id="x-foo-tpl">
+    <p>I'm inside a custom element template!</p>
+  </template>
+  <x-foo></x-foo>
+  <script>
+    const template = document.querySelector('#x-foo-tpl');
+
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.appendChild(template.content.cloneNode(true));
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+  </script>
+</body>
+</html>
+```
+
+
+
+这样可以在自定义元素中实现高度的 HTML 代码重用，以及 DOM 封装
+
