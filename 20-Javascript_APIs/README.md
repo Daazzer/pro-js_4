@@ -870,3 +870,9 @@ Stream API 定义了三种流
 
 - `performance.getEntries()` 获取在一个执行上下文中被记录的所有性能条目
 
+#### 1.User Timing API
+
+用于记录和分析自定义性能条目
+
+- `performance.mark()` 记录自定义性能条目
+
