@@ -866,3 +866,7 @@ Stream API 定义了三种流
 - `window.performance.now()` 返回一个微秒精度的浮点值。这个方法先后捕获的时间戳更不可能出现相等的情况，这个计时器采用**相对**度量
 - `performance.timeOrigin` 属性返回计时器初始化时全局系统时钟的值
 
+### 20.10.2 Performance Timeline API
+
+- `performance.getEntries()` 获取在一个执行上下文中被记录的所有性能条目
+
