@@ -1566,3 +1566,94 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 4.反射自定义元素属性
+
+对 DOM 的修改应该反映到 JavaScript 对象，反之亦然。要从 JavaScript 对象反射到 DOM，常见的方式是使用获取函数和设置函数
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>反射自定义元素属性</title>
+</head>
+<body>
+  <x-foo></x-foo>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+
+        this.bar = true;
+      }
+
+      get bar() {
+        return this.getAttribute('bar');
+      }
+
+      set bar(value) {
+        this.setAttribute('bar', value);
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+
+    console.log(document.body.innerHTML);  // <x-foo bar="true"></x-foo>
+  </script>
+</body>
+</html>
+```
+
+
+
+从 DOM 反映到 JavaScript 对象
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>反射自定义元素属性</title>
+</head>
+<body>
+  <x-foo bar="false"></x-foo>
+  <script>
+    class FooElement extends HTMLElement {
+      static get observedAttributes() {
+        // 返回应该触发 attributeChangedCallback() 执行的属性
+        return ['bar'];
+      }
+
+      get bar() {
+        return this.getAttribute('bar');
+      }
+
+      set bar(value) {
+        this.setAttribute('bar', value);
+      }
+
+      attributeChangedCallback(name, oldValue, newValue) {
+        if (oldValue !== newValue) {
+          console.log(`${oldValue} -> ${newValue}`);
+
+          this[name] = newValue;
+        }
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+    // null -> false
+
+    document.querySelector('x-foo').setAttribute('bar', true);
+    // false -> true
+  </script>
+</body>
+</html>
+```
+

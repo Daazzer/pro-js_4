@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>反射自定义元素属性</title>
+</head>
+<body>
+  <x-foo></x-foo>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+
+        this.bar = true;
+      }
+
+      get bar() {
+        return this.getAttribute('bar');
+      }
+
+      set bar(value) {
+        this.setAttribute('bar', value);
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+
+    console.log(document.body.innerHTML);  // <x-foo bar="true"></x-foo>
+  </script>
+</body>
+</html>
