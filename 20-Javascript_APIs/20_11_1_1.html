@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用 DocumentFragment</title>
+</head>
+<body>
+  <template id="foo">
+    <p>I'm inside a template!</p>
+  </template>
+
+  <script>
+    const fragment = document.querySelector('#foo').content;
+
+    console.log(document.querySelector('p'));  // null
+    console.log(fragment.querySelector('p'));  // <p>...</p>
+  </script>
+</body>
+</html>

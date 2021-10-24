@@ -913,3 +913,69 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 1.使用 DocumentFragment
+
+通过 `<template>` 元素的 `content` 属性可以取得 `DocumentFragment` 的引用
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 DocumentFragment</title>
+  </head>
+  <body>
+    <template id="foo">
+      <p>I'm inside a template!</p>
+    </template>
+
+    <script>
+      const fragment = document.querySelector('#foo').content;
+
+      console.log(document.querySelector('p'));  // null
+      console.log(fragment.querySelector('p'));  // <p>...</p>
+    </script>
+  </body>
+</html>
+```
+
+
+
+`DocumentFragment` 也是批量向 HTML 中添加元素的高效工具。相比于 `document.appendChild()`，可以一次性添加所有子节点，最多只会有一次布局重排
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 DocumentFragment</title>
+  </head>
+  <body>
+    <div id="foo"></div>
+    <script>
+      // 也可以使用 document.createDocumentFragment()
+      const fragment = new DocumentFragment();
+      const foo = document.querySelector('#foo');
+
+      // 为 DocumentFragment 添加子元素不会导致布局重排
+      for (let i = 1; i <= 3; i++) {
+        fragment.appendChild(document.createElement('p'));
+      }
+
+      console.log(fragment.children.length);  // 3
+
+      foo.appendChild(fragment);
+
+      console.log(fragment.children.length);  // 0
+      console.log(document.body.innerHTML);
+    </script>
+  </body>
+</html>
+```
+

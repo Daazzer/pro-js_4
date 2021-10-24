@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用 DocumentFragment</title>
+</head>
+<body>
+  <div id="foo"></div>
+  <script>
+    // 也可以使用 document.createDocumentFragment()
+    const fragment = new DocumentFragment();
+    const foo = document.querySelector('#foo');
+
+    // 为 DocumentFragment 添加子元素不会导致布局重排
+    for (let i = 1; i <= 3; i++) {
+      fragment.appendChild(document.createElement('p'));
+    }
+
+    console.log(fragment.children.length);  // 3
+
+    foo.appendChild(fragment);
+
+    console.log(fragment.children.length);  // 0
+    console.log(document.body.innerHTML);
+  </script>
+</body>
+</html>
