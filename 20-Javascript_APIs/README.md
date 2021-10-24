@@ -892,3 +892,24 @@ Stream API 定义了三种流
 
 一套用于增强 DOM 行为的工具，包括影子 DOM、自定义元素和 HTML 模板。这一套浏览器 API 特别混乱
 
+### 20.11.1 HTML 模板
+
+`<template>` 标签，提前在页面中写出特殊标记，让浏览器自动将其解析为 DOM 子树，但跳过渲染
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML 模板</title>
+  </head>
+  <body>
+    <template id="foo">
+      <p>I'm inside a template!</p>
+    </template>
+  </body>
+</html>
+```
+
