@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>升级自定义元素</title>
+</head>
+<body>
+  <script>
+    customElements.whenDefined('x-foo').then(() => console.log('defined!'));
+
+    console.log(customElements.get('x-foo'));
+    // undefined
+
+    customElements.define('x-foo', class {});
+    // defined!
+
+    console.log(customElements.get('x-foo'));
+    // class FooElement{}
+  </script>
+</body>
+</html>

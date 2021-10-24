@@ -1657,3 +1657,72 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 5.升级自定义元素
+
+Web 组件再 `CustomElementRegistry` 上额外暴露了一些方法。可以用来检测自定义元素是否定义完成，然后用它来升级已有元素
+
+- `CustomElementRegistry.get()` 返回相应自定义元素的类
+- `CustomElementRegistry.whenDefined()` 返回一个 `Promise`，当相应自定义元素有定义之后解决
+- `CustomElementRegistry.upgrade()` 在元素连接到 DOM 之前强制升级
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>升级自定义元素</title>
+</head>
+<body>
+  <script>
+    customElements.whenDefined('x-foo').then(() => console.log('defined!'));
+
+    console.log(customElements.get('x-foo'));
+    // undefined
+
+    customElements.define('x-foo', class {});
+    // defined!
+
+    console.log(customElements.get('x-foo'));
+    // class FooElement{}
+  </script>
+</body>
+</html>
+```
+
+
+
+连接到 DOM 的元素在自定义元素有定义时会**自动升级**
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>升级自定义元素</title>
+</head>
+<body>
+  <script>
+    // 在自定义元素有定义之前会创建 HTMLUnknownElement 对象
+    const fooElement = document.createElement('x-foo');
+
+    // 创建自定义元素
+    class FooElement extends HTMLElement {}
+    customElements.define('x-foo', FooElement);
+
+    console.log(fooElement instanceof FooElement);  // false
+
+    // 强制升级
+    customElements.upgrade(fooElement);
+
+    console.log(fooElement instanceof FooElement);  // true
+  </script>
+</body>
+</html>
+```
+
