@@ -846,3 +846,18 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+## 20.10 计时 API
+
+`Performance` 接口通过 JavaScript API 暴露了浏览器内部的度量指标，允许开发者直接访问这些信息并基于这些信息实现自己想要的功能，这个接口暴露在 `window.performance`
+
+`Performance` 接口由多个 API 构成：
+
+- High Resolution Time API
+- Performance Timeline API
+- Navigation Timling API
+- User Timing API
+- Resource Timing API
+- Paint Timing API
+
