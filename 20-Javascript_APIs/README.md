@@ -861,3 +861,8 @@ Stream API 定义了三种流
 - Resource Timing API
 - Paint Timing API
 
+### 20.10.1 High Resolution Time API
+
+- `window.performance.now()` 返回一个微秒精度的浮点值。这个方法先后捕获的时间戳更不可能出现相等的情况，这个计时器采用**相对**度量
+- `performance.timeOrigin` 属性返回计时器初始化时全局系统时钟的值
+
