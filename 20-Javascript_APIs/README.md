@@ -876,3 +876,9 @@ Stream API 定义了三种流
 
 - `performance.mark()` 记录自定义性能条目
 
+#### 2.Navigation Timing API
+
+用于度量当前页面加载速度
+
+- `performance.getEntriesByType()`
+
