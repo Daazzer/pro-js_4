@@ -1088,3 +1088,38 @@ Stream API 定义了三种流
 
 应该能够把 CSS 限制在使用它的 DOM 上，而不是影响到全局
 
+#### 2.创建影子 DOM
+
+影子 DOM 是通过 `attachShadow()` 方法创建并添加给有效 HTML 元素。容纳影子 DOM 的元素被称为**影子宿主**（shadow host）。影子 DOM 的根节点被称为**影子根**（shadow root）
+
+- `attachShadow()` 接收一个 `shadowRootInit` 对象，必须包含一个 `mode` 属性，值为 `"open"` 或 `"closed"`，对 `"open"` 影子的引用可以通过 `shadowRoot` 属性在 HTML 元素上获得，而对 `"closed"` 影子 DOM 的引用无法这样获取，返回影子 DOM 的实例。
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建影子 DOM</title>
+  </head>
+  <body>
+    <div id="foo"></div>
+    <div id="bar"></div>
+    <script>
+      const foo = document.querySelector('#foo');
+      const bar = document.querySelector('#bar');
+
+      const openShadowDOM = foo.attachShadow({ mode: 'open' });
+      const closedShadowDOM = bar.attachShadow({ mode: 'closed' });  // 创建保密影子
+
+      console.log(openShadowDOM);  // #shadow-root (open)
+      console.log(closedShadowDOM);  // #shadow-root (closed)
+
+      console.log(foo.shadowRoot);  // #shadow-root (open)
+      console.log(bar.shadowRoot);  // null
+    </script>
+  </body>
+</html>
+```
+
