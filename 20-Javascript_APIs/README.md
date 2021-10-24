@@ -979,3 +979,69 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 2.使用 `<template>` 标签
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 template 标签</title>
+  </head>
+  <body>
+    <div id="foo"></div>
+    <template id="bar">
+      <p></p>
+      <p></p>
+      <p></p>
+    </template>
+    <script>
+      const fooElement = document.querySelector('#foo');
+      const barTemplate = document.querySelector('#bar');
+      const barFragment = barTemplate.content;
+
+      console.log(document.body.innerHTML);
+      fooElement.appendChild(barFragment);
+      console.log(document.body.innerHTML);
+    </script>
+  </body>
+</html>
+```
+
+
+
+如果想要复制模板，可以使用 `importNode()` 方法克隆 `DocumentFragment`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 template 标签</title>
+  </head>
+  <body>
+    <div id="foo"></div>
+    <template id="bar">
+      <p></p>
+      <p></p>
+      <p></p>
+    </template>
+    <script>
+      const fooElement = document.querySelector('#foo');
+      const barTemplate = document.querySelector('#bar');
+      const barFragment = barTemplate.content;
+
+      console.log(document.body.innerHTML);
+      fooElement.appendChild(document.importNode(barFragment, true));
+      console.log(document.body.innerHTML);
+    </script>
+  </body>
+</html>
+```
+
