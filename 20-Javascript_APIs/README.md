@@ -1045,3 +1045,36 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 3.模板脚本
+
+脚本执行可以推迟到将 `DocumentFragment` 的内容实际添加到 DOM 树。
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板脚本</title>
+  </head>
+  <body>
+    <div id="foo"></div>
+    <template id="bar">
+      <script>console.log('Template script executed');</script>
+    </template>
+    <script>
+      const fooElement = document.querySelector('#foo');
+      const barTemplate = document.querySelector('#bar');
+      const barFragment = barTemplate.content;
+
+      console.log('About to add template');  // About to add template
+      fooElement.appendChild(barFragment);  // Template script executed
+      console.log('Added template');  // Added template
+    </script>
+  </body>
+</html>
+```
+
