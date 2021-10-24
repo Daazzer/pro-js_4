@@ -1312,3 +1312,33 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 5.事件重定向
+
+如果影子 DOM 中发生了浏览器事件，那么浏览器需要一种方式让父 DOM处理事件。事件会逃出影子 DOM 并经过**事件重定向**(event retarget) 在外部被处理
+
+使用 `<slot>` 标签从外部投射进来的元素不会发生事件重定向，因为从技术上讲，这些元素仍然存在于影子 DOM 外部
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事件重定向</title>
+</head>
+<body>
+  <div onclick="console.log('Handled outside:', event.target)"></div>
+  <script>
+    document.querySelector('div')
+      .attachShadow({ mode: 'open' })
+      .innerHTML = `
+        <button onclick="console.log('Handled inside:', event.target)">Foo</button>
+      `;
+  </script>
+</body>
+</html>
+```
+
