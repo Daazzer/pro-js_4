@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用自定义元素生命周期方法</title>
+</head>
+<body>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+        console.log('ctor');
+      }
+
+      connectedCallback() {
+        console.log('connected');
+      }
+
+      disconnectedCallback() {
+        console.log('disconnected');
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+
+    const fooElement = document.createElement('x-foo');
+    // ctor
+
+    document.body.appendChild(fooElement);
+    // connected
+
+    document.body.removeChild(fooElement);
+    // disconnected
+  </script>
+</body>
+</html>

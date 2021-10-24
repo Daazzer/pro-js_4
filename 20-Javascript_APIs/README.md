@@ -1515,3 +1515,54 @@ Stream API 定义了三种流
 
 这样可以在自定义元素中实现高度的 HTML 代码重用，以及 DOM 封装
 
+#### 3.使用自定义元素生命周期方法
+
+5 个生命周期方法
+
+- `constructor()` 在创建元素实例或将已有 DOM 元素升级为自定义元素时调用
+- `connectedCallback()` 在每次将这个自定义元素实例添加到 DOM 中时调用
+- `disconnectedCallback()` 在每次将这个自定义元素实例从 DOM 中移除时调用
+- `attributeChangedCallback()` 在每次**可观察属性**的值发生变化时调用。在元素实例初始化时，初始值的定义也算一次变化
+- `adoptedCallback()` 在通过 `document.adoptNode()` 将这个自定义元素实例移动到新文档对象时调用
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用自定义元素生命周期方法</title>
+</head>
+<body>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+        console.log('ctor');
+      }
+
+      connectedCallback() {
+        console.log('connected');
+      }
+
+      disconnectedCallback() {
+        console.log('disconnected');
+      }
+    }
+
+    customElements.define('x-foo', FooElement);
+
+    const fooElement = document.createElement('x-foo');
+    // ctor
+
+    document.body.appendChild(fooElement);
+    // connected
+
+    document.body.removeChild(fooElement);
+    // disconnected
+  </script>
+</body>
+</html>
+```
+
