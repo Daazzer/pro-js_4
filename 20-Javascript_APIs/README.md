@@ -728,3 +728,121 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+### 20.9.5 通过管道连接流
+
+使用 `pipeThrough()` 方法把 `ReadableStream` 接入 `TransformStream`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通过管道连接流</title>
+  </head>
+  <body>
+    <script>
+      async function* ints() {
+        for (let i = 0; i < 5; i++) {
+          yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+        }
+      }
+
+      // 将一个整数的 ReadableStream 传入 TransformStream，TransformStream 对每个值加倍处理
+      const integerStream = new ReadableStream({
+        async start(controller) {
+          for await (const chunk of ints()) {
+            controller.enqueue(chunk);
+          }
+
+          controller.close();
+        }
+      });
+
+      const doublingStream = new TransformStream({
+        transform(chunk, controller) {
+          controller.enqueue(chunk * 2);
+        }
+      });
+
+      // 通过管道连接流
+      const pipedStream = integerStream.pipeThrough(doublingStream);
+
+      // 从连接流的输出获得读取器
+      const pipedStreamDefaultReader = pipedStream.getReader();
+
+      // 消费者
+      (async () => {
+        while (true) {
+          const { done, value } = await pipedStreamDefaultReader.read();
+
+          if (done) {
+            break;
+          } else {
+            console.log(value);
+          }
+        }
+      })();
+
+      // 0
+      // 2
+      // 4
+      // 6
+      // 8
+    </script>
+  </body>
+</html>
+```
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通过管道连接流</title>
+  </head>
+  <body>
+    <script>
+      async function* ints() {
+        for (let i = 0; i < 5; i++) {
+          yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+        }
+      }
+
+      // 将一个整数的 ReadableStream 传入 TransformStream，TransformStream 对每个值加倍处理
+      const integerStream = new ReadableStream({
+        async start(controller) {
+          for await (const chunk of ints()) {
+            controller.enqueue(chunk);
+          }
+
+          controller.close();
+        }
+      });
+
+      // 另外，使用 pipeTo() 方法也可以将 ReadableStream 连接到 WritableStream
+      const writableStream = new WritableStream({
+        write(value) {
+          console.log(value);
+        }
+      });
+
+      const pipedStream = integerStream.pipeTo(writableStream);
+
+      // 0
+      // 1
+      // 2
+      // 3
+      // 4
+    </script>
+  </body>
+</html>
+```
+
