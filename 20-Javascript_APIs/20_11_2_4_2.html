@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合成与影子 DOM 槽位</title>
+</head>
+<body>
+  <div>
+    <p slot="foo">Foo</p>
+    <p slot="bar">Bar</p>
+  </div>
+  <script>
+    for (const color of ['red', 'green', 'blue']) {
+      const div = document.createElement('div');
+      const shadowDOM = div.attachShadow({ mode: 'open' });
+
+      document.body.appendChild(div);
+      shadowDOM.innerHTML = `
+        <p>Make me ${color}</p>
+
+        <style>
+          p {
+            color: ${color};
+          }
+        </style>
+      `;
+    }
+
+    document.querySelector('div')
+      .attachShadow({ mode: 'open' })
+      .innerHTML = `
+        <slot name="bar"></slot>
+        <slot name="foo"></slot>
+      `;
+  </script>
+</body>
+</html>

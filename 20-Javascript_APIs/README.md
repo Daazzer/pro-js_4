@@ -1206,3 +1206,109 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 4.合成与影子 DOM 槽位
+
+位于影子宿主中的 HTML 需要一种机制以渲染到影子 DOM 中去，但这些 HTML 又不必属于影子 DOM 树
+
+影子 DOM 一添加到元素中，浏览器就会赋予它最高优先级，优先渲染它的内容而不是原来的文本
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合成与影子 DOM 槽位</title>
+</head>
+<body>
+  <div>
+    <p>Foo</p>
+  </div>
+  <script>
+    setTimeout(() => document.querySelector('div').attachShadow({ mode: 'open' }), 1000);
+  </script>
+</body>
+</html>
+```
+
+
+
+为了显示文本内容，需要使用 `<slot>` 标签指示浏览器在哪里放置原来的 HTML
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合成与影子 DOM 槽位</title>
+</head>
+<body>
+  <div id="foo">
+    <p>Foo</p>
+  </div>
+  <script>
+    setTimeout(() => {
+      const shadowDOM = document.querySelector('div').attachShadow({ mode: 'open' });
+      // 实际上只是 DOM 内容的投射(projection)
+      shadowDOM.innerHTML = `
+        <div #id="bar">
+          <slot></slot>
+        </div>
+      `;
+    }, 1000);
+  </script>
+</body>
+</html>
+```
+
+
+
+改变影子宿主的渲染顺序，除了默认槽位，还可以使用**命名槽位**(named slot) 实现多个投射。这是通过匹配的 `slot/name` 属性对实现的。
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>合成与影子 DOM 槽位</title>
+</head>
+<body>
+  <div>
+    <p slot="foo">Foo</p>
+    <p slot="bar">Bar</p>
+  </div>
+  <script>
+    for (const color of ['red', 'green', 'blue']) {
+      const div = document.createElement('div');
+      const shadowDOM = div.attachShadow({ mode: 'open' });
+
+      document.body.appendChild(div);
+      shadowDOM.innerHTML = `
+        <p>Make me ${color}</p>
+
+        <style>
+          p {
+            color: ${color};
+          }
+        </style>
+      `;
+    }
+
+    document.querySelector('div')
+      .attachShadow({ mode: 'open' })
+      .innerHTML = `
+        <slot name="bar"></slot>
+        <slot name="foo"></slot>
+      `;
+  </script>
+</body>
+</html>
+```
+
