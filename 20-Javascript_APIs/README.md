@@ -1123,3 +1123,86 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+#### 3.使用影子 DOM
+
+可以像使用常规 DOM 一样使用影子 DOM
+
+```html
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用影子 DOM</title>
+</head>
+<body>
+  <script>
+    for (const color of ['red', 'green', 'blue']) {
+      const div = document.createElement('div');
+      const shadowDOM = div.attachShadow({ mode: 'open' });
+
+      document.body.appendChild(div);
+      shadowDOM.innerHTML = `
+        <p>Make me ${color}</p>
+
+        <style>
+          p {
+            color: ${color};
+          }
+        </style>
+      `;
+    }
+
+    function countP(node) {
+      console.log(node.querySelectorAll('p').length);
+    }
+
+    countP(document);  // 0
+
+    for (const element of document.querySelectorAll('div')) {
+      countP(element.shadowRoot);
+    }
+
+    // 1
+    // 1
+    // 1
+  </script>
+</body>
+```
+
+
+
+影子 DOM 可以在 DOM 树间无限制移动
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用影子 DOM</title>
+</head>
+<body>
+  <div></div>
+  <p id="foo">Move me</p>
+  <script>
+    const divElement = document.querySelector('div');
+    const pElement = document.querySelector('p');
+    const shadowDOM = divElement.attachShadow({ mode: 'open' });
+
+    // 从父 DOM 中移除元素
+    divElement.parentElement.removeChild(pElement);
+
+    // 把元素添加到影子 DOM
+    shadowDOM.appendChild(pElement);
+
+    // 检查元素是否移动到了影子 DOM 中
+    console.log(shadowDOM.innerHTML);
+  </script>
+</body>
+</html>
+```
+
