@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建自定义元素</title>
+</head>
+<body>
+  <x-foo></x-foo>
+  <x-foo></x-foo>
+  <x-foo></x-foo>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+        console.log('x-foo');
+      }
+    }
+    customElements.define('x-foo', FooElement);
+    // x-foo
+    // x-foo
+    // x-foo
+  </script>
+</body>
+</html>

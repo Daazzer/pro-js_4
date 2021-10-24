@@ -1348,3 +1348,97 @@ Stream API 定义了三种流
 
 可以在 HTML 中创建自定义的、复杂的和可重用的元素，而且只要使用简单的 HTML 标签或属性就可以创建相应的实例
 
+#### 1.创建自定义元素
+
+自定义元素要使用全局属性 `customElements`，这个属性会返回 `CustomElementRegistry` 对象
+
+`customElement.define()` 方法可以创建自定义元素。
+
+> **注意** 自定义元素名必须至少包含一个不在名称开头和末尾的连字符，而且元素标签不能自关闭
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建自定义元素</title>
+</head>
+<body>
+  <x-foo>I'm inside a nonsense element.</x-foo>
+  <script>
+    class FooElement extends HTMLElement {}
+    customElements.define('x-foo', FooElement);
+    console.log(document.querySelector('x-foo') instanceof FooElement);  // true
+  </script>
+</body>
+</html>
+```
+
+
+
+通过调用自定义元素的构造函数来控制这个类在 DOM 中每个实例的行为
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建自定义元素</title>
+</head>
+<body>
+  <x-foo></x-foo>
+  <x-foo></x-foo>
+  <x-foo></x-foo>
+  <script>
+    class FooElement extends HTMLElement {
+      constructor() {
+        super();
+        console.log('x-foo');
+      }
+    }
+    customElements.define('x-foo', FooElement);
+    // x-foo
+    // x-foo
+    // x-foo
+  </script>
+</body>
+</html>
+```
+
+
+
+如果自定义元素继承了一个元素类，那么可以使用 `is` 属性和 `extends` 选项将标签指定为该自定义元素的实例：
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建自定义元素</title>
+</head>
+<body>
+  <div is="x-foo"></div>
+  <div is="x-foo"></div>
+  <div is="x-foo"></div>
+  <script>
+    class FooElement extends HTMLDivElement {
+      constructor() {
+        super();
+        console.log('x-foo');
+      }
+    }
+    customElements.define('x-foo', FooElement, { extends: 'div' });
+    // x-foo
+    // x-foo
+    // x-foo
+  </script>
+</body>
+</html>
+```
+
