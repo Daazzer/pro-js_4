@@ -880,5 +880,11 @@ Stream API 定义了三种流
 
 用于度量当前页面加载速度
 
-- `performance.getEntriesByType()`
+- `performance.getEntriesByType('navigation')`
+
+#### 3.Resource Timing API
+
+用于度量当前页面加载时请求资源的速度
+
+- `performance.getEntriesByType('resource')`
 
