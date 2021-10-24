@@ -667,3 +667,64 @@ Stream API 定义了三种流
 </html>
 ```
 
+
+
+### 20.9.4 转换流
+
+用于组合可读流和可写流。数据块在两个流之间的转换是通过 `transform()` 方法来完成的
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>转换流</title>
+  </head>
+  <body>
+    <script>
+      async function* ints() {
+        for (let i = 0; i < 5; i++) {
+          yield await new Promise(resolve => setTimeout(resolve, 1000, i));
+        }
+      }
+
+      // 通过 transform() 方法将每个值翻倍
+      const { writable, readable } = new TransformStream({
+        transform(chunk, controller) {
+          controller.enqueue(chunk * 2);
+        }
+      });
+
+      // 向转换流的组件流（可读流和可写流）传入数据和从中获取数据
+      const readableStreamDefaultReader = readable.getReader();
+      const writableStreamDefaultWriter = writable.getWriter();
+
+      // 消费者
+      (async () => {
+        while (true) {
+          const { done, value } = await readableStreamDefaultReader.read();
+
+          if (done) {
+            break;
+          } else {
+            console.log(value);
+          }
+        }
+      })();
+
+      // 生产者
+      (async () => {
+        for await (const chunk of ints()) {
+          await writableStreamDefaultWriter.ready;
+          writableStreamDefaultWriter.write(chunk);
+        }
+
+        writableStreamDefaultWriter.close();
+      })();
+    </script>
+  </body>
+</html>
+```
+
