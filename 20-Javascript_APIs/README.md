@@ -888,3 +888,7 @@ Stream API 定义了三种流
 
 - `performance.getEntriesByType('resource')`
 
+## 20.11 Web 组件
+
+一套用于增强 DOM 行为的工具，包括影子 DOM、自定义元素和 HTML 模板。这一套浏览器 API 特别混乱
+
