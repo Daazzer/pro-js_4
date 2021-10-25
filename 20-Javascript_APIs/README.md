@@ -1726,3 +1726,9 @@ Web 组件再 `CustomElementRegistry` 上额外暴露了一些方法。可以用
 </html>
 ```
 
+
+
+## 20.12 Web Cryptography API
+
+描述了一套密码学工具。这些工具包括生成、使用和应用加密密钥对，加密和解密信息，以及可靠地生成随机数
+
