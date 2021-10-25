@@ -1732,3 +1732,56 @@ Web 组件再 `CustomElementRegistry` 上额外暴露了一些方法。可以用
 
 描述了一套密码学工具。这些工具包括生成、使用和应用加密密钥对，加密和解密信息，以及可靠地生成随机数
 
+### 20.12.1 生成随机数
+
+`Math.random()` 在浏览器中是以**伪随机数生成器**（PRNG，RseudoRandom Number Generator）方式实现的。浏览器的 PRNG 并未使用真正的随机源，只是对内部状态应用了固定的算法。
+
+由于算法本身是固定的，因此随机数顺序也是确定的。如果攻击者知道 PRNG 的内部状态，就可以预测后续生成的伪随机值。
+
+伪随机生成器主要用于快速计算出看起来随机的值。不过并不适合用于加密计算。为解决这个问题，密码学安全伪随机数生成器（CSPRNG，Cryptographically Secure PseudoRandom Number Generator）
+
+可以通过 `crypto.getRandomValues()` 在全局 `Crypto` 对象上访问，传入一个定型数组
+
+`getRandomValues()` 最多可以生成 2^16 (65536) 字节，超出会抛出错误
+
+```js
+const fooArray = new Unit8Array(2 ** 16);
+console.log(crypto.getRandomValues(fooArray));  // Unit32Array(16384) [...]
+
+const barArray = new Unit8Array((2 ** 16) + 1);
+console.log(crypto.getRandomValues(barArray));  // Error
+```
+
+
+
+使用 CSPRNG 实现 `Math.random()`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成随机数</title>
+</head>
+<body>
+  <script>
+    // 使用 CSPRNG 实现 Math.random()
+    function randomFloat() {
+      // 生成 32 位随机数
+      const fooArray = new Uint32Array(1);
+
+      // 最大值是 2^32 - 1
+      const maxUnit32 = 0xffffffff;
+
+      // 用最大可能的值来除
+      return crypto.getRandomValues(fooArray)[0] / maxUnit32;
+    }
+
+    console.log(randomFloat());
+  </script>
+</body>
+</html>
+```
+
