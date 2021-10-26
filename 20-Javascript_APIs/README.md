@@ -1785,3 +1785,9 @@ console.log(crypto.getRandomValues(barArray));  // Error
 </html>
 ```
 
+
+
+### 20.12.2 使用 SubtleCrypto 对象
+
+通过 `window.crypto.subtle` 访问。因为所有密码学操作都在原始二进制数据上执行，所以 `SubtleCrypto` 的每个方法都要用到 `ArrayBuffer` 和 `ArrayBufferView` 类型，因此 `TextEncoder` 和 `TextDecoder` 是经常与 `SubtleCrypto` 一起使用的类，用于实现二进制数据与字符串之间的相互转换
+
