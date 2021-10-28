@@ -1797,3 +1797,25 @@ console.log(crypto.getRandomValues(barArray));  // Error
 - **SHA-2 (Secure Hash Algorithm 2)** 构建于相同耐碰撞单向压缩函数之上的一套散列函数。规范支持其中 3 种：SHA-256、SHA-384  和 SHA-512。生成的消息摘要可以是 256 位（SHA-256）、384 位（SHA-384）或 512 （SHA-512）。这个算法被认为是安全的，广泛用于很多领域和协议，包括 TLS、PGP 和加密货币（如比特币）
 
 `SubtleCrypto.digest()` 方法用于生成消息摘要。要使用的散列算法通过字符串 `"SHA-1"`、`"SHA-256"`、`"SHA-384"` 或 `"SHA-512"` 指定
+
+#### 2.CryptoKey 与算法
+
+`SubtleCrypto` 对象使用 `CryptoKey` 类的实例来生成密钥对。`CryptoKey` 类支持多种加密算法，允许密钥的抽取和使用
+
+- **RSA (Rivest-Shamir-Adleman)**
+- **RSASSA-PKCS1-v1_5**
+- **RSA-PSS**
+- **RSA-OAEP**
+- **ECC (Elliptic-Curve Cryptography)**
+- **ECDSA (Elliptic Curve Digital Signature Algorithm)**
+- **ECDH**
+- **AES**
+- **AES-CTR**
+- **AES-CBC**
+- **AES-GCM**
+- **AES-KW**
+- **HMAC**
+- **KDF**
+- **HKDF**
+- **PBKDF2**
+
