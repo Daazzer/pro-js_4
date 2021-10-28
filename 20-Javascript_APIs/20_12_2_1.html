@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成密码学摘要</title>
+</head>
+<body>
+  <script>
+    (async () => {
+      const textEncoder = new TextEncoder();
+      const message = textEncoder.encode('foo');
+      const messageDigest = await crypto.subtle.digest('SHA-256', message);
+
+      console.log(new Uint32Array(messageDigest));
+      // Uint32Array(8) [1806968364, 2412183400, 1011194873, 876687389, 1882014227, 2696905572, 2287897337, 2934400610]
+      /* 
+      在使用时，二进制的消息摘要会转为十六进制字符串格式。
+      通过将二进制数据按 8 位进行分割，然后再调用 toString(16) 就可以
+      把任何数组缓冲区转为十六进制字符串
+       */
+      const hexDigest = Array.from(new Uint8Array(messageDigest))
+        .map(x => x.toString(16).padStart(2, '0'))
+        .join('');
+      console.log(hexDigest);
+      // 2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae
+    })();
+  </script>
+</body>
+</html>

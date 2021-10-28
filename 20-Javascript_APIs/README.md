@@ -1791,3 +1791,9 @@ console.log(crypto.getRandomValues(barArray));  // Error
 
 通过 `window.crypto.subtle` 访问。因为所有密码学操作都在原始二进制数据上执行，所以 `SubtleCrypto` 的每个方法都要用到 `ArrayBuffer` 和 `ArrayBufferView` 类型，因此 `TextEncoder` 和 `TextDecoder` 是经常与 `SubtleCrypto` 一起使用的类，用于实现二进制数据与字符串之间的相互转换
 
+#### 1.生成密码学摘要
+
+- **SHA-1 (Secure Hash Algorithm 1)** 架构类似 MD5 的散列函数。接收任意大小的输入，生成 160 位消息散列。由于容易受到碰撞攻击，这个算法已经不再安全
+- **SHA-2 (Secure Hash Algorithm 2)** 构建于相同耐碰撞单向压缩函数之上的一套散列函数。规范支持其中 3 种：SHA-256、SHA-384  和 SHA-512。生成的消息摘要可以是 256 位（SHA-256）、384 位（SHA-384）或 512 （SHA-512）。这个算法被认为是安全的，广泛用于很多领域和协议，包括 TLS、PGP 和加密货币（如比特币）
+
+`SubtleCrypto.digest()` 方法用于生成消息摘要。要使用的散列算法通过字符串 `"SHA-1"`、`"SHA-256"`、`"SHA-384"` 或 `"SHA-512"` 指定
