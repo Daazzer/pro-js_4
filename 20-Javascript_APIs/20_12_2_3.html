@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成 CryptoKey</title>
+</head>
+<body>
+  <script>
+    /* 
+    支持 AES-CTR 算法
+    密钥长度 128 位
+    不能从 Crypto 对象中提取
+    可以跟 encrypt() 和 decrypt() 方法一起使用
+     */
+    (async () => {
+      const params = {
+        name: 'AES-CTR',
+        length: 128
+      };
+
+      const keyUsages = ['encrypt', 'decrypt'];
+
+      const key = await crypto.subtle.generateKey(params, false, keyUsages);
+
+      console.log(key);
+      // CryptoKey {type: 'secret', extractable: false, algorithm: {…}, usages: Array(2)}
+    })();
+  </script>
+</body>
+</html>

@@ -1819,3 +1819,81 @@ console.log(crypto.getRandomValues(barArray));  // Error
 - **HKDF**
 - **PBKDF2**
 
+#### 3.生成 CryptoKey
+
+- `SubtleCrypto.generateKey()` 生成随机 `CryptoKey`，返回一个 `Promise`，解决为一个或多个 `CryptoKey` 实例，接收三个参数：指定目标算法的参数对象、一个表示密钥是否可以从 `CryptoKey` 对象中提取出来的布尔值，一个表示这个密钥可以与哪个 `SubtleCrypto` 方法一起使用的字符串数组（`keyUsage`）
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成 CryptoKey</title>
+</head>
+<body>
+  <script>
+    /* 
+    支持 AES-CTR 算法
+    密钥长度 128 位
+    不能从 Crypto 对象中提取
+    可以跟 encrypt() 和 decrypt() 方法一起使用
+     */
+    (async () => {
+      const params = {
+        name: 'AES-CTR',
+        length: 128
+      };
+
+      const keyUsages = ['encrypt', 'decrypt'];
+
+      const key = await crypto.subtle.generateKey(params, false, keyUsages);
+
+      console.log(key);
+      // CryptoKey {type: 'secret', extractable: false, algorithm: {…}, usages: Array(2)}
+    })();
+  </script>
+</body>
+</html>
+```
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生成 CryptoKey</title>
+</head>
+<body>
+  <script>
+    /* 
+    支持 ECDSA 算法
+    使用 P-256 椭圆曲线
+    可以从 CryptoKey 中提取
+    可以跟 sign() 和 verify() 方法一起使用
+     */
+    (async () => {
+      const params = {
+        name: 'ECDSA',
+        namedCurve: 'P-256'
+      };
+
+      const keyUsages = ['sign', 'verify'];
+
+      const { publicKey, privateKey } = await crypto.subtle.generateKey(params, true, keyUsages);
+
+      console.log(publicKey);
+      // CryptoKey {type: 'public', extractable: true, algorithm: {…}, usages: Array(1)}
+      console.log(privateKey);
+      // CryptoKey {type: 'private', extractable: true, algorithm: {…}, usages: Array(1)}
+    })();
+  </script>
+</body>
+</html>
+```
+
