@@ -1909,3 +1909,13 @@ console.log(crypto.getRandomValues(barArray));  // Error
 - `deriveKey()` 返回一个解决为 `CryptoKey` 的 `Promise`
 - `deriveBits()` 返回一个解决为 `ArrayBuffer` 的 `Promise`
 
+#### 6.使用非对称密钥签名和验证消息
+
+- `SubtleCrypto.sign()` 用私钥生成签名
+- `SubtleCrypto.verify()` 用公钥验证签名
+
+#### 7.使用对称密钥加密和解密
+
+- `SubtleCrypto.encrypt()` 使用公钥和对称算法加密
+- `SubtleCrypto.decrypt()` 使用公钥和对称算法解密
+
