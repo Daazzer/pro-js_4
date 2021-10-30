@@ -1919,3 +1919,8 @@ console.log(crypto.getRandomValues(barArray));  // Error
 - `SubtleCrypto.encrypt()` 使用公钥和对称算法加密
 - `SubtleCrypto.decrypt()` 使用公钥和对称算法解密
 
+#### 8.包装和解包密钥
+
+- `SubtleCrypto.wrapKey()` 包装密钥
+- `SubtleCrypto.unwrapKey()` 解包密钥
+
