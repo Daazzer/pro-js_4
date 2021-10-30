@@ -1904,3 +1904,8 @@ console.log(crypto.getRandomValues(barArray));  // Error
 - `exportKey()` 方法指定目标格式（`"raw"`、`"pkcs8"`、`"spki"`、`"jwk"`）就可以取得密钥
 - `importKey()` 导入密钥
 
+#### 5.从主密钥派生密钥
+
+- `deriveKey()` 返回一个解决为 `CryptoKey` 的 `Promise`
+- `deriveBits()` 返回一个解决为 `ArrayBuffer` 的 `Promise`
+
