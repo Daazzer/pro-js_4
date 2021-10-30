@@ -1897,3 +1897,10 @@ console.log(crypto.getRandomValues(barArray));  // Error
 </html>
 ```
 
+
+
+#### 4.导出和导入密钥
+
+- `exportKey()` 方法指定目标格式（`"raw"`、`"pkcs8"`、`"spki"`、`"jwk"`）就可以取得密钥
+- `importKey()` 导入密钥
+
