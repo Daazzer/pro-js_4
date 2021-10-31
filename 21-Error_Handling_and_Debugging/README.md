@@ -179,3 +179,9 @@ image.addEventListener('error', event => {
 image.src = 'donesnotexist.gif';  // 不存在，资源会加载失败
 ```
 
+
+
+### 21.2.4 错误处理策略
+
+应该非常清楚自己的代码在什么情况下会失败，以及失败会导致什么结果。另外，还要有一个系统跟踪这些问题
+
