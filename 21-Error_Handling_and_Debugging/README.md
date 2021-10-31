@@ -23,3 +23,6 @@
 - Chrome 移动版和 Safari 和 iOS 版内置了实用工具
 - Firefox 常用的调试工具：Firebug Lite
 
+## 21.2 错误处理
+
+有一个良好的错误处理策略可以让用户知道到底发生了什么。为此，必须理解各种错误捕获和处理 JavaScript 错误的方式
