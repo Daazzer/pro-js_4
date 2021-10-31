@@ -323,3 +323,9 @@ for (const mod of mods) {
 - `log(message)` 在控制台记录常规消息
 - `warn(message)` 在控制台中记录警告信息
 
+### 21.3.2 理解控制台运行时
+
+浏览器控制台是个读取-求值-打印-循环（REPL，read-eval-print-loop），与页面的 JavaScript 运行时并发
+
+在浏览器的元素选项卡中单击任何一个节点，然后在控制台中使用 `$0` 可以打印出改节点的引用
+
