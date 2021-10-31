@@ -314,3 +314,12 @@ for (const mod of mods) {
 
 以往最常用的调试方法，在相关代码中插入 `alert()`，但是这种方法非常不人性化，现在已经不推荐
 
+### 21.3.1 把消息记录到控制台
+
+浏览器通过 `console` 对象直接把 JavaScript 消息写入控制台，包含如下方法：
+
+- `error(message)` 在控制台中记录错误消息
+- `info(message)` 在控制台中记录信息性内容
+- `log(message)` 在控制台记录常规消息
+- `warn(message)` 在控制台中记录警告信息
+
