@@ -199,7 +199,7 @@ image.src = 'donesnotexist.gif';  // 不存在，资源会加载失败
 
 - [JSHint](https://jshint.com/)
 - [JSLint](https://www.jslint.com/)
-- Google Closure
+- [Google Closure](https://github.com/google/closure-library)
 - [TypeScript](https://www.typescriptlang.org/)
 
 静态代码分析器要求使用类型、函数签名及其他指令来注解 JavaScript，以此描述程序在基本可执行代码之外运行
@@ -229,4 +229,26 @@ function concat(str1, str2, str3) {
   return result;
 }
 ```
+
+
+
+#### 3.数据类型错误
+
+因为 JavaScript 是松散类型的，所以变量和函数参数都不能保证会使用正确的数据类型
+
+```js
+function getQueryString(url) {
+  if (typeof url === 'string') {
+    let pos = url.indexOf('?');
+    if (pos > -1) {
+      return url.substring(pos + 1);
+    }
+  }
+  return '';
+}
+```
+
+
+
+一般来说，原始类型的值应该使用 `typeof` 检测，而对象值应该使用 `instanceof` 检测
 
