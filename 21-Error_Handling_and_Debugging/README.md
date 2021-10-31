@@ -252,3 +252,9 @@ function getQueryString(url) {
 
 一般来说，原始类型的值应该使用 `typeof` 检测，而对象值应该使用 `instanceof` 检测
 
+#### 4.通信错误
+
+- URL 格式错误或发送数据的格式不正确
+
+对于查询字符串，应该都通过 `encodeURIComponent()` 编码
+
