@@ -329,3 +329,19 @@ for (const mod of mods) {
 
 在浏览器的元素选项卡中单击任何一个节点，然后在控制台中使用 `$0` 可以打印出改节点的引用
 
+### 21.3.3 使用 JavaScript 调试器
+
+ECMAScript 5.1 定义了 `debugger` 关键字，用于调用可能存在的调试功能。如果没有相关的功能，这条语句会被简单地跳过
+
+```js
+function pauseExecution() {
+  console.log('Will print before breakpoint');
+  debugger;
+  console.log('Will not print until breakpoint continues');
+}
+```
+
+
+
+在运行时碰到这个关键字时，所有主流浏览器都会打开开发者工具板，并在指定位置显示断点
+
