@@ -118,3 +118,32 @@ class CustomError extends Error {
 }
 ```
 
+
+
+#### 1.何时抛出错误
+
+在出现已知函数无法正确执行的情况时就应该抛出错误
+
+使用适当的信息创建自定义错误可以有效提高代码的可维护性
+
+```js
+function process(values) {
+  if (!(values instanceof Array)) {
+    throw new Error('process(): Argument must be an Array.');
+  }
+  
+  values.sort();
+  
+  for (const value of values) {
+    if (value > 100) {
+      return value;
+    }
+  }
+  
+  return -1;
+}
+```
+
+
+
+良好的错误处理协议可以保证只会发生你自己抛出的错误
