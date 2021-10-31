@@ -77,3 +77,44 @@ ECMA-262 定义了 8 中错误类型
 
 使用 `try/catch` 可以针对特定错误类型实现自定义的错误处理
 
+### 21.2.2 抛出错误
+
+`throw` 操作符可以手动抛出错误，代码立即停止执行，除非 `try/catch` 语句捕获了抛出的值，必须有一个值，但值的类型不限
+
+```js
+throw 12345;
+throw "Hello world!";
+throw true;
+throw { name: "JavaScript" };
+```
+
+
+
+或者使用内置的错误类型来模拟浏览器错误。每种错误类型的构造函数只接受一个参数，就是错误消息
+
+```js
+throw new Error("Something bad happened.");
+// 使用特定类型也一样
+throw new SyntaxError("I don't like your syntax.");
+throw new InternalError("I can't do that, Dave.");
+throw new TypeError("What type of variable do you take me for?");
+throw new RangeError("Sorry, you just don't have the range.");
+throw new EvalError("That doesn't evaluate.");
+throw new URIError("Uri, is that you?");
+throw new ReferenceError("You didn't cite your references properly.");
+```
+
+
+
+自定义错误类型，创建自定义错误类型时需要提供 `name` 和 `message` 属性
+
+```js
+class CustomError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "CustomError";
+    this.message = message;
+  }
+}
+```
+
