@@ -13,8 +13,13 @@
 | 浏览器  | Windows/Linux    | Mac       |
 | ------- | ---------------- | --------- |
 | Chrome  | Ctrl+Shift+J     | Cmd+Opt   |
-| FireFox | Ctrl+Shift+K     | Cmd+Opt+K |
+| Firefox | Ctrl+Shift+K     | Cmd+Opt+K |
 | IE/Edge | F12，然后 Ctrl+2 | 不适用    |
 | Opera   | Ctrl+Shift+I     | Cmd+Opt+I |
 | Safari  | 不适用           | Cmd+Opt+C |
+
+### 21.1.2 移动控制台
+
+- Chrome 移动版和 Safari 和 iOS 版内置了实用工具
+- Firefox 常用的调试工具：Firebug Lite
 
