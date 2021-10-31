@@ -73,3 +73,7 @@ ECMA-262 定义了 8 中错误类型
 - `TypeError` 变量不是预期类型或者访问不存在的方法抛出
 - `URIError` 使用 `encodeURI()` 或 `decodeURI()` 但传入了格式错误的 URI 时发生
 
+#### 3. try/catch 的用法
+
+使用 `try/catch` 可以针对特定错误类型实现自定义的错误处理
+
