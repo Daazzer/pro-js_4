@@ -41,3 +41,20 @@ try {
 
 即使在 `catch` 块中不使用错误对象，也必须为它定义名称。错误对象中暴露的实际信息因浏览器而异，但至少包含保存错误信息的 `messsage` 属性
 
+#### 1.finally 子句
+
+`try/catch` 语句中可选的 `finally` 子句始终运行
+
+```js
+// finally 的存在导致 try 块中的 return 语句被忽略。无论如何函数都会返回 0
+function testFinally() {
+  try {
+    return 2;
+  } catch (error) {
+    return 1;
+  } finally {
+    return 0;
+  }
+}
+```
+
