@@ -58,3 +58,18 @@ function testFinally() {
 }
 ```
 
+
+
+#### 2.错误类型
+
+ECMA-262 定义了 8 中错误类型
+
+- `Error` 基类，其它错误类型继承于此
+- `InternalError` JavaScript 引擎抛出异常时由浏览器抛出
+- `EvalError` `eval()` 函数发生异常时抛出
+- `RangeError` 数值越界时抛出
+- `ReferenceError` 访问不存在的变量导致的
+- `SyntaxError` 语法错误
+- `TypeError` 变量不是预期类型或者访问不存在的方法抛出
+- `URIError` 使用 `encodeURI()` 或 `decodeURI()` 但传入了格式错误的 URI 时发生
+
