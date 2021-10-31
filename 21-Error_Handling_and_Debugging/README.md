@@ -345,3 +345,26 @@ function pauseExecution() {
 
 在运行时碰到这个关键字时，所有主流浏览器都会打开开发者工具板，并在指定位置显示断点
 
+### 21.3.4 在页面中打印消息
+
+在 DOM 中打印消息
+
+```js
+function log(message) {
+  const console = document.getElementById('debuginfo');
+  if (console === null) {
+    console = document.createElement('div');
+    console.id = 'debuginfo';
+    console.style.background = '#dedede';
+    console.style.border = '1px solid silver';
+    console.style.padding = '5px';
+    console.style.width = '400px';
+    console.style.position = 'absolute';
+    console.style.right = '0px';
+    console.style.top = '0px';
+    document.body.appendChild(console);
+  }
+  console.innerHTML = `<p>${message}</p>`;
+}
+```
+
