@@ -204,3 +204,29 @@ image.src = 'donesnotexist.gif';  // 不存在，资源会加载失败
 
 静态代码分析器要求使用类型、函数签名及其他指令来注解 JavaScript，以此描述程序在基本可执行代码之外运行
 
+#### 2.类型转换错误
+
+**类型转换错误** 的主要原因是使用了会自动改变某个值的数据类型的操作符或语言构造。使用等于 `==` 或不等于 `!=` 操作符，以及在 `if`、`for`、`while` 等流程控制语句中使用非布尔值导致
+
+```js
+function concat(str1, str2, str3) {
+	let result = str1 + str2;
+  if (str3) {  // 不要！,就算 str3 为 1 的时候也会通过
+    result += str3;
+  }
+  return result;
+}
+```
+
+改写为
+
+```js
+function concat(str1, str2, str3) {
+  let result = str1 + str2;
+  if (typeof str3 === 'string') {
+    result += str3;
+  }
+  return result;
+}
+```
+
