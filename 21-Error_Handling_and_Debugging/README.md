@@ -381,3 +381,13 @@ console.log = function() {
 
 
 
+### 21.3.6 抛出错误
+
+```js
+function assert(condition, message) {
+  if (!condition) {
+    throw new Error(message);
+  }
+}
+```
+
