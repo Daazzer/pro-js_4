@@ -20,3 +20,4 @@
 - [第 18 章 动画与 Canvas 图形](./18-Animation_and_Graphics_with_Canvas)
 - [第 19 章 表单脚本](./19-Scripting_Forms)
 - [第 20 章 JavaScript API](./20-Javascript_APIs)
+- [第 21 章 错误处理与调试](./21-Error_Handling_and_Debugging)
