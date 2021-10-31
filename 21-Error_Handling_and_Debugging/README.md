@@ -147,3 +147,35 @@ function process(values) {
 
 
 良好的错误处理协议可以保证只会发生你自己抛出的错误
+
+### 21.2.3 error 事件
+
+任何没有被 `try/catch` 语句处理的错误都会在 `window` 上触发 `error` 事件，会传入 3 个参数：错误信息、发生错误的 URL 和行号
+
+另外，`onerror` 事件处理程序需要使用 DOM Level 0 技术来指定，因为它不遵循 DOM Level 2 Events 标准格式：
+
+```js
+window.onerror = (message, url, line) => {
+  console.log(message);
+  return false;  // 阻止浏览器默认报告错误的行为
+};
+```
+
+
+
+图片也支持 `error` 事件。如果图片 `src` 属性中的 URL 没有返回可识别的图片格式，就会触发 `error` 事件
+
+```js
+const image = new Image();
+
+image.addEventListener('load', event => {
+  console.log('Image loaded!');
+});
+
+image.addEventListener('error', event => {
+  console.log('image not loaded!');
+});
+
+image.src = 'donesnotexist.gif';  // 不存在，资源会加载失败
+```
+
