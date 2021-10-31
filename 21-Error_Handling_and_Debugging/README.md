@@ -193,3 +193,14 @@ image.src = 'donesnotexist.gif';  // 不存在，资源会加载失败
 - 数据类型错误
 - 通信错误
 
+#### 1.静态代码分析器
+
+常用的静态代码分析工具
+
+- [JSHint](https://jshint.com/)
+- [JSLint](https://www.jslint.com/)
+- Google Closure
+- [TypeScript](https://www.typescriptlang.org/)
+
+静态代码分析器要求使用类型、函数签名及其他指令来注解 JavaScript，以此描述程序在基本可执行代码之外运行
+
