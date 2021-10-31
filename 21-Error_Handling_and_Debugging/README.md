@@ -368,3 +368,16 @@ function log(message) {
 }
 ```
 
+
+
+### 21.3.5 补充控制台方法
+
+```js
+console.log = function() {
+  const args = Array.prototype.slice.call(arguments);
+  console.log(args.join(', '));
+}
+```
+
+
+
