@@ -285,3 +285,26 @@ for (const mod of mods) {
 }
 ```
 
+
+
+### 21.2.7 把错误记录到服务器中
+
+对于复杂的 Web 应用程序，最好把 JavaScript 错误发送回服务器记录下来
+
+```js
+function logError(sev, msg) {
+  const img = new Image(),
+        encodedSev = encodeURIComponent(sev),
+        encodedMsg = encodedURIComponent(msg);
+  img.src = `log.php?sev=${encodedSev}&msg=${encodedMsg}`;  // 不受跨域影响
+}
+
+for (const mod of mods) {
+  try {
+    mod.init();
+  } catch (ex) {
+    logError('nonfatal', `Module init failed: ${ex.message}`);
+  }
+}
+```
+
