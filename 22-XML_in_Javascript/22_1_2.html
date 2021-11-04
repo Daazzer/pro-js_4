@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DOMParser 类型</title>
+</head>
+<body>
+  <script>
+    const parser = new DOMParser();
+    const xmldom = parser.parseFromString('<root><child /></root>', 'text/xml');
+
+    console.log(xmldom.documentElement.tagName);  // "root"
+    console.log(xmldom.documentElement.firstChild.tagName);  // "child"
+
+    const anotherChild = xmldom.createElement('child');
+    xmldom.documentElement.appendChild(anotherChild);
+
+    const children = xmldom.getElementsByTagName('child');
+    console.log(children.length);  // 2
+  </script>
+</body>
+</html>
