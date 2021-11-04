@@ -89,3 +89,32 @@ const hasXmlDom = document.implementation.hasFeature('XML', '2.0');
 
 `DOMParser` 不能把 HTML 解析为 HTML 文档
 
+### 22.1.3 XMLSerializer 类型
+
+与 `DOMParser` 相对，`XMLSerializer` 类型用于把 DOM 文档序列化为 XML 字符串
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XMLSerializer 类型</title>
+</head>
+<body>
+  <script>
+    const parser = new DOMParser();
+    const xmldom = parser.parseFromString('<root><child /></root>', 'text/xml');
+    const serializer = new XMLSerializer();
+    const xml = serializer.serializeToString(xmldom);
+    console.log(xml);  // "<root><child/></root>"
+  </script>
+</body>
+</html>
+```
+
+
+
+> **注意** 如果给 `serializeToString()` 传入非 DOM 对象，就会导致抛出错误
+
