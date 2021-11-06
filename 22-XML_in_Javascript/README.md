@@ -203,3 +203,17 @@ if (result !== null) {
 }
 ```
 
+
+
+### 22.2.5 命名空间支持
+
+对于使用命名空间的 XML 文档，必须告诉 `XPathEvaluator` 命名空间信息，才能进行正确求值
+
+```js
+const nsresolver = xmldom.createNSResolver(xmldom.documentElement);
+
+const result = xmldom.evaluate("wrox:book/wrox:author", xmldom.documentElement, nsresolver, XPathResult.ORDERED_NODE_SHAPSHOT_TYPE, null);
+
+console.log(result.snapshotLength);
+```
+
