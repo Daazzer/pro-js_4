@@ -174,3 +174,32 @@ const result = xmldom.evaluate('employee/name', xmldom.documentElement, null, XP
 console.log(result.booleanValue)
 ```
 
+
+
+### 22.2.4 默认类型结果
+
+可以使用 `XPathResult.ANY_TYPE` 类型让求值自动返回默认类型结果。通常，默认类型结果是布尔值、数值、字符串和无序节点迭代器
+
+```js
+const result = xmldom.evaluate('employee/name', xmldom.documentElement, null, XPathResult.ANY_TYPE, null);
+
+if (result !== null) {
+  switch(result.resultType) {
+      case XPathResult.STRING_TYPE;
+      	// 处理字符串类型
+      	break;
+      case XPathResult.NUMBER_TYPE;
+      	// 处理数值类型
+      	break;
+    	case XPathResult.BOOLEAN_TYPE;
+      	// 处理布尔值类型
+      	break;
+      case XPathResult.UNORDERED_NODE_ITERATOR_TYPE;
+      	// 处理无序节点迭代器
+      	break;
+    	default:
+      	// 处理其他可能的结果类型
+  }
+}
+```
+
