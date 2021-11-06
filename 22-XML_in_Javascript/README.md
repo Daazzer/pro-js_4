@@ -148,3 +148,17 @@ if (result !== null) {
 }
 ```
 
+
+
+### 22.2.2 单个节点结果
+
+`XPathResult.FIRST_ORDERED_NODE_TYPE` 结果类型返回匹配的第一个节点，可以通过结果的 `singleNodeValue` 属性获取
+
+```js
+const result = xmldom.evaluate('employee/name', xmldom.documentElement, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+
+if (result !== null) {
+  console.log(result.singleNodeValue.tagName);
+}
+```
+
