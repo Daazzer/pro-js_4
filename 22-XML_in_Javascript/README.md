@@ -122,3 +122,29 @@ const hasXmlDom = document.implementation.hasFeature('XML', '2.0');
 
 XPath 是为了在 DOM 文档中定位特定节点而创建的
 
+### 22.2.1 DOM Level 3 XPath
+
+确定浏览器是否支持 DOM Level 3 XPath
+
+```js
+const supportsXPath = document.implementation.hasFeature("XPath", "3.0");
+```
+
+
+
+这个规范最重要的两个类型，`XPathEvaluator` 和 `XPathResult`
+
+`Document` 类型通常是通过 `XPathEvaluator` 接口实现的
+
+```js
+const result = xmldom.evaluate('employee/name', xmldom.documentElement, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+
+if (result !== null) {
+  const element = result.iterateNext();
+  while(element) {
+    console.log(element.tagName);
+    node = result.iterateNext();
+  }
+}
+```
+
