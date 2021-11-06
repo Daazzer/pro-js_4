@@ -37,3 +37,35 @@ JSON 中的对象必须用双引号把属性名包围起来
 
 同一个对象不能同时出现两个相同的属性
 
+### 23.1.3 数组
+
+数组在 JSON 中使用 JavaScript 的数组字面量形式表示
+
+```json
+[25, "hi", true]
+```
+
+复杂数组
+
+```json
+[
+  {
+    "title": "Professional JavaScript",
+    "authors": [
+      "Nicholas C. Zakas",
+      "Matt Frisbie"
+    ],
+    "edition": 4,
+    "year": 2017
+  },
+  {
+    "title": "Professional JavaScript",
+    "authors": [
+      "Nicholas C. Zakas"
+    ],
+    "edition": 3,
+    "year": 2011
+  }
+]
+```
+
