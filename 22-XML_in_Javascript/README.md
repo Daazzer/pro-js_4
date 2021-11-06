@@ -118,3 +118,7 @@ const hasXmlDom = document.implementation.hasFeature('XML', '2.0');
 
 > **注意** 如果给 `serializeToString()` 传入非 DOM 对象，就会导致抛出错误
 
+## 22.2 浏览器对 XPath 的支持
+
+XPath 是为了在 DOM 文档中定位特定节点而创建的
+
