@@ -248,3 +248,23 @@ processor.setParameter(null, "message", "Hello World!");
 const result = processor.transformToDocument(xmldom);
 ```
 
+
+
+### 22.3.3 重置处理器
+
+每个 `XLSTProcessor` 实例都可以重用与多个转换，只是要使用不同的 XSLT 样式表。
+
+`reset()` 方法可以删除所有参数和样式表。
+
+```js
+const processor = new XLSTProcessor();
+processor.importStylesheet(xsltdom);
+
+// 执行某些转换
+
+processor.reset();
+processor.importStylesheet(xsltdom2);
+
+// 再执行一些转换
+```
+
