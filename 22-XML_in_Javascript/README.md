@@ -223,3 +223,15 @@ console.log(result.snapshotLength);
 
 可扩展样式表语言转换（XSLT，Extensible Stylesheet Language Transformations）是与 XML 相伴的一种技术，可以利用 XPath 将一种文档表示转换为另一种文档表示。与 XML 和 XPath 不同，XSLT 没有与之相关的正式 API，正式的 DOM 中也没有涵盖它。因此浏览器都以自己的方式实现 XSLT。率先在 JavaScript 中支持 XSLT 的是 IE
 
+### 22.3.1 XLSTProcessor 类型
+
+使用 `XSLTProcessor` 类型，开发者可以使用 XSLT 转换 XML 文档
+
+```js
+const processor = new XSLTProcessor();
+processor.importStylesheet(xlstdom);
+
+const result = processor.transformToDocument(xmldom);
+console.log(serializeXml(result));
+```
+
