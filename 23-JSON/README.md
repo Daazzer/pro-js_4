@@ -20,3 +20,20 @@ JSON 没有变量、函数或对象实例的概念。JSON 的所有记号都只�
 
 JavaScript 字符串与 JSON 字符串的区别主要是，JSON 字符串必须用双引号
 
+### 23.1.2 对象
+
+JSON 中的对象必须用双引号把属性名包围起来
+
+```json
+{
+	"name": "Nicholas",
+  "age": 29,
+  "school": {
+    "name": "Merrimack College",
+    "location": "North Andover, MA"
+  }
+}
+```
+
+同一个对象不能同时出现两个相同的属性
+
