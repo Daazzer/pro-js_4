@@ -162,3 +162,15 @@ if (result !== null) {
 }
 ```
 
+
+
+### 22.2.3 简单类型结果
+
+使用布尔值、数值和字符串 `XPathResult` 类型，可以根据 XPath 获取简单、非节点数据类型。这些结果类型返回的值需要分别使用 `booleanValue`、`numberValue` 和 `stringValue` 属性获取。对于布尔值类型，如果至少有一个节点匹配 XPath 表达式，`booleanValue` 就是 `true0`；否则，`booleanValue` 为 `false`
+
+```js
+const result = xmldom.evaluate('employee/name', xmldom.documentElement, null, XPathResult.BOOLEAN_TYPE, null);
+
+console.log(result.booleanValue)
+```
+
