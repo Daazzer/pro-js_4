@@ -235,3 +235,16 @@ const result = processor.transformToDocument(xmldom);
 console.log(serializeXml(result));
 ```
 
+
+
+### 22.3.2 使用参数
+
+`XLSTProcessor` 还允许使用 `setParameter()` 方法设置 XLST 参数。改方法接受三个参数：命名空间 URI、参数本地名称和要设置的值
+
+```js
+const processor = new XSLTProcessor();
+processor.importStylesheet(xsltdom);
+processor.setParameter(null, "message", "Hello World!");
+const result = processor.transformToDocument(xmldom);
+```
+
