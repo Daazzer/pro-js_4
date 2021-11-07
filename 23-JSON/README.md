@@ -214,3 +214,40 @@ JSON 对象有两个静态方法：
 </html>
 ```
 
+
+
+### 23.2.3 选项解析
+
+`JSON.parse()` 可以接受第二个参数：为一个函数，这个函数会针对每个键/值对调用一次。被称为**还原函数**（reviver），如果还原函数返回 `undefined`，则结果中就会删除相应的的键
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>解析选项</title>
+</head>
+<body>
+  <script>
+    const book = {
+      title: 'Professional JavaScript',
+      authors: [
+        'Nicholas C. Zakas',
+        'Matt Frisbie'
+      ],
+      edition: 4,
+      year: 2017,
+      releaseDate: new Date(2017, 11, 1)
+    };
+    const jsonText = JSON.stringify(book);
+    const bookCopy = JSON.parse(jsonText, (key, value) => key == 'releaseDate' ? new Date(value) : value);
+
+    console.log(bookCopy);  // {title: 'Professional JavaScript', authors: Array(2), edition: 4, year: 2017, releaseDate: Fri Dec 01 2017 00:00:00 GMT+0800 (中国标准时间)}
+    console.log(bookCopy.releaseDate.getFullYear());  // 2017
+  </script>
+</body>
+</html>
+```
+

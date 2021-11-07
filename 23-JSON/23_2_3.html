@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>toJSON() 方法</title>
+  <title>解析选项</title>
 </head>
 <body>
   <script>
@@ -16,13 +16,13 @@
       ],
       edition: 4,
       year: 2017,
-      toJSON() {
-        return this.title;
-      }
+      releaseDate: new Date(2017, 11, 1)
     };
     const jsonText = JSON.stringify(book);
+    const bookCopy = JSON.parse(jsonText, (key, value) => key == 'releaseDate' ? new Date(value) : value);
 
-    console.log(jsonText);  // "Professional JavaScript"
+    console.log(bookCopy);  // {title: 'Professional JavaScript', authors: Array(2), edition: 4, year: 2017, releaseDate: Fri Dec 01 2017 00:00:00 GMT+0800 (中国标准时间)}
+    console.log(bookCopy.releaseDate.getFullYear());  // 2017
   </script>
 </body>
 </html>
