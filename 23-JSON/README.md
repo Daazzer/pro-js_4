@@ -74,3 +74,11 @@ JSON 中的对象必须用双引号把属性名包围起来
 ## 23.2 解析与序列化
 
 JSON 可以直接被解析成可用的 JavaScript 对象。
+
+### 23.2.1 对象
+
+JSON 对象有两个静态方法：
+
+- `stringify()` 将 JavaScript 序列化为 JSON 字符串
+- `parse()` 将 JSON 解析为原生 JavaScript 值
+
