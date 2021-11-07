@@ -82,3 +82,46 @@ JSON 对象有两个静态方法：
 - `stringify()` 将 JavaScript 序列化为 JSON 字符串
 - `parse()` 将 JSON 解析为原生 JavaScript 值
 
+### 23.2.2 序列化选项
+
+`JSON.stringify()` 除了接收一个对象参数，还可以接收两个参数。过滤器，可以是数组或函数；用于缩进结果 JSON 字符串的选项
+
+#### 1.过滤结果
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>序列化选项</title>
+</head>
+<body>
+  <script>
+    const book = {
+      title: 'Professional JavaScript',
+      authors: [
+        'Nicholas C. Zakas',
+        'Matt Frisbie'
+      ],
+      edition: 4,
+      year: 2017
+    };
+    const jsonText = JSON.stringify(book, ['title', 'edition']);
+
+    console.log(jsonText);  // {"title":"Professional JavaScript","edition":4}
+    const jsonText1 = JSON.stringify(book, (key, value) => {
+      switch(key) {
+        case 'authors': return value.join(',');
+        case 'year': return 5000;
+        case 'edition': return undefined;  // 返回 undefined 会把属性删除
+        default: return value;
+      }
+    });
+    console.log(jsonText1);  // {"title":"Professional JavaScript","authors":"Nicholas C. Zakas,Matt Frisbie","year":5000}
+  </script>
+</body>
+</html>
+```
+

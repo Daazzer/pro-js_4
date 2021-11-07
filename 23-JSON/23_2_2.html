@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>序列化选项</title>
+</head>
+<body>
+  <script>
+    const book = {
+      title: 'Professional JavaScript',
+      authors: [
+        'Nicholas C. Zakas',
+        'Matt Frisbie'
+      ],
+      edition: 4,
+      year: 2017
+    };
+    const jsonText = JSON.stringify(book, ['title', 'edition']);
+
+    console.log(jsonText);  // {"title":"Professional JavaScript","edition":4}
+    const jsonText1 = JSON.stringify(book, (key, value) => {
+      switch(key) {
+        case 'authors': return value.join(',');
+        case 'year': return 5000;
+        case 'edition': return undefined;  // 返回 undefined 会把属性删除
+        default: return value;
+      }
+    });
+    console.log(jsonText1);  // {"title":"Professional JavaScript","authors":"Nicholas C. Zakas,Matt Frisbie","year":5000}
+  </script>
+</body>
+</html>
