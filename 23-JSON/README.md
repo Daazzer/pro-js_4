@@ -170,3 +170,47 @@ JSON 对象有两个静态方法：
 </html>
 ```
 
+
+
+#### 3.toJSON() 方法
+
+可以在要序列化的对象中添加 `toJSON()` 方法，序列化时会基于这个方法返回适当的 JSON 表示
+
+`toJSON()` 方法可以与过滤函数一起用
+
+在把对象传给 `JSON.stringify()` 时会执行如下步骤
+
+1. 如果可以获取实际的值，则调用 `toJSON()` 方法获取实际的值，否则使用默认的序列化
+2. 如果提供了第二个参数，则应用过滤函数的值就是第 1 步返回的值
+3. 第 2 步返回的每个值都会相应地进行序列化
+4. 如果提供了第 3 个参数，则相应地进行缩进
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>toJSON() 方法</title>
+</head>
+<body>
+  <script>
+    const book = {
+      title: 'Professional JavaScript',
+      authors: [
+        'Nicholas C. Zakas',
+        'Matt Frisbie'
+      ],
+      edition: 4,
+      year: 2017,
+      toJSON: () => 'aaa'
+    };
+    const jsonText = JSON.stringify(book);
+
+    console.log(jsonText);  // "Professional JavaScript"
+  </script>
+</body>
+</html>
+```
+
