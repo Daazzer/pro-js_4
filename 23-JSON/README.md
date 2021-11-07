@@ -95,7 +95,7 @@ JSON 对象有两个静态方法：
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>序列化选项</title>
+  <title>过滤结果</title>
 </head>
 <body>
   <script>
@@ -120,6 +120,51 @@ JSON 对象有两个静态方法：
       }
     });
     console.log(jsonText1);  // {"title":"Professional JavaScript","authors":"Nicholas C. Zakas,Matt Frisbie","year":5000}
+  </script>
+</body>
+</html>
+```
+
+
+
+#### 2.字符串缩进
+
+`JSON.stringify()` 第三个参数控制缩进和空格
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>字符串缩进</title>
+</head>
+<body>
+  <script>
+    const book = {
+      title: 'Professional JavaScript',
+      authors: [
+        'Nicholas C. Zakas',
+        'Matt Frisbie'
+      ],
+      edition: 4,
+      year: 2017
+    };
+    const jsonText = JSON.stringify(book, null, 4);
+
+    console.log(jsonText);
+    /* 
+    {
+        "title": "Professional JavaScript",
+        "authors": [
+            "Nicholas C. Zakas",
+            "Matt Frisbie"
+        ],
+        "edition": 4,
+        "year": 2017
+    }
+     */
   </script>
 </body>
 </html>
