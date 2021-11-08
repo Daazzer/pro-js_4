@@ -8,3 +8,11 @@ XHR 对象 API 被普遍认为比较难用，而 Fetch API 后台成了替代工
 
 > **注意** 在实际开发中，应该尽可能使用 `fetch()`
 
+## 24.1 XMLHttpRequest 对象
+
+所有现代浏览器通过 `XMLHttpRequest` 构造函数原生支持 XHR 对象：
+
+```js
+const xhr = new XMLHttpRequest();
+```
+
