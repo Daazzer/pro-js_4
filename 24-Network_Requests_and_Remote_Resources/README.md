@@ -81,3 +81,49 @@ xhr.send(null);
 
 与其它事件处理器不同，`onreadystatechange` 事件处理程序不会接收到 `event` 对象。必须要用 XHR 对象本身来确定接下来做什么
 
+### 24.1.2 HTTP 头部
+
+默认情况下，XHR 请求会发送以下头部字段
+
+- `Accept` 浏览器可以处理的内容类型
+- `Accept-Charset` 浏览器可以显示的字符集
+- `Accept-Encoding` 浏览器可以处理的压缩编码类型
+- `Accept-Language` 浏览器使用的语言
+- `Connection` 浏览器与服务器的连接类型
+- `Cookie` 页面中设置的 Cookie
+- `Host` 发送请求的页面所在的域
+- `Referer` 发送请求的页面的 URI。注意，这个字段在 HTTP 规范中就拼错了，所以考虑到兼容性也必须将错就错。（正确的拼写应该是 Referrer）。
+- `User-Agent` 浏览器的用户代理字符串
+
+设置请求头的方法：
+
+- `setRequestHeader()` 接收两个参数：头部字段的名称和值
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) {
+    if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+      console.log(xhr.responseText);
+    } else {
+      console.log('Request was unsuccessful ' + xhr.status);
+    }
+  }
+};
+xhr.open('get', 'example.php', true);
+xhr.setRequestHeader('MyHeader', 'MyValue');
+xhr.send(null);
+```
+
+
+
+获取响应头方法：
+
+- `getResponseHeader()` 接收一个参数：头部的名称
+- `getAllResponseHeaders()` 返回包含所有响应头部字符串
+
+```js
+const myHeader = xhr.getResponseHeader('MyHeader');
+const allHeaders = xhr.getAllResponseHeaders();
+```
+
