@@ -127,3 +127,23 @@ const myHeader = xhr.getResponseHeader('MyHeader');
 const allHeaders = xhr.getAllResponseHeaders();
 ```
 
+
+
+### 24.1.3 GET 请求
+
+查询字符串中的每个名和值都必须使用 `encodeURIComponet()` 编码
+
+```js
+xhr.open('get', 'example.php?name1=value1&name2=value2', true);
+```
+
+可以使用以下函数将查询字符串参数添加到现有的 URL 末尾
+
+```js
+function addURLParam(url, name, value) {
+  url += (url.indexOf('?') == -1) ? '?' : '&';
+  url += encodeURIComponent(name) + '=' + encodeURIComponet(value);
+  return url;
+}
+```
+
