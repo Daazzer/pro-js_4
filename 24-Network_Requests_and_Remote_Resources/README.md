@@ -147,3 +147,56 @@ function addURLParam(url, name, value) {
 }
 ```
 
+
+
+### 24.1.4 POST 请求
+
+每个 POST 请求都应该在请求体中携带提交的数据，而 GET 请求则不然
+
+```js
+xhr.open('post', 'example.php', true);
+```
+
+
+
+可以使用 XHR 模拟表单提交。
+
+1. 把 `Content-Type` 头部设置为 `"application/x-www-formurlencoded"`
+2. 创建对应格式的字符串
+
+
+
+```js
+function submitData() {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+        console.log(xhr.responseText);
+      } else {
+        console.log('Request was unsuccessful ' + xhr.status);
+      }
+    }
+  };
+
+  xhr.open('post', 'postexample.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  const form = document.getElementById('user-info');
+  xhr.send(serialize(form));
+}
+```
+
+
+
+postexample.php 随后可以通过 `$_POST` 取得 POST 的数据
+
+```php
+<?php
+  header("Content-Type: text/plain");
+	echo <<<EOF
+Name: {$_POST['user-name']}
+Email: {$_POST['user-email']}
+EOF;
+?>
+```
+
