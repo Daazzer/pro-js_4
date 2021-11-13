@@ -200,3 +200,51 @@ EOF;
 ?>
 ```
 
+
+
+### 24.1.5 XMLHttpRequest Level 2
+
+#### 1.FormData 类型
+
+方法
+
+- `append()` 接收两个参数：键和值，相当于表单字段名和该字段的值
+
+```js
+const data = new FormData();
+data.append('name', 'Nicholas');
+```
+
+
+
+也可以将表单中的数据作为键/值对填充进去
+
+```js
+const data = new FormData(document.forms[0]);
+```
+
+
+
+直接传给 XHR 对象的 `send()` 方法
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) {
+    if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+      console.log(xhr.responseText);
+    } else {
+      console.log('Request was unsuccessful ' + xhr.status);
+    }
+  }
+};
+
+xhr.open('post', 'postexample.php', true);
+const form = document.getElementById('user-info');
+xhr.send(new FormData(form));
+```
+
+
+
+使用 `FormData` 的时候不需要另外设置请求头了。XHR 对象能够识别作为 `FormData` 实例的传入的数据并自动配置相应的头部
+
