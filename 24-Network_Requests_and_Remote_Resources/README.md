@@ -248,3 +248,31 @@ xhr.send(new FormData(form));
 
 使用 `FormData` 的时候不需要另外设置请求头了。XHR 对象能够识别作为 `FormData` 实例的传入的数据并自动配置相应的头部
 
+#### 2.超时
+
+XHR 对象的 `timeout` 属性，用于表示发送请求后等待多少毫秒，如果响应不成功就中断请求。此时会触发 `timeout` 事件
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4) {
+    try {
+      if (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) {
+        console.log(xhr.responseText);
+      } else {
+        console.log('Request was unsuccessful ' + xhr.status);
+      }
+    } catch(ex) {
+			// 假设由 ontimeout 处理
+    }
+  }
+};
+
+xhr.open('get', 'timeout.php', true);
+xhr.timeout = 1000;  // 设置 1 秒超时
+xhr.ontimeout = function() {
+  console.log('Request did not return in a second.');
+};
+xhr.send(null);
+```
+
