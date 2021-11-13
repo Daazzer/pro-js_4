@@ -276,3 +276,17 @@ xhr.ontimeout = function() {
 xhr.send(null);
 ```
 
+
+
+#### 3.overrideMimeType() 方法
+
+`overrideMimeType()` 方法用于重写 XHR 响应的 MIME 类型
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.open('get', 'text.php', true);
+xhr.overrideMimeType('text/xml');
+xhr.send(null);
+```
+
+必须在调用 `send()` 之前调用 `overrideMimeType()`
