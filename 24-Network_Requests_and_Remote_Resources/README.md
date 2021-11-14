@@ -353,3 +353,42 @@ xhr.send(null);
 
 必须在调用 `open()` 之前添加 `onprogress` 事件处理程序
 
+## 24.3 跨源资源共享
+
+默认情况下，XHR 只能访问与发起请求的页面在同一个域内的资源
+
+跨源资源共享（CORS，Cross-Origin Resource Sharing）定义了浏览器与服务器如何实现跨源通信。CORS 背后的基本思路就是使用自定义的 HTTP 头部允许浏览器和服务器相互了解，以确实请求或响应应该成功还是失败
+
+简单的请求，在发送时都会有一个额外的头部叫 `Origin` 表示发送请求的页面的源（协议、域名和端口）
+
+如果服务器决定响应请求，那么应该发送 `Access-Control-Allow-Origin` 头部，包含相同的源或者如果资源是公开的，那么包含 `"*"`
+
+```http
+Access-Control-Allow-Origin: http://www.nczonline.net
+```
+
+
+
+要向不同域的源发送请求，可以使用标准 XHR 对象并給 `open()` 方法传入一个绝对 URL，比如：
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.onload = function() {
+  if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+    console.log(xhr.responseText);
+  } else {
+    console.log('Request was unsuccessful: ' + xhr.status);
+  }
+};
+xhr.open('get', 'http://www.somewhere-else.com/page/', true);
+xhr.send(null);
+```
+
+
+
+出于安全考虑，跨域 XHR 对象也施加了一些额外限制
+
+- 不能使用 `setRequestHeader()` 设置自定义头部
+- 不能发送和接收 cookie
+- `getAllResponseHeaders()` 方法始终返回空字符串
+
