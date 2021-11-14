@@ -392,3 +392,15 @@ xhr.send(null);
 - 不能发送和接收 cookie
 - `getAllResponseHeaders()` 方法始终返回空字符串
 
+### 24.3.1 预检请求
+
+CORS 通过一种叫**预检请求**（preflighted request）的服务器验证机制，允许使用自定义头部、除 GET 和 POST 之外的方法，以及不同请求体内容类型。在要发送涉及上述某种高级选项的请求时，会先向服务器发送一个“预检”请求。这个请求使用 OPTIONS 方法发送并包含以下头部
+
+- `Origin` 与简单请求相同
+- `Access-Control-Request-Method` 请求希望使用的方法
+- `Access-Control-Request-Headers` （可选）要使用的逗号分隔的自定义头部列表
+
+在这个请求发送后，服务器可以确定是否允许这种类型的请求。
+
+预检请求返回后，结果会按向应指定的时间缓存一段时间。换句话说，只有第一次发送这种类型的请求时才会多发送一次额外的 HTTP 请求
+
