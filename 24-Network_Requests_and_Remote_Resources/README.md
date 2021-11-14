@@ -320,3 +320,36 @@ xhr.open('get', 'altevents.php', true);
 xhr.send(null);
 ```
 
+
+
+### 24.2.2 progress 事件
+
+`progress` 事件处理程序的 `event` 对象
+
+- `target` 是 XHR 对象 
+- `lengthComputable` 一个布尔值，表示进度信息是否可用
+- `position` 是接收到的字节数
+- `totalSize` 是响应的 `Content-Length` 头部定义的总字节数
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.onload = function() {
+  if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+    console.log(xhr.responseText);
+  } else {
+    console.log('Request was unsuccessful: ' + xhr.status);
+  }
+};
+xhr.onprogress = function(event) {
+  const divStatus = document.getElementById('status');
+  if (event.lengthComputable) {
+    divStatus.innerHTML = `Received ${event.position} of ${event.totalSize} bytes`;
+  }
+};
+
+xhr.open('get', 'altevents.php', true);
+xhr.send(null);
+```
+
+必须在调用 `open()` 之前添加 `onprogress` 事件处理程序
+
