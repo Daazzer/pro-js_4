@@ -302,3 +302,21 @@ xhr.send(null);
 - `load` 在成功接收完响应时触发
 - `loadend` 在通信完成时，且在 `error`、`abort` 或 `load` 之后触发
 
+### 24.2.1 load 事件
+
+`load` 事件用于替代 `readystatechange` 事件，`load` 事件会传入一个 `event` 对象，其 `target` 为 XHR 实例，为了兼容性，还是访问 XHR 实例比较靠谱
+
+```js
+const xhr = new XMLHttpRequest();
+xhr.onload = function() {
+  if ((xhr.status >= 200 && xhr.status < 300) || xhr.status === 304) {
+    console.log(xhr.responseText);
+  } else {
+    console.log('Request was unsuccessful: ' + xhr.status);
+  }
+};
+
+xhr.open('get', 'altevents.php', true);
+xhr.send(null);
+```
+
