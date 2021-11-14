@@ -433,3 +433,38 @@ img.src = 'http://www.example.com/test?name=Nicholas';
 ```
 
 缺点是只能发送 GET 请求和无法获取服务器响应的内容
+
+### 24.4.2 JSONP
+
+JSONP 是 “JSON with padding” 的简写
+
+后端返回的数据
+
+```js
+callback({ "name": "Nicholas" });
+```
+
+JSONP 格式包含两个部分：回调和数据。回调是在页面接收到响应之后应该调用的函数，通常回调的名称是通过请求来动态指定的。而数据就是作为参数传给回调函数的 JSON 数据
+
+```tex
+http://freegeoip.net/json/?callback=handleResponse
+```
+
+JSONP 调用是通过动态创建 `<script>` 元素并为 `src` 属性指定跨域 URL 实现的。
+
+```js
+function handleResponse(response) {
+  console.log(`You're at IP address ${response.ip}, which is in ${response.city}, ${response.region_name}`);
+}
+const script = document.createElement('script');
+script.src = 'http://freegeoip.net/json/?callback=handleResponse';
+document.body.insertBefore(script, document.body.firstChild);
+```
+
+
+
+JSONP 缺点：
+
+- 如果请求的域不可信，则可能在响应中加入恶意内容。
+- 不好确定 JSONP 请求是否失败。虽然 HTML5 规定了 `<script>` 元素的 `onerror` 事件，但是还没被任何浏览器实现
+
