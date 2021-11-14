@@ -290,3 +290,15 @@ xhr.send(null);
 ```
 
 必须在调用 `send()` 之前调用 `overrideMimeType()`
+
+## 24.2 进度事件
+
+6 个进度事件 API：
+
+- `loadstart` 在接收到响应的第一个字节时触发
+- `progress` 在接收响应期间反复触发
+- `error` 在请求出错时触发
+- `abort` 在调用 `abort()` 终止连接时触发
+- `load` 在成功接收完响应时触发
+- `loadend` 在通信完成时，且在 `error`、`abort` 或 `load` 之后触发
+
