@@ -417,3 +417,19 @@ Access-Control-Allow-Credentials: true
 ## 24.4 替代性跨源技术
 
 不需要修改服务器的跨源
+
+### 24.4.1 图片探测
+
+利用 `<img>` 标签实现跨域通信。可以动态创建图片，然后通过它们的 `onload` 和 `onerror` 事件处理程序得知何时接收到响应
+
+通过监听 `onload` 和 `onerror` 事件知道什么时候能接收到响应
+
+```js
+const img = new Image();
+img.onload = img.onerror = function() {
+  console.log('Done!');
+};
+img.src = 'http://www.example.com/test?name=Nicholas';
+```
+
+缺点是只能发送 GET 请求和无法获取服务器响应的内容
