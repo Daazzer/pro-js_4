@@ -404,3 +404,13 @@ CORS 通过一种叫**预检请求**（preflighted request）的服务器验证�
 
 预检请求返回后，结果会按向应指定的时间缓存一段时间。换句话说，只有第一次发送这种类型的请求时才会多发送一次额外的 HTTP 请求
 
+### 24.3.2 凭据请求
+
+默认情况，跨源请求不提供凭据（cookie、HTTP认证和客户端 SSL 证书）。可以通过将 `withCredentials` 属性设置为 `true` 来表明请求会发送凭据。如果服务器允许带凭据的请求，那么可以在响应中包含
+
+```http
+Access-Control-Allow-Credentials: true
+```
+
+如果发送了凭据请求而服务器返回的响应中没有这个头部，则浏览器不会把响应交给 JavaScript （`responseText` 是空字符串，`status` 是 `0`，`onerror()` 被调用）
+
