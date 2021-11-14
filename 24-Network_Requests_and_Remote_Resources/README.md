@@ -414,3 +414,6 @@ Access-Control-Allow-Credentials: true
 
 如果发送了凭据请求而服务器返回的响应中没有这个头部，则浏览器不会把响应交给 JavaScript （`responseText` 是空字符串，`status` 是 `0`，`onerror()` 被调用）
 
+## 24.4 替代性跨源技术
+
+不需要修改服务器的跨源
