@@ -493,3 +493,14 @@ fetch('bar.txt').then(response => console.log(response));
 // Response { type: "basic", url: ... }
 ```
 
+#### 2.读取响应
+
+读取响应最简单的方式就是取得纯文本格式的内容，使用 `text()` 方法
+
+```js
+fetch('bar.txt')
+	.then(response => response.text())
+	.then(data => console.log(data));
+// bar.txt 的内容
+```
+
