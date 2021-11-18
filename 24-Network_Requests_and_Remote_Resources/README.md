@@ -468,3 +468,7 @@ JSONP 缺点：
 - 如果请求的域不可信，则可能在响应中加入恶意内容。
 - 不好确定 JSONP 请求是否失败。虽然 HTML5 规定了 `<script>` 元素的 `onerror` 事件，但是还没被任何浏览器实现
 
+## 24.5 Fetch API
+
+Fetch API 能够执行 `XMLHttpRequest` 对象的所有任务，但更容易使用，接口也更现代化，能够在 Web 工作线程等现代 Web 工具使用
+
