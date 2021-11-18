@@ -504,3 +504,69 @@ fetch('bar.txt')
 // bar.txt 的内容
 ```
 
+#### 3.处理状态码和请求失败
+
+Fetch API 支持通过 `Response` 的 `status` 和 `statusText` 属性检查响应状态。成功通常 `status` 为 200
+
+```js
+fetch('bar.txt').then(response => {
+  console.log(response.status);  // 200
+  console.log(response.statusText);  // OK
+});
+```
+
+请求不存在的资源
+
+```js
+fetch('/does-not-exist').then(response => {
+  console.log(response.status);  // 404
+  console.log(response.statusText);  // Not Found
+});
+```
+
+服务器错误
+
+```js
+fetch('/throw-server-error').then(response => {
+  console.log(response.status);  // 500
+  console.log(response.statusText);  // Internal Server Error
+});
+```
+
+重定向时默认是 200，会至少出现两轮网络请求，`Response` 对象的 `redirected` 属性会被设置为 `true`
+
+```js
+fetch('/permanent-redirect').then(response => {
+  // 默认行为是跟随重定向直到最终 URL
+  // <origin url>/permanent-redirect -> <redirect url>
+  console.log(response.status);  // 200
+  console.log(response.statusText);  // OK
+  console.log(response.redirected);  // true
+});
+```
+
+可以同时检查 `status` 和 `ok` 属性判断是否响应成功
+
+```js
+fetch('/bar').then(response => {
+  console.log(response.status);  // 200
+  console.log(response.ok);  // true
+});
+fetch('/does-not-exist').then(response => {
+  console.log(response.status);  // 404
+  console.log(response.ok);  // false
+});
+```
+
+超时导致期约拒绝
+
+```js
+fetch('/hangs-forever').then(response => {
+  console.log(response);
+}, err => {
+  console.log(err);
+});
+```
+
+违反 CORS、无网络连接、HTTPS 错配及其他浏览器/网络策略问题都会导致期约被拒绝
+
