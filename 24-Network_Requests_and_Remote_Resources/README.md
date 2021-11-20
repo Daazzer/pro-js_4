@@ -657,3 +657,10 @@ fetch('my-image.png')
 	.then(blob => imageElement.src = URL.createObjectURL(blob));
 ```
 
+#### 5.发送跨源请求
+
+```js
+fetch('//cross-origin.com', { mode: 'no-cors' })
+	.then(response => console.log(response.type));
+```
+
