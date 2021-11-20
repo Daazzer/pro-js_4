@@ -665,3 +665,17 @@ fetch('//cross-origin.com', { mode: 'no-cors' })
 // opaque
 ```
 
+#### 6.中断请求
+
+调用 `AbortControler.abort()` 会中断所有网络传输
+
+```js
+const abortController = new AbortController();
+
+fetch('wikipedia.zip', { signal: abortController.signal })
+  .catch(() => console.log('aborted!'));
+
+// 10ms 后中断请求
+setTimeout(() => abortController.abort(), 10);
+```
+
