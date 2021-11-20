@@ -570,3 +570,22 @@ fetch('/hangs-forever').then(response => {
 
 违反 CORS、无网络连接、HTTPS 错配及其他浏览器/网络策略问题都会导致期约被拒绝
 
+#### 4.自定义选项
+
+`fetch()` 第二个可选参数为 `init` 对象。有以下配置属性
+
+| 键               | 值                                                           |
+| ---------------- | ------------------------------------------------------------ |
+| `body`           | 指定使用请求体时请求体的内容                                 |
+| `cache`          | 用于控制浏览器与 HTTP 缓存的交互。要更重缓存的重定向，请求 `redirect` 属性必须是 `"follow"`，而且必须符合同源策略限制。 |
+| `credentials`    | 用于指定在外发请求中如何包含 cookie。与 `XMLHttpRequest` 的 `withCredentials` 标签类似 |
+| `headers`        | 用于指定请求头部，必须是 `Headers` 对象实例或包含字符串格式键/值对的常规对象。默认值为空 `Headers` 对象。这不意味着没有任何头部，浏览器会默认自动添加一些头部。这些头部对 JavaScript 不可见，但是可以用网络检查器观察到 |
+| `integrity`      | 用于强制子资源完整性                                         |
+| `keepalive`      | 用于指示浏览器允许请求存在时间超出页面生命周期               |
+| `method`         | 用于指定 HTTP 请求方法                                       |
+| `mode`           | 用于指定请求模式。这个模式决定来自跨源请求的响应是否有效，以及客户端可以读取多少响应 |
+| `redirect`       | 用于指定如何处理重定向（状态码为 301、302、303、307 或 308） |
+| `referrer`       | 用于指定 HTTP 的 `Referer` 头部的内容                        |
+| `referrerPolicy` | 用于指定 HTTP 的 `Referer` 头部                              |
+| `signal`         | 用于支持通过 `AbortController` 中断进行中的 `fetch()` 请求，必须是 `AbortSignal` 实例 |
+
