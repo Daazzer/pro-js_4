@@ -611,3 +611,21 @@ fecth('/send-me-json', {
 });
 ```
 
+#### 2.在请求体中发送参数
+
+因为请求体支持任意字符串值，所以可以通过它发送请求参数
+
+```js
+const payload = 'foo=bar&baz=qux';
+
+const paramHeaders = new Headers({
+  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+});
+
+fecth('/send-me-params', {
+  method: 'POST',
+  body: payload,
+  headers: paramHeaders
+});
+```
+
