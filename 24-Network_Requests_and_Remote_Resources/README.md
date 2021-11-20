@@ -629,3 +629,19 @@ fecth('/send-me-params', {
 });
 ```
 
+#### 3.发送文件
+
+因为请求体支持 `FormData` 实现，所以 `fetch()` 也可以序列化并发送文件字段中的文件
+
+```js
+const imageFormData = new FormData();
+const imageInput = document.querySelector('input[type="file"]');
+
+imageFormData.append('image', imageInput.files[0]);
+
+fecth('/img-upload', {
+  method: 'POST',
+  body: imageFormData
+});
+```
+
