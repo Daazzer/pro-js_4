@@ -645,3 +645,15 @@ fecth('/img-upload', {
 });
 ```
 
+#### 4.加载 Blob 文件
+
+可以使用响应对象上面的 `blob()` 方法，返回一个期约，解决为一个 `Blob` 的实例。可以将这个实例传递给 `URL.createObjectUrl()` 以生成可以添加给元素 `src` 属性的值
+
+```js
+const imageElement = document.querySelector('img');
+
+fetch('my-image.png')
+  .then(response => response.blob())
+	.then(blob => imageElement.src = URL.createObjectURL(blob));
+```
+
