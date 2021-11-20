@@ -662,5 +662,6 @@ fetch('my-image.png')
 ```js
 fetch('//cross-origin.com', { mode: 'no-cors' })
 	.then(response => console.log(response.type));
+// opaque
 ```
 
