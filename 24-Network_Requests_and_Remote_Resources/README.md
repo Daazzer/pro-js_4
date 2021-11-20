@@ -589,3 +589,6 @@ fetch('/hangs-forever').then(response => {
 | `referrerPolicy` | 用于指定 HTTP 的 `Referer` 头部                              |
 | `signal`         | 用于支持通过 `AbortController` 中断进行中的 `fetch()` 请求，必须是 `AbortSignal` 实例 |
 
+### 24.5.2 常见 Fecth 请求模式
+
+与 `XMLHttpRequest` 一样，`fetch()` 既可以发送数据也可以接受数据。使用 `init` 对象参数，可以配置 `fetch()` 在请求体中发送各种序列化的数据
