@@ -592,3 +592,22 @@ fetch('/hangs-forever').then(response => {
 ### 24.5.2 常见 Fecth 请求模式
 
 与 `XMLHttpRequest` 一样，`fetch()` 既可以发送数据也可以接受数据。使用 `init` 对象参数，可以配置 `fetch()` 在请求体中发送各种序列化的数据
+
+#### 1.发送 JSON 数据
+
+```js
+const payload = JSON.stringify({
+  foo: 'bar'
+});
+
+const jsonHeaders = new Headers({
+  'Content-Type': 'application/json'
+});
+
+fecth('/send-me-json', {
+  method: 'POST',
+  body: payload,
+  headers: jsonHeaders
+});
+```
+
