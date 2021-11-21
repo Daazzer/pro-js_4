@@ -723,3 +723,23 @@ console.log(...h.values());  // bar, qux
 console.log(...h.entries());  // ['foo', 'bar'], ['baz', 'qux']
 ```
 
+#### 2.Headers 独有的特性
+
+初始化 `Headers` 时，可以传入键/值对形式的对象
+
+```js
+const seed = { foo: 'bar' };
+const h = new Headers(seed);
+console.log(h.get('foo'));  // bar
+```
+
+`append()` 方法支持添加多个值，如果添加不存在的头部，相当于调用 `set()`
+
+```js
+const h = new Headers();
+h.append('foo', 'bar');
+console.log(h.get('foo'));  // bar
+h.append('foo', 'baz');
+console.log(h.get('foo'));  // bar, baz
+```
+
