@@ -774,3 +774,43 @@ console.log(r);
 console.log(new Request('https://foo.com', { method: 'POST' }));
 ```
 
+#### 2.克隆 Request 对象
+
+两种方式
+
+1. 使用 `Request` 构造函数
+2. `clone()` 方法
+
+```js
+const r1 = new Request('https://foo.com');
+const r2 = new Request(r1, { method: 'POST' });
+
+console.log(r1.method);  // GET
+console.log(r2.method);  // POST
+```
+
+第二种
+
+```js
+const r1 = new Request('https://foo.com', { method: 'POST', body: 'foobar' });
+const r2 = r1.clone();
+
+console.log(r1.url);  // https://foo.com
+console.log(r2.url);  // https://foo.com
+
+console.log(r1.bodyUsed);  // false
+console.log(r2.bodyUsed);  // false
+```
+
+如果请求对象的 `bodyUsed` 为 `true`，再克隆会报错
+
+```js
+const r = new Request('https://foo.com');
+r.clone();
+new Request(r);
+
+r.text();  // 设置 bodyUsed 为 true
+r.clone();  // 报错
+new Request(r);  // 报错
+```
+
