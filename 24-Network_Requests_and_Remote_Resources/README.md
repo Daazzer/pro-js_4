@@ -814,3 +814,19 @@ r.clone();  // 报错
 new Request(r);  // 报错
 ```
 
+#### 3.在 fetch() 中使用 Request 对象
+
+可以给 `fetch()` 直接传入一个 `Request` 实例，如果还传入第二个参数 `init` 会覆盖默认传入的 `Request` 行为
+
+```js
+const r = new Request('https://foo.com');
+
+// 向 foo.com 发送 GET 请求
+fetch(r);
+
+// 向 foo.com 发送 POST 请求
+fetch(r, { method: 'POST' });
+```
+
+与克隆 `Request` 一样，`fetch()` 也不能拿请求体已经用过的 `Request` 对象来发送请求
+
