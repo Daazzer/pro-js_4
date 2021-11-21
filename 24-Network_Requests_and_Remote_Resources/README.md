@@ -679,3 +679,9 @@ fetch('wikipedia.zip', { signal: abortController.signal })
 setTimeout(() => abortController.abort(), 10);
 ```
 
+
+
+### 24.5.3 Headers 对象
+
+`Headers` 对象是所有外发请求和入站响应头部的容器。通过 `Request.prototype.headers` 或 `Response.prototype.headers` 访问，使用 `new Headers()` 也可以创建一个新实例
+
