@@ -6,7 +6,7 @@
 - [第 4 章 变量、作用域与内存](./4-Variables_Scope_and_Memory)
 - [第 5 章 基本引用类型](./5-Basic_Reference_Types)
 - [第 6 章 集合引用类型](./6-Collection_Reference_Types)
-- [第 7 章 集合引用类型](./7-Iterators_and_Generators)
+- [第 7 章 迭代器与生成器](./7-Iterators_and_Generators)
 - [第 8 章 对象、类与面向对象编程](./8-Objects_Classes_and_Object-Oriented_Programming)
 - [第 9 章 代理与反射](./9-Proxies_and_Reflect)
 - [第 10 章 函数](./10-Functions)
