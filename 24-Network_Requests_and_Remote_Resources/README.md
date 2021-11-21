@@ -758,3 +758,19 @@ console.log(h.get('foo'));  // bar, baz
 ### 24.5.4 Request 对象
 
 `Request` 对象是获取资源请求的接口。
+
+#### 1.创建 Request 对象
+
+可以通过构造函数初始化 `Request` 对象。需要传入一个 `input` 参数，一般是 URL
+
+```js
+const r = new Request('https://foo.com');
+console.log(r);
+```
+
+同时也接收第二个可选参数 `init` 对象，与 `fetch()` 的 `init` 对象一样
+
+```js
+console.log(new Request('https://foo.com', { method: 'POST' }));
+```
+
