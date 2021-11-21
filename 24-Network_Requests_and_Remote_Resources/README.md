@@ -685,3 +685,41 @@ setTimeout(() => abortController.abort(), 10);
 
 `Headers` 对象是所有外发请求和入站响应头部的容器。通过 `Request.prototype.headers` 或 `Response.prototype.headers` 访问，使用 `new Headers()` 也可以创建一个新实例
 
+#### 1.Headers 与 Map 的相似之处
+
+`Headers` 与 `Map` 类型都有 `get()`、`set()`、`has()` 和 `delete()` 等实例方法
+
+```js
+const h = new Headers();
+
+h.set('foo', 'bar');  // 设置值
+
+console.log(h.has('foo'));  // 检查值
+
+console.log(h.get('foo'));  // 获取值
+
+h.delete('foo');  // 删除值
+```
+
+`Headers` 和 `Map` 都可以使用一个可迭代对象来初始化
+
+```js
+const seed = [['foo', 'bar']];
+
+const h = new Headers(seed);
+
+console.log(h.get('foo'));  // bar
+```
+
+而且有相同的 `keys()`、`values()` 和 `entries()` 迭代器接口
+
+```js
+const seed = [['foo', 'bar'], ['baz', 'qux']];
+
+const h = new Headers(seed);
+
+console.log(...h.keys());  // foo, baz
+console.log(...h.values());  // bar, qux
+console.log(...h.entries());  // ['foo', 'bar'], ['baz', 'qux']
+```
+
