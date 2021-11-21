@@ -755,3 +755,6 @@ console.log(h.get('foo'));  // bar, baz
 | `response`        | 在通过构造函数初始化 `Response` 对象时激活                   | 不允许修改禁止修改的响应头部 |
 | `immutable`       | 在通过 `error()` 或 `redirect()` 静态方法初始化 `Response` 对象时激活 | 不允许修改任何头部           |
 
+### 24.5.4 Request 对象
+
+`Request` 对象是获取资源请求的接口。
