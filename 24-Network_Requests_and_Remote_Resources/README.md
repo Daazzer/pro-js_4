@@ -830,3 +830,6 @@ fetch(r, { method: 'POST' });
 
 与克隆 `Request` 一样，`fetch()` 也不能拿请求体已经用过的 `Request` 对象来发送请求
 
+### 24.5.5 Response 对象
+
+`Response` 对象是获取资源响应的接口。
