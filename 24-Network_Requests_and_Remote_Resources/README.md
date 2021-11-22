@@ -851,6 +851,7 @@ console.log(r);
 | `status`     | 表示 HTTP 响应状态码的整数                                 |
 | `statusText` | 表示 HTTP 响应状态的字符串                                 |
 
+
 创建有参数的 `Response` 实例
 
 ```js
@@ -860,6 +861,14 @@ const r = new Response('foobar', {
 });
 console.log(r);  // Response {type: 'default', url: '', redirected: false, status: 418, ok: false, …}
 ```
+
+大多数情况下，产生 `Response` 对象的主要方式是调用 `fetch()`，它返回一个最后会解决为 `Response` 对象的期约，这个 `Response` 对象代表实际的 HTTP 响应。
+
+```js
+fetch('https://foo.com')
+	.then(response => console.log(response));
+```
+
 
 两个用于生成 `Response` 对象的静态方法：
 
