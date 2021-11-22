@@ -957,3 +957,8 @@ r2.text().then(console.log);  // foobar
 r1.text().then(console.log);  // 报错
 ```
 
+### 24.5.6 Request、Response 及 Body 混入
+
+`Request` 和 `Response` 都使用了 Fetch API 的 `Body` 混入，以实现两者承担有效载荷的能力。这个混入为两个类型提供了只读的 `body` 属性（实现为 `ReadableStream`）、只读的 `bodyUsed` 布尔值（表示 `body` 流是否已读）和一组方法，用于从流中读取内容并将结果转换为某种 JavaScript 对象类型。
+
+`Body` 混入提供了 5 个方法
