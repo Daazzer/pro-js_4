@@ -901,3 +901,59 @@ console.log(Response.error());
 | `type`       | 字符串，包含响应类型。                                       |
 | `url`        | 包含响应 URL 的字符串。对于重定向响应，这是最终的 URL，非重定向响应就是它产生的 |
 
+#### 3.克隆 Response 对象
+
+主要是使用 `clone()` 方法，创建一个一模一样的副本，不会覆盖任何值，不会将任何请求的响应体标记为已使用
+
+```js
+const r1 = new Response('foobar');
+const r2 = new r1.clone();
+
+console.log(r1.bodyUsed);  // false
+console.log(r2.bodyUsed);  // false
+```
+
+如果响应对象的 `bodyUsed` 属性为 `true`，则不能再创建这个对象的副本。否则报错
+
+```js
+const r = new Response('foobar');
+r.clone();
+
+r.text();  // 设置 bodyUsed 为 true
+
+r.clone();  // 报错
+```
+
+有响应体的 `Response` 对象只能读取一次。（不包含响应体的 `Response` 对象不受此限制。）
+
+```js
+const r = new Response('foobar');
+
+r.text().then(console.log);  // foobar
+
+r.text().then(console.log);  // foobar  // 报错
+```
+
+必须在第一次读取前 `clone()`
+
+```js
+const r = new Response('foobar');
+
+r.clone().text().then(console.log);  // foobar
+r.clone().text().then(console.log);  // foobar
+r.text().then(console.log);  // foobar
+```
+
+创建带有原始响应体的 `Response` 实例，响应体会在两个响应之间**共享**
+
+```js
+const r1 = new Response('foobar');
+const r2 = new Response(r1.body);
+
+console.log(r1.bodyUsed);  // false
+console.log(r2.bodyUsed);  // false
+
+r2.text().then(console.log);  // foobar
+r1.text().then(console.log);  // 报错
+```
+
