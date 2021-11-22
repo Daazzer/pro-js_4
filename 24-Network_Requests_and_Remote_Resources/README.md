@@ -878,3 +878,17 @@ console.log(Response.error());
 // Response {type: 'error', url: '', redirected: false, status: 0, ok: false, …}
 ```
 
+#### 2.读取响应状态信息
+
+`Response` 对象包含一组只读属性，描述了请求完成后的状态
+
+| 属性         | 值                                                           |
+| ------------ | ------------------------------------------------------------ |
+| `headers`    | 响应包含的 `Headers` 对象                                    |
+| `ok`         | 布尔值，表示 HTTP 状态码的含义。200~299 的状态码返回 `true`，其他状态码返回 `false` |
+| `redirected` | 布尔值，表示响应是否至少经过一次重定向                       |
+| `status`     | 整数，表示响应的 HTTP 状态码                                 |
+| `statusText` | 字符串，包含对 HTTP 状态码的正式描述。这个值派生自可选的 HTTP Reason-Pharse 字段，因此如果服务器以 Reason-Pharse 为由拒绝响应，这个字段可能是空字符串 |
+| `type`       | 字符串，包含响应类型。                                       |
+| `url`        | 包含响应 URL 的字符串。对于重定向响应，这是最终的 URL，非重定向响应就是它产生的 |
+
