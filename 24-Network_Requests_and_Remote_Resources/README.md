@@ -833,3 +833,48 @@ fetch(r, { method: 'POST' });
 ### 24.5.5 Response 对象
 
 `Response` 对象是获取资源响应的接口。
+
+#### 1.创建 Response 对象
+
+创建默认 `Response` 对象
+
+```js
+const r = new Response();
+console.log(r);
+```
+
+`Response` 构造函数接收一个可选的 `body` 参数。这个 `body` 可以是 `null`，等同于 `fetch()` 参数 `init` 中的 `body`。还可以接收一个可选的 `init` 对象，包含以下键/值
+
+| 键           | 值                                                         |
+| ------------ | ---------------------------------------------------------- |
+| `headers`    | 必须是 `Headers` 对象实例或包含字符串键/值对的常规对象实例 |
+| `status`     | 表示 HTTP 响应状态码的整数                                 |
+| `statusText` | 表示 HTTP 响应状态的字符串                                 |
+
+创建有参数的 `Response` 实例
+
+```js
+const r = new Response('foobar', {
+  status: 418,
+  statusText: 'I\'m a teapot'
+});
+console.log(r);  // Response {type: 'default', url: '', redirected: false, status: 418, ok: false, …}
+```
+
+两个用于生成 `Response` 对象的静态方法：
+
+- `Response.redirect()` 接收一个 URL 和一个重定向状态码（301、302、303、307 或 308），返回重定向的 `Response` 对象
+- `Response.error()` 用于产生表示网络错误的 `Response` 对象（网络错误会导致 `fetch()` 期约被拒绝）
+
+```js
+console.log(Response.redirect('https://foo.com', 301));  // 提供的状态码必须是重定向状态码，否则报错
+// Response {type: 'default', url: '', redirected: false, status: 301, ok: false, …}
+```
+
+
+
+```js
+console.log(Response.error());
+// Response {type: 'error', url: '', redirected: false, status: 0, ok: false, …}
+```
+
