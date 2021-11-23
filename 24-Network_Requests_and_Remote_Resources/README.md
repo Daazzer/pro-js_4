@@ -1013,7 +1013,7 @@ request.json()
 
 #### 3.Body.formData()
 
-浏览器可以将 `FormData` 对象序列化/反序列化为主体。
+`Body.formData()` 方法返回期约，解决为将缓冲区转存得到的 `FormData` 实例。
 
 ```js
 const myFormData = new FormData();
@@ -1041,5 +1041,31 @@ request.formData()
 	.then(formData => console.log(formData.get('foo')));
 
 // bar
+```
+
+#### 4.Body.arrayBuffer()
+
+`Body.arrayBuffer()` 方法返回期约，解决为将缓冲区转存得到的 `ArrayBuffer` 实例。
+
+在 `Response` 对像上使用 `Body.arrayBuffer()`
+
+```js
+fetch('https://foo.com')
+	.then(response => response.arrayBuffer())
+	.then(console.log);
+
+// ArrayBuffer(...) {}
+```
+
+`Request` 对象上使用 `Body.arrayBuffer()`
+
+```js
+const request = new Request('https://foo.com', { method: 'POST', body: 'abcdefg' });
+
+// 以整数形式打印二进制编码的字符串
+request.arrayBuffer()
+	.then(buf => console.log(new Int8Array(buf)));
+
+// Int8Array(7) [97, 98, 99, 100, 101, 102, 103, buffer: ArrayBuffer(7), byteLength: 7, byteOffset: 0, length: 7]
 ```
 
