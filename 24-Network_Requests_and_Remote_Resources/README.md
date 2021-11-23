@@ -1095,3 +1095,43 @@ request.blob()
 // Blob {size: 7, type: 'text/plain;charset=utf-8'}
 ```
 
+#### 6.一次性流
+
+因为 `Body` 混入是构建在 `ReadableStream` 之上的，所以主体流只能使用一次。这意味着主体混入方法只能调用一次，再次调用就会抛出错误
+
+```js
+fetch('https://foo.com')
+  .then(response => response.blob().then(() => response.blob()));  // 报错
+```
+
+所有的这些方法在它们被调用时给 `ReadableStream` 加锁，以阻止其他读取器访问
+
+```js
+fetch('https://foo.com')
+  .then(response => {
+  	response.blob();  // 第一次调用给流加锁
+  	response.blob();  // 第二次调用再次加锁会失败，报错
+	});
+
+const request = new Request('https://foo.com', { method: 'POST', body: 'foobar' });
+
+request.blob();
+request.blob();  // 报错
+```
+
+作为 `Body` 混入的一部分，`bodyUsed` 布尔值属性表示 `ReadableStream` 是否已**分发**（disturbed），也就是读取器是否加锁
+
+```js
+const request = new Request('https://foo.com', { method: 'POST', body: 'foobar' });
+const response = new Response('foobar');
+
+console.log(request.bodyUsed);  // false
+console.log(response.bodyUsed);  // false
+
+request.text().then(console.log);  // foobar
+response.text().then(console.log);  // foobar
+
+console.log(request.bodyUsed);  // true
+console.log(response.bodyUsed);  // true
+```
+
