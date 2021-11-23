@@ -1176,3 +1176,11 @@ fetch('https://fetch.spec.whatwg.org/')
 	});
 ```
 
+## 24.6 Beacon API
+
+`navigator` 对象添加了一个 `sendBeacon()` 方法。接收一个 URL 和一个数据有效载荷参数，并会发送一个 POST 请求。如果请求成功进入了最终要发送的任务队列，则这个方法返回 `true`，否则返回 `false`
+
+```js
+navigator.sendBeacon('https://example.com/analytics-reporting-url', '{ foo: "bar" }');
+```
+
