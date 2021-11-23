@@ -1011,3 +1011,35 @@ request.json()
 // { bar: 'baz' }
 ```
 
+#### 3.Body.formData()
+
+浏览器可以将 `FormData` 对象序列化/反序列化为主体。
+
+```js
+const myFormData = new FormData();
+myFormData.append('foo', 'bar');
+```
+
+在 `Response` 对像上使用 `Body.formData()`
+
+```js
+fetch('https://foo.com/form-data')
+	.then(response => response.formData())
+	.then(formData => console.log(formData.get('foo')));
+
+// bar
+```
+
+`Request` 对象上使用 `Body.formData()`
+
+```js
+const myFormData = new FormData();
+myFormData.append('foo', 'bar');
+const request = new Request('https://foo.com', { method: 'POST', body: myFormData });
+
+request.formData()
+	.then(formData => console.log(formData.get('foo')));
+
+// bar
+```
+
