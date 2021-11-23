@@ -1215,3 +1215,28 @@ socket.close();
 
 调用 `close()` 之后，`readyState` 立即变为 2（连接正在关闭），并会在关闭后变为 3（连接已经关闭）
 
+### 24.7.2 发送和接收数据
+
+Web Socket 向服务器发送数据，使用 `send()` 方法并传入一个字符串、`ArrayBuffer` 或 `Blob`
+
+```js
+const socket = new WebSocket('ws://www.example.com/server.php');
+
+const stringData = 'Hello world!';
+const arrayBufferData = Uint8Array.from(['f', 'o', 'o']);
+const blobData = new Blob(['f', 'o', 'o']);
+
+socket.send(stringData);
+socket.send(arrayBufferData.buffer);
+socket.send(blobData);
+```
+
+服务器向客户端发送消息时，`WebSocket` 对象上会触发 `message` 事件。可以通过 `event.data` 属性访问到有效载荷
+
+```js
+socket.onmessage = function(event) {
+  const data = event.data;
+  // 对数据执行其它操作
+};
+```
+
