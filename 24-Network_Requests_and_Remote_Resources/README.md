@@ -1135,3 +1135,44 @@ console.log(request.bodyUsed);  // true
 console.log(response.bodyUsed);  // true
 ```
 
+#### 7.使用 ReadableStream 主体
+
+Fetch API 通过 `ReadableStream` 支持在这些块到达时就实时读取和操作这些数据
+
+使用异步函数将流数据递归调用打平全部读出
+
+```js
+fetch('https://fetch.spec.whatwg.org/')
+	.then(response => response.body)
+	.then(async body => {
+  	const reader = body.getReader();
+  	while(true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      console.log(value);
+    }
+	});
+```
+
+或者直接封装到 `Iterable` 接口中，在 `for-await-of` 循环中调用
+
+```js
+fetch('https://fetch.spec.whatwg.org/')
+	.then(response => response.body)
+	.then(async body => {
+  	const reader = body.getReader();
+  	const asyncIterable = {
+      [Symbol.asyncIterator]() {
+        return {
+          next() {
+            return reader.read();
+          }
+        };
+      }
+    };
+  	for await (chunk of asyncIterable) {
+      console.log(chunk);
+    }
+	});
+```
+
