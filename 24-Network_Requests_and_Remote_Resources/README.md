@@ -1069,3 +1069,29 @@ request.arrayBuffer()
 // Int8Array(7) [97, 98, 99, 100, 101, 102, 103, buffer: ArrayBuffer(7), byteLength: 7, byteOffset: 0, length: 7]
 ```
 
+#### 5.Body.blob()
+
+`Body.blob()` 方法返回期约，解决为将缓冲区转存得到的 `Blob` 实例。
+
+在 `Response` 对像上使用 `Body.blob()`
+
+```js
+fetch('https://foo.com')
+	.then(response => response.blob())
+	.then(console.log);
+
+// Blob(...) {size:..., type: "..."}
+```
+
+`Request` 对象上使用 `Body.blob()`
+
+```js
+const request = new Request('https://foo.com', { method: 'POST', body: 'abcdefg' });
+
+// 以整数形式打印二进制编码的字符串
+request.blob()
+	.then(console.log);
+
+// Blob {size: 7, type: 'text/plain;charset=utf-8'}
+```
+
