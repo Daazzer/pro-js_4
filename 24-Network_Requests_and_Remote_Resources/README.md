@@ -1240,3 +1240,29 @@ socket.onmessage = function(event) {
 };
 ```
 
+### 24.7.3 其他事件
+
+3 个其他事件
+
+- `open` 在连接成功建立时触发
+- `error` 在发生错误时触发。连接无法存续
+- `close` 在连接关闭时触发
+  - `wasClean` 布尔值，表示连接是否干净关闭
+  - `code` 数值状态码
+  - `reason` 包含服务器发来的消息
+
+`WebSocket` 对象不支持 DOM Level 2 事件监听器，需要使用 DOM Level 0 的事件监听器
+
+```js
+const socket = new WebSocket('ws://www.example.com/server.php');
+socket.onopen = function() {
+  console.log('Connection established.');
+};
+socket.onerror = function() {
+  console.log('Connection error.');
+};
+socket.onclose = function() {
+  console.log('Connection closed.');
+};
+```
+
