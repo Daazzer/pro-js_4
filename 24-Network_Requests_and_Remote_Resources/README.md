@@ -1184,3 +1184,8 @@ fetch('https://fetch.spec.whatwg.org/')
 navigator.sendBeacon('https://example.com/analytics-reporting-url', '{ foo: "bar" }');
 ```
 
+## 24.7 Web Socket
+
+Web Socket （套接字）的目标是通过一个长时链接实现与服务器全双工、双向的通信。在 JavaScript 中创建 Web Socket 时，一个 HTTP 请求会发送到服务器以初始化连接。服务器响应后，连接使用 HTTP 的 `Upgrade` 头部从 HTTP 协议切换到 Web Socket 协议。这意味着 Web Socket 不能通过标准 HTTP 服务器实现，而必须使用支持改协议的专有服务器。
+
+要使用 `ws://` 和 `wss://` 协议
