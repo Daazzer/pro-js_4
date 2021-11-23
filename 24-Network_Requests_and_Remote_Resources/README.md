@@ -1189,3 +1189,29 @@ navigator.sendBeacon('https://example.com/analytics-reporting-url', '{ foo: "bar
 Web Socket （套接字）的目标是通过一个长时链接实现与服务器全双工、双向的通信。在 JavaScript 中创建 Web Socket 时，一个 HTTP 请求会发送到服务器以初始化连接。服务器响应后，连接使用 HTTP 的 `Upgrade` 头部从 HTTP 协议切换到 Web Socket 协议。这意味着 Web Socket 不能通过标准 HTTP 服务器实现，而必须使用支持改协议的专有服务器。
 
 要使用 `ws://` 和 `wss://` 协议
+
+### 24.7.1 API
+
+实例化一个 `WebSocket`
+
+```js
+const socket = new WebSocket('ws://www.example.com/server/php');
+```
+
+同源策略不适用于 Web Socket，因此可以打开任意站点的连接。
+
+`WebSocket` 也有一个 `readyState` 属性表示当前状态
+
+- `WebSocket.OPENING` (0) 连接正在建立
+- `WebSocket.OPEN` (1) 连接已经建立
+- `WebSocket.CLOSING` (2) 连接正在关闭
+- `WebSocket.CLOSE` (3) 连接已经关闭
+
+任何时候都可以调用 `close()` 方法关闭连接
+
+```js
+socket.close();
+```
+
+调用 `close()` 之后，`readyState` 立即变为 2（连接正在关闭），并会在关闭后变为 3（连接已经关闭）
+
