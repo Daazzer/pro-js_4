@@ -967,6 +967,8 @@ r1.text().then(console.log);  // 报错
 
 `Body.text()` 方法返回期约，解决为将缓冲区转存得到的 UTF-8 格式字符串。
 
+在 `Response` 对像上使用 `Body.text()`
+
 ```js
 fetch('https://foo.com')
 	.then(response => response.text())
@@ -982,5 +984,30 @@ request.text()
 	.then(console.log);
 
 // barbazqux
+```
+
+#### 2.Body.json()
+
+`Body.text()` 方法返回期约，解决为将缓冲区转存得到的 JSON。
+
+在 `Response` 对像上使用 `Body.json()`
+
+```js
+fetch('https://foo.com/foo.json')
+	.then(response => response.json())
+	.then(console.log);
+
+// { "foo": "bar" }
+```
+
+`Request` 对象上使用 `Body.json()`
+
+```js
+const request = new Request('https://foo.com', { method: 'POST', body: JSON.stringify({ bar: 'baz' }) });
+
+request.json()
+	.then(console.log);
+
+// { bar: 'baz' }
 ```
 
