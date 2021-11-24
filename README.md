@@ -24,4 +24,5 @@
 - [第 22 章 处理 XML](./22-XML_in_Javascript)
 - [第 23 章 JSON](./23-JSON)
 - [第 24 章 网络请求与远程资源](./24-Network_Requests_and_Remote_Resources)
+- [第 25 章 客户端存储](./25-Client-Side_Storage)
 
