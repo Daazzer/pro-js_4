@@ -34,3 +34,36 @@ cookie 的限制
 - 每个域不超过 20 个 cookie
 - 每个域不超过 81920 字节
 
+### 25.1.2 cookie 构成
+
+- **名称** 唯一标识 cookie 的名称。cookie 名不区分大小写，因此 `myCookie` 和 `MyCookie` 是同一个名称。不过，实践中最好将 cookie 名当成区分大小写来对待。cookie 名必须经过 URL 编码
+- **值** 存储在 cookie 里的字符串值。这个值必须经过 URL 编码
+- **域** cookie 有效的域。发送到这个域的所有请求都会包含对应的 cookie。这个值可能包含子域（如 www.wrox.com），也可以不包含（如 .wrox.com 表示对 wrox.com 的所有子域都有效）。如果不明确设置，则默认为设置 cookie 的域。
+- **路径** 请求 URL 中包含这个路径才会把 cookie 发送到服务器。例如，可以指定 cookie 只能由 http://www.worx.com/books/ 访问，因此访问 http://www.wrox.com/ 下的页面就不会发送 cookie，即使请求的是同一个域
+- **过期时间** 表示何时删除 cookie 的时间戳（即什么时间之后就不发送到服务器了）。默认情况下，浏览器会话结束后会删除所有 cookie。不过，也可以设置删除 cookie 时间。这个值是 GMT 格式（Wdy，DD-Mon-YYYY HH:MM:SS GMT），用指定删除 cookie 的具体时间。这样即使关闭浏览器 cookie 也会保留在用户机器上。把过期时间设置为过去的时间会立刻删除 cookie
+- **安全标志** 设置之后，只在使用 SSL 安全连接的情况下才会把 cookie 发送到服务器。例如，请求 https://www.wrox.com 会发送 cookie，而请求 http://www.wrox.com 则不会
+
+这些参数在 `Set-Cookie` 头部中使用分号加空格隔开
+
+```http
+HTTP/1.1 200 OK
+Content-type: text/html
+Set-Cookie: name=value; expires=Mon, 22-JAN-07 07:10:24 GMT; domain=.wrox.com;
+Other-header: other-header-value
+```
+
+这个头部设置一个名为 `"name"` 的 cookie，这个 cookie 在 2007 年 1 月 22 日 7:10:24 过期，对 www.wrox.com 及其他 wrox.com 子域有效
+
+安全标志 `secure` 是 cookie 中唯一的非名/值对，只需一个 `secure` 就可以了
+
+```http
+HTTP/1.1 200 OK
+Content-type: text/html
+Set-Cookie: name=value; domain=.wrox.com; path=/; secure
+Other-header: other-header-value
+```
+
+这个 cookie 只能在 SSL 连接上发送，因为设置了 `secure` 标志
+
+要知道，域、路径、过期时间和 `secure` 标志用于告诉浏览器什么情况下应该在请求中包含 cookie。这些参数并不会随请求发送给服务器，实际发送的只有 cookie 名/值对
+
