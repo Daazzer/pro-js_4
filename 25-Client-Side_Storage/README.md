@@ -87,3 +87,11 @@ document.cookie = `${encodeURIComponent('name')}=${encodeURIComponent('Nicholas'
 
 `name=name1=value1&name2=value2&name3=value3&name4=value4&name5=value5`
 
+### 25.1.5 使用 cookie 的注意事项
+
+还有一种叫作 **HTTP-only** 的 cookie。可以在浏览器设置，也可以在服务器设置。但只能在服务器上读取，这是因为 JavaScript 无法取得这种 cookie 的值
+
+保存的 cookie 越大，请求时长越长。避免存储太大的 cookie
+
+> **注意** 避免在 cookie 保存敏感信息
+
