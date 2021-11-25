@@ -81,3 +81,9 @@ Other-header: other-header-value
 document.cookie = `${encodeURIComponent('name')}=${encodeURIComponent('Nicholas')}; domain=.wrox.com; path=/`;
 ```
 
+### 25.1.4 子 cookie
+
+为了绕过浏览器对每个域 cookie 数的限制，提出了子 cookie，子 cookie 是使用 cookie 的值在单个 cookie 中存储多个名/值对。
+
+`name=name1=value1&name2=value2&name3=value3&name4=value4&name5=value5`
+
