@@ -67,3 +67,17 @@ Other-header: other-header-value
 
 要知道，域、路径、过期时间和 `secure` 标志用于告诉浏览器什么情况下应该在请求中包含 cookie。这些参数并不会随请求发送给服务器，实际发送的只有 cookie 名/值对
 
+### 25.1.3 JavaScript 中的 cookie
+
+`document.cookie` 返回包含页面中所有有效 cookie 的字符串（根据域、路径、过期时间和安全设置），以逗号分隔，给 `document.cookie` 直接赋值不会覆盖原有的值，除非设置了相同的 cookie 名
+
+`name1=value1;name2=value2;name3=value3`
+
+所有名和值都是 URL 编码的，因此要用 `decodeURIComponent()` 编码
+
+设置 cookie
+
+```js
+document.cookie = `${encodeURIComponent('name')}=${encodeURIComponent('Nicholas')}; domain=.wrox.com; path=/`;
+```
+
