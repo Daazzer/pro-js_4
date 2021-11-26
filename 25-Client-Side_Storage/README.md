@@ -104,3 +104,17 @@ Web Storage 的第 2 版定义了两个对象：
 
 这两种浏览器存储 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式
 
+### 25.2.1 Storage 类型
+
+`Storage` 类型用于保存名/值对数据，直至存储空间上限（由浏览器决定）。
+
+- `clear()` 删除所有值；不在 Firefox 实现
+- `getItem(name)` 取得给定 `name` 的值
+- `key(index)` 取得给定数值位置的名称
+- `removeItem(name)` 删除给定 `name` 的名/值对
+- `setItem(name, value)` 设置给定 `name` 的值
+
+通过 `length` 属性可以确定 `Storage` 对象中保存了多少名/值对
+
+> **注意** `Storage` 类型只能存储字符串。非字符串数据在存储之前会自动转换为字符串
+
