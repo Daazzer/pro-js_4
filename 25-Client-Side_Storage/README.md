@@ -95,3 +95,12 @@ document.cookie = `${encodeURIComponent('name')}=${encodeURIComponent('Nicholas'
 
 > **注意** 避免在 cookie 保存敏感信息
 
+## 25.2 Web Storage
+
+Web Storage 的第 2 版定义了两个对象：
+
+- `localStorage` 是永久存储机制
+- `sessionStorage` 是跨会话的存储机制
+
+这两种浏览器存储 API 提供了在浏览器中不受页面刷新影响而存储数据的两种方式
+
