@@ -118,3 +118,22 @@ Web Storage 的第 2 版定义了两个对象：
 
 > **注意** `Storage` 类型只能存储字符串。非字符串数据在存储之前会自动转换为字符串
 
+### 25.2.2 sessionStorage 对象
+
+`sessionStorage` 对象只存储会话数据，数据只会存储到浏览器关闭。并且不受页面刷新影响，可以在浏览器崩溃并重启后恢复。
+
+可以使用 `getItem()` 或直接访问属性名来取得 `sessionStorage` 上的数据
+
+```js
+const name = sessionStorage.getItem('name');
+const book = sessionStorage.book;
+Object.entries(sessionStorage).forEach(([key, value]) => console.log(key, value));
+```
+
+从 `sessionStorage` 中删除数据，可以使用 `delete` 操作符或者 `removeItem()` 方法
+
+```js
+delete sessionStorage.name;
+sessionStorage.removeItem('book');
+```
+
