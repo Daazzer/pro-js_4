@@ -137,3 +137,28 @@ delete sessionStorage.name;
 sessionStorage.removeItem('book');
 ```
 
+### 25.2.3 localStorage 对象
+
+`localStorage` 对象中的数据会保留到通过 JavaScript 删除或者用户清除浏览器缓存，并且不受页面刷新影响，也不会因关闭窗口、标签页或重启浏览器而丢失
+
+可以使用 `getItem()` 或直接访问属性名来取得 `localStorage` 上的数据
+
+```js
+const name = localStorage.getItem('name');
+const book = localStorage.book;
+```
+
+使用 `setItem()` 或直接设置属性来设置 `localStorage` 上的数据
+
+```js
+localStorage.setItem('name', 'Nicholas');
+localStorage.book = 'Professional JavaScript';
+```
+
+从 `localStorage` 中删除数据，可以使用 `delete` 操作符或者 `removeItem()` 方法
+
+```js
+delete localStorage.name;
+localStorage.removeItem('book');
+```
+
