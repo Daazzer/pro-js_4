@@ -233,3 +233,7 @@ localStorage.removeItem('book');
 
 > **注意** 在同页面是不会触发 `storage` 事件的，必须要在相同的域不同的页面打开修改 `Storage` 时，才会在其它页面触发
 
+### 25.2.5 限制
+
+不同浏览器给 `localStorage` 和 `sessionStorage` 设置了不同的空间限制，但大多数会限制为每个源 5MB。
+
