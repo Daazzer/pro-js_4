@@ -162,3 +162,74 @@ delete localStorage.name;
 localStorage.removeItem('book');
 ```
 
+### 25.2.4 存储事件
+
+`Storage` 对象，使用属性或 `setItem()` 设置值、使用 `delete` 或 `removeItem()` 删除值，以及每次调用 `clear()` 时，都会在文档上触发 `storage` 事件。
+
+事件对象属性：
+
+- `domain` 存储变化对应的域
+- `key` 被设置或删除的键
+- `newValue` 键被设置的新值，若键被删除则为 `null`
+- `oldValue` 键变化之前的值
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>存储事件</title>
+</head>
+<body>
+  <button id="btn">点我设置值</button>
+
+  <script>
+    const btn = document.querySelector('#btn');
+    // 要再打开新页面才会触发
+    window.addEventListener('storage', event => {
+      console.log(event.domain);
+      console.log(event.key);
+      console.log(event.newValue);
+      console.log(event.oldValue);
+    });
+    btn.addEventListener('click', () => {
+      let count = localStorage.getItem('count');
+      count = Number(count || 0);
+      localStorage.setItem('count', ++count);
+    });
+  </script>
+</body>
+</html>
+```
+
+监听的页面
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>存储事件1</title>
+</head>
+<body>
+  <h2>用于监听存储事件的页面</h2>
+  <script>
+    window.addEventListener('storage', event => {
+      console.log(event.domain);
+      console.log(event.key);
+      console.log(event.newValue);
+      console.log(event.oldValue);
+    });
+  </script>
+</body>
+</html>
+```
+
+此技术可以用于跨页面通讯。
+
+> **注意** 在同页面是不会触发 `storage` 事件的，必须要在相同的域不同的页面打开修改 `Storage` 时，才会在其它页面触发
+
