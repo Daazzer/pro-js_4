@@ -237,3 +237,9 @@ localStorage.removeItem('book');
 
 不同浏览器给 `localStorage` 和 `sessionStorage` 设置了不同的空间限制，但大多数会限制为每个源 5MB。
 
+## 25.3 IndexedDB
+
+Indexed Database API 简称 IndexedDB，方便 JavaScript 对象的存储和获取，同时也支持查询和搜索。
+
+绝大多数 IndexedDB 操作要求加 `onerror` 和 `onsuccess` 事件处理程序来确定输出
+
