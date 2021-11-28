@@ -462,3 +462,56 @@ request.onsuccess = event => {
 
 在没有更多记录时，`onsuccess` 被最后一次调用，此时 `event.target.result` 等于 `null`
 
+### 25.3.6 范围键
+
+范围键对应 `IDBKeyRange` 的实例。
+
+使用 `only()` 方法并传入想要获取的键
+
+```js
+const onlyRange = IDBKeyRange.only('007');
+```
+
+定义结果集的下限。下限表示游标开始的位置，如果想从 `"007"` 后面开始记录，可以再传入第二个参数 `true`
+
+```js
+const lowerRange = IDBKeyRange.lowerBound('007', true);
+```
+
+定义结果集的上限，如果不想包含指定键，可以在第二个参数传入 `true`
+
+```js
+const upperRange = IDBKeyRange.upperBound('ace', true);
+```
+
+同时指定下限和上限，可以使用 `bound()` 方法。接收 4 个参数：下限的键、上限的键、可选的布尔值表示是否跳过下限和可选布尔值表示是否跳过上限
+
+```js
+const boundRange = IDBKeyRange.bound('007', 'ace', false, true);
+```
+
+定义了范围之后，把它传给 `openCursor()` 方法，就可以得到位于该范围内的游标
+
+```js
+const version = 1;
+const request = indexedDB.open('admin', version);
+request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+request.onsuccess = event => {
+  const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        range = IDBKeyRange.bound('007', 'ace'),
+        request = store.openCursor(range);
+  request.onerror = event => console.log('Did not get the object!');
+  request.onsuccess = event => {
+    const cursor = event.target.result;  // IDBCursor 实例，访问对象存储下一条记录
+    if (cursor) {
+      console.log(`Key: ${cursor.key}, Value: ${JSON.stringify(cursor.value)}`);
+      cursor.continue();
+    } else {
+      console.log('Done!');
+    }
+  };
+};
+```
+
