@@ -298,7 +298,7 @@ const transaction = db.transaction(['users', 'anotherStore']);
 const transaction = db.transaction('users', 'readwrite');
 ```
 
-使用 `objectStore()` 方法并传入对象存储的名称以访问特定的对象存储
+有了事务的引用，使用 `objectStore()` 方法并传入对象存储的名称以访问特定的对象存储
 
 - `add()` 添加对象
 - `put()` 更新对象
@@ -316,3 +316,24 @@ request.onsuccess = event => console.log(event.target.result.firstName);
 
 事务对象本身也有事件处理程序：`onerror` 和 `oncomplete`
 
+### 25.3.4 插入对象
+
+- `add()` 插入新值，如果存在同名的键会报错
+- `put()` 更新值，重写该对象
+
+```js
+let request,
+    requests = [];
+users.forEach(user => {
+  request = store.add(user);
+  request.onerror = () => {
+    // 处理错误
+  };
+  request.onsuccess = () => {
+    // 处理成功
+  };
+  requests.push(request);
+});
+```
+
+创建并填充了数据以后，就可以查询对象存储了
