@@ -515,3 +515,10 @@ request.onsuccess = event => {
 };
 ```
 
+### 25.3.7 设置游标方向
+
+`openCursor()` 方法接受两个参数，第一个是 `IDEKeyRange` 的实例，第二个是表示方向的字符串。
+
+- 从前往后的方向传 `"next"`、`"nextunique"`
+- 从后往前的方向传 `"prev"`、`"prevunique"`
+
