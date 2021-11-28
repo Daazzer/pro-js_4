@@ -337,3 +337,128 @@ users.forEach(user => {
 ```
 
 创建并填充了数据以后，就可以查询对象存储了
+
+### 25.3.5 通过游标查询
+
+如果想取得多条数据，则需要在事务中创建一个**游标**，游标是一个指向结果集的指针。与传统数据库查询不同，游标不会事先收集所有结果。相反，游标指向第一个结果，并在接到指令前不会主动查找下一条数据
+
+在对象存储上创调用 `openCursor()` 方法创建游标。返回一个请求，有 `onsuccess` 和 `onerror` 事件
+
+```js
+const version = 1;
+const request = indexedDB.open('admin', version);
+request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+request.onsuccess = event => {
+  const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        request = store.openCursor();
+  request.onerror = event => console.log('Did not get the object!');
+  request.onsuccess = event => console.log(event.target);
+};
+```
+
+`onsuccess` 事件处理程序，可以通过 `event.target.result` 访问对象存储中的下一条记录，保存着一个 `IDBCursor` 实例，有以下属性
+
+- `direction` 字符串常量，表示游标的前进方向以及是否应该遍历所有重复的值。可能值：
+  - `NEXT("next")`
+  - `NEXTUNIQUE("nextunique")`
+  - `PREV("prev")`
+  - `PREVUNIQUE("prevunique")`
+- `key` 对象的键
+- `value` 实际的对象
+- `primaryKey` 游标使用的键。可能是对象键或索引键
+
+游标用于更新个别记录。`update()` 方法使用指定的对象更新当前游标对应的值。返回一个请求，有 `onsuccess` 和 `onerror` 事件
+
+```js
+const version = 1;
+const request = indexedDB.open('admin', version);
+request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+request.onsuccess = event => {
+  const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        request = store.openCursor();
+  request.onerror = event => console.log('Did not get the object!');
+  request.onsuccess = event => {
+    const cursor = event.target.result;  // IDBCursor 实例，访问对象存储下一条记录
+    console.log(event.target);
+    if (cursor) {
+      if (cursor.key === 'foo') {
+        const value = cursor.value;
+        value.password = 'magic';
+        const updateRequest = cursor.update(value);
+        updateRequest.onsuccess = () => {
+          // TODO
+        };
+        updateRequest.onerror = () => {
+          // TODO
+        };
+      }
+    }
+  };
+};
+```
+
+也可以调用 `delete()` 来删除游标位置记录，返回一个请求
+
+```js
+const version = 1;
+const request = indexedDB.open('admin', version);
+request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+request.onsuccess = event => {
+  const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        request = store.openCursor();
+  request.onerror = event => console.log('Did not get the object!');
+  request.onsuccess = event => {
+    const cursor = event.target.result;  // IDBCursor 实例，访问对象存储下一条记录
+    console.log(event.target);
+    if (cursor) {
+      if (cursor.key === 'foo') {
+        const deleteRequest = cursor.delete();  // 请求删除对象
+        deleteRequest.onsuccess = () => {
+          // TODO
+        };
+        deleteRequest.onerror = () => {
+          // TODO
+        };
+      }
+    }
+  };
+};
+```
+
+默认情况下，每个游标只会创建一个请求。要创建另外一个请求，必须调用
+
+- `continue(key)` 移动结果集中的下一条记录。参数 `key` 是可选的。如果没有指定，游标就移动到下一条记录；如果指定了，则移动到指定的键
+- `advance(count)` 游标向前移动指定的 `count` 条记录
+
+两个方法都会重用 `onsuccess` 和 `onerror` 直至不需要
+
+```js
+const version = 1;
+const request = indexedDB.open('admin', version);
+request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+request.onsuccess = event => {
+  const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        request = store.openCursor();
+  request.onerror = event => console.log('Did not get the object!');
+  request.onsuccess = event => {
+    const cursor = event.target.result;  // IDBCursor 实例，访问对象存储下一条记录
+    if (cursor) {
+      console.log(`Key: ${cursor.key}, Value: ${JSON.stringify(cursor.value)}`);
+      cursor.continue();
+    } else {
+      console.log('Done!');
+    }
+  };
+};
+```
+
+在没有更多记录时，`onsuccess` 被最后一次调用，此时 `event.target.result` 等于 `null`
+

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>通过游标查询</title>
+</head>
+<body>
+  <script>
+    const version = 1;
+    const request = indexedDB.open('admin', version);
+    request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+    request.onsuccess = event => {
+      const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        request = store.openCursor();
+      request.onerror = event => console.log('Did not get the object!');
+      request.onsuccess = event => {
+        const cursor = event.target.result;  // IDBCursor 实例，访问对象存储下一条记录
+        console.log(event.target);
+        if (cursor) {
+          if (cursor.key === 'foo') {
+            const value = cursor.value;
+            value.password = 'magic';
+            const updateRequest = cursor.update(value);
+            updateRequest.onsuccess = () => {
+              // TODO
+            };
+            updateRequest.onerror = () => {
+              // TODO
+            };
+          }
+        }
+      };
+    };
+  </script>
+</body>
+</html>
