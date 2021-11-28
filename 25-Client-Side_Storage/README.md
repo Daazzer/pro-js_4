@@ -613,3 +613,17 @@ const transaction = db.transaction('users'),
 store.deleteIndex('username');
 ```
 
+### 25.3.9 并发问题
+
+如果两个不同的浏览器标签同时打开了同一个网页，则有可能出现一个网页尝试升级数据库而另一个尚未就绪的情形。
+
+添加 `onversionchange` 事件处理非常重要。最好的处理就是立即关闭数据库，以便完成版本升级
+
+```js
+const request = indexedDB.open('admin', 1);
+request.onsuccess = event => {
+  const database = event.target.result;
+  database.onversionchange = () => database.close();
+};
+```
+
