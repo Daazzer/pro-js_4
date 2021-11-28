@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>对象存储</title>
+</head>
+<body>
+  <script>
+    const version = 1;
+    const user = {
+      username: '007',
+      firstName: 'James',
+      lastName: 'Bond',
+      password: 'foo'
+    };
+
+    const request = indexedDB.open('admin', version);
+    request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+    request.onsuccess = event => {
+      const db = event.target.result;
+      console.log(db);  // IDBDatabase {}
+    };
+    request.onupgradeneeded = event => {
+      const db = event.target.result;
+
+      if (db.objectStoreNames.contains('users')) {
+        db.deleteObjectStore('users');
+      }
+
+      // keyPath 属性表示应该用作键的存储对象的属性名
+      db.createObjectStore('users', { keyPath: 'username' });
+    };
+  </script>
+</body>
+</html>

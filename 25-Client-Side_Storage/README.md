@@ -261,3 +261,58 @@ request.onsuccess = event => db = event.target.result;
 
 可以通过 `event.target.result` 访问数据库 `IDBDatabase` 实例
 
+### 25.3.2 对象存储
+
+如果数据库还不存在，`open()` 操作会创建一个新数据库，然后触发 `upgradeneeded` 事件；如果数据库存在，而你指定了一个升级的版本号，则会立即触发 `upgradeneeded` 事件。可以为这个事件设置处理程序，并在处理程序中创建数据库模式。
+
+```js
+request.onupgradeneeded = event => {
+  const db = event.target.result;
+
+  if (db.objectStoreNames.contains('users')) {
+    db.deleteObjectStore('users');
+  }
+
+  // keyPath 属性表示应该用作键的存储对象的属性名
+  db.createObjectStore('users', { keyPath: 'username' });
+};
+```
+
+### 25.3.3 事务
+
+创建了对象存储之后，剩下的所有操作都是通过**事务**完成的。通过数据库对象的 `transaction()` 方法创建
+
+```js
+const transaction = db.transaction('users');
+```
+
+访问多个对象存储
+
+```js
+const transaction = db.transaction(['users', 'anotherStore']);
+```
+
+修改访问模式，传入第二个参数。可选值 `"readonly"`、`"readwrite"`、`"versionchange"`
+
+```js
+const transaction = db.transaction('users', 'readwrite');
+```
+
+使用 `objectStore()` 方法并传入对象存储的名称以访问特定的对象存储
+
+- `add()` 添加对象
+- `put()` 更新对象
+- `get()` 获得对象
+- `delete()` 删除对象
+- `clear()` 删除所有对象
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      request = store.get('007');
+request.onerror = event => console.log('Did not get the object!');
+request.onsuccess = event => console.log(event.target.result.firstName);
+```
+
+事务对象本身也有事件处理程序：`onerror` 和 `oncomplete`
+

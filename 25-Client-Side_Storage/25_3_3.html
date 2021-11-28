@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>事务</title>
+</head>
+<body>
+  <script>
+    const version = 1;
+    const user = {
+      username: '007',
+      firstName: 'James',
+      lastName: 'Bond',
+      password: 'foo'
+    };
+
+    const request = indexedDB.open('admin', version);
+    request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+    request.onsuccess = event => {
+      const db = event.target.result,
+        transaction = db.transaction('users'),
+        store = transaction.objectStore('users'),
+        request = store.get('007');
+      request.onerror = event => console.log('Did not get the object!');
+      request.onsuccess = event => console.log(event.target.result.firstName);
+    };
+  </script>
+</body>
+</html>
