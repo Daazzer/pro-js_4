@@ -522,3 +522,94 @@ request.onsuccess = event => {
 - 从前往后的方向传 `"next"`、`"nextunique"`
 - 从后往前的方向传 `"prev"`、`"prevunique"`
 
+### 25.3.8 索引
+
+创建索引，首先要取得对象存储的引用，然后调用 `createIndex()`，返回一个 `IDBIndex` 实例，在对象存储上调用 `index()` 方法也可以得到同一个实例
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      index = store.createIndex('username', 'username', { unique: true });
+```
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      index = store.index('username');
+```
+
+可以 索引上使用 `openCursor()` 方法创建新游标，其 `result.key` 属性中保存的是索引键，而不是主键
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      index = store.index('username'),
+      request = index.openCursor();
+request.onsuccess = event => {
+  // TODO...
+};
+```
+
+使用 `openKeyCursor()` 也可以在索引上创建特殊游标，只返回每条记录主键。`event.target.result.key` 是索引键，`event.target.result.value` 是主键而不是整个记录
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      index = store.index('username'),
+      request = index.openKeyCursor();
+request.onsuccess = event => {
+  // TODO...
+};
+```
+
+使用 `get()` 方法并传入索引键通过索引取得单条记录
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      index = store.index('username'),
+      request = index.get('007');
+request.onsuccess = event => {
+  // TODO...
+};
+```
+
+使用 `getKey()` 方法。取得给定索引键的主键
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      index = store.index('username'),
+      request = index.getKey('007');
+request.onsuccess = event => {
+  // TODO...
+};
+```
+
+任何时候，都可以使用 `IDBIndex` 对象的下列属性取得索引的相关信息
+
+- `name` 索引的名称
+- `keyPath` 调用 `createIndex()` 时传入的属性路径
+- `objectStore` 索引对应的对象存储
+- `unique` 表示索引键是否唯一的布尔值
+
+对象存储的 `indexNames` 属性，保存着与之相关索引的名称
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users'),
+      indexNames = store.indexNames;
+for (const indexName in indexNames) {
+  const index = store.index(indexName);
+  console.log(`Index name: ${index.name} KeyPath: ${index.keyPath} Unique: ${index.unique}`);
+}
+```
+
+在对象存储上调用 `deleteIndex()` 方法并传入索引的名称可以删除索引
+
+```js
+const transaction = db.transaction('users'),
+      store = transaction.objectStore('users');
+store.deleteIndex('username');
+```
+
