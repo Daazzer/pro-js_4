@@ -243,3 +243,21 @@ Indexed Database API 简称 IndexedDB，方便 JavaScript 对象的存储和获�
 
 绝大多数 IndexedDB 操作要求加 `onerror` 和 `onsuccess` 事件处理程序来确定输出
 
+### 25.3.1 数据库
+
+IndexedDB 使用对象存储
+
+使用 IndexedDB 数据库的第一步是调用 `indexedDB.open()`，传入一个要打开的数据库名称，如果给定名称的数据库已存在，则会发送一个打开它的请求；如果不存在，则会发送创建并打开这个数据库的请求。返回一个 `IDBRequest` 的实例，可以在这个实例上添加 `onerror` 和 `onsuccess` 事件处理器
+
+```js
+let db, request, version = 1;
+
+request = indexedDB.open('admin', version);
+request.onerror = event => console.log(`Failed to open: ${event.target.errorCode}`);
+request.onsuccess = event => db = event.target.result;
+```
+
+`event.target` 都指向 `request` 请求
+
+可以通过 `event.target.result` 访问数据库 `IDBDatabase` 实例
+
