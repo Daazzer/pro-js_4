@@ -84,3 +84,53 @@ if (loadCondition) {
 
 对静态分析友好的模块系统可以让模块打包系统更容易将代码处理为较少的文件。
 
+### 26.1.8 循环依赖
+
+CommonJS、AMD 和 ES6 在内的所有模块系统都支持循环依赖。
+
+在下面的模块代码中（其中使用了模块中立的伪代码），任何模块都可以作为入口模块，即使依赖 图中存在循环依赖：
+
+```js
+require('./moduleD');
+require('./moduleB');
+
+console.log('moduleA');
+require('./moduleA');
+require('./moduleC');
+
+console.log('moduleB');
+require('./moduleB');
+require('./moduleD');
+
+console.log('moduleC');
+
+require('./moduleA');
+require('./moduleC');
+
+console.log('moduleD'); 
+```
+
+修改主模块中用到的模块会改变依赖加载顺序。
+
+如果 `moduleA` 最先加载，则会按以下顺序输出
+
+```js
+moduleB
+moduleC
+moduleD
+moduleA
+```
+
+![图26-2](./i/26-2.svg)
+
+如果 `moduleC` 最先加载，则会按以下顺序输出
+
+```js
+moduleD
+moduleA
+moduleB
+moduleC
+```
+
+![图26-3](./i/26-3.svg)
+
