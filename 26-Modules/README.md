@@ -134,3 +134,103 @@ moduleC
 
 ![图26-3](./i/26-3.svg)
 
+## 26.2 凑合的模块系统
+
+ES6 之前会使用函数作用域和立即调用函数表达式（IIFE，Immediately Invoked Function Expression）将模块封装在匿名闭包中
+
+ ```js
+ (function() {
+   // 私有 Foo 模块的代码
+   console.log('bar');
+ })();
+ // bar
+ ```
+
+如果把这个模块的返回值赋给一个变量，那么实际上就为模块创建了命名空间
+
+为了暴露公共 API，模块 IIFE 会返回一个对象，其属性就是模块命名空间中的公共成员
+
+```js
+var Foo = (function() {
+  return {
+    bar: 'baz',
+    baz: function() {
+      console.log(this.bar);
+    }
+  };
+})();
+```
+
+还有一种模式叫作“泄露模块模式”（revealing module pattern）。这种模式只返回一个对象， 其属性是私有数据和成员的引用
+
+```js
+var Foo = (function() {
+  var bar = 'baz';
+  var baz = function() {
+    console.log(bar);
+  };
+
+  return {
+    bar: bar,
+    baz: baz
+  };
+})();
+```
+
+在模块内部也可以定义模块，这样可以实现命名空间嵌套
+
+```js
+var Foo = (function() {
+  return {
+    bar: 'baz'
+  };
+})();
+Foo.baz = (function() {
+  return {
+    qux: function() {
+      console.log('baz');
+    }
+  };
+})();
+console.log(Foo.bar); // 'baz'
+Foo.baz.qux(); // 'baz' 
+```
+
+为了让模块正确使用外部的值，可以将它们作为参数传给 IIFE
+
+```js
+var globalBar = 'baz';
+var Foo = (function(bar) {
+  return {
+    bar: bar,
+    baz: function() {
+      console.log(bar);
+    }
+  };
+})(globalBar);
+console.log(Foo.bar); // 'baz' 
+```
+
+因为这里的模块实现其实就是在创建 JavaScript 对象的实例，所以完全可以在定义之后再扩展模块
+
+无论模块是否存在，配置模块扩展以执行扩展也很有用
+
+```js
+// 扩展 Foo 以增加新方法
+var Foo = (function(FooModule) {
+  FooModule.baz = function() {
+    console.log(FooModule.bar);
+  };
+  return FooModule;
+})(Foo || {});
+// 扩展 Foo 以增加新数据
+var Foo = (function(FooModule) {
+  FooModule.bar = 'baz';
+  return FooModule;
+})(Foo || {});
+console.log(Foo.bar); // 'baz'
+Foo.baz(); // 'baz'
+```
+
+自己动手写模块系统确实非常有意思，但实际开发中并不建议这么做，因为不够可靠
+
