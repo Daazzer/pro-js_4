@@ -238,3 +238,93 @@ Foo.baz(); // 'baz'
 
 在 ES6 原生支持模块之前，需要单独的模块工具把这些模块语法与 JavaScript 运行时连接起来。这里的模块语法和连接方式有不同的表现形式，通常需要在浏览器中额外加载库或者在构建时完成预处理。
 
+### 26.3.1 CommonJS
+
+CommonJS 规范概述了同步声明依赖的模块定义。这个规范主要用于在服务器端实现模块化代码组织，但也可用于定义在浏览器中使用的模块依赖。CommonJS 模块语法不能在浏览器中直接运行。
+
+CommonJS 模块定义需要使用 `require()` 指定依赖，而使用 `exports` 对象定义自己的公共 API
+
+```js
+var moduleB = require('./moduleB');
+module.exports = {
+  stuff: moduleB.doStuff();
+}; 
+```
+
+在 Node.js 中，模块标识符可能指向文件，也可能指向包含 index.js 文件的目录
+
+请求模块会加载相应模块，而把模块赋值给变量也非常常见，但赋值给变量不是必需的。调用 `require()` 意味着模块会原封不动地加载进来：
+
+```js
+console.log('moduleA');
+require('./moduleA');  // "moduleA" 
+```
+
+无论一个模块在 `require()` 中被引用多少次，模块永远是单例。这是因为无论请求多少次，模块只会被加载一次。
+
+```js
+console.log('moduleA');
+var a1 = require('./moduleA');
+var a2 = require('./moduleA');
+console.log(a1 === a2); // true 
+```
+
+模块第一次加载后会被缓存，后续加载会取得缓存的模块（如下代码所示）。模块加载顺序由依赖图决定。
+
+```js
+console.log('moduleA');
+require('./moduleA');
+require('./moduleB');  // "moduleA"
+require('./moduleA'); 
+```
+
+`require()` 可以以编程方式嵌入在模块中，以下是动态加载依赖
+
+```js
+console.log('moduleA');
+if (loadCondition) {
+  require('./moduleA');
+} 
+```
+
+在 Node.js 中可以使用绝对或相对路径，也可以使用安装在 `node_modules` 目录中依赖的模块标识符。
+
+`module.exports` 对象非常灵活，有多种使用方式。如果只想导出一个实体，可以直接给  `module.exports` 赋值：
+
+```js
+module.exports = 'foo';
+```
+
+可以使用对象字面量赋值或每个属性赋一次值来实现
+
+```js
+module.exports = {
+  a: 'A',
+  b: 'B'
+};
+
+// 或者
+module.exports.a = 'A';
+module.exports.b = 'B'; 
+```
+
+模块的一个主要用途是托管类定义（这里使用 ES6 风格的类定义，不过 ES5 风格也兼容）
+
+```js
+class A {}
+module.exports = A;
+
+// 在别的文件
+var A = require('./moduleA');
+var a = new A();
+```
+
+也可以将类实例作为导出值：
+
+```js
+class A {}
+module.exports = new A();
+```
+
+为了以正确的顺序打包模块，需要事先生成全面的依赖图
+
