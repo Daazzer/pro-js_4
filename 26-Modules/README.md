@@ -328,3 +328,38 @@ module.exports = new A();
 
 为了以正确的顺序打包模块，需要事先生成全面的依赖图
 
+### 26.3.2 异步模块定义
+
+遵循 AMD 规范的库：[RequireJs](https://requirejs.org/)
+
+异步模块定义（AMD，Asynchronous Module Definition）的模块定义系统以浏览器为目标执行环境
+
+AMD 的一般策略是让模块声明自己的依赖，而运行在浏览器中的模块系统会按需获取依赖，并在依赖加载完成后立即执行依赖它们的模块
+
+与 CommonJS 不同，AMD 支持可选地为模块指定字符串标识符。
+
+```js
+// ID 为'moduleA'的模块定义。moduleA 依赖 moduleB，
+// moduleB 会异步加载
+define('moduleA', ['moduleB'], function(moduleB) {
+  return {
+    stuff: moduleB.doStuff();
+  };
+});
+```
+
+AMD 也支持 `require` 和 `exports` 对象
+
+```js
+define('moduleA', ['require', 'exports'], function(require, exports) {
+  var moduleB = require('moduleB');
+  exports.stuff = moduleB.doStuff();
+});
+// 动态依赖也是通过这种方式支持的
+define('moduleA', ['require'], function(require) {
+  if (condition) {
+    var moduleB = require('moduleB');
+  }
+});
+```
+
