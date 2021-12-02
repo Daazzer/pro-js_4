@@ -363,3 +363,34 @@ define('moduleA', ['require'], function(require) {
 });
 ```
 
+### 26.3.3 通用模块定义
+
+通用模块定义（UMD，Universal Module Definition）规范可用于创建 CommonJS 和 AMD 都可以使用的模块代码。
+
+UMD 定义的模块会在启动时检测要使用哪个模块系统，然后进行适当配置，并把所有逻辑包装在一个立即调用的函数表达式（IIFE）中。
+
+```js
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD 注册为匿名模块
+    define(['moduleB'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node 不支持严格 CommonJS
+    // 但可以在 Node 这样支持 module.exports 的
+    // 类 CommonJS 环境下使用
+    module.exports = factory(require(' moduleB '));
+  } else {
+    // 浏览器全局上下文（root 是 window）
+    root.returnExports = factory(root.moduleB);
+  }
+}(this, function (moduleB) {
+  // 以某种方式使用 moduleB
+  // 将返回值作为模块的导出
+  // 这个例子返回了一个对象
+  // 但是模块也可以返回函数作为导出值
+  return {};
+}));
+```
+
+开发时不应该期望手写这个包装函数，它应该由构建工具自动生成。开发者只需专注于模块的内容，而不必关心这些样板代码。
+
