@@ -402,3 +402,55 @@ UMD 定义的模块会在启动时检测要使用哪个模块系统，然后进�
 
 ES6 引入了模块规范，这个规范全方位简化了之前出现的模块加载器，原生浏览器支持意味着加载器及其他预处理都不再必要。
 
+### 26.4.1 模块标签及定义
+
+带有 `type="module"` 属性的 `<script>` 标签会告诉浏览器相关代码应该作为模块执行
+
+```html
+<script type="module">
+ // 模块代码
+</script>
+<script type="module" src="path/to/myModule.js"></script> 
+```
+
+JavaScript 模块文件没有专门的内容类型。
+
+与传统脚本不同，所有模块都会像 `<script defer>` 加载的脚本一样按顺序执行。解析到 `<script type="module">` 标签后会立即下载模块文件，但执行会延迟到文档解析完成。
+
+`<script type="module">` 在页面中出现的顺序就是它们执行的顺序。
+
+```html
+<!-- 第二个执行 -->
+<script type="module"></script>
+<!-- 第三个执行 -->
+<script type="module"></script>
+<!-- 第一个执行 -->
+<script></script> 
+
+<!-- 另外，可以改为加载外部 JS 模块定义 -->
+<!-- 第二个执行 -->
+<script type="module" src="module.js"></script>
+<!-- 第三个执行 -->
+<script type="module" src="module.js"></script>
+<!-- 第一个执行 -->
+<script></script> 
+```
+
+也可以给模块标签添加 `async` 属性。模块不会等待文档完成解析才执行。
+
+同一个模块无论在一个页面中被加载多少次，实际上都只会加载一次
+
+```html
+<!-- moduleA 在这个页面上只会被加载一次 -->
+<script type="module">
+  import './moduleA.js';
+</script>
+<script type="module">
+  import './moduleA.js';
+</script>
+<script type="module" src="./moduleA.js"></script>
+<script type="module" src="./moduleA.js"></script> 
+```
+
+嵌入页面的模块定义中的代码不能被其他模块 `import`，只有通过外部文件加载的模块才可以使用 `import` 加载。因此，嵌入模块只适合作为入口模块。
+
