@@ -775,3 +775,44 @@ module.then(module => {
 })();
 ```
 
+### 26.4.6 模块转移导出
+
+模块导入的值可以直接通过管道转移到导出
+
+```js
+export * from './foo.js';
+```
+
+使用此语法也要注意导出名称是否冲突
+
+```js
+// foo.js
+export const baz = 'origin:foo';
+
+// bar.js
+export * from './foo.js';
+export const baz = 'origin:bar';
+
+// main.js
+import { baz } from './bar.js';
+console.log(baz); // origin:bar
+```
+
+也可以明确列出要从外部模块转移本地导出的值。该语法支持使用别名
+
+```js
+export { foo, bar as myBar } from './foo.js';
+```
+
+外部模块的默认导出可以重用为当前模块的默认导出
+
+```js
+export { default } from './foo.js';
+```
+
+在重新导出时，还可以把导入的命名变量改为默认导出
+
+```js
+export { foo as default } from './foo.js';
+```
+
