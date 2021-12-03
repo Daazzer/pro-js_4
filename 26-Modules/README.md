@@ -816,3 +816,13 @@ export { default } from './foo.js';
 export { foo as default } from './foo.js';
 ```
 
+### 26.4.7 工作者模块
+
+ECMAScript 6 模块与 `Worker` 实例完全兼容。在实例化时，可以给工作者传入一个指向模块文件的路径，与传入常规脚本文件一样。`Worker` 构造函数接收第二个参数，用于说明传入的是模块文件。
+
+```js
+// 第二个参数默认为{ type: 'classic' }
+const scriptWorker = new Worker('scriptWorker.js');
+const moduleWorker = new Worker('moduleWorker.js', { type: 'module' });
+```
+
