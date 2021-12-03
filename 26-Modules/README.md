@@ -715,3 +715,63 @@ import { default as foo, bar, baz } from './foo.js';
 import foo, * as Foo from './foo.js';
 ```
 
+#### 26.4.5.1 动态导入
+
+[动态导入-EN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports)
+
+[动态导入-ZH-CN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/import#%E5%8A%A8%E6%80%81import)
+
+在希望在条件语句中或按需加载模块的情况下，可以改用动态导入。以下是一些可能需要使用动态导入的原因：
+
+- 静态导入会大大降低代码的加载速度，并且您需要导入的代码的可能性很小，或者直到以后才需要。
+- 静态导入时，会大大增加程序的内存使用量，并且很少需要导入代码。
+- 当您要导入的模块在加载时不存在时
+- 需要动态导入字符串路径，例如模板字符串。（静态导入仅支持静态字符串路径。）
+- 当导入的模块具有副作用时，并且您不希望有这些副作用，除非某些条件成立。（建议在模块中不要有任何副作用，但是有时您不能在模块依赖性中控制它）
+
+关键字 `import` 可以像调用函数一样来动态的导入模块。以这种方式调用，将返回一个 `Promise`，也就是异步导入模块
+
+```js
+import('/modules/my-module.js').then((module) => {
+  // 用模块来做其它事
+});
+```
+
+同时也支持 `await` 关键字
+
+```js
+let module = await import('/modules/my-module.js');
+```
+
+例子
+
+```js
+// module.js
+export let a = 1;
+
+export default function (num1, num2) {
+  return num1 + num2;
+}
+```
+
+异步 `Promise` 使用
+
+```js
+const module = import('./module.js');
+
+module.then(module => {
+  const result = module.default(module.a, module.a);
+  console.log(result);
+});
+```
+
+或者解构赋值来使用
+
+```js
+(async () => {
+  // 因为 await 后面跟着的是一个 promise，则返回 fulfilled 值，而这里的 fullfilled 值正好就是一个模块对象，包含模块的所有导出绑定值（理解为 then 中的第一个参数结果）
+  const { default: sum, a } = await import('./module.js');
+  console.log(sum(a, a));
+})();
+```
+
