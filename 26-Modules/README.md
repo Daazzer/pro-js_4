@@ -623,3 +623,95 @@ export const foo = 'foo' as myFoo;
 
 > **注意** 一般来说，声明、赋值和导出标识符最好分开。这样就不容易搞错了，同时也可以让 `export` 语句集中在一块
 
+### 26.4.5 模块导入
+
+模块可以通过使用 `import` 关键字使用其他模块导出的值。`import` 必须出现在模块的顶级（作用域顶级）
+
+```js
+// 允许
+import foo;
+// 不允许
+if (condition) {
+  import foo;
+}
+```
+
+是推荐把导入语句放在模块顶部
+
+```js
+// 允许
+import { foo } from './fooModule.js';
+console.log(foo); // 'foo'
+// 允许，但应该避免
+console.log(foo); // 'foo'
+import { foo } from './fooModule.js';
+```
+
+模块标识符可以是相对于当前模块的相对路径，也可以是指向模块文件的绝对路径。它必须是纯字 符串，不能是动态计算的结果
+
+如果在浏览器中通过标识符原生加载模块，则文件必须带有 `.js` 扩展名，不然可能无法正确解析
+
+```js
+// 解析为/components/bar.js
+import bar from './bar.js';
+// 解析为/bar.js
+import bar from '../bar.js';
+// 解析为/bar.js
+import bar from '/bar.js';
+```
+
+可以只通过路径加载模块
+
+```js
+import './foo.js';
+```
+
+导入对模块而言是只读的，不可以直接修改导出值，使用 `*` 批量导入的模块，赋值给别名的命名导出就好像使用 `Object.freeze()` 冻结过一样
+
+```js
+import foo, * as Foo './foo.js';
+foo = 'foo'; // 错误
+Foo.foo = 'foo'; // 错误
+foo.bar = 'bar'; // 允许
+```
+
+命名导出可以使用 `*` 批量获取并赋值给保存导出集合的别名，而无须列出每个标识符
+
+```js
+const foo = 'foo', bar = 'bar', baz = 'baz';
+export { foo, bar, baz };
+import * as Foo from './foo.js';
+
+console.log(Foo.foo); // foo
+console.log(Foo.bar); // bar
+console.log(Foo.baz); // baz
+```
+
+使用 `import` 子句可以为导入的值指定别名
+
+```js
+import { foo, bar, baz as myBaz } from './foo.js';
+
+console.log(foo); // foo
+console.log(bar); // bar
+console.log(myBaz); // baz
+```
+
+可以使用 `default` 关键字并提供别名来导入。也可以不使用大括号，此时指定的标识符就是默认导出的别名
+
+```js
+// 等效
+import { default as foo } from './foo.js';
+import foo from './foo.js';
+```
+
+同时导入命名导出和默认导出，可以使用标识符导入或者 `*` 加默认标识符并存
+
+```js
+import foo, { bar, baz } from './foo.js';
+
+import { default as foo, bar, baz } from './foo.js';
+
+import foo, * as Foo from './foo.js';
+```
+
