@@ -826,3 +826,20 @@ const scriptWorker = new Worker('scriptWorker.js');
 const moduleWorker = new Worker('moduleWorker.js', { type: 'module' });
 ```
 
+### 26.4.8 向后兼容
+
+对于想要尽可能在浏览器中原生使用 ECMAScript 6 模块的用户，可以提供两个版本的代码： 基于模块的版本与基于脚本的版本。如果嫌麻烦，可以使用第三方模块系统（如 SystemJS）或在构建时将 ES6 模块进行转译，这都是不错的方案。
+
+更好、更优雅的方案是利用脚本的 `type` 属性和 `nomodule` 属性
+
+浏览器在遇到 `<script>` 标签上无法识别的 `type` 属性时会拒绝执行其内容。对于不支持模块的浏览器，这意味着 `<script type="module">` 不会被执行，原生支持 ECMAScript 6 模块的浏览器也会识别 `nomodule` 属性。此属性通知支持 ES6 模块的浏览器不执行脚本。下面代码会生成一个设置，在这个设置中，支持模块和不支持模块的浏览器都只会执行一段脚本
+
+```html
+<!-- 支持模块的浏览器会执行这段脚本 -->
+<!-- 不支持模块的浏览器不会执行这里的代码 -->
+<script type="module" src="module.js"></script>
+<!-- 支持模块的浏览器不会执行这段脚本 -->
+<!-- 不支持模块的浏览器会执行这里的代码 -->
+<script nomodule src="script.js"></script>
+```
+
