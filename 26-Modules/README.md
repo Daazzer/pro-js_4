@@ -491,3 +491,135 @@ ES6 模块系统增加了一些新行为
 
 与 `<script type="module">` 关联或者通过 `import` 语句加载的 JavaScript 文件会被认定为模块
 
+### 26.4.4 模块导出
+
+ES6 模块支持两种导出：命名导出和默认导出。
+
+`export` 关键字用于声明一个值为命名导出。导出语句必须在模块顶级，不能嵌套在某个块中
+
+```js
+// 允许
+export foo;
+// 不允许
+if (condition) {
+  export foo;
+}
+```
+
+`export` 关键字在模块中出现的顺序没有限制。`export` 语句甚至可以出现在它要导出的值之前
+
+```js
+// 允许
+const foo = 'foo';
+export { foo };
+// 允许
+export const foo = 'foo';
+// 允许，但应该避免
+export { foo };
+const foo = 'foo'; 
+```
+
+行内命名导出
+
+```js
+export const foo = 'foo';
+// 或者
+const foo = 'foo';
+export { foo };
+```
+
+导出时也可以提供别名，别名必须在 `export` 子句的大括号语法中指定，导入这个模块的外部模块可以使用 `myFoo` 访问导出的值
+
+```js
+const foo = 'foo';
+export { foo as myFoo };
+```
+
+可以在一个模块中声明多个命名导出。导出的值可以在导出语句中声明，也可以在导出之前声明
+
+```js
+export const foo = 'foo';
+export const bar = 'bar';
+export const baz = 'baz';
+```
+
+部分或全部导出值指定别名
+
+```js
+const foo = 'foo';
+const bar = 'bar';
+const baz = 'baz';
+export { foo, bar as myBar, baz };
+```
+
+**默认导出**使用 `default` 关键字将一个值声明为默认导出，每个模块只能有一个默认导出。重复的默认导出会导致 `SyntaxError`
+
+```js
+const foo = 'foo';
+export default foo;
+```
+
+使用命名导出语法的 `default` 关键字
+
+```js
+const foo = 'foo';
+// 等同于 export default foo;
+export { foo as default };
+```
+
+ES6 支持在一个模块中同时定义这两种导出
+
+```js
+const foo = 'foo';
+const bar = 'bar';
+export { bar };
+export default foo;
+// 或者
+const foo = 'foo';
+const bar = 'bar';
+export { foo as default, bar };
+```
+
+ES6 规范对不同形式的 `export` 语句规定了限制
+
+```js
+// 命名行内导出
+export const baz = 'baz';
+export const foo = 'foo', bar = 'bar';
+export function foo() {}
+export function* foo() {}
+export class Foo {}
+
+// 命名子句导出
+export { foo };
+export { foo, bar };
+export { foo as myFoo, bar };
+
+// 默认导出
+export default 'foo';
+export default 123;
+export default /[a-z]*/;
+export default { foo: 'foo' };
+export { foo, bar as default };
+export default foo
+export default function() {}
+export default function foo() {}
+export default function*() {}
+export default class {}
+```
+
+会导致错误的不同形式
+
+```js
+// 行内默认导出中不能出现变量声明
+export default const foo = 'bar';
+
+// 只有标识符可以出现在 export 子句中
+export { 123 as foo };
+
+// 别名只能在 export 子句中出现
+export const foo = 'foo' as myFoo;
+```
+
+> **注意** 一般来说，声明、赋值和导出标识符最好分开。这样就不容易搞错了，同时也可以让 `export` 语句集中在一块
+
