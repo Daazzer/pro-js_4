@@ -62,3 +62,11 @@
 
 `WorkerGlobalScope` 还增加了新的全局方法 `importScripts()`，只在工作者线程内可用
 
+#### 2.WorkerGlobalScope 的子类
+
+每种类型的工作者线程都使用了自己特定的全局对象，这继承自 `WorkerGlobalScope`
+
+- 专用工作者线程使用 `DedicatedWorkerGlobalScope`
+- 共享工作者线程使用 `SharedWorkerGlobalScope`
+- 服务工作者线程使用 `ServiceWorkerGlobalScope`
+
