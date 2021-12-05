@@ -26,4 +26,5 @@
 - [第 24 章 网络请求与远程资源](./24-Network_Requests_and_Remote_Resources)
 - [第 25 章 客户端存储](./25-Client-Side_Storage)
 - [第 26 章 模块](./26-Modules)
+- [第 27 章 工作者线程](./27-Workers)
 
