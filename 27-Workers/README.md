@@ -35,3 +35,30 @@
 
 在工作者线程内部，没有 `window` 的概念。这里的全局对象是 `WorkerGlobalScope` 的实例，通过 `self` 关键字暴露出来。
 
+#### 1.WorkerGlobalScope 属性和方法
+
+`self` 上可用的属性是 `window` 对象上属性的严格子集。其中有些属性会返回特定于工作者线程的版本。
+
+- `navigator` 返回与工作者线程关联的 `WorkerNavigator`
+- `self` 返回 `WorkerGlobalScope` 对象
+- `location` 返回与工作者线程关联的 `WorkerLocation`
+- `performance` 返回（只包含特定属性和方法的）`Performance` 对象
+- `console` 返回与工作者线程关联的 `Console` 对象；对 API 没有限制
+- `caches` 返回与工作者线程关联的 `CacheStorage` 对象；对 API 没有限制
+- `indexedDB` 返回 `IDBFactory` 对象
+- `isSecureContext` 返回布尔值，表示工作者线程上下文是否安全
+- `origin` 返回 `WorkerGlobalScope` 的源
+
+暴露的一些方法
+
+- `atob()`
+- `btoa()`
+- `clearInterval()`
+- `clearTimeout()`
+- `createImageBitmap()`
+- `fetch()`
+- `setInterval()`
+- `setTimeout()`
+
+`WorkerGlobalScope` 还增加了新的全局方法 `importScripts()`，只在工作者线程内可用
+
