@@ -140,3 +140,46 @@ console.log(worker);
 - `postMessage()` 用于通过异步消息事件向工作者线程发送信息
 - `terminate()` 用于立即终止工作者线程。没有为工作者线程提供清理的机会，脚本会突然停止
 
+#### 4.DedicatedWorkerGlobalScope
+
+在专用工作者线程内部，全局作用域是 `DedicatedWorkerGlobalScope` 的实例。因为这继承自 `WorkerGlobalScope`，所以包含它的所有属性和方法。工作者线程可以通过 `self` 关键字访问该全局作用域
+
+```js
+// globalScopeWorker.js
+console.log('inside worker: ', self);
+```
+
+```js
+// main.js
+const worker = new Worker('./globalScopeWorker.js');
+
+console.log('created worker: ', worker);
+// created worker:  Worker {onmessage: null, onerror: null}
+// inside worker:  DedicatedWorkerGlobalScope {name: '', onmessage: null, onmessageerror: null, cancelAnimationFrame: ƒ, close: ƒ, …}
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DedicatedWorkerGlobalScope</title>
+  </head>
+  <body>
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
+因为工作者线程具有不可忽略的启动延迟，所以即使 `Worker` 对象存在，工作者线程的日志也会在主线程的日志之后打印出来。
+
+`DedicatedWorkerGlobalScope` 在 `WorkerGlobalScope` 基础上增加了以下属性和方法
+
+- `name` 可以提供给 `Worker` 构造函数的一个可选的字符串标识符
+- `postMessage()` 与 `worker.postMessage()` 对应的方法，用于从工作者线程内部向父上下文发送消息
+- `close()` 与 `worker.terminate()` 对应的方法，用于立即终止工作者线程。没有为工作者线程提供清理的机会，脚本会突然停止
+- `importScripts()` 用于向工作者线程中导入任意数量的脚本
+
