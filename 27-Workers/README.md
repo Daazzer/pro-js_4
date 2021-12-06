@@ -78,3 +78,34 @@
 
 JavaScript 线程的各个方面，包括生命周期管理、代码路径和输入/输出，都由初始化线程时提供的脚本来控制。该脚本也可以再请求其他脚本，但一个线程总是从一个脚本源开始。
 
+#### 1.创建专用工作者线程
+
+把文件路径提供给 Worker 构造函数，然后构造函数再在后台异步加载脚本并实例化工作者线程。
+
+```js
+// emptyWorker.js
+console.log('emptyWorker');
+```
+
+```js
+// main.js
+const worker = new Worker('./emptyWorker.js');
+console.log(worker);
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建专用工作者线程</title>
+  </head>
+  <body>
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
