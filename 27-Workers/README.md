@@ -183,3 +183,11 @@ console.log('created worker: ', worker);
 - `close()` 与 `worker.terminate()` 对应的方法，用于立即终止工作者线程。没有为工作者线程提供清理的机会，脚本会突然停止
 - `importScripts()` 用于向工作者线程中导入任意数量的脚本
 
+### 27.2.2 专用工作者线程与隐式 MessagePorts
+
+专用工作者线程的 `Worker` 对象和 `DedicatedWorkerGlobalScope` 与 `MessagePorts` 有一些相同接口处理程序和方法：`onmessage`、`onmessageerror`、`close()` 和 `postMessage()`
+
+父上下文中的 `Worker` 对象和 `DedicatedWorkerGlobalScope` 实际上融合了 `MessagePort`，并在自己的接口中分别暴露了相应的处理程序和方法。
+
+也有不一致的地方：比如 `start()` 和 `close()` 约定。专用工作者线程会自动发送排队的消息，因此 `start()` 也就没有必要了。另外，`close()` 在专用工作者线程的上下文中没有意义，因为这样关闭 `MessagePort` 会使工作者线程孤立。因此，在工作者线程内部调用 `close()`（或在外部调用 `terminate()`）不仅会关闭 `MessagePort`，也会终止线程。
+
