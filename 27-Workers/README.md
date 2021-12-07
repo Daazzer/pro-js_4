@@ -566,3 +566,49 @@ throw new Error('foo');
 ### 27.2.9 与专用工作者线程通信
 
 与工作者线程的通信都是通过异步消息完成的
+
+#### 1.使用 postMessage()
+
+使用 `postMessage()` 传递序列化的消息
+
+```js
+// factorialWorker.js
+function factorial(n) {
+  let result = 1;
+  while (n) { result *= n--; }
+  return result;
+}
+
+self.onmessage = ({ data }) => {
+  self.postMessage(`${data}! = ${factorial(data)}`);
+};
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 postMessage()</title>
+  </head>
+  <body>
+    <script>
+      const factorialWorker = new Worker('./factorialWorker.js');
+
+      factorialWorker.onmessage = ({ data }) => console.log(data);
+
+      factorialWorker.postMessage(5);
+      factorialWorker.postMessage(7);
+      factorialWorker.postMessage(10);
+
+      // 5! = 120
+      // 7! = 5040
+      // 10! = 3628800
+    </script>
+  </body>
+</html>
+```
+
