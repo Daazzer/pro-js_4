@@ -386,3 +386,92 @@ setTimeout(() => {
 
 > **注意** 像这样序列化函数有个前提，就是函数体内不能使用通过闭包获得的引用，也包括全局变量，比如 `window`，因为这些引用在工作者线程中执行时会出错。
 
+### 27.2.6 在工作者线程中动态执行脚本
+
+可以使用 `importScripts()` 方法通过编程方式加载和执行任意脚本。该方法可用于全局 `Worker` 对象。这个方法会加载脚本并按照加载顺序同步执行。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在工作者线程中动态执行脚本</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js');
+      // importing scripts
+      // scriptA executes
+      // scriptB executes
+      // scripts imported
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+console.log('importing scripts');
+
+importScripts('./scriptA.js', './scriptB.js');
+
+console.log('scripts imported');
+```
+
+```js
+// scriptA.js
+console.log('scriptA executes');
+```
+
+```js
+// scriptB.js
+console.log('scriptB executes');
+```
+
+脚本加载受到常规 CORS 的限制，但在工作者线程内部可以请求来自任何源的脚本。这里的脚本导入策略类似于使用生成的 `<script>` 标签动态加载脚本。在这种情况下，所有导入的脚本也会共享作用域。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在工作者线程中动态执行脚本</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js', { name: 'foo' });
+      // importing scripts in foo with bar
+      // scriptA executes in foo with bar
+      // scriptB executes in foo with bar
+      // scripts imported
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+const globalToken = 'bar';
+console.log(`importing scripts in ${self.name} with ${globalToken}`);
+
+importScripts('./scriptA.js', './scriptB.js');
+
+console.log('scripts imported');
+```
+
+```js
+// scriptA.js
+console.log(`scriptA executes in ${self.name} with ${globalToken}`);
+```
+
+```js
+// scriptB.js
+console.log(`scriptB executes in ${self.name} with ${globalToken}`);
+```
+
