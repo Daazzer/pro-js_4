@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>可转移对象</title>
+</head>
+<body>
+  <script>
+    const worker = new Worker('./27_2_10_2_worker.js');
+
+    // 创建 32 位缓冲区
+    const arrayBuffer = new ArrayBuffer(32);
+
+    console.log(`page's buffer size: ${arrayBuffer.byteLength}`);  // 32
+
+    worker.postMessage(arrayBuffer);
+
+    console.log(`page's buffer size: ${arrayBuffer.byteLength}`);  // 32
+  </script>
+</body>
+</html>

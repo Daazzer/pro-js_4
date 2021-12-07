@@ -872,3 +872,90 @@ channel.onmessage = ({ data }) => {
 
 > **注意** 结构化克隆算法在对象比较复杂时会存在计算性消耗。因此，实践中要尽可能避免过大、过多的复制
 
+#### 2.可转移对象
+
+使用可**转移对象**（transferable objects）可以把所有权从一个上下文转移到另一个上下文。
+
+只有如下几种对象是可转移对象：
+
+- `ArrayBuffer`
+- `MessagePort`
+- `ImageBitmap`
+- `OffscreenCanvas`
+
+`postMessage()` 方法的第二个可选参数是数组，它指定应该将哪些对象转移到目标上下文。
+
+在遍历消息负载对象时，浏览器根据转移对象数组检查对象引用，并对转移对象进行转移而不复制它们。这意味着被转移的对象可以通过消息负载发送，消息负载本身会被复制
+
+下面的例子演示了工作者线程对 `ArrayBuffer` 的常规结构化克隆。这里没有对象转移：
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可转移对象</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js');
+
+      // 创建 32 位缓冲区
+      const arrayBuffer = new ArrayBuffer(32);
+
+      console.log(`page's buffer size: ${arrayBuffer.byteLength}`);  // 32
+
+      worker.postMessage(arrayBuffer);
+
+      console.log(`page's buffer size: ${arrayBuffer.byteLength}`);  // 32
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+self.onmessage = ({ data }) => {
+  console.log(`worker's buffer size: ${data.byteLength}`);  // 32
+};
+```
+
+如果把 `ArrayBuffer` 指定为可转移对象，那么对缓冲区内存的引用就会从父上下文中抹去，然后分配给工作者线程。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可转移对象</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js');
+
+      // 创建 32 位缓冲区
+      const arrayBuffer = new ArrayBuffer(32);
+
+      console.log(`page's buffer size: ${arrayBuffer.byteLength}`);  // 32
+
+      worker.postMessage(arrayBuffer, [arrayBuffer]);
+
+      console.log(`page's buffer size: ${arrayBuffer.byteLength}`);  // 0
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+self.onmessage = ({ data }) => {
+  console.log(`worker's buffer size: ${data.byteLength}`);  // 32
+};
+```
+
