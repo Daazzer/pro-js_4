@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用 MessageChannel</title>
+</head>
+<body>
+  <script>
+    const channel = new MessageChannel();
+    const workerA = new Worker('./27_2_9_2_1_workerA.js');
+    const workerB = new Worker('./27_2_9_2_1_workerB.js');
+
+    workerA.postMessage('workerA', [channel.port1]);
+    workerB.postMessage('workerB', [channel.port2]);
+
+    workerA.onmessage = ({ data }) => console.log(data);
+    workerB.onmessage = ({ data }) => console.log(data);
+    
+    workerA.postMessage(['page']);
+    // ['page', 'workerA', 'workerB']
+
+    workerB.postMessage(['page'])
+    // ['page', 'workerB', 'workerA']
+  </script>
+</body>
+</html>

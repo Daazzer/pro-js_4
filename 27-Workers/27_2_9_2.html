@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用 MessageChannel</title>
+</head>
+<body>
+  <script>
+    const channel = new MessageChannel();
+    const factorialWorker = new Worker('./27_2_9_2_worker.js');
+
+    // 把 MessagePort 对象发送到工作者线程
+    // 工作者线程负责处理初始化信道
+    factorialWorker.postMessage(null, [channel.port1]);
+
+    // 工作者线程通过信道响应
+    channel.port2.onmessage = ({ data }) => console.log(data);
+
+    // 通过信道实际发送数据
+    channel.port2.postMessage(5);
+
+    // 5! = 120
+  </script>
+</body>
+</html>

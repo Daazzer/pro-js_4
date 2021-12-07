@@ -612,3 +612,182 @@ self.onmessage = ({ data }) => {
 </html>
 ```
 
+#### 2. 使用 MessageChannel
+
+Channel Messaging API 可以在两个上下文间明确建立通信渠道
+
+`MessageChannel` 实例有两个端口，分别代表两个通信端点。要让父页面和工作线程通过 `MessageChannel` 通信，需要把一个端口传到工作者线程中
+
+```js
+// worker.js
+// 在监听器中存储全局 messagePort
+let messagePort = null;
+
+function factorial(n) {
+  let result = 1;
+  while (n) { result *= n--; }
+  return result;
+}
+
+self.onmessage = ({ ports }) => {
+  // 只设置一次端口
+  if (!messagePort) {
+    // 初始化消息发送端口，
+    // 给变量赋值并重置监听器
+    messagePort = ports[0];
+    self.onmessage = null;
+
+    // 在全局对象上设置消息处理程序
+    messagePort.onmessage = ({ data }) => {
+      // 收到消息后发送数据
+      messagePort.postMessage(`${data}! = ${factorial(data)}`);
+    };
+  }
+};
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 MessageChannel</title>
+  </head>
+  <body>
+    <script>
+      const channel = new MessageChannel();
+      const factorialWorker = new Worker('./worker.js');
+
+      // 把 MessagePort 对象发送到工作者线程
+      // 工作者线程负责处理初始化信道
+      factorialWorker.postMessage(null, [channel.port1]);
+
+      // 工作者线程通过信道响应
+      channel.port2.onmessage = ({ data }) => console.log(data);
+
+      // 通过信道实际发送数据
+      channel.port2.postMessage(5);
+
+      // 5! = 120
+    </script>
+  </body>
+</html>
+```
+
+`MessageChannel` 真正有用的地方是让两个工作者线程之间直接通信。这可以通过把端口传给另一个工作者线程实现
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 MessageChannel</title>
+  </head>
+  <body>
+    <script>
+      const channel = new MessageChannel();
+      const workerA = new Worker('./workerA.js');
+      const workerB = new Worker('./workerB.js');
+
+      workerA.postMessage('workerA', [channel.port1]);
+      workerB.postMessage('workerB', [channel.port2]);
+
+      workerA.onmessage = ({ data }) => console.log(data);
+      workerB.onmessage = ({ data }) => console.log(data);
+
+      workerA.postMessage(['page']);
+      // ['page', 'workerA', 'workerB']
+
+      workerB.postMessage(['page'])
+      // ['page', 'workerB', 'workerA']
+    </script>
+  </body>
+</html>
+```
+
+```js
+// workerA.js
+let messagePort = null;
+let contextIdentifier = null;
+
+/**
+ * 添加上下文并发送
+ * @param {string[]} data 标识符数据
+ * @param {MessagePort|WindowOrWorkerGlobalScope} destination 通讯终端
+ */
+function addContextAndSend(data, destination) {
+  // 添加标识符以表示当前工作者线程
+  data.push(contextIdentifier);
+
+  // 把数据发送到下一个目标
+  destination.postMessage(data);
+}
+
+self.onmessage = ({ data, ports }) => {
+  // 如果消息里存在端口（ports）
+  // 则初始化工作者线程
+  if (ports.length) {
+    // 记录标识符
+    contextIdentifier = data;
+
+    // 获取 MessagePort
+    messagePort = ports[0];
+
+    // 添加处理程序把接收的数据
+    // 发回到父页面
+    messagePort.onmessage = ({ data }) => {
+      addContextAndSend(data, self)
+    };
+  } else {
+    addContextAndSend(data, messagePort);
+  }
+};
+```
+
+```js
+// workerB.js
+let messagePort = null;
+let contextIdentifier = null;
+
+/**
+ * 添加上下文并发送
+ * @param {string[]} data 标识符数据
+ * @param {MessagePort|WindowOrWorkerGlobalScope} destination 通讯终端
+ */
+function addContextAndSend(data, destination) {
+  // 添加标识符以表示当前工作者线程
+  data.push(contextIdentifier);
+
+  // 把数据发送到下一个目标
+  destination.postMessage(data);
+}
+
+self.onmessage = ({ data, ports }) => {
+  // 如果消息里存在端口（ports）
+  // 则初始化工作者线程
+  if (ports.length) {
+    // 记录标识符
+    contextIdentifier = data;
+
+    // 获取 MessagePort
+    messagePort = ports[0];
+
+    // 添加处理程序把接收的数据
+    // 发回到父页面
+    messagePort.onmessage = ({ data }) => {
+      addContextAndSend(data, self)
+    };
+  } else {
+    addContextAndSend(data, messagePort);
+  }
+};
+```
+
+数组从父页面发送到工作者线程，工作者线程会加上自己的上下文标识符。然后，数组又从一个工作者线程发送到另一个工作者线程。第二个线程又加上自己的上下文标识符，随即将数组发回主页，主页把数组打印出来
+
