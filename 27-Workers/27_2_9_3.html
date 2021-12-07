@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>使用 BroadcastChannel</title>
+</head>
+<body>
+  <script>
+    const channel = new BroadcastChannel('worker_channel');
+    const worker = new Worker('./27_2_9_3_worker.js');
+
+    // 工作者线程通过信道响应
+    channel.onmessage = ({ data }) => console.log(`heard ${data} on page`);
+
+    setTimeout(() => channel.postMessage('foo'), 1000);
+
+    // heard foo in worker
+    // heard bar on page
+    /* 
+    页面在通过 BroadcastChannel 发送消息之前会先等 1 秒钟。因为这种信道没有端口所有
+    权的概念，所以如果没有实体监听这个信道，广播的消息就不会有人处理。在这种情况下，如果没有
+    setTimeout()，则由于初始化工作者线程的延迟，就会导致消息已经发送了，但工作者线程上的消息
+    处理程序还没有就位
+     */
+  </script>
+</body>
+</html>

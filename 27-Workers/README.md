@@ -791,3 +791,56 @@ self.onmessage = ({ data, ports }) => {
 
 数组从父页面发送到工作者线程，工作者线程会加上自己的上下文标识符。然后，数组又从一个工作者线程发送到另一个工作者线程。第二个线程又加上自己的上下文标识符，随即将数组发回主页，主页把数组打印出来
 
+#### 3.使用 BroadcastChannel
+
+同源脚本能够通过 `BroadcastChannel` 相互之间发送和接收消息。这种通道类型的设置比较简单，不需要像 `MessageChannel` 那样转移乱糟糟的端口
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 BroadcastChannel</title>
+  </head>
+  <body>
+    <script>
+      const channel = new BroadcastChannel('worker_channel');
+      const worker = new Worker('./// worker.js
+const channel = new BroadcastChannel('worker_channel');
+
+channel.onmessage = ({ data }) => {
+  console.log(`heard ${data} in worker`);
+  channel.postMessage('bar');
+};worker.js');
+
+      // 工作者线程通过信道响应
+      channel.onmessage = ({ data }) => console.log(`heard ${data} on page`);
+
+      setTimeout(() => channel.postMessage('foo'), 1000);
+
+      // heard foo in worker
+      // heard bar on page
+      /* 
+      页面在通过 BroadcastChannel 发送消息之前会先等 1 秒钟。因为这种信道没有端口所有
+      权的概念，所以如果没有实体监听这个信道，广播的消息就不会有人处理。在这种情况下，如果没有
+      setTimeout()，则由于初始化工作者线程的延迟，就会导致消息已经发送了，但工作者线程上的消息
+      处理程序还没有就位
+       */
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+const channel = new BroadcastChannel('worker_channel');
+
+channel.onmessage = ({ data }) => {
+  console.log(`heard ${data} in worker`);
+  channel.postMessage('bar');
+};
+```
+
