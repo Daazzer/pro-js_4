@@ -808,13 +808,13 @@ self.onmessage = ({ data, ports }) => {
   <body>
     <script>
       const channel = new BroadcastChannel('worker_channel');
-      const worker = new Worker('./// worker.js
-const channel = new BroadcastChannel('worker_channel');
+      const worker = new Worker('./worker.js');
+      const channel = new BroadcastChannel('worker_channel');
 
-channel.onmessage = ({ data }) => {
-  console.log(`heard ${data} in worker`);
-  channel.postMessage('bar');
-};worker.js');
+      channel.onmessage = ({ data }) => {
+        console.log(`heard ${data} in worker`);
+        channel.postMessage('bar');
+      };
 
       // 工作者线程通过信道响应
       channel.onmessage = ({ data }) => console.log(`heard ${data} on page`);
@@ -847,4 +847,28 @@ channel.onmessage = ({ data }) => {
 ### 27.2.10 工作者线程数据传输
 
 有三种在上下文间转移信息的方式：**结构化克隆算法**（structured clone algorithm）、**可转移对象**（transferable objects）和**共享数组缓冲区**（shared array buffers）
+
+#### 1.结构化克隆算法
+
+**结构化克隆算法**可用于在两个独立上下文间共享数据
+
+在通过 `postMessage()` 传递对象时，浏览器会遍历该对象，并在目标上下文中生成它的一个副本。下列类型是结构化克隆算法支持的类型。
+
+- 除 `Symbol` 之外的所有原始类型
+- `Boolean` 对象
+- `String` 对象
+- `Date`
+- `RegExp`
+- `Blob`
+- `File`
+- `FileList`
+- `ArrayBuffer`
+- `ArrayBufferView`
+- `ImageData`
+- `Array`
+- `Object`
+- `Map`
+- `Set`
+
+> **注意** 结构化克隆算法在对象比较复杂时会存在计算性消耗。因此，实践中要尽可能避免过大、过多的复制
 
