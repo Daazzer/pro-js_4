@@ -475,3 +475,43 @@ console.log(`scriptA executes in ${self.name} with ${globalToken}`);
 console.log(`scriptB executes in ${self.name} with ${globalToken}`);
 ```
 
+### 27.2.7 委托任务到子工作者线程
+
+有时候可能需要在工作者线程中再创建子工作者线程。在有多个 CPU 核心的时候，使用多个子工作者线程可以实现并行计算
+
+子工作者线程的脚本路径根据父工作者线程而不是相对于网页来解析
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>委托任务到子工作者线程</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js');
+      // worker
+      // subworker
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+console.log('worker');
+
+const worker = new Worker('./subworker.js');
+```
+
+```js
+// subworker.js
+console.log('subworker');
+```
+
+> **注意** 顶级工作者线程的脚本和子工作者线程的脚本都必须从与主页相同的源加载
+
