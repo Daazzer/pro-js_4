@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SharedArrayBuffer</title>
+</head>
+<body>
+  <script>
+    // 创建包含 4 个线程的线程池
+    const workers = [];
+    for (let i = 0; i < 4; i++) {
+      workers.push(new Worker('./27_2_10_3_1_worker.js'));
+    }
+
+    // 在最后一个工作者线程完成后打印最终值
+    let responseCount = 0;
+    for (const worker of workers) {
+      worker.onmessage = () => {
+        if (++responseCount === workers.length) {
+          console.log(`Final buffer value: ${view[0]}`);
+        }
+      };
+    }
+
+    //  初始化 SharedArrayBuffer
+    const sharedArrayBuffer = new SharedArrayBuffer(4);
+    const view = new Uint32Array(sharedArrayBuffer);
+    view[0] = 1;
+    // 把 SharedArrayBuffer 发给每个线程
+    for (const worker of workers) {
+      worker.postMessage(sharedArrayBuffer);
+    }
+    // （期待结果为 4000001。实际输出类似于：）
+    // Final buffer value: 2145106
+  </script>
+</body>
+</html>

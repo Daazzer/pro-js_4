@@ -959,3 +959,178 @@ self.onmessage = ({ data }) => {
 };
 ```
 
+#### 3.SharedArrayBuffer
+
+> **注意** 由于 Spectre 和 Meltdown 的漏洞，所有主流浏览器在 2018 年 1 月就禁用了 `SharedArrayBuffer`。从 2019 年开始，有些浏览器开始逐步重新启用这一特性。
+
+既不克隆，也不转移，`SharedArrayBuffer` 作为 `ArrayBuffer` 能够在不同浏览器上下文间共享。在把 `SharedArrayBuffer` 传给 `postMessage()` 时，浏览器只会传递原始缓冲区的引用。结果是，两个不同的 JavaScript 上下文会分别维护对同一个内存块的引用。每个上下文都可以随意修改这个缓冲区
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharedArrayBuffer</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js');
+
+      // 创建 1 字节缓冲区
+      const sharedArrayBuffer = new SharedArrayBuffer(1);
+
+      // 创建 1 字节缓冲区的视图
+      const view = new Uint8Array(sharedArrayBuffer);
+
+      // 父上下文赋值 1
+      view[0] = 1;
+
+      worker.onmessage = () => {
+        console.log(`buffer value after worker modification: ${view[0]}`);
+      };
+
+      // 发送对 sharedArrayBuffer 的引用
+      worker.postMessage(sharedArrayBuffer);
+      // buffer value before worker modification: 1
+      // buffer value after worker modification: 2
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+self.onmessage = ({ data }) => {
+  const view = new Uint8Array(data);
+  console.log(`buffer value before worker modification: ${view[0]}`);
+
+  // 工作者线程为共享缓冲区赋值
+  view[0] += 1;
+
+  // 发送空消息，通知赋值完成
+  self.postMessage(null);
+};
+```
+
+在两个并行线程中共享内存块有资源争用的风险。换句话说，`SharedArrayBuffer` 实例实 际上会被当成易变（volatile）内存。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharedArrayBuffer</title>
+  </head>
+  <body>
+    <script>
+      // 创建包含 4 个线程的线程池
+      const workers = [];
+      for (let i = 0; i < 4; i++) {
+        workers.push(new Worker('./27_2_10_3_1_worker.js'));
+      }
+
+      // 在最后一个工作者线程完成后打印最终值
+      let responseCount = 0;
+      for (const worker of workers) {
+        worker.onmessage = () => {
+          if (++responseCount === workers.length) {
+            console.log(`Final buffer value: ${view[0]}`);
+          }
+        };
+      }
+
+      //  初始化 SharedArrayBuffer
+      const sharedArrayBuffer = new SharedArrayBuffer(4);
+      const view = new Uint32Array(sharedArrayBuffer);
+      view[0] = 1;
+      // 把 SharedArrayBuffer 发给每个线程
+      for (const worker of workers) {
+        worker.postMessage(sharedArrayBuffer);
+      }
+      // （期待结果为 4000001。实际输出类似于：）
+      // Final buffer value: 2145106
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+self.onmessage = ({ data }) => {
+  const view = new Uint32Array(data);
+
+  // 执行 100 万次加操作
+  for (let i = 0; i < 1e6; i++) {
+    view[0] += 1;
+  }
+
+  self.postMessage(null);
+};
+```
+
+为解决该问题，可以使用 `Atomics` 对象让一个工作者线程获得 `SharedArrayBuffer` 实例的锁，在执行完全部读/写/读操作后，再允许另一个工作者线程执行操作。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SharedArrayBuffer</title>
+  </head>
+  <body>
+    <script>
+      // 创建包含 4 个线程的线程池
+      const workers = [];
+      for (let i = 0; i < 4; i++) {
+        workers.push(new Worker('./27_2_10_3_2_worker.js'));
+      }
+
+      // 在最后一个工作者线程完成后打印最终值
+      let responseCount = 0;
+      for (const worker of workers) {
+        worker.onmessage = () => {
+          if (++responseCount === workers.length) {
+            console.log(`Final buffer value: ${view[0]}`);
+          }
+        };
+      }
+
+      //  初始化 SharedArrayBuffer
+      const sharedArrayBuffer = new SharedArrayBuffer(4);
+      const view = new Uint32Array(sharedArrayBuffer);
+      view[0] = 1;
+
+      // 把 SharedArrayBuffer 发给每个线程
+      for (const worker of workers) {
+        worker.postMessage(sharedArrayBuffer);
+      }
+      // （期待结果为 4000001）
+      // Final buffer value: 2145106
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+self.onmessage = ({ data }) => {
+  const view = new Uint32Array(data);
+
+  // 执行 100 万次加操作
+  for (let i = 0; i < 1e6; i++) {
+    Atomics.add(view, 0, 1);
+  }
+
+  self.postMessage(null);
+};
+```
+
