@@ -844,3 +844,7 @@ channel.onmessage = ({ data }) => {
 };
 ```
 
+### 27.2.10 工作者线程数据传输
+
+有三种在上下文间转移信息的方式：**结构化克隆算法**（structured clone algorithm）、**可转移对象**（transferable objects）和**共享数组缓冲区**（shared array buffers）
+
