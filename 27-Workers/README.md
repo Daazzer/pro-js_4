@@ -191,3 +191,125 @@ console.log('created worker: ', worker);
 
 也有不一致的地方：比如 `start()` 和 `close()` 约定。专用工作者线程会自动发送排队的消息，因此 `start()` 也就没有必要了。另外，`close()` 在专用工作者线程的上下文中没有意义，因为这样关闭 `MessagePort` 会使工作者线程孤立。因此，在工作者线程内部调用 `close()`（或在外部调用 `terminate()`）不仅会关闭 `MessagePort`，也会终止线程。
 
+### 27.2.3 专用工作者线程的生命周期
+
+一般来说，专用工作者线程可以非正式区分为处于下列三个状态：**初始化**（initializing）、活动（active）和**终止**（terminated）。这几个状态对其他上下文是不可见的。
+
+初始化时，虽然工作者线程脚本尚未执行，但可以先把要发送给工作者线程的消息加入队列。这些消息会等待工作者线程的状态变为活动，再把消息添加到它的消息队列。
+
+```js
+// initializingWorker.js
+self.addEventListener('message', ({ data }) => console.log(data));
+```
+
+```js
+// main.js
+const worker = new Worker('./27_2_3_initializingWorker.js');
+
+// Worker 可能仍处于初始化状态
+// 但 postMessage() 数据可以正常处理
+worker.postMessage('foo');
+worker.postMessage('bar');
+worker.postMessage('baz');
+
+// foo
+// bar
+// baz
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专用工作者线程的生命周期</title>
+  </head>
+  <body>
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
+自我终止和外部终止最终都会执行相同的工作者线程终止例程。
+
+```js
+// closeWorker.js
+self.postMessage('foo');
+self.close();
+self.postMessage('bar');
+setTimeout(() => self.postMessage('baz'));
+```
+
+```js
+// main.js
+const worker = new Worker('./closeWorker.js');
+
+worker.addEventListener('message', ({ data }) => console.log(data));
+
+// foo
+// bar
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专用工作者线程的生命周期</title>
+  </head>
+  <body>
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
+`close()` 在这里会通知工作者线程取消事件循环中的所有任务，并阻止继续添加新任务。这也是为什么 `"baz"` 没有打印出来的原因。工作者线程不需要执行同步停止，因此在父上下文的事件循环中处理的 `"bar"` 仍会打印出来。
+
+外部终止的例子
+
+```js
+// terminateWorker.js
+self.onmessage = ({ data }) => console.log(data);
+```
+
+```js
+// main.js
+const worker = new Worker('./terminateWorker.js');
+
+// 给 1000 毫秒让工作者线程初始化
+setTimeout(() => {
+  worker.postMessage('foo');
+  worker.terminate();
+  worker.postMessage('bar');
+  setTimeout(() => worker.postMessage('baz'), 0);
+}, 1000);
+
+// foo
+```
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>专用工作者线程的生命周期</title>
+  </head>
+  <body>
+    <script src="./main.js"></script>
+  </body>
+</html>
+```
+
+外部先给工作者线程发送了带 `"foo"` 的 `postMessage`，这条消息可以在外部终止之前处理。一旦调用了 `terminate()`，工作者线程的消息队列就会被清理并锁住，这也是只是打印 `"foo"` 的原因。
+
+在整个生命周期中，一个专用工作者线程只会关联一个网页（Web 工作者线程规范称其为一个**文档**）。除非明确终止，否则只要关联文档存在，专用工作者线程就会存在。如果浏览器离开网页（通过导航或关闭标签页或关闭窗口），它会将与其关联的工作者线程标记为终止，它们的执行也会立即停止。
+
