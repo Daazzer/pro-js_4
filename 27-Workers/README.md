@@ -1134,3 +1134,163 @@ self.onmessage = ({ data }) => {
 };
 ```
 
+### 27.2.11 线程池
+
+工作者线程在执行计算时，会被标记为忙碌状态。直到它通知线程池自己空闲了，才准备好接收新任务。这些活动线程就称为“线程池”或“工作者线程池”。
+
+可以参考  `navigator.hardwareConcurrency` 属性返回的系统可用的核心数量。因为不太可能知道每个核心的多线程能力，所以最好把这个数字作为线程池大小的上限。
+
+接下来的例子将构建一个相对简单的线程池，定义一个 `TaskWorker` 类，它可以扩展 `Worker` 类。`TaskWorker` 类负责两件事：跟踪线程是否正忙于工作，并管理进出线程的信息与事件。另外，传入给这个工作者线程的任务会封装到一个 `Promise` 中，然后正确地解决和拒绝。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>线程池</title>
+  </head>
+  <body>
+    <script>
+      class TaskWorker extends Worker {
+        constructor(notifyAvaliable, ...workerArgs) {
+          super(...workerArgs);
+
+          // 初始化为不可用状态
+          this.avaliable = false;
+          this.resolve = null;
+          this.reject = null;
+
+          // 线程池会传递回调
+          // 以便工作者线程发出它需要新任务的信号
+          this.notifyAvaliable = notifyAvaliable;
+
+          // 线程脚本在完全初始化之后
+          // 会发送一条 "ready" 消息
+          this.onmessage = () => this.setAvaliable();
+        }
+
+        // 由线程池调用，以分派新任务
+        dispatch({ resolve, reject, postMessageArgs }) {
+          this.avaliable = false;
+
+          this.onmessage = ({ data }) => {
+            resolve(data);
+            this.setAvaliable();
+          };
+
+          this.onerror = e => {
+            reject(e);
+            this.setAvaliable();
+          };
+
+          this.postMessage(...postMessageArgs);
+        }
+
+        setAvaliable() {
+          this.avaliable = true;
+          this.resolve = null;
+          this.reject = null;
+          this.notifyAvaliable();
+        }
+      }
+
+      class WorkerPool {
+        constructor(poolSize, ...workerArgs) {
+          this.taskQueue = [];
+          this.workers = [];
+          // 初始化线程池
+          for (let i = 0; i < poolSize; i++) {
+            this.workers.push(new TaskWorker(() => this.dispatchIfAvailable(), ...workerArgs));
+          }
+        }
+
+        // 把任务推入队列
+        enqueue(...postMessageArgs) {
+          return new Promise((resolve, reject) => {
+            this.taskQueue.push({ resolve, reject, postMessageArgs });
+            this.dispatchIfAvailable();
+          });
+        }
+
+        // 把任务发送给下一个空闲的线程（如果有的话）
+        dispatchIfAvailable() {
+          if (!this.taskQueue.length) {
+            return;
+          }
+          for (const worker of this.workers) {
+            if (worker.available) {
+              let a = this.taskQueue.shift();
+              worker.dispatch(a);
+              break;
+            }
+          }
+        }
+
+        // 终止所有工作者线程
+        close() {
+          for (const worker of this.workers) {
+            worker.terminate();
+          }
+        }
+      }
+    </script>
+
+    <script>
+      const totalFloats = 1E8;
+      const numTasks = 20;
+      const floatsPerTask = totalFloats / numTasks;
+      const numWorkers = 4;
+      // 创建线程池
+      const pool = new WorkerPool(numWorkers, './worker.js');
+
+      // 填充浮点值数组
+      let arrayBuffer = new SharedArrayBuffer(4 * totalFloats);
+      let view = new Float32Array(arrayBuffer);
+      for (let i = 0; i < totalFloats; ++i) {
+        view[i] = Math.random();
+      }
+      let partialSumPromises = [];
+      for (let i = 0; i < totalFloats; i += floatsPerTask) {
+        partialSumPromises.push(
+          pool.enqueue({
+            startIdx: i,
+            endIdx: i + floatsPerTask,
+            arrayBuffer: arrayBuffer
+          })
+        );
+      }
+      // 等待所有期约完成，然后求和
+      Promise.all(partialSumPromises)
+        .then((partialSums) => partialSums.reduce((x, y) => x + y))
+        .then(console.log);
+      //（在这个例子中，和应该约等于 1E8/2）
+      // 49997075.47203197
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+self.onmessage = ({ data }) => {
+  let sum = 0;
+  let view = new Float32Array(data.arrayBuffer);
+
+  // 求和
+  for (let i = data.startIdx; i < data.endIdx; i++) {
+    // 不需要原子操作，因为只需要读
+    sum += view[i];
+  }
+
+  // 把结果发送给工作者线程
+  self.postMessage(sum);
+};
+
+// 发送消息给 TaskWorker
+// 通知工作者线程准备好接收任务了
+self.postMessage('ready');
+```
+
