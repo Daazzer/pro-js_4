@@ -515,3 +515,51 @@ console.log('subworker');
 
 > **注意** 顶级工作者线程的脚本和子工作者线程的脚本都必须从与主页相同的源加载
 
+### 27.2.8 处理工作者线程错误
+
+如果工作者线程脚本抛出了错误，该工作者线程沙盒可以阻止它打断父线程的执行
+
+```js
+// main.js
+// 其中的 try/catch 块不会捕获到错误
+try {
+  const worker = new Worker('./worker.js');
+  console.log('no error');
+} catch(e) {
+  console.log('caught error');
+}
+// no error
+```
+
+```js
+// worker.js
+throw Error('foo');
+```
+
+此可以通过在 `Worker` 对象上设置 `onerror` 侦听器访问到
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>处理工作者线程错误</title>
+  </head>
+  <body>
+    <script>
+      const worker = new Worker('./worker.js');
+      worker.onerror = console.log;
+      // ErrorEvent {message: "Uncaught Error: foo"}
+    </script>
+  </body>
+</html>
+```
+
+```js
+// worker.js
+throw new Error('foo');
+```
+
