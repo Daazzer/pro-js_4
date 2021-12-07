@@ -321,3 +321,68 @@ setTimeout(() => {
 - `type` 表示加载脚本的运行方式，可以是 `"classic"` 或 `"module"`。`"classic"` 将脚本作为常规脚本来执行，`"module"` 将脚本作为模块来执行
 - `credentials` 在 `type` 为 `"module"` 时，指定如何获取与传输凭证数据相关的工作者线程模块脚本。值可以是 `"omit"`、`"same-orign"` 或 `"include"`。这些选项与 `fetch()` 的凭证选项相同。在 `type` 为 `"classic"` 时，默认为 `"omit"`
 
+### 27.2.5 在 JavaScript 行内创建工作者线程
+
+专用工作者线程也可以通过 `Blob` 对象 URL 在行内脚本创建
+
+在行内创建工作者线程的例子
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在 JavaScript 行内创建工作者线程</title>
+  </head>
+  <body>
+    <script>
+      //  创建要执行的 JavaScript 代码字符串
+      const workerScript = 'self.onmessage = ({ data }) => console.log(data);';
+
+      // 基于脚本字符串生成 Blob 对象
+      const workerScriptBlob = new Blob([workerScript]);
+
+      // 基于 Blob 实例创建对象 URL
+      const workerScriptBlobUrl = URL.createObjectURL(workerScriptBlob);
+
+      // 基于对象 URL 创建专用工作者线程
+      const worker = new Worker(workerScriptBlobUrl);
+
+      worker.postMessage('blob worker script');
+      // blob worker script
+    </script>
+  </body>
+</html>
+```
+
+工作者线程也可以利用函数序列化来初始化行内脚本。这是因为函数的 `toString()` 方法返回函数 代码的字符串，而函数可以在父上下文中定义并在子上下文中执行。
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>在 JavaScript 行内创建工作者线程</title>
+  </head>
+  <body>
+    <script>
+      function fibonacci(n) {
+        return n < 1 ? 0
+        : n <= 2 ? 1
+        : fibonacci(n - 1) + fibonacci(n - 2);
+      }
+      const workerScript = `self.postMessage(${fibonacci.toString()}(9));`;
+      const worker = new Worker(URL.createObjectURL(new Blob([workerScript])));
+      worker.onmessage = ({ data }) => console.log(data);
+      // 34
+    </script>
+  </body>
+</html>
+```
+
+> **注意** 像这样序列化函数有个前提，就是函数体内不能使用通过闭包获得的引用，也包括全局变量，比如 `window`，因为这些引用在工作者线程中执行时会出错。
+
