@@ -1169,7 +1169,7 @@ self.onmessage = ({ data }) => {
 
           // 线程脚本在完全初始化之后
           // 会发送一条 "ready" 消息
-          this.onmessage = () => this.setAvaliable();
+          this.onmessage = this.setAvaliable;
         }
 
         // 由线程池调用，以分派新任务
@@ -1203,7 +1203,7 @@ self.onmessage = ({ data }) => {
           this.workers = [];
           // 初始化线程池
           for (let i = 0; i < poolSize; i++) {
-            this.workers.push(new TaskWorker(() => this.dispatchIfAvailable(), ...workerArgs));
+            this.workers.push(new TaskWorker(this.dispatchIfAvailable, ...workerArgs));
           }
         }
 
@@ -1217,12 +1217,10 @@ self.onmessage = ({ data }) => {
 
         // 把任务发送给下一个空闲的线程（如果有的话）
         dispatchIfAvailable() {
-          if (!this.taskQueue.length) {
-            return;
-          }
+          if (!this.taskQueue.length) return;
           for (const worker of this.workers) {
             if (worker.available) {
-              let a = this.taskQueue.shift();
+              const a = this.taskQueue.shift();
               worker.dispatch(a);
               break;
             }
@@ -1244,27 +1242,27 @@ self.onmessage = ({ data }) => {
       const floatsPerTask = totalFloats / numTasks;
       const numWorkers = 4;
       // 创建线程池
-      const pool = new WorkerPool(numWorkers, './worker.js');
+      const pool = new WorkerPool(numWorkers, './27_2_11_worker.js');
 
       // 填充浮点值数组
-      let arrayBuffer = new SharedArrayBuffer(4 * totalFloats);
-      let view = new Float32Array(arrayBuffer);
+      const arrayBuffer = new SharedArrayBuffer(4 * totalFloats);
+      const view = new Float32Array(arrayBuffer);
+      const partialSumPromises = [];
       for (let i = 0; i < totalFloats; ++i) {
         view[i] = Math.random();
       }
-      let partialSumPromises = [];
       for (let i = 0; i < totalFloats; i += floatsPerTask) {
         partialSumPromises.push(
           pool.enqueue({
             startIdx: i,
             endIdx: i + floatsPerTask,
-            arrayBuffer: arrayBuffer
+            arrayBuffer
           })
         );
       }
       // 等待所有期约完成，然后求和
       Promise.all(partialSumPromises)
-        .then((partialSums) => partialSums.reduce((x, y) => x + y))
+        .then(partialSums => partialSums.reduce((x, y) => x + y))
         .then(console.log);
       //（在这个例子中，和应该约等于 1E8/2）
       // 49997075.47203197
@@ -1277,7 +1275,7 @@ self.onmessage = ({ data }) => {
 // worker.js
 self.onmessage = ({ data }) => {
   let sum = 0;
-  let view = new Float32Array(data.arrayBuffer);
+  const view = new Float32Array(data.arrayBuffer);
 
   // 求和
   for (let i = data.startIdx; i < data.endIdx; i++) {
