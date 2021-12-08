@@ -1395,6 +1395,8 @@ new SharedWorker('./sharedWorker.js?');
 
 #### 3.使用 SharedWorker 对象
 
+`SharedWorker` 通过 `MessagePort` 在共享工作者线程和父上下文间传递信息
+
 `SharedWorker` 对象支持以下属性
 
 - `onerror` 在共享线程中发生 `ErrorEvent` 类型的错误事件时会调用指定给该属性的处理程序
@@ -1402,5 +1404,5 @@ new SharedWorker('./sharedWorker.js?');
   - 此事件也可以通过使用 `sharedWorker.addEventListener('error', handler)` 处理
 - `port` 专门用来跟共享线程通信的 `MessagePort`
 
-`SharedWorker` 通过 `MessagePort` 在共享工作者线程和父上下文间传递信息
+
 
