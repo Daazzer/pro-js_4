@@ -1799,3 +1799,44 @@ navigator.serviceWorker.register('/serviceWorker.js', { scope: '/foo/' });
 
 与 `LocalStorage` 一样，`Cache` 对象在 `CacheStorage` 字典中无限期存在，会超出浏览器会话的界限。此外，`Cache` 条目只能以源为基础存取。
 
+#### 1.CacheStorage 对象
+
+`CacheStorage` 提供的 API 类似于异步 `Map`。`CacheStorage` 的接口通过全局对象的 `caches` 属性暴露出来。
+
+`CacheStorage` 中的每个缓存可以通过给 `caches.open()` 传入相应字符串键取得。非字符串键会转换为字符串。如果缓存不存在，就会创建。
+
+`Cache` 对象是通过期约返回的：
+
+```js
+caches.open('v1').then(console.log);
+// Cache {}
+```
+
+与 `Map` 类似，`CacheStorage` 也有 `has()`、`delete()` 和 `keys()` 方法。这些方法与 `Map` 上对应方法类似，但都基于期约。
+
+```js
+caches.open('v1')
+  .then(() => caches.open('v3'))
+  .then(() => caches.open('v2'))
+  .then(() => caches.keys())
+  .then(console.log); // ["v1", "v3", "v2"]
+```
+
+`CacheStorage` 接口还有一个 `match()` 方法，可以接收一个 `options` 配置对象。可以根据 `Request` 对象搜索 `CacheStorage` 中的所有 `Cache` 对象。
+
+```js
+// 创建一个请求键和两个响应值
+const request = new Request('');
+const response1 = new Response('v1');
+const response2 = new Response('v2');
+// 用同一个键创建两个缓存对象，最终会先找到 v1
+// 因为它排在 caches.keys()输出的前面
+caches.open('v1')
+  .then(v1cache => v1cache.put(request, response1))
+  .then(() => caches.open('v2'))
+  .then(v2cache => v2cache.put(request, response2))
+  .then(() => caches.match(request))
+  .then(response => response.text())
+  .then(console.log); // v1
+```
+
