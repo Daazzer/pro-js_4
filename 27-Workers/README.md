@@ -1536,3 +1536,9 @@ self.onconnect = ({ ports }) => {
 
 > **注意** `SharedWorker` 兼容性较差，实际开发中慎用
 
+## 27.4 服务工作者线程
+
+**服务工作者线程**（service worker）是一种类似浏览器中代理服务器的线程，可以拦截外出请求和缓存响应。这可以让网页在没有网络连接的情况下正常使用，因为部分或全部页面可以从服务工作者线程缓存中提供服务。服务工作者线程也可以使用 Notifications API、Push API、Background Sync API 和 Channel Messaging API。
+
+> **注意** 服务工作者线程涉及的内容极其广泛，几乎可以单独写一本书。为了更好地理解这一话题，推荐有条件的读者学一下 Udacity 的课程“Offline Web Applications”。除此之外，也可以参考 Mozilla 维护的 Service Worker Cookbook 网站，其中包含了常见的服务工作者线程模式。
+
