@@ -1546,3 +1546,12 @@ self.onconnect = ({ ports }) => {
 
 作为一种工作者线程，服务工作者线程与专用工作者线程和共享工作者线程拥有很多共性。比如，在独立上下文中运行，只能通过异步消息通信。
 
+#### 1.ServiceWorkerContainer
+
+服务工作者线程与专用工作者线程或共享工作者线程的一个区别是没有全局构造函数。服务工作者线程是通过 `ServiceWorkerContainer` 来管理的，它的实例保存在 `navigator.serviceWorker` 属性中。该对象是个顶级接口，通过它可以让浏览器创建、更新、销毁或者与服务工作者线程交互。
+
+```js
+console.log(navigator.serviceWorker);
+// ServiceWorkerContainer { ... }
+```
+
