@@ -1393,3 +1393,14 @@ new SharedWorker('./sharedWorker.js?');
 
 如果该脚本在两个不同的标签页中运行，同样也只会创建两个共享工作者线程。每个构造函数都会检查匹配的共享工作者线程，然后连接到已存在的那个。
 
+#### 3.使用 SharedWorker 对象
+
+`SharedWorker` 对象支持以下属性
+
+- `onerror` 在共享线程中发生 `ErrorEvent` 类型的错误事件时会调用指定给该属性的处理程序
+  - 此事件会在共享线程抛出错误时发生
+  - 此事件也可以通过使用 `sharedWorker.addEventListener('error', handler)` 处理
+- `port` 专门用来跟共享线程通信的 `MessagePort`
+
+`SharedWorker` 通过 `MessagePort` 在共享工作者线程和父上下文间传递信息
+
