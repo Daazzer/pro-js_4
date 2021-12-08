@@ -101,18 +101,18 @@
     const pool = new WorkerPool(numWorkers, './27_2_11_worker.js');
 
     // 填充浮点值数组
-    let arrayBuffer = new SharedArrayBuffer(4 * totalFloats);
-    let view = new Float32Array(arrayBuffer);
+    const arrayBuffer = new SharedArrayBuffer(4 * totalFloats);
+    const view = new Float32Array(arrayBuffer);
     for (let i = 0; i < totalFloats; ++i) {
       view[i] = Math.random();
     }
-    let partialSumPromises = [];
+    const partialSumPromises = [];
     for (let i = 0; i < totalFloats; i += floatsPerTask) {
       partialSumPromises.push(
         pool.enqueue({
           startIdx: i,
           endIdx: i + floatsPerTask,
-          arrayBuffer: arrayBuffer
+          arrayBuffer
         })
       );
     }
