@@ -1670,3 +1670,25 @@ if ('serviceWorker' in navigator) {
 - `update()` 直接从服务器重新请求服务脚本，如果新脚本不同，则重新初始化
 - `unregister()` 取消服务工作者线程的注册。该方法会在服务工作者线程执行完再取消注册
 
+#### 5.使用 ServiceWorker 对象
+
+`ServiceWorker` 对象可以通过两种方式获得：
+
+- 通过 `ServiceWorkerContainer` 对象的 `controller` 属性
+- 通过 `ServiceWorkerRegistration` 的 `active` 属性
+
+该对象继承 `Worker` 原型，因此包括其所有属性和方法，但没有 `terminate()` 方法。
+
+`ServiceWorker` 支持以下事件处理程序
+
+- `onstatechange` `ServiceWorker` 发生 `statechange` 事件时会调用指定的事件处理程序
+  - 此事件会在 `ServiceWorker.state` 变化时发生
+  - 此事件也可以使用 `serviceWorker.addEventListener('statechange', handler)` 处理。`ServiceWorker` 支持以下属性
+- `scriptURL` 解析后注册服务工作者线程的 URL。例如，如果服务工作者线程是通过相对路径 `'./serviceWorker.js'` 创建的，且注册在 `https://www.example.com` 上，则 `scriptURL` 属性将返回 `"https://www.example.com/serviceWorker.js"`
+- `state` 表示服务工作者线程状态的字符串，可能的值如下
+  - `installing`
+  - `installed`
+  - `activating`
+  - `activated`
+  - `redundant`
+
