@@ -1603,3 +1603,29 @@ if ('serviceWorker' in navigator) {
 
 如果没有 `load` 事件这个门槛，服务工作者线程的注册就会与页面资源的加载重叠，进而拖慢初始页面渲染的过程。除非该服务工作者线程负责管理缓存 `clients.claim()`，否则等待 `load` 事件是个明智的选择，这样同样可以发挥服务工作者线程的价值。
 
+#### 3.使用 ServiceWorkerContainer 对象
+
+`ServiceWorkerContainer` 支持以下事件处理程序
+
+- `oncontrollerchange` 在 `ServiceWorkerContainer` 触发 `controllerchange` 事件时会调用指定的事件处理程序
+  - 此事件在获得新激活的 `ServiceWorkerRegistration` 时触发
+  - 此事件也可以使用 `navigator.serviceWorker.addEventListener('controllerchange', handler)` 处理
+- `onerror` 在关联的服务工作者线程触发 `ErrorEvent` 错误事件时会调用指定的事件处理程序
+  - 此事件在关联的服务工作者线程内部抛出错误时触发
+  - 此事件也可以使用 `navigator.serviceWorker.addEventListener('error', handler)` 处理
+- `onmessage` 在服务工作者线程触发 `MessageEvent` 事件时会调用指定的事件处理程序
+  - 此事件在服务脚本向父上下文发送消息时触发
+  - 此事件也可以使用 `navigator.serviceWorker.addEventListener('message', handler)` 处理
+
+`ServiceWorkerContainer` 支持下列属性
+
+- `ready` 返回期约，解决为激活的 `ServiceWorkerRegistration` 对象。该期约不会拒绝
+- `controller` 返回与当前页面关联的激活的 `ServiceWorker` 对象，如果没有激活的服务工作者线程则返回 `null`
+
+`ServiceWorkerContainer` 支持下列方法
+
+- `register()` 使用接收的 `url` 和 `options` 对象创建或更新 `ServiceWorkerRegistration`
+- `getRegistration()` 返回期约，解决为与提供的作用域匹配的 `ServiceWorkerRegistration` 对象；如果没有匹配的服务工作者线程则返回 `undefined`
+- `getRegistrations()` 返回期约，解决为与 `ServiceWorkerContainer` 关联的 `ServiceWorkerRegistration` 对象的数组；如果没有关联的服务工作者线程则返回空数组
+- `startMessage()` 开始传送通过 `Client.postMessage()` 派发的消息
+
