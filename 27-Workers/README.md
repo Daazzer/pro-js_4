@@ -1336,3 +1336,60 @@ console.log('emptySharedWorker');
 
 也可以在行内脚本中创建共享工作者线程，但这样做没什么意义。因为每个基于行内脚本字符串创建的 `Blob` 都会被赋予自己唯一的浏览器内部 URL，所以行内脚本中创建的共享工作者线程始终是唯一的。
 
+#### 2.SharedWorker 标识与独占
+
+虽然 `Worker()` 构造函数始终会创建新实例，而 `SharedWorker()` 则只会在相同的标识不存在的情况下才创建新实例。如果**的确**存在与标识匹配的共享工作者线程，则只会与已有共享者线程建立新的连接。
+
+共享工作者线程标识源自解析后的脚本 URL、工作者线程名称和文档源。
+
+下面的脚本将实例化一个共享工作者线程并添加两个连接：
+
+```js
+// 实例化一个共享工作者线程
+// - 全部基于同源调用构造函数
+// - 所有脚本解析为相同的 URL
+// - 所有线程都有相同的名称
+new SharedWorker('./sharedWorker.js');
+new SharedWorker('./sharedWorker.js');
+new SharedWorker('./sharedWorker.js');
+```
+
+下面三个脚本字符串都解析到相同的 URL，所以也只会创建一个共享工作者线程：
+
+```js
+// 实例化一个共享工作者线程，假设当前域名是：https://www.example.com
+// - 全部基于同源调用构造函数
+// - 所有脚本解析为相同的 URL
+// - 所有线程都有相同的名称
+new SharedWorker('./sharedWorker.js');
+new SharedWorker('sharedWorker.js');
+new SharedWorker('https://www.example.com/sharedWorker.js');
+```
+
+不同的线程名称会强制浏览器创建多个共享工作者线程。对下面的例子而言，一个名为 `'foo'`，另一个名为 `'bar'`，尽管它们同源且脚本 URL 相同：
+
+```js
+// 实例化一个共享工作者线程
+// - 全部基于同源调用构造函数
+// - 所有脚本解析为相同的 URL
+// - 一个线程名称为'foo'，一个线程名称为'bar'
+new SharedWorker('./sharedWorker.js', { name: 'foo' });
+new SharedWorker('./sharedWorker.js', { name: 'foo' });
+new SharedWorker('./sharedWorker.js', { name: 'bar' });
+```
+
+共享线程，顾名思义，可以在不同标签页、不同窗口、不同内嵌框架或同源的其他工作者线程之间共享。
+
+初始化共享线程的脚本只会限制 URL，因此下面的代码会创建两个共享工作者线程，尽管加载了相同的脚本：
+
+```js
+// 实例化一个共享工作者线程
+// - 全部基于同源调用构造函数
+// - '?'导致了两个不同的 URL
+// - 所有线程都有相同的名称
+new SharedWorker('./sharedWorker.js');
+new SharedWorker('./sharedWorker.js?');
+```
+
+如果该脚本在两个不同的标签页中运行，同样也只会创建两个共享工作者线程。每个构造函数都会检查匹配的共享工作者线程，然后连接到已存在的那个。
+
