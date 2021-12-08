@@ -1692,3 +1692,9 @@ if ('serviceWorker' in navigator) {
   - `activated`
   - `redundant`
 
+#### 6.服务工作者线程的安全限制
+
+服务工作者线程 API 只能在安全上下文（HTTPS）下使用。在非安全上下文（HTTP）中，`navigator.serviceWorker` 是 `undefined`。为方便开发，浏览器豁免了通过 `localhost` 或 `127.0.0.1` 在本地加载的页面的安全上下文规则。
+
+> **注意** 可以通过 `window.isSecureContext` 确定当前上下文是否安全。
+
