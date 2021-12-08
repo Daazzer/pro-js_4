@@ -1,7 +1,7 @@
 // worker.js
 self.onmessage = ({ data }) => {
   let sum = 0;
-  let view = new Float32Array(data.arrayBuffer);
+  const view = new Float32Array(data.arrayBuffer);
 
   // 求和
   for (let i = data.startIdx; i < data.endIdx; i++) {
