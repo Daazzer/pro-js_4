@@ -1698,3 +1698,37 @@ if ('serviceWorker' in navigator) {
 
 > **注意** 可以通过 `window.isSecureContext` 确定当前上下文是否安全。
 
+#### 7.ServiceWorkerGlobalScope
+
+在服务工作者线程内部，全局上下文是 `ServiceWorkerGlobalScope` 的实例。
+
+`ServiceWorkerGlobalScope` 通过以下属性和方法扩展了 `WorkerGlobalScope`。
+
+- `caches` 返回服务工作者线程的 `CacheStorage` 对象
+- `clients` 返回服务工作者线程的 `Clients` 接口，用于访问底层 `Client` 对象
+- `registration` 返回服务工作者线程的 `ServiceWorkerRegistration` 对象
+- `skipWaiting()` 强制服务工作者线程进入活动状态；需要跟 `Clients.claim()` 一起使用
+- `fetch()` 在服务工作者线程内发送常规网络请求；用于在服务工作者线程确定有必要发送实际网络请求（而不是返回缓存值）时。
+
+> **注意** 根据浏览器实现，在 `SeviceWorker` 中把日志打印到控制台不一定能在浏览器默认控制台中看到。
+
+服务工作者线程的全局作用域可以监听以下事件，这里进行了分类
+
+- 服务工作者线程状态
+  - `install` 在服务工作者线程进入**安装**状态时触发（在客户端可以通过 `ServiceWorkerRegistration.installing` 判断）。也可以在 `self.onintall` 属性上指定该事件的处理程序
+    - 这是服务工作者线程接收的第一个事件，在线程一开始执行时就会触发
+    - 每个服务工作者线程只会调用一次
+  - `activate` 在服务工作者线程进入激活或已激活 状态时触发（在客户端可以通过 `ServiceWorkerRegistration.active` 判断）。也可以在 `self.onactive` 属性上指定该事件的处理程序
+    - 此事件在服务工作者线程准备好处理功能性事件和控制客户端时触发
+    - 此事件并不代表服务工作者线程在控制客户端，只表明具有控制客户端的条件
+- Fetch API
+  - `fetch` 在服务工作者线程截获来自主页面的 `fetch()` 请求时触发。服务工作者线程的 `fetch` 事件处理程序可以访问 `FetchEvent`，可以根据需要调整输出。也可以在 `self.onfetch` 属性上指定该事件的处理程序
+- Message API
+  - `message` 在服务工作者线程通过 `postMesssage()` 获取数据时触发。也可以在 `self.onmessage` 属性上指定该事件的处理程序
+- Notification API
+  - `notificationclick` 在系统告诉浏览器用户点击了 `ServiceWorkerRegistration.showNotification()` 生成的通知时触发。也可以在 `self.onnotificationclick` 属性上指定该事件的处理程序
+  - `notificationclose` 在系统告诉浏览器用户关闭或取消显示了 `ServiceWorkerRegistration.showNotification()` 生成的通知时触发。也可以在 `self.onnotificationclose` 属性上指定该事件的处理程序
+- Push API
+  - `push` 在服务工作者线程接收到推送消息时触发。也可以在 `self.onpush` 属性上指定该事件的处理程序
+  - `pushsubscriptionchange` 在应用控制外的因素（非 JavaScript 显式操作）导致推送订阅状态变化时触发。也可以在 `self.onpushsubscriptionchange` 属性上指定该事件的处理程序
+
