@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>服务工作者线程作用域限制</title>
+</head>
+<body>
+  <script>
+    (async () => {
+      // const serviceWorkerRegistration = await navigator.serviceWorker.register('./27_4_1_8_serviceWorker.js');
+      // const serviceWorkerRegistration = await navigator.serviceWorker.register('./27_4_1_8_serviceWorker.js', { scope: './' });
+      const serviceWorkerRegistration = await navigator.serviceWorker.register('./27_4_1_8_serviceWorker.js', { scope: './foo' });
+      console.log(serviceWorkerRegistration.scope);
+      // http://127.0.0.1:5500
+      // http://127.0.0.1:5500
+      // http://127.0.0.1:5500/foo
+    })();
+  </script>
+</body>
+</html>

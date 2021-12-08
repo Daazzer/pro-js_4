@@ -1732,3 +1732,56 @@ if ('serviceWorker' in navigator) {
   - `push` 在服务工作者线程接收到推送消息时触发。也可以在 `self.onpush` 属性上指定该事件的处理程序
   - `pushsubscriptionchange` 在应用控制外的因素（非 JavaScript 显式操作）导致推送订阅状态变化时触发。也可以在 `self.onpushsubscriptionchange` 属性上指定该事件的处理程序
 
+#### 8.服务工作者线程作用域限制
+
+服务工作者线程只能拦截其作用域内的客户端发送的请求。作用域是相对于获取服务脚本的路径定义的。如果没有在 `register()` 中指定，则作用域就是服务脚本的路径。
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务工作者线程作用域限制</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        // const serviceWorkerRegistration = await navigator.serviceWorker.register('./serviceWorker.js');
+        // const serviceWorkerRegistration = await navigator.serviceWorker.register('./serviceWorker.js', { scope: './' });
+        const serviceWorkerRegistration = await navigator.serviceWorker.register('./serviceWorker.js', { scope: './foo' });
+        console.log(serviceWorkerRegistration.scope);
+        // http://127.0.0.1:5500
+        // http://127.0.0.1:5500
+        // http://127.0.0.1:5500/foo
+      })();
+    </script>
+  </body>
+</html>
+```
+
+```js
+// serviceWorker.js
+console.log('serviceWorker');
+```
+
+服务工作者线程的作用域实际上遵循了目录权限模型，即只能相对于服务脚本所在路径缩小作用 域。像下面这样扩展作用域会抛出错误
+
+```js
+navigator.serviceWorker.register('/foo/serviceWorker.js', { scope: '/' });
+// Error: The path of the provided scope 'https://example.com/'
+// is not under the max scope allowed 'https://example.com/foo/' 
+```
+
+通常，服务工作者线程作用域会使用末尾带斜杠的绝对路径来定义
+
+```js
+navigator.serviceWorker.register('/serviceWorker.js', { scope: '/foo/' });
+```
+
+如果想扩展服务工作者线程的作用域，主要有两种方式
+
+- 通过包含想要的作用域的路径提供（获取）服务脚本。
+- 给服务脚本的响应添加 `Service-Worker-Allowed` 头部，把它的值设置为想要的作用域。该作用域值应该与 `register()` 中的作用域值一致。
+
