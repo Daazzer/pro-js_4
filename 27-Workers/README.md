@@ -1306,3 +1306,33 @@ self.postMessage('ready');
 
 与专用工作者线程一样，共享工作者线程也在独立执行上下文中运行，也只能与其他上下文异步通信
 
+#### 1.创建共享工作者线程
+
+通过加载 JavaScript 文件创建。此时，需要给 `SharedWorker` 构造函数传入文件路径，该构造函数在后台异步加载脚本并实例化共享工作者线程
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>共享工作者线程简介</title>
+  </head>
+  <body>
+    <script>
+      const sharedWorker = new SharedWorker('./emptySharedWorker.js');
+      console.log(sharedWorker);  // SharedWorker {}
+    </script>
+  </body>
+</html>
+```
+
+```js
+// emptySharedWorker.js
+console.log('emptySharedWorker');
+```
+
+也可以在行内脚本中创建共享工作者线程，但这样做没什么意义。因为每个基于行内脚本字符串创建的 `Blob` 都会被赋予自己唯一的浏览器内部 URL，所以行内脚本中创建的共享工作者线程始终是唯一的。
+
