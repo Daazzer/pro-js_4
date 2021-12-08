@@ -1534,3 +1534,5 @@ self.onconnect = ({ ports }) => {
 
 共享线程与父上下文的启动和关闭不是对称的。每个新 `SharedWorker` 连接都会触发一个事件，但没有事件对应断开 `SharedWorker` 实例的连接（如页面关闭）。
 
+> **注意** `SharedWorker` 兼容性较差，实际开发中慎用
+
