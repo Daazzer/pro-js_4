@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>创建服务工作者线程</title>
+</head>
+<body>
+  <script>
+    // 注册成功，成功回调（解决）
+    navigator.serviceWorker.register('./27_4_1_2_emptyServiceWorker.js')
+      .then(console.log, console.error);
+    // ServiceWorkerRegistration { ... } 
+
+    // 使用不存在的文件注册，失败回调（拒绝）
+    navigator.serviceWorker.register('./doesNotExist.js')
+      .then(console.log, console.error);
+    // TypeError: Failed to register a ServiceWorker:
+    // A bad HTTP response code (404) was received when fetching the script.
+  </script>
+</body>
+</html>

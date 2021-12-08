@@ -1555,3 +1555,51 @@ console.log(navigator.serviceWorker);
 // ServiceWorkerContainer { ... }
 ```
 
+#### 2.创建服务工作者线程
+
+`ServiceWorkerContainer` 没有通过全局构造函数创建，而是暴露了 `register()` 方法，该方法 以与 `Worker()` 或 `SharedWorker()` 构造函数相同的方式传递脚本 URL
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建服务工作者线程</title>
+  </head>
+  <body>
+    <script>
+      // 注册成功，成功回调（解决）
+      navigator.serviceWorker.register('./emptyServiceWorker.js')
+        .then(console.log, console.error);
+      // ServiceWorkerRegistration { ... } 
+
+      // 使用不存在的文件注册，失败回调（拒绝）
+      navigator.serviceWorker.register('./doesNotExist.js')
+        .then(console.log, console.error);
+      // TypeError: Failed to register a ServiceWorker:
+      // A bad HTTP response code (404) was received when fetching the script.
+    </script>
+  </body>
+</html>
+```
+
+```js
+// emptyServiceWorker.js
+console.log('emptyServiceWorker');
+```
+
+注册服务工作者线程的一种非常常见的模式是基于特性检测，并在页面的 `load` 事件中操作
+
+```js
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./serviceWorker.js');
+  });
+} 
+```
+
+如果没有 `load` 事件这个门槛，服务工作者线程的注册就会与页面资源的加载重叠，进而拖慢初始页面渲染的过程。除非该服务工作者线程负责管理缓存 `clients.claim()`，否则等待 `load` 事件是个明智的选择，这样同样可以发挥服务工作者线程的价值。
+
