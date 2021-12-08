@@ -1404,5 +1404,18 @@ new SharedWorker('./sharedWorker.js?');
   - 此事件也可以通过使用 `sharedWorker.addEventListener('error', handler)` 处理
 - `port` 专门用来跟共享线程通信的 `MessagePort`
 
+#### 4.SharedWorkerGlobalScope
 
+在共享线程内部，全局作用域是 `SharedWorkerGlobalScope` 的实例。`SharedWorkerGlobalScope` 继承自 `WorkerGlobalScope`，因此包括它所有的属性和方法。通过 `self` 关键字访问该全局上下文
+
+`SharedWorkerGlobalScope` 通过以下属性和方法扩展了 `WorkerGlobalScope`
+
+- `name` 可选的字符串标识符，可以传给 `SharedWorker` 构造函数
+- `importScripts()` 用于向工作者线程中导入任意数量的脚本
+- `close()` 与 `worker.terminate()` 对应，用于立即终止工作者线程。没有给工作者线程提供终止前清理的机会；脚本会突然停止。
+- `onconnect` 与共享线程建立新连接时，应将其设置为处理程序。`connect` 事件包括 `MessagePort` 实例的 `ports` 数组，可用于把消息发送回父上下文
+  - 在通过 `worker.port.onmessage` 或 `worker.port.start()` 与共享线程建立连接时都会触发 `connect` 事件
+  - `connect` 事件也可以通过使用 `sharedWorker.addEventListener('connect', handler)` 处理
+
+> **注意** 根据浏览器实现，在 `SharedWorker` 中把日志打印到控制台不一定能在浏览器默认的控制台中看到。
 
