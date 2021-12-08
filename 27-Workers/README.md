@@ -1629,3 +1629,44 @@ if ('serviceWorker' in navigator) {
 - `getRegistrations()` 返回期约，解决为与 `ServiceWorkerContainer` 关联的 `ServiceWorkerRegistration` 对象的数组；如果没有关联的服务工作者线程则返回空数组
 - `startMessage()` 开始传送通过 `Client.postMessage()` 派发的消息
 
+#### 4.使用 ServiceWorkerRegistration 对象
+
+`ServiceWorkerRegistration` 对象表示注册成功的服务工作者线程。该对象可以在 `register()` 返回的解决期约的处理程序中访问到。通过它的一些属性可以确定关联服务工作者线程的生命周期状态。
+
+调用 `navigator.serviceWorker.register()` 之后返回的期约会将注册成功的 `ServiceWorkerRegistration` 对象（注册对象）发送给处理函数。在同一页面使用同一 URL 多次调用该方法会返回相同的注册对象。
+
+```js
+(async () => {
+  const registrationA = await navigator.serviceWorker.register('./serviceWorker.js');
+	const registrationB = await navigator.serviceWorker.register('./serviceWorker2.js');
+  console.log(registrationA === registrationB);
+})();
+```
+
+`ServiceWorkerRegistration` 支持以下事件处理程序
+
+- `onupdatefound` 在服务工作者线程触发 `updatefound` 事件时会调用指定的事件处理程序
+  - 此事件会在服务工作者线程开始安装新版本时触发，表现为 `ServiceWorkerRegistration.installing` 收到一个新的服务工作者线程
+  - 此事件也可以使用 `serviceWorkerRegistration.addEventListener('updatefound', handler)` 处理
+
+`ServiceWorkerRegistration` 支持以下通用属性
+
+- `scope` 返回服务工作者线程作用域的完整 URL 路径。该值源自接收服务脚本的路径和在 `register()` 中提供的作用域
+- `navigationPreload` 返回与注册对象关联的 `NavigationPreloadManager` 实例
+- `pushManager` 返回与注册对象关联的 `pushManager` 实例
+
+`ServiceWorkerRegistration` 还支持以下属性，可用于判断服务工作者线程处于生命周期的什么阶段
+
+- `installing` 如果有则返回状态为 `installing`（安装）的服务工作者线程，否则为 `null`
+- `waiting` 如果有则返回状态为 `waiting`（等待）的服务工作者线程，否则为 `null`
+- `active` 如果有则返回状态 `activating` 或 `active`（活动）的服务工作者线程，否则为 `null`
+
+注意，这些属性都是服务工作者线程状态的一次性快照。
+
+`ServiceWorkerRegistration` 支持下列方法
+
+- `getNotifications()` 返回期约，解决为 `Notification` 对象的数组
+- `showNotifications()` 显示通知，可以配置 `title` 和 `options` 参数
+- `update()` 直接从服务器重新请求服务脚本，如果新脚本不同，则重新初始化
+- `unregister()` 取消服务工作者线程的注册。该方法会在服务工作者线程执行完再取消注册
+
