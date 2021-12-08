@@ -1457,3 +1457,80 @@ new SharedWorker('./sharedWorker.js');
 
 没有办法以编程方式终止共享线程。`SharedWorker` 对象上没有 `terminate()` 方法。在共享线程端口（稍后讨论）上调用 `close()` 时，只要还有一个端口连接到该线程就不会真的终止线程
 
+### 27.3.3 连接到共享工作者线程
+
+每次调用 `SharedWorker()` 构造函数，无论是否创建了工作者线程，都会在共享线程内部触发 `connect` 事件。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>连接到共享工作者线程</title>
+  </head>
+  <body>
+    <script>
+      for (let i = 0; i < 5; i++) {
+        new SharedWorker('./sharedWorker.js');
+      }
+
+      // connected 1 times
+      // connected 2 times
+      // connected 3 times
+      // connected 4 times
+      // connected 5 times
+    </script>
+  </body>
+</html>
+```
+
+```js
+// sharedWorker.js
+let i = 0;
+self.onconnect = () => console.log(`connected ${i++} times`);
+```
+
+发生 `connect` 事件时，`SharedWorker()` 构造函数会隐式创建 `MessageChannel` 实例，并把 `MessagePort` 实例的所有权唯一地转移给该 `SharedWorker` 的实例。这个 `MessagePort` 实例会保存在 `connect` 事件对象的 `ports` 数组中。一个连接事件只能代表一个连接，因此可以假定 `ports` 数组的长度等于 1。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>连接到共享工作者线程</title>
+  </head>
+  <body>
+    <script>
+      for (let i = 0; i < 5; i++) {
+        new SharedWorker('./sharedWorker.js');
+      }
+
+      // 1 unique connected ports
+      // 2 unique connected ports
+      // 3 unique connected ports
+      // 4 unique connected ports
+      // 5 unique connected ports 
+    </script>
+  </body>
+</html>
+```
+
+```js
+// sharedWorker.js
+const connectedProts = new Set();
+
+self.onconnect = ({ ports }) => {
+  connectedProts.add(ports[0]);
+
+  console.log(`${connectedProts.size} unique connected ports`);
+};
+```
+
+共享线程与父上下文的启动和关闭不是对称的。每个新 `SharedWorker` 连接都会触发一个事件，但没有事件对应断开 `SharedWorker` 实例的连接（如页面关闭）。
+
