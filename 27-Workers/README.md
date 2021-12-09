@@ -1840,3 +1840,76 @@ caches.open('v1')
   .then(console.log); // v1
 ```
 
+#### 2.Cache 对象
+
+服务工作者线程缓存只考虑缓存 HTTP 的 GET 请求。这样是合理的，因为 GET 请求的响应通常不会随时间而改变。另一方面，默认情况下，`Cache` 不允许使用 POST、PUT 和 DELETE 等请求方法。这些方法意味着与服务器动态交换信息，因此不适合客户端缓存。
+
+为填充 `Cache`，可使用以下三个方法。
+
+- `put(request, response)` 在键（`Request` 对象或 URL 字符串）和值（`Response` 对象）同时存在时用于添加缓存项。该方法返回 `Promise`，在添加成功后会解决。
+- `add(request)` 在只有 `Request` 对象或 URL 时使用此方法发送 `fetch()` 请求，并缓存响应。 该方法返回期约，期约在添加成功后会解决。
+- `addAll(requests)` 在希望填充全部缓存时使用，比如在服务工作者线程初始化时也初始化缓存。该方法接收 URL 或 `Request` 对象的数组。`addAll()` 会对请求数组中的每一项分别调用 `add()`。该方法返回期约，期约在所有缓存内容添加成功后会解决。
+
+```js
+const request1 = new Request('https://www.foo.com');
+const response1 = new Response('fooResponse');
+caches.open('v1')
+  .then(cache => {
+  cache.put(request1, response1)
+    .then(() => cache.keys())
+    .then(console.log) // [Request]
+    .then(() => cache.delete(request1))
+    .then(() => cache.keys())
+    .then(console.log); // []
+});
+```
+
+要检索 Cache，可以使用下面的两个方法
+
+- `matchAll(request, options)` 返回期约，期约解决为匹配缓存中 `Response` 对象的数组
+  - 此方法对结构类似的缓存执行批量操作，比如删除所有缓存在 `/images` 目录下的值。
+  - 可以通过 `options` 对象配置请求匹配方式
+- `match(request, options)` 返回期约，期约解决为匹配缓存中的 `Response` 对象；如果没命中缓存则返回 `undefined`。
+  - 本质上相当于 `matchAll(request, options)[0]`
+  - 可以通过 `options` 对象配置请求匹配方式
+
+缓存是否命中取决于 URL 字符串和/或 `Request` 对象 URL 是否匹配。URL 字符串和 `Request` 对象是可互换的，因为匹配时会提取 `Request` 对象的 URL。
+
+```js
+const request1 = 'https://www.foo.com';
+const request2 = new Request('https://www.bar.com');
+const response1 = new Response('fooResponse');
+const response2 = new Response('barResponse');
+caches.open('v1').then((cache) => {
+  cache.put(request1, response1)
+    .then(() => cache.put(request2, response2))
+    .then(() => cache.match(new Request('https://www.foo.com')))
+    .then(response => response.text())
+    .then(console.log) // fooResponse
+    .then(() => cache.match('https://www.bar.com'))
+    .then(response => response.text())
+    .then(console.log); // barResponse
+}); 
+```
+
+`Cache` 对象使用 `Request` 和 `Response` 对象的 `clone()` 方法创建副本，并把它们存储为键/值对。
+
+```js
+const request1 = new Request('https://www.foo.com');
+const response1 = new Response('fooResponse');
+caches.open('v1').then(cache => {
+  cache.put(request1, response1)
+    .then(() => cache.keys())
+    .then(keys => console.log(keys[0] === request1)) // false
+    .then(() => cache.match(request1))
+    .then(response => console.log(response === response1)); // false
+}); 
+```
+
+`Cache.match()`、`Cache.matchAll()` 和 `CacheStorage.match()` 都支持可选的 `options` 对象，其属性是
+
+- `cacheName` 只有 `CacheStorage.matchAll()` 支持。设置为字符串时，只会匹配 `Cache` 键为指定字符串的缓存值。
+- `ignoreSearch` 设置为 `true` 时，在匹配 URL 时忽略查询字符串，包括请求查询和缓存键。例如，`https://example.com?foo=bar` 会匹配 `https://example.com`
+- `ignoreMethod` 设置为 `true` 时，在匹配 URL 时忽略请求查询的 HTTP 方法。
+- `ignoreVary` 匹配的时候考虑 HTTP 的 `Vary` 头部，该头部指定哪个请求头部导致服务器响应不同的值。`ignoreVary` 设置为 `true` 时，在匹配 URL 时忽略 `Vary` 头部
+
