@@ -1988,3 +1988,47 @@ Service Worker 规范定义了 6 种服务工作者线程可能存在的状态
 
 调用 `navigator.serviceWorker.register()` 会启动创建服务工作者线程实例的过程。会进入**已解析**状态。
 
+#### 2.安装中状态
+
+**安装中**状态是执行所有服务工作者线程设置任务的状态。
+
+通过检查 `ServiceWorkerRegistration.installing` 是否被设置为 `ServiceWorker` 实例
+
+关联的 `ServiceWorkerRegistration` 对象也会在服务工作者线程到达该状态时触发 `updatefound` 事件：
+
+```js
+navigator.serviceWorker.register('./serviceWorker.js')
+  .then((registration) => {
+  registration.onupdatefound = () => {
+    console.log('Service worker is in the installing state');
+  };
+}); 
+```
+
+在服务工作者线程中，这个阶段可以通过给 `install` 事件添加处理程序来确定：
+
+```js
+self.oninstall = (installEvent) => {
+  console.log('Service worker is in the installing state');
+}; 
+```
+
+**安装中**状态频繁用于填充服务工作者线程的缓存。服务工作者线程在成功缓存指定资源之前可以一直处于该状态。如果任何资源缓存失败，服务工作者线程都会安装失败并跳至**已失效**状态。
+
+服务工作者线程可以通过 `ExtendableEvent` 停留在安装中状态。调用 `ExtendableEvent.waitUntil()` 方法，该方法接收一个 `Promise` 参数，会将状态过渡延迟到这个 `Promise` 解决。
+
+```js
+const CACHE_KEY = 'v1';
+self.oninstall = installEvent => {
+  installEvent.waitUntil(
+    caches.open(CACHE_KEY).then(cache => cache.addAll([
+      'foo.js',
+      'bar.html',
+      'baz.css',
+    ]))
+  );
+}; 
+```
+
+如果没有错误发生或者没有拒绝，服务工作者线程就会前进到**已安装**状态。
+
