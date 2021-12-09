@@ -158,3 +158,42 @@ element.className = "edit";
 
 同样，保证层与层之间的适当分离至关重要。显示出问题就应该只到 CSS 中解决，行为出问题就应该只找 JavaScript 的问题。
 
+#### 3.解耦应用程序逻辑/事件处理程序
+
+将应用程序逻辑与事件处理程序分开，各自负责处理各自的事情。事件处理程序应该专注于 `event` 对象的相关信息，然后把这些信息传给处理应用程序逻辑的某些方法。
+
+```js
+// bad
+function handleKeyPress(event) {
+  if (event.keyCode == 13) {
+    let target = event.target;
+    let value = 5 * parseInt(target.value);
+    if (value > 10) {
+      document.getElementById("error-msg").style.display = "block";
+    }
+  }
+}
+```
+
+```js
+// good
+function validateValue(value) {
+  value = 5 * parseInt(value);
+  if (value > 10) {
+    document.getElementById("error-msg").style.display = "block";
+  }
+}
+function handleKeyPress(event) {
+  if (event.keyCode == 13) {
+    let target = event.target;
+    validateValue(target.value);
+  }
+} 
+```
+
+以下是在解耦应用程序逻辑和业务逻辑时应该注意的几点。
+
+- 不要把 `event` 对象传给其他方法，而是只传递 `event` 对象中必要的数据。
+- 应用程序中每个可能的操作都应该无须事件处理程序就可以执行。
+- 事件处理程序应该处理事件，而把后续处理交给应用程序逻辑。
+
