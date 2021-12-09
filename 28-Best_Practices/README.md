@@ -134,8 +134,27 @@ function insertMessage(msg) {
     <p> class="post">${msg}</p>
     <p><em>Latest message above.</em></p>
 	</div>`;
-} 
+}
 ```
 
 HTML 渲染应该尽可能与 JavaScript 分开。在使用 JavaScript 插入数据时，应该尽可能不要插入标记。
+
+#### 2.解耦 CSS/JavaScript
+
+CSS 也可能与 JavaScript 产生紧密耦合。
+
+```js
+// CSS 紧耦合到了 JavaScript
+element.style.color = "red";
+element.style.backgroundColor = "blue";
+```
+
+现代 Web 应用程序经常使用 JavaScript 改变样式，因此虽然不太可能完全解耦 CSS 和 JavaScript，但可以让这种耦合变成更松散。这主要可以通过动态修改类名而不是样式来实现
+
+```js
+// CSS 与 JavaScript 松散耦合
+element.className = "edit";
+```
+
+同样，保证层与层之间的适当分离至关重要。显示出问题就应该只到 CSS 中解决，行为出问题就应该只找 JavaScript 的问题。
 
