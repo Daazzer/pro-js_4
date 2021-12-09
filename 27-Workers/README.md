@@ -2375,3 +2375,27 @@ self.onfetch = fetchEvent => {
 self.onactivate = () => self.registration.showNotification('bar');
 ```
 
+#### 2.处理通知事件
+
+通过 `ServiceWorkerRegistration` 对象创建的通知会向服务工作者线程发送 `notificationclick` 和 `notificationclose` 事件
+
+```js
+self.onnotificationclick = ({ notification }) => {
+  console.log('notification click', notification);
+}; 
+```
+
+```js
+self.onnotificationclose = ({ notification }) => {
+  console.log('notification close', notification);
+};
+```
+
+在服务工作者线程处理程序中，可以通 过 `clients.openWindow()` 打开相应的 URL
+
+```js
+self.onnotificationclick = ({notification}) => {
+  clients.openWindow('https://foo.com');
+}; 
+```
+
