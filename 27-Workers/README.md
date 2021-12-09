@@ -2032,3 +2032,18 @@ self.oninstall = installEvent => {
 
 如果没有错误发生或者没有拒绝，服务工作者线程就会前进到**已安装**状态。
 
+#### 3.已安装状态
+
+**已安装**状态也称为**等待中**（waiting）状态，意思是服务工作者线程此时没有别的事件要做，只是准备在得到许可的时候去控制客户端。如果没有活动的服务工作者线程，则新安装的服务工作者线程会跳到这个状态，并直接进入**激活中**状态，因为没有必要再等了。
+
+```js
+navigator.serviceWorker.register('./serviceWorker.js')
+  .then(registration => {
+  if (registration.waiting) {
+    console.log('Service worker is in the installing/waiting state');
+  }
+}); 
+```
+
+可以通过 `self.skipWaiting()` 强制推进服务工作者线程的状态
+
