@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>理解服务工作者线程的生命周期</title>
+</head>
+<body>
+  <script>
+    (async () => {
+      const registration = await navigator.serviceWorker.register('./27_4_5_serviceWorker.js')
+      registration.installing.onstatechange = ({ target: { state }}) => {
+        console.log('state change to', state);
+      };
+    })();
+  </script>
+</body>
+</html>

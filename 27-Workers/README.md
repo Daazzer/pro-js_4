@@ -1962,3 +1962,25 @@ navigator.storage.estimate().then(console.log);
 - 未激活服务工作者线程消极活动
 - 活动的服务工作者线程粘连
 
+### 27.4.5 理解服务工作者线程的生命周期
+
+Service Worker 规范定义了 6 种服务工作者线程可能存在的状态
+
+- 已解析（parsed）
+- 安装中 （installing）
+- 已安装（installed）
+- 激活中（activating）
+- 已激活（activated）
+- 已失效（redundant）
+
+每次变化都会在 `ServiceWorker` 对象上触发 `statechange` 事件
+
+```js
+(async () => {
+  const registration = await navigator.serviceWorker.register('./serviceWorker.js')
+  registration.installing.onstatechange = ({ target: { state }}) => {
+    console.log('state change to', state);
+  };
+})();
+```
+
