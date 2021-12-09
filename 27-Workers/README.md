@@ -2154,3 +2154,63 @@ navigator.serviceWorker.register('/serviceWorker.js', {
 
 推荐同时使用 `updateViaCache` 和 `CacheControl` 头部指定客户端的缓存行为
 
+### 27.4.8 强制性服务工作者线程操作
+
+在安装事件中缓存资源，此时要强制服务工作者线程进入活动状态，然后再强制活动服务工作者线程去控制关联的客户端
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>强制性服务工作者线程操作</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        const registration = await navigator.serviceWorker.register('./serviceWorker.js')
+        setInterval(() => registration.update(), 1e6);
+      })();
+    </script>
+  </body>
+</html>
+```
+
+```js
+// serviceWorker.js
+const CACHE_KEY = 'v1';
+
+self.oninstall = installEvent => {
+  // 填充缓存，然后强制服务工作者线程进入已激活状态
+  // 这样会触发 activate 事件
+  installEvent.waitUntil(
+    caches.open(CACHE_KEY)
+    .then(cache => cache.addAll([
+      'foo.css',
+      'bar.js'
+    ]))
+    .then(() => self.skipWaiting())
+  );
+};
+
+// 强制服务工作者线程接管客户端
+// 这会在每个客户端触发 controllerchange 事件
+self.onactivate = activateEvent => clients.claim();
+
+```
+
+```css
+/* foo.css */
+body {
+  background-color: #f0f;
+}
+```
+
+```js
+// bar.js
+console.log('bar.js');
+```
+
