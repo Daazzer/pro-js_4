@@ -2214,3 +2214,51 @@ body {
 console.log('bar.js');
 ```
 
+### 27.4.9 服务工作者线程消息
+
+服务工作者线程也能与客户端通过 `postMessage()` 交换消息。
+
+发送给服务工作者线程的消息可以在全局作用域处理，而发送回客户端的消息则可以在 `ServiceWorkerContext` 对象上处理
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务工作者线程消息</title>
+  </head>
+  <body>
+    <script>
+      navigator.serviceWorker.onmessage = ({ data }) => {
+        console.log('client heard:', data);
+      };
+      (async () => {
+        const registration = await navigator.serviceWorker.register('./27_4_9_serviceWorker.js');
+        registration.active?.postMessage('foo');
+        // 也可以简单地使用 serviceWorker.controller 属性
+        navigator.serviceWorker.controller?.postMessage('foo');
+      })();
+
+      // service worker heard: foo
+      // client heard: bar
+      // service worker heard: foo
+      // client heard: bar
+    </script>
+  </body>
+</html>
+```
+
+```js
+// serviceWorker.js
+self.onmessage = ({ data, source }) => {
+  console.log('service worker heard:', data);
+
+  source.postMessage('bar');
+};
+```
+
+因为客户端和服务工作者线程可以相互之间发送消息，所以通过 `MessageChannel` 或 `BroadcastChannel` 实现通信也是可能的。
+
