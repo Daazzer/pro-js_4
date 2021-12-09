@@ -2280,3 +2280,13 @@ self.onfetch = fetchEvent => {
 
 > **注意** 如果 `event.respondWith()` 没有被调用，浏览器也会通过网络发送请求
 
+#### 2.从缓存返回
+
+这个策略其实就是缓存检查。对于任何肯定有缓存的资源（如在安装阶段缓存的资源），可以采用该策略
+
+```js
+self.onfetch = fetchEvent => {
+  fetchEvent.respondWith(caches.match(fetchEvent.request));
+}; 
+```
+
