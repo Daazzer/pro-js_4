@@ -2358,7 +2358,7 @@ self.onfetch = fetchEvent => {
     <script>
       (async () => {
         const registration = await navigator.serviceWorker.register('./serviceWorker.js');
-        const status = await Notification.requestPermission()
+        const status = await Notification.requestPermission();
         if (status === 'granted') {
           registration.showNotification('foo');
         }
@@ -2416,7 +2416,7 @@ self.onnotificationclick = ({notification}) => {
   <body>
     <script>
       (async () => {
-        const registration = await navigator.serviceWorker.register('./27_4_11_3_serviceWorker.js');
+        const registration = await navigator.serviceWorker.register('./serviceWorker.js');
         registration.pushManager.subscribe({
           applicationServerKey: '<public-key>',  // 来自服务器的公钥
           userVisibleOnly: true
@@ -2434,6 +2434,62 @@ self.onactivate = () => {
     applicationServerKey: '<public-key>', // 来自服务器的公钥
     userVisibleOnly: true
   });
+};
+```
+
+#### 4.处理推送事件
+
+订阅之后，服务工作者线程会在每次服务器推送消息时收到 `push` 事件。
+
+```js
+self.onpush = pushEvent => {
+  console.log('Service worker was pushed data:', pushEvent.data.text());
+}; 
+```
+
+`push` 事件继承了 `ExtendableEvent`。可以把 `showNotification()` 返回的 `Promise` 传给 `waitUntil()`，这样就会让服务工作者线程一直活动到通知的 `Promise` 解决。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>处理推送事件</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        const registration = await navigator.serviceWorker.register('./serviceWorker.js');
+        // 请求显示通知的授权
+        const status = await Notification.requestPermission();
+        if (status === 'granted') {
+          // 如果获得授权，只订阅推送消息
+          registration.pushManager.subscribe({
+            applicationServerKey: '<public-key>',  // 来自服务器的公钥
+            userVisibleOnly: true
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
+```
+
+```js
+// serviceWorker.js
+// 收到推送事件后，在通知中以文本形式显示数据
+self.onpush = pushEvent => {
+  pushEvent.waitUntil(
+    self.registration.showNotification(pushEvent.data.text())
+  );
+};
+
+// 如果用户单击通知，则打开相应的应用程序页面
+self.onnotificationclick = ({ notification }) => {
+  clients.openWindow('https://example.com/clicked-notification');
 };
 ```
 
