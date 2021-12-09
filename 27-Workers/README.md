@@ -2340,3 +2340,38 @@ self.onfetch = fetchEvent => {
 - 服务工作者线程必须能够订阅服务器发送的推送通知。
 - 服务工作者线程必须能够处理推送消息，即使应用程序没在前台运行或者根本没打开。
 
+#### 1.显示通知
+
+可以通过 `ServiceWorkerRegistration.showNotification()` 显示通知
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务工作者线程消息</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        const registration = await navigator.serviceWorker.register('./serviceWorker.js');
+        const status = await Notification.requestPermission()
+        if (status === 'granted') {
+          registration.showNotification('foo');
+        }
+      })();
+    </script>
+  </body>
+</html>
+```
+
+类似地，在服务工作者线程内部可以使用全局 `registration` 属性触发通知
+
+```js
+// serviceWorker.js
+self.onactivate = () => self.registration.showNotification('bar');
+```
+
