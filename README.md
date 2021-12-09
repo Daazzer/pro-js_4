@@ -27,4 +27,5 @@
 - [第 25 章 客户端存储](./25-Client-Side_Storage)
 - [第 26 章 模块](./26-Modules)
 - [第 27 章 工作者线程](./27-Workers)
+- [第 28 章 最佳实践](./28-Best_Practices)
 
