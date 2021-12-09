@@ -2262,3 +2262,9 @@ self.onmessage = ({ data, source }) => {
 
 因为客户端和服务工作者线程可以相互之间发送消息，所以通过 `MessageChannel` 或 `BroadcastChannel` 实现通信也是可能的。
 
+### 27.4.10 拦截 fetch 事件
+
+服务工作者线程作用域中的网络请求会注册 为 `fetch` 事件。
+
+`FetchEvent` 继承自 `ExtendableEvent`。让服务工作者线程能够决定如何处理 `fetch` 事件的方法 是 `event.respondWith()`。该方法接收期约，该期约会解决为一个 `Response` 对象。当然，该 `Response` 对象实际上来自哪里完全由服务工作者线程决定。
+
