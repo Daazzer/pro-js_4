@@ -1923,3 +1923,26 @@ navigator.storage.estimate().then(console.log);
 // {quota: 76475314176, usage: 0, usageDetails: {…}}
 ```
 
+### 27.4.3 服务工作者线程客户端
+
+服务工作者线程会使用 `Client` 对象跟踪关联的窗口、工作线程或服务工作者线程。
+
+可以通过 `Clients` 接口访问这些 `Client` 对象。该接口暴露在全局上下文的 `self.clients` 属性上
+
+`Client` 对象支持以下属性和方法：
+
+- `id` 返回客户端的全局唯一标识符，例如 `7e4248ec-b25e-4b33-b15f-4af8bb0a3ac4`。`id` 可用于通过 `Client.get()` 获取客户端的引用
+- `type` 返回表示客户端类型的字符串。`type` 可能的值是 `window`、`worker` 或 `sharedworker`
+- `url` 返回客户端的 URL
+- `postMessage()` 用于向单个客户端发送消息
+
+`Clients` 接口支持通过 `get()` 或 `matchAll()` 访问 `Client` 对象。`matchAll()` 也可以接收 `options` 对象，该对象支持以下属性
+
+- `includeUncontrolled` 在设置为 `true` 时，返回结果包含不受当前服务工作者线程控制的客户端。默认为 `false`
+- `type` 可以设置为 `window`、`worker` 或 `sharedworker`，对返回结果进行过滤。默认为 `all`， 返回所有类型的客户端
+
+`Clients` 接口也支持以下方法
+
+- `openWindow(url)` 在新窗口中打开指定 URL，实际上会给当前服务工作者线程添加一个新 `Client`。这个新 `Client` 对象以解决的期约形式返回。该方法可用于回应点击通知的操作，此时服务工作者线程可以检测单击事件并作为响应打开一个窗口
+- `claim()` 强制性设置当前服务工作者线程以控制其作用域中的所有客户端。`claim()` 可用于不希望等待页面重新加载而让服务工作者线程开始管理页面。
+
