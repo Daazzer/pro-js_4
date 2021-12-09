@@ -250,3 +250,31 @@ Wrox.ProJS.EventUtil = { /* ... */ };
 Wrox.ProJS.CookieUtil = { /* ... */ };
 ```
 
+#### 3.不要比较 null
+
+```js
+function sortArray(values) {
+  if (values != null) { // 不要这样比较！
+    values.sort(comparator);
+  }
+} 
+```
+
+单纯比较 `null` 通常是不够的。检查值的类型就要真的检查类型，而不是检查它不能是什么。
+
+```js
+function sortArray(values) {
+  if (values instanceof Array) { // 推荐
+    values.sort(comparator);
+  }
+} 
+```
+
+如果看到比较 `null` 的代码，可以使用下列某种技术替换它。
+
+- 如果值应该是引用类型，则使用 `instanceof` 操作符检查其构造函数
+- 如果值应该是原始类型，则使用 `typeof` 检查其类型
+- 如果希望值是有特定方法名的对象，则使用 `typeof` 操作符确保对象上存在给定名字的方法
+
+代码中比较 `null` 的地方越少，就越容易明确类型检查的目的，从而消除不必要的错误。
+
