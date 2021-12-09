@@ -2399,3 +2399,41 @@ self.onnotificationclick = ({notification}) => {
 }; 
 ```
 
+#### 3.订阅推送事件
+
+对于发送给服务工作者线程的推送消息，必须通过服务工作者线程的 `PushManager` 来订阅。这样服务工作者线程就可以在 `push` 事件处理程序中处理推送消息
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订阅推送事件</title>
+  </head>
+  <body>
+    <script>
+      (async () => {
+        const registration = await navigator.serviceWorker.register('./27_4_11_3_serviceWorker.js');
+        registration.pushManager.subscribe({
+          applicationServerKey: '<public-key>',  // 来自服务器的公钥
+          userVisibleOnly: true
+        });
+      })();
+    </script>
+  </body>
+</html>
+```
+
+```js
+// serviceWorker.js
+self.onactivate = () => {
+  self.registration.pushManager.subscribe({
+    applicationServerKey: '<public-key>', // 来自服务器的公钥
+    userVisibleOnly: true
+  });
+};
+```
+
