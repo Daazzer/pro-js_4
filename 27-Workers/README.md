@@ -2036,6 +2036,8 @@ self.oninstall = installEvent => {
 
 **已安装**状态也称为**等待中**（waiting）状态，意思是服务工作者线程此时没有别的事件要做，只是准备在得到许可的时候去控制客户端。如果没有活动的服务工作者线程，则新安装的服务工作者线程会跳到这个状态，并直接进入**激活中**状态，因为没有必要再等了。
 
+这个阶段可以通过检查 `ServiceWorkerRegistration.waiting` 是否被设置为一个 `ServiceWorker` 实例来确定
+
 ```js
 navigator.serviceWorker.register('./serviceWorker.js')
   .then(registration => {
@@ -2046,4 +2048,35 @@ navigator.serviceWorker.register('./serviceWorker.js')
 ```
 
 可以通过 `self.skipWaiting()` 强制推进服务工作者线程的状态
+
+#### 4.激活中状态
+
+**激活中**状态表示服务工作者线程已经被浏览器选中即将变成可以控制页面的服务工作者线程。如果浏览器中没有活动服务工作者线程，这个新服务工作者线程会自动到达激活中状态。如果有一个活动服务工作者线程，则这个作为替代的服务工作者线程可以通过如下方式进入激活中状态。
+
+- 原有服务工作者线程控制的客户端数量变为 0。这通常意味着所有受控的浏览器标签页都被关闭。在下一个导航事件时，新服务工作者线程会到达激活中状态。
+- 已安装的服务工作者线程调用 `self.skipWaiting()`。这样可以立即生效，而不必等待一次导航事件。
+
+通过检查 `ServiceWorkerRegistration.active` 是否被设置为一 个 `ServiceWorker` 实例来确定
+
+```js
+navigator.serviceWorker.register('./serviceWorker.js')
+  .then(registration => {
+  if (registration.active) {
+    console.log('Service worker is in the activating/activated state');
+  }
+}); 
+```
+
+在这个服务工作者线程内部，可以通过给 `activate` 事件添加处理程序来获悉
+
+```js
+const CACHE_KEY = 'v3';
+self.onactivate = activateEvent => {
+  caches.keys()
+    .then(keys => keys.filter(key => key !== CACHE_KEY))
+    .then(oldKeys => oldKeys.forEach(oldKey => caches.delete(oldKey)));
+};
+```
+
+`activate` 事件也继承自 `ExtendableEvent`，因此也支持 `waitUntil()` 方法，可以延迟过渡到**已激活**状态，或者基于 `Promise` 拒绝过渡到**已失效**状态。
 
