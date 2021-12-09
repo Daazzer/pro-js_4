@@ -2316,3 +2316,18 @@ self.onfetch = fetchEvent => {
 };
 ```
 
+#### 5.通用后备
+
+应用程序需要考虑缓存和网络都不可用的情况。服务工作者线程可以在安装时缓存后备资源，然后在缓存和网络都失败时返回它们
+
+```js
+self.onfetch = fetchEvent => {
+  fetchEvent.respondWith(
+    // 开始执行“从缓存返回，以网络为后备”策略
+    caches.match(fetchEvent.request)
+    .then(response => response || fetch(fetchEvent.request))
+    .catch(() => caches.match('/fallback.html'))
+  );
+}; 
+```
+
