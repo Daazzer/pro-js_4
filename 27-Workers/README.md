@@ -2138,3 +2138,19 @@ navigator.serviceWorker.ready.then(() => {
 
 大多数浏览器将服务工作者线程实现为独立的进程，而该进程由浏览器单独控制。如果浏览器检测到某个服务工作者线程空闲了，就可以终止它并在需要时再重新启动。这意味着可以依赖服务工作者线程在激活后处理事件，但不能依赖它们的持久化全局状态。
 
+### 27.4.7 通过 updateViaCache 管理服务文件缓存
+
+为了让客户端能控制自己的更新行为，可以通过 `updateViaCache` 属性设置客户端对待服务脚本的方式。该属性可以在注册服务工作者线程时定义，可以是如下三个字符串值。
+
+- `imports` 默认值。顶级服务脚本永远不会被缓存，但通过 `importScripts()` 在服务工作者线程内部导入的文件会按照 `Cache-Control` 头部设置纳入 HTTP 缓存管理。
+- `all` 服务脚本没有任何特殊待遇。所有文件都会按照 `Cache-Control` 头部设置纳入 HTTP 缓存管理。
+- `none` 顶级服务脚本和通过 `importScripts()` 在服务工作者线程内部导入的文件永远都不会被缓存。
+
+```js
+navigator.serviceWorker.register('/serviceWorker.js', {
+  updateViaCache: 'none'
+}); 
+```
+
+推荐同时使用 `updateViaCache` 和 `CacheControl` 头部指定客户端的缓存行为
+
