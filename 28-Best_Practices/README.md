@@ -214,3 +214,39 @@ function handleKeyPress(event) {
 - 创建包含想要功能的新对象，通过它与别人的对象交互。
 - 创建新自定义类型继承本来想要修改的类型，可以给自定义类型添加新功能。
 
+#### 2.不声明全局变量
+
+与尊重对象所有权密切相关的是尽可能不声明全局变量和函数。最多可以创建一个全局变量，作为其他对象和函数的命名空间。
+
+```js
+// 两个全局变量：不要！
+var name = "Nicholas";
+function sayName() {
+  console.log(name);
+} 
+```
+
+```js
+// 一个全局变量：推荐
+var MyApplication = {
+  name: "Nicholas",
+  sayName: function() {
+    console.log(this.name);
+  }
+};
+```
+
+这样一个全局对象可以扩展为**命名空间**的概念。命名空间涉及创建一个对象，然后通过这个对象来暴露能力。
+
+关于命名空间，最重要的确定一个所有人都同意的全局对象名称。这个名称要足够独特，不可能与其他人的冲突。大多数情况下，可以使用开发者所在的公司名，例如 `goog` 或 `Wrox`。下面的例子演示了使用 `Wrox` 作为命名空间来组织功能：
+
+```js
+// 创建全局对象
+var Wrox = {};
+// 为本书（Professional JavaScript）创建命名空间
+Wrox.ProJS = {};
+// 添加本书用到的其他对象
+Wrox.ProJS.EventUtil = { /* ... */ };
+Wrox.ProJS.CookieUtil = { /* ... */ };
+```
+
