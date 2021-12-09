@@ -108,3 +108,34 @@ let person;
 
 随时注意不要让代码产生紧密耦合
 
+#### 1.解耦 HTML/JavaScript
+
+把 JavaScript 直接嵌入在 HTML 中，要么使用包含嵌入代码的 `<script>` 元素，要么使用 HTML 属性添加事件处理程序，这些都会造成紧密耦合。
+
+```html
+<!-- 使用<script>造成 HTML/JavaScript 紧密耦合 -->
+<script>
+  document.write("Hello world!");
+</script>
+
+<!-- 使用事件处理程序属性造成 HTML/JavaScript 紧密耦合 -->
+<input type="button" value="Click Me" onclick="doSomething()"/>
+```
+
+理想情况下，HTML 和 JavaScript 应该完全分开，通过外部文件引入 JavaScript，然后使用 DOM 添加行为。
+
+在相反的情况下，HTML 和 JavaScript 也会变得紧密耦合：把 HTML 包含在 JavaScript 中。
+
+```js
+// HTML 紧密耦合到了 JavaScript
+function insertMessage(msg) {
+  let container = document.getElementById("container");
+  container.innerHTML = `<div class="msg">
+    <p> class="post">${msg}</p>
+    <p><em>Latest message above.</em></p>
+	</div>`;
+} 
+```
+
+HTML 渲染应该尽可能与 JavaScript 分开。在使用 JavaScript 插入数据时，应该尽可能不要插入标记。
+
