@@ -2303,3 +2303,16 @@ self.onfetch = fetchEvent => {
 };
 ```
 
+#### 4.从缓存返回，网络作后备
+
+这个策略优先考虑响应速度，但仍会在没有缓存的情况下发送网络请求。这是大多数渐进式 Web 应用程序（PWA，Progressive Web Application）采取的首选策略
+
+```js
+self.onfetch = fetchEvent => {
+  fetchEvent.respondWith(
+    caches.match(fetchEvent.request)
+    .then((response) => response || fetch(fetchEvent.request))
+  );
+};
+```
+
