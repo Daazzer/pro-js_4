@@ -2080,3 +2080,45 @@ self.onactivate = activateEvent => {
 
 `activate` 事件也继承自 `ExtendableEvent`，因此也支持 `waitUntil()` 方法，可以延迟过渡到**已激活**状态，或者基于 `Promise` 拒绝过渡到**已失效**状态。
 
+#### 5.已激活状态
+
+**已激活**状态表示服务工作者线程正在控制一个或多个客户端。在这个状态，服务工作者线程会捕获其作用域中的 `fetch()` 事件、通知和推送事件。
+
+这个阶段大致可以通过检查 `ServiceWorkerRegistration.active` 是否被设置为一个 `ServiceWorker` 实例来确定
+
+```js
+navigator.serviceWorker.register('./serviceWorker.js')
+  .then(registration => {
+  if (registration.active) {
+    console.log('Service worker is in the activating/activated state');
+  }
+}); 
+```
+
+更可靠的确定服务工作者线程处于已激活状态一种方式是检查 `ServiceWorkerRegistration` 的 `controller` 属性。该属性会返回激活的 `ServiceWorker` 实例，即控制页面的实例
+
+```js
+navigator.serviceWorker.register('./serviceWorker.js')
+  .then(registration => {
+  if (registration.controller) {
+    console.log('Service worker is in the activated state');
+  }
+}); 
+```
+
+在新服务工作者线程控制客户端时，该客户端中的 `ServiceWorkerContainer` 会触发 `controllerchange` 事件
+
+```js
+navigator.serviceWorker.oncontrollerchange = () => {
+  console.log('A new service worker is controlling this client');
+};
+```
+
+另外，也可以使用 `ServiceWorkerContainer.ready` 期约来检测活动服务工作者线程。该期约会在当前页面拥有活动工作者线程时立即解决：
+
+```js
+navigator.serviceWorker.ready.then(() => {
+  console.log('A new service worker is controlling this client');
+}); 
+```
+
