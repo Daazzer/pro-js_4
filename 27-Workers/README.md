@@ -1913,3 +1913,13 @@ caches.open('v1').then(cache => {
 - `ignoreMethod` 设置为 `true` 时，在匹配 URL 时忽略请求查询的 HTTP 方法。
 - `ignoreVary` 匹配的时候考虑 HTTP 的 `Vary` 头部，该头部指定哪个请求头部导致服务器响应不同的值。`ignoreVary` 设置为 `true` 时，在匹配 URL 时忽略 `Vary` 头部
 
+#### 3.最大存储空间
+
+使用 StorageEstimate API 可以近似地获悉有多少空间可用（以字节为单位），以及当前使用了多少空间。此方法只在安全上下文中可用
+
+```js
+navigator.storage.estimate().then(console.log);
+// 不同浏览器的输出可能不同：
+// {quota: 76475314176, usage: 0, usageDetails: {…}}
+```
+
