@@ -2268,3 +2268,15 @@ self.onmessage = ({ data, source }) => {
 
 `FetchEvent` 继承自 `ExtendableEvent`。让服务工作者线程能够决定如何处理 `fetch` 事件的方法 是 `event.respondWith()`。该方法接收期约，该期约会解决为一个 `Response` 对象。当然，该 `Response` 对象实际上来自哪里完全由服务工作者线程决定。
 
+#### 1.从网络返回
+
+这个策略就是简单地转发 `fetch` 事件。那些绝对需要发送到服务器的请求就适合该策略。
+
+```js
+self.onfetch = fetchEvent => {
+  fetchEvent.respondWith(fetch(fetchEvent.request));
+};
+```
+
+> **注意** 如果 `event.respondWith()` 没有被调用，浏览器也会通过网络发送请求
+
