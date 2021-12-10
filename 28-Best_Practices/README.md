@@ -803,3 +803,21 @@ export const bar = 'bar'; // unused
 
 能够实现模块打包的工具非常多。Webpack、Rollupt 和 Browserify 只是其中的几个，可以将基于模块的代码转换为普遍兼容的网页脚本。
 
+### 28.3.2 验证
+
+有一些工具可以帮我们发现 JavaScript 代码中潜在的问题，最流行的是 Douglas Crockford 的 JSLint 和 ESLint。
+
+这些代码检查工具可以发现 JavaScript 代码中的语法错误和常见的编码错误。
+
+- 使用 `eval()`
+- 使用未声明的变量
+- 遗漏了分号
+- 不适当地换行
+- 不正确地使用逗号
+- 遗漏了包含语句的括号
+- 遗漏了 `switch` 分支中的 `break`
+- 重复声明变量
+- 使用了 `with`
+- 错误地使用等号（应该是两个或三个等号）
+- 执行不到的代码
+
