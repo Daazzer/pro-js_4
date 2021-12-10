@@ -187,48 +187,78 @@ console.log(a[Symbol.iterator]()); // Array Iterator {}
 
 任何实现 `Iterator` 接口的对象都可以作为迭代器使用
 
+为了让一个可迭代对象能够创建多个迭代器，必须每创建一个迭代器就对应一个新计数器。
+
 ```js
 class Counter {
-    // Counter 实例应该迭代 limit 次
-    constructor(limit) {
-        this.count = 1;
-        this.limit = limit;
-    }
+  // Counter 实例应该迭代 limit 次
+  constructor(limit) {
+    this.count = 1;
+    this.limit = limit;
+  }
 
-    [Symbol.iterator]() {
-        let count = 1,
-            limit = this.limit;
-        // 为了能够创建多个独立的迭代器，可以把计数器变量放到闭包里
-        return {
-            next() {
-                if (count <= limit) {
-                    return { done: false, value: count++ };
-                } else {
-                    return { done: true, value: undefined };
-                }
-            }
-        };
-    }
+  [Symbol.iterator]() {
+    let count = 1,
+        limit = this.limit;
+    // 为了能够创建多个独立的迭代器，可以把计数器变量放到闭包里
+    return {
+      next() {
+        if (count <= limit) {
+          return { done: false, value: count++ };
+        } else {
+          return { done: true, value: undefined };
+        }
+      }
+    };
+  }
 }
 
 const counter = new Counter(3);
 
 for (const c of counter) {
-    console.log(c);
+  console.log(c);
 }
 // 1
 // 2
 // 3
 
 for (const c of counter) {
-    console.log(c);
+  console.log(c);
 }
 // 1
 // 2
 // 3
 ```
 
+每个以这种方式创建的迭代器也实现了 `Iterable` 接口。`Symbol.iterator` 属性引用的工厂函数会返回相同的迭代器：
 
+```js
+let arr = ['foo', 'bar', 'baz'];
+let iter1 = arr[Symbol.iterator]();
+
+console.log(iter1[Symbol.iterator]); // f values() { [native code] }
+
+let iter2 = iter1[Symbol.iterator]();
+
+console.log(iter1 === iter2); // true
+```
+
+因为每个迭代器也实现了 `Iterable` 接口，所以它们可以用在任何期待可迭代对象的地方，比如 `for-of` 循环：
+
+```js
+let arr = [3, 1, 4];
+let iter = arr[Symbol.iterator]();
+
+for (let item of arr ) { console.log(item); }
+// 3
+// 1
+// 4
+
+for (let item of iter ) { console.log(item); }
+// 3
+// 1
+// 4
+```
 
 ### 7.2.4 提前终止迭代器
 
