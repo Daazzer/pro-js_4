@@ -712,3 +712,34 @@ for (let i = 0; i < 10; i++) {
 
 事件委托利用了事件的冒泡。任何冒泡的事件都可以不在事件目标上，而在目标的任何祖先元素上处理。基于这个认知，可以把事件处理程序添加到负责处理多个目标的高层元素上。只要可能，就应该在文档级添加事件处理程序，因为在文档级可以处理整个页面的事件。
 
+#### 4.注意 HTMLCollection
+
+任何时候，只要访问 `HTMLCollection`，无论是它的属性还是方法，就会触发查询文档，而这个查询相当耗时。减少访问 `HTMLCollection` 的次数可以极大地提升脚本的性能。
+
+可能优化 `HTMLCollection` 访问最关键地方就是循环了。
+
+```js
+let images = document.getElementsByTagName("img");
+for (let i = 0, len = images.length; i < len; i++) {
+  // 处理
+}
+```
+
+在循环中使用 `HTMLCollection` 时，应该首先取得对要使用的元素的引用，如下面所示。这样才能避免在循环体内多次调用 `HTMLCollection`
+
+```js
+let images = document.getElementsByTagName("img"),
+    image;
+for (let i = 0, len=images.length; i < len; i++) {
+  image = images[i];
+  // 处理
+}
+```
+
+编写 JavaScript 代码时，关键是要记住，只要返回 `HTMLCollection` 对象，就应该尽量不访问它。以下情形会返回 `HTMLCollection`
+
+- 调用 `getElementsByTagName()`
+- 读取元素的 `childNodes` 属性
+- 读取元素的 `attributes` 属性
+- 访问特殊集合，如 `document.form`、`document.images` 等
+
