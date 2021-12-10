@@ -115,13 +115,13 @@ for (const el of fooArr) {
 
 ### 7.2.2 迭代器协议
 
+迭代器是一种一次性使用的对象，用于迭代与其关联的可迭代对象。
+
 迭代器 API
 
 - `next()` 方法在可迭代对象中遍历数据，每次成功调用 `next()`，都会返回一个 `IteratorResult` 对象，包含两个属性 `done` 和 `value`
   - `done` 布尔值，表示是否还可以调用 `next()` 取得下一个值
   - `value` 包含可迭代对象的下一个值 (`done` 为 `false`)，或者 `undefined` (`done` 为 `true`)
-
-
 
 不同迭代器的实例相互之间没有联系，只会独立地遍历可迭代对象
 
@@ -135,8 +135,6 @@ console.log(iter2.next());  // { done: false, value: 'foo' }
 console.log(iter2.next());  // { done: false, value: 'bar' }
 console.log(iter1.next());  // { done: false, value: 'bar' }
 ```
-
-
 
 如果可迭代对象在迭代期间被修改了，那么迭代器也会反映相应的变化
 
@@ -156,27 +154,34 @@ console.log(iter.next());  // { done: true, value: undefined }
 
 > **注意** 迭代器维护着一个指向可迭代对象的引用，因此迭代器会阻止垃圾回收程序回收可迭代对象
 
-
-
-显式的迭代器实现
+下面的例子比较了一个显式的迭代器实现和一个原生的迭代器实现。
 
 ```js
+// 这个类实现了可迭代接口（Iterable）
+// 调用默认的迭代器工厂函数会返回
+// 一个实现迭代器接口（Iterator）的迭代器对象
 class Foo {
-    // 实现可迭代接口 (Iterable)
-    [Symbol.iterator]() {
-        return {
-            next() {
-                return { done: false, value: 'foo' };
-            }
-        };
-    }
+  // 实现可迭代接口 (Iterable)
+  [Symbol.iterator]() {
+    return {
+      next() {
+        return { done: false, value: 'foo' };
+      }
+    };
+  }
 }
 
-const foo = new Foo();
-console.log(foo[Symbol.iterator]());  // { next: f() {} }
+const f = new Foo();
+// 打印出实现了迭代器接口的对象
+console.log(f[Symbol.iterator]()); // { next: f() {} }
+
+// Array 类型实现了可迭代接口（Iterable）
+// 调用 Array 类型的默认迭代器工厂函数
+// 会创建一个 ArrayIterator 的实例
+const a = new Array();
+// 打印出 ArrayIterator 的实例
+console.log(a[Symbol.iterator]()); // Array Iterator {}
 ```
-
-
 
 ### 7.2.3 自定义迭代器
 
