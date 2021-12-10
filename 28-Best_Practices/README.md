@@ -336,3 +336,26 @@ function updateUI() {
 
 因此，一个经验规则就是，只要函数中有引用超过两次的全局对象，就应该把这个对象保存为一个局部变量。
 
+#### 2.不使用 with 语句
+
+在性能很重要的代码中，应避免使用 `with` 语句。与函数类似，`with` 语句会创建自己的作用域，因此也会加长其中代码的作用域链。在 `with` 语句中执行的代码一定比在它外部执行的代码慢，因为作用域链查找时多一步。
+
+```js
+function updateBody() {
+  with(document.body) {
+    console.log(tagName);
+    innerHTML = "Hello world!";
+  }
+}
+```
+
+大多数情况下， 使用局部变量可以实现同样的效果，无须增加新作用域。
+
+```js
+function updateBody() {
+  let body = document.body;
+  console.log(body.tagName);
+  body.innerHTML = "Hello world!";
+}
+```
+
