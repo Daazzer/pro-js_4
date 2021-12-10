@@ -518,3 +518,31 @@ do {
 } while (--iterations > 0);
 ```
 
+#### 4.避免重复解释
+
+```js
+// 对代码求值：不要
+eval("console.log('Hello world!')");
+// 创建新函数：不要
+let sayHi = new Function("console.log('Hello world!')");
+// 设置超时函数：不要
+setTimeout("console.log('Hello world!')", 500);
+```
+
+在上面所列的每种情况下，都需要重复解释包含 JavaScript 代码的字符串。在  JavaScript 运行时，必须启动新解析器实例来 解析这些字符串中的代码。实例化新解析器比较费时间
+
+尽量不使用 `eval()`
+
+```js
+// 直接写出来
+console.log('Hello world!');
+// 创建新函数：直接写出来
+let sayHi = function() {
+  console.log('Hello world!');
+};
+// 设置超时函数：直接写出来
+setTimeout(function() {
+  console.log('Hello world!');
+}, 500);
+```
+
