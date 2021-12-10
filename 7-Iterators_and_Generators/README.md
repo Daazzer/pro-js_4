@@ -271,51 +271,51 @@ for (let item of iter ) { console.log(item); }
 
 ```js
 class Counter {
-    constructor(limit) {
-        this.limit = limit;
-    }
+  constructor(limit) {
+    this.limit = limit;
+  }
 
-    [Symbol.iterator]() {
-        let count = 1,
-            limit = this.limit;
-        return {
-            next() {
-                if (count <= limit) {
-                    return { done: false, value: count++ };
-                } else {
-                    return { done: true };
-                }
-            },
-            // 可选的 return() 方法用于指定在迭代器提前关闭时执行的逻辑。
-            return() {
-                console.log('提前退出');
-                return { done: true };
-            }
-        };
-    }
+  [Symbol.iterator]() {
+    let count = 1,
+        limit = this.limit;
+    return {
+      next() {
+        if (count <= limit) {
+          return { done: false, value: count++ };
+        } else {
+          return { done: true };
+        }
+      },
+      // 可选的 return() 方法用于指定在迭代器提前关闭时执行的逻辑。
+      return() {
+        console.log('提前退出');
+        return { done: true };
+      }
+    };
+  }
 }
 
 const counter1 = new Counter(5);
 
 for (const i of counter1) {
-    if (i > 2) {
-        break;
-    }
-    console.log(i);
-    // 1
-    // 2
-    // 提前退出
+  if (i > 2) {
+    break;
+  }
+  console.log(i);
+  // 1
+  // 2
+  // 提前退出
 }
 
 const counter2 = new Counter(5);
 
 try {
-    for (const i of counter2) {
-        if (i > 2) {
-            throw 'err';
-        }
-        console.log(i);
+  for (const i of counter2) {
+    if (i > 2) {
+      throw 'err';
     }
+    console.log(i);
+  }
 } catch (e) {}
 // 1
 // 2
@@ -327,26 +327,24 @@ const [a, b] = counter3;
 // 提前退出
 ```
 
-
-
 如果迭代器没有关闭，则还可以继续从上次离开的地方继续迭代
 
-`return()` 方法是可选的。并非所有的迭代器都可关闭的，要知道某个迭代器是否可以关闭，可以测试这个迭代器实例的 `return` 属性是不是函数对象，不过仅仅给一个不可关闭的迭代器增加这个方法**并不能**让它变成可关闭的
+`return()` 方法是可选的。并非所有的迭代器都可关闭的，要知道某个迭代器是否可以关闭，可以测试这个迭代器实例的 `return` 属性是不是函数对象，不过，仅仅给一个不可关闭的迭代器增加这个方法**并不能**让它变成可关闭的。这是因为调用 `return()` 不会强制迭代器进入关闭状态。
 
 ```js
 const arr = [1, 2, 3, 4, 5];
 const iter = arr[Symbol.iterator]();
 
 iter.return = function() {
-    console.log('提前退出');
-    return { done: true };
+  console.log('提前退出');
+  return { done: true };
 }
 
 for (const i of iter) {
-    console.log(i);
-    if (i > 2) {
-        break;
-    }
+  console.log(i);
+  if (i > 2) {
+    break;
+  }
 }
 // 1
 // 2
@@ -354,13 +352,11 @@ for (const i of iter) {
 // 提前退出
 
 for (const i of iter) {
-    console.log(i);
+  console.log(i);
 }
 // 4
 // 5
 ```
-
-
 
 ## 7.3 生成器
 
