@@ -674,3 +674,35 @@ list.appendChild(fragment);
 
 只要是必须更新 DOM，就尽量考虑使用文档片段来预先构建 DOM 结构，然后再把构建好的 DOM 结构实时更新到文档中。
 
+#### 2.使用 innerHTML
+
+使用 DOM方法如 `createElement()` 和 `appendChild()`，以及使用 `innerHTML`。
+
+对于少量 DOM 更新，这两种技术区别不大，但对于大量 DOM 更新，使用 `innerHTML` 要比使用标准 DOM 方法创建同样的结构快很多
+
+在给 `innerHTML` 赋值时，后台会创建 HTML 解析器，然后会使用原生 DOM 调用而不是 JavaScript 的 DOM 方法来创建 DOM 结构。原生 DOM 方法速度更快，因为该方法是执行编译代码而非解释代码。
+
+```js
+let list = document.getElementById("myList"),
+    html = "";
+for (let i = 0; i < 10; i++) {
+  html += '<li>Item ${i}</li>';
+}
+list.innerHTML = html;
+/*
+以上代码构造了一个HTML字符串，然后将它赋值给list.innerHTML，结果也会创建适当的 DOM
+结构。虽然拼接字符串也会有一些性能损耗，但这个技术仍然比执行多次 DOM 操作速度更快。
+ */
+```
+
+与其他 DOM 操作一样，使用 `innerHTML` 的关键在于最小化调用次数。例如，下面的代码使用 `innerHTML` 的次数就太多了：
+
+```js
+let list = document.getElementById("myList");
+for (let i = 0; i < 10; i++) {
+  list.innerHTML += '<li>Item ${i}</li>'; // 不要
+} 
+```
+
+> **注意** 使用 `innerHTML` 可以提升性能，但也会暴露巨大的 XSS 攻击面。无论何时使用它 填充不受控的数据，都有可能被攻击者注入可执行代码。此时必须要当心。
+
