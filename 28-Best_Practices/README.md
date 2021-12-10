@@ -556,3 +556,25 @@ setTimeout(function() {
 
 JavaScript 代码中语句的数量影响操作执行的速度。寻找可以合并的语句，以减少整个脚本的执行时间。
 
+#### 1.多个变量声明
+
+声明多个变量时很容易出现多条语句。
+
+```js
+// 有四条语句：浪费
+let count = 5;
+let color = "blue";
+let values = [1,2,3];
+let now = new Date();
+```
+
+不同数据类型的变量必须在不同的语句中声明。但在 JavaScript 中，所有变量都可以使用一个 `let` 语句声明。
+
+```js
+// 一条语句更好
+let count = 5,
+    color = "blue",
+    values = [1,2,3],
+    now = new Date();
+```
+
