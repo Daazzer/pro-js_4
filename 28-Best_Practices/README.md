@@ -743,3 +743,7 @@ for (let i = 0, len=images.length; i < len; i++) {
 - 读取元素的 `attributes` 属性
 - 访问特殊集合，如 `document.form`、`document.images` 等
 
+## 28.3 部署
+
+任何 JavaScript 解决方案最重要的部分可能就是把网站或 Web 应用程序部署到线上环境了。不过，在发布之前，还需要解决一些问题。
+
