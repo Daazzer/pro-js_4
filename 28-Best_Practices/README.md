@@ -636,3 +636,41 @@ let person = {
 
 DOM 操作和交互需要占用大量时间，因为经常需要重新渲染整个或部分页面。
 
+#### 1.实时更新最小化
+
+访问 DOM 时，只要访问的部分是显示页面的一部分，就是在执行**实时更新**操作。
+
+实时更新的次数越多，执行代码所需的时间也越长。反之，实时更新的次数越少，代码执行就越快。
+
+```js
+let list = document.getElementById("myList"),
+    item;
+for (let i = 0; i < 10; i++) {
+  item = document.createElement("li");
+  list.appendChild(item);
+  item.appendChild(document.createTextNode(`Item ${i}`));
+}
+/*
+以上代码向列表中添加了 10 项。每添加 1 项，就会有两次实时更新：一次添加<li>元素，一次为
+它添加文本节点。因为要添加 10 项，所以整个操作总共要执行 20 次实时更新。
+ */
+```
+
+使用文档片段构建 DOM 结构，然后一次性将它添加到 list 元素。这 个办法可以减少实时更新，也可以避免页面闪烁。
+
+```js
+let list = document.getElementById("myList"),
+    fragment = document.createDocumentFragment(),
+    item;
+for (let i = 0; i < 10; i++) {
+  item = document.createElement("li");
+  fragment.appendChild(item);
+  item.appendChild(document.createTextNode("Item " + i));
+}
+list.appendChild(fragment); 
+```
+
+这样修改之后，完成同样的操作只会触发一次实时更新。这是因为更新是在添加完所有列表项之后一次性完成的。文档片段在这里作为新创建项目的临时占位符。最后，使用 `appendChild()` 将所有项目都添加到列表中。
+
+只要是必须更新 DOM，就尽量考虑使用文档片段来预先构建 DOM 结构，然后再把构建好的 DOM 结构实时更新到文档中。
+
