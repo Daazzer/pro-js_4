@@ -459,3 +459,62 @@ if (i > -1) {
 }
 ```
 
+### 3.展开循环
+
+如果循环的次数是有限的，那么通常抛弃循环而直接多次调用函数会更快。
+
+```js
+// 抛弃循环
+// 这个例子假设 values 数组始终只有 3 个值，然后分别针对每个元素调用一次 process()
+process(values[0]);
+process(values[1]);
+process(values[2]);
+```
+
+如果不能提前预知循环的次数，那么或许可以使用一种叫作**达夫设备**（Duff’s Device）的技术。达夫设备的基本思路是以 8 的倍数作为迭代次数从而将循环展开为一系列语句。
+
+```js
+// 来源：Jeff Greenberg 在 JavaScript 中实现的达夫设备
+// 假设 values.length > 0
+let iterations = Math.ceil(values.length / 8);
+let startAt = values.length % 8;  // 保存着仅按照除以 8 来循环不会处理的元素个数
+let i = 0;
+do {
+  switch(startAt) {
+    case 0: process(values[i++]);
+    case 7: process(values[i++]);
+    case 6: process(values[i++]);
+    case 5: process(values[i++]);
+    case 4: process(values[i++]);
+    case 3: process(values[i++]);
+    case 2: process(values[i++]);
+    case 1: process(values[i++]);
+  }
+  startAt = 0;
+} while (--iterations > 0); 
+```
+
+Andrew B. King 在 *Speed Up Your Site* 一书中提出了更快的达夫设备实现，他将 `do-while` 循环分成了两个单独的循环
+
+```js
+// 来源：Speed Up Your Site（New Riders，2003）
+let iterations = Math.floor(values.length / 8);
+let leftover = values.length % 8;  // 保存着只按照除以 8 来循环不会处理
+let i = 0;
+if (leftover > 0) {
+  do {
+    process(values[i++]);
+  } while (--leftover > 0);
+}
+do {
+  process(values[i++]);
+  process(values[i++]);
+  process(values[i++]);
+  process(values[i++]);
+  process(values[i++]);
+  process(values[i++]);
+  process(values[i++]);
+  process(values[i++]);
+} while (--iterations > 0);
+```
+
