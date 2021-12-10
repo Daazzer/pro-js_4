@@ -46,12 +46,14 @@ let set = new Set().add(3).add(1).add(4);
 
 **迭代器** (Iterator) 是按需创建的一次性对象。每个迭代器都会关联一个**可迭代对象**，而迭代器会暴露迭代其关联可迭代对象的 API
 
-### 7.2.1 迭代器模式
+### 7.2.1 可迭代协议
 
 实现 `Iterable` 接口（可迭代协议）要求同时具备两种能力：
 
 - 支持迭代的自我识别能力
 - 创建实现 `Iterator` 接口的对象能力
+
+在 ECMAScript 中，这意味着必须暴露一个属性作为“默认迭代器”，而且这个属性必须使用特殊的 `Symbol.iterator` 作为键。这个默认迭代器属性必须引用一个迭代器工厂函数，调用这个工厂函数必须返回一个新迭代器。
 
 实现了 `Iterable` 接口的内置类型：
 
@@ -61,6 +63,8 @@ let set = new Set().add(3).add(1).add(4);
 - 集合
 - `arguments` 对象
 - `NodeList` 等 DOM 集合类型
+
+检查是否存在默认迭代器属性可以暴露这个工厂函数：
 
 ```js
 let num = 1;
@@ -83,9 +87,7 @@ console.log(set[Symbol.iterator]);  // f values() { [native code] }
 console.log(els[Symbol.iterator]);  // f values() { [native code] }
 ```
 
-
-
-实现可迭代类型都会支持：
+实际写代码过程中，不需要显式调用这个工厂函数来生成迭代器。实现可迭代协议的所有类型都会自动兼容接收可迭代对象的任何语言特性。接收可迭代对象的原生语言特性包括：
 
 - `for-of` 循环
 - 数组解构
@@ -97,8 +99,6 @@ console.log(els[Symbol.iterator]);  // f values() { [native code] }
 - `Promise.race()` 接收由期约组成的可迭代对象
 - `yield*` 操作符，在生成器中使用
 
-
-
 如果对象原型链上的父类实现了 `Iterable` 接口，那这个对象也就实现了这个接口
 
 ```js
@@ -106,14 +106,12 @@ class FooArray extends Array {}
 const fooArr = new FooArray('foo', 'bar', 'baz');
 
 for (const el of fooArr) {
-    console.log(el);
+  console.log(el);
 }
 // foo
 // bar
 // baz
 ```
-
-
 
 ### 7.2.2 迭代器协议
 
