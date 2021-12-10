@@ -593,3 +593,42 @@ i++;
 let name = values[i++];
 ```
 
+#### 3.使用数组和对象字面量
+
+有两种使用数组和对象的方式：构造函数和字面量。
+
+使用构造函数始终会产生比单纯插入元素或定义属性更多的语句，而字面量只需一条语句即可完成全部操作。
+
+```js
+// 创建和初始化数组用了四条语句：浪费
+let values = new Array();
+values[0] = 123;
+values[1] = 456;
+values[2] = 789;
+
+// 创建和初始化对象用了四条语句：浪费
+let person = new Object();
+person.name = "Nicholas";
+person.age = 29;
+person.sayName = function() {
+  console.log(this.name);
+};
+```
+
+转换成字面量形式
+
+```js
+// 一条语句创建并初始化数组
+let values = [123, 456, 789];
+// 一条语句创建并初始化对象
+let person = {
+  name: "Nicholas",
+  age: 29,
+  sayName() {
+    console.log(this.name);
+  }
+}; 
+```
+
+> **注意** 减少代码中的语句量是很不错的目标，但不是绝对的法则。一味追求语句最少化，可能导致一条语句容纳过多逻辑，最终难以理解。
+
