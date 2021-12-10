@@ -301,3 +301,38 @@ JavaScript 一开始就是一门解释型语言，因此执行速度比编译型
 
 任何可以缩短遍历作用域链时间的举措都能提升代码性能。
 
+#### 1.避免全局查找
+
+全局变量和函数相比于局部值始终是最费时间的，因为需要经历作用域链查找。
+
+```js
+function updateUI() {
+  let imgs = document.getElementsByTagName("img");
+  /*
+  如果页面的图片非常多，那么 for 循环中就需要引用 document 几十甚至上百次，
+  每次都要遍历一次作用域链。
+   */
+  for (let i = 0, len = imgs.length; i < len; i++) {
+    imgs[i].title = `${document.title} image ${i}`;
+  }
+  let msg = document.getElementById("msg");
+  msg.innerHTML = "Update complete.";
+}
+```
+
+通过在局部作用域中保存 `document` 对象的引用，能够明显提升这个函数的性能，因为只需要作用域链查找。
+
+```js
+function updateUI() {
+  let doc = document;
+  let imgs = doc.getElementsByTagName("img");
+  for (let i = 0, len = imgs.length; i < len; i++) {
+    imgs[i].title = `${doc.title} image ${i}`;
+  }
+  let msg = doc.getElementById("msg");
+  msg.innerHTML = "Update complete.";
+}
+```
+
+因此，一个经验规则就是，只要函数中有引用超过两次的全局对象，就应该把这个对象保存为一个局部变量。
+
