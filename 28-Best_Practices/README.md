@@ -578,3 +578,18 @@ let count = 5,
     now = new Date();
 ```
 
+#### 2.插入迭代性值
+
+任何时候只要使用迭代性值（即会递增或递减的值），都要尽可能使用组合语句。
+
+```js
+// bad
+let name = values[i];
+i++;
+```
+
+```js
+// good
+let name = values[i++];
+```
+
