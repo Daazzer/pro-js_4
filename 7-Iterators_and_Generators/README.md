@@ -485,7 +485,7 @@ function* invalidGeneratorFnC() {
 }
 ```
 
-#### 1. 生成器对象作为可迭代对象
+#### 1.生成器对象作为可迭代对象
 
 在生成器对象上显式调用 `next()` 方法的用处并不大。其实，如果把生成器对象当成可迭代对象，那么使用起来会更方便
 
@@ -519,7 +519,7 @@ for (const _ of nTimes(3)) {
 // foo
 ```
 
-#### 2. 使用 yield 实现输入和输出
+#### 2.使用 yield 实现输入和输出
 
 `yield` 关键字可以作为函数的中间参数使用。上一次生成器函数暂停的 `yield` 关键字会接收到传给 `next()` 方法的第一个值
 
@@ -563,7 +563,7 @@ function* zeroes(n) {
 console.log(Array.from(zeroes(8))); // [0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
-#### 3. 产生可迭代对象
+#### 3.产生可迭代对象
 
 使用星号增强 `yield` 的行为，让它能够迭代一个可迭代对象，从而一次产出一个值
 
@@ -656,26 +656,24 @@ for (const x of outerGeneratorFn(innerGeneratorFn)) {
 // iter value: bar
 ```
 
-#### 4. 使用 yield* 实现递归算法
+#### 4.使用 yield* 实现递归算法
 
 ```js
 // 实现递归算法
 function* nTimes(n) {
-    if (n > 0) {
-        yield* nTimes(n - 1);
-        yield n - 1;
-    }
+  if (n > 0) {
+    yield* nTimes(n - 1);
+    yield n - 1;
+  }
 }
 
 for (const x of nTimes(3)) {
-    console.log(x);
-    // 0
-    // 1
-    // 2
+  console.log(x);
+  // 0
+  // 1
+  // 2
 }
 ```
-
-
 
 ### 7.3.3 生成器作为默认迭代器
 
