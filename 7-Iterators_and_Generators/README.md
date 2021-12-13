@@ -487,16 +487,18 @@ function* invalidGeneratorFnC() {
 
 #### 1. 生成器对象作为可迭代对象
 
+在生成器对象上显式调用 `next()` 方法的用处并不大。其实，如果把生成器对象当成可迭代对象，那么使用起来会更方便
+
 ```js
 // 生成器对象作为可迭代对象
 function* generatorFn() {
-    yield 1;
-    yield 2;
-    yield 3;
+  yield 1;
+  yield 2;
+  yield 3;
 }
 
 for (const x of generatorFn()) {
-    console.log(x);
+  console.log(x);
 }
 // 1
 // 2
@@ -504,13 +506,13 @@ for (const x of generatorFn()) {
 
 // 迭代器执行指定次数
 function* nTimes(n) {
-    while (n--) {
-        yield;
-    }
+  while (n--) {
+    yield;
+  }
 }
 
 for (const _ of nTimes(3)) {
-    console.log('foo');
+  console.log('foo');
 }
 // foo
 // foo
