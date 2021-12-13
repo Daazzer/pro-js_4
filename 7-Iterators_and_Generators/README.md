@@ -433,15 +433,13 @@ console.log(generatorFn()[Symbol.iterator]());  // generatorFn {<suspended>}
 
 `yield` 关键字可以让生成器停止和开始执行
 
-`yield` 关键字有点像函数的中间返回语句，它生成的值会出现在 `next()` 方法返回的对象里。通过 `yield` 关键字退出的生成器函数会在 `done: false` 状态；通过 `return` 关键字退出的生成器函数会处于 `done: true` 状态
-
-`yield` 关键字只能在生成器函数内部使用，用在其它地方会抛出错误
+`yield` 关键字有点像函数的中间返回语句，它生成的值会出现在 `next()` 方法返回的对象里。通过 `yield` 关键字退出的生成器函数会处在 `done: false` 状态；通过 `return` 关键字退出的生成器函数会处于 `done: true` 状态
 
 ```js
 function* generator() {
-    yield 'foo';
-    yield 'bar';
-    return 'baz';
+  yield 'foo';
+  yield 'bar';
+  return 'baz';
 }
 
 const generatorObject = generator();
@@ -460,7 +458,32 @@ console.log(generatorObject2.next());  // { done: false, value: 'bar' }
 console.log(generatorObject1.next());  // { done: false, value: 'bar' }
 ```
 
+`yield` 关键字只能在生成器函数内部使用，用在其它地方会抛出错误
 
+```js
+// 有效
+function* validGeneratorFn() {
+  yield;
+}
+// 无效
+function* invalidGeneratorFnA() {
+  function a() {
+    yield;
+  }
+}
+// 无效
+function* invalidGeneratorFnB() {
+  const b = () => {
+    yield;
+  };
+}
+// 无效
+function* invalidGeneratorFnC() {
+  (() => {
+    yield;
+  })();
+}
+```
 
 #### 1. 生成器对象作为可迭代对象
 
