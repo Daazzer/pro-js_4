@@ -679,24 +679,26 @@ for (const x of nTimes(3)) {
 
 ```js
 class Foo {
-    constructor() {
-        this.values = [1, 2, 3];
-    }
-    * [Symbol.iterator]() {
-        yield* this.values;
-    }
+  constructor() {
+    this.values = [1, 2, 3];
+  }
+  * [Symbol.iterator]() {
+    yield* this.values;
+  }
 }
 
 const f = new Foo();
+/*
+这里，for-of 循环调用了默认迭代器（它恰好又是一个生成器函数）并产生了一个生成器对象。
+这个生成器对象是可迭代的，所以完全可以在迭代中使用。
+ */
 for (const x of f) {
-    console.log(x);
+  console.log(x);
 }
 // 1
 // 2
 // 3
 ```
-
-
 
 ### 7.3.4 提前终止生成器
 
