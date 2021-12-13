@@ -767,34 +767,37 @@ for (const x of g) {
 
 #### 2.throw()
 
-会在暂停的时候将一个提供的错误注入到生成器对象中。如果错误未被处理，生成器就会关闭
+`throw()` 方法会在暂停的时候将一个提供的错误注入到生成器对象中。如果错误未被处理，生成器就会关闭
 
 ```js
 function* generatorErrorFn() {
-    for (const x of [1, 2, 3]) {
-        yield x;
-    }
+  for (const x of [1, 2, 3]) {
+    yield x;
+  }
 }
 
 const gError = generatorErrorFn();
+
 console.log(gError);  // generatorFn {<suspended>}
+
 try {
-    gError.throw('foo');
+  gError.throw('foo');
 } catch (e) {
-    console.log(e);  // foo
+  console.log(e);  // foo
 }
+
 console.log(gError);  // generatorFn {<closed>}
 ```
 
-如果在生成器函数内部处理了错误，则可以恢复执行，但是错误处理会跳过对应的 `yield`
+如果在生成器函数**内部**处理了错误，则可以恢复执行，但是错误处理会跳过对应的 `yield`
 
 ```js
 function* generatorHandleErrorFn() {
-    for (const x of [1, 2, 3]) {
-        try {
-            yield x;
-        } catch (e) {}
-    }
+  for (const x of [1, 2, 3]) {
+    try {
+      yield x;
+    } catch (e) {}
+  }
 }
 
 const gHandleError = generatorHandleErrorFn();
@@ -805,3 +808,4 @@ console.log(gHandleError.next());  // {value: 3, done: false}
 ```
 
 > **注意** 如果生成器对象还没有开始执行，那么调用 `throw()` 抛出的错误不会在函数内部被捕获，相当于在函数外部捕获
+
