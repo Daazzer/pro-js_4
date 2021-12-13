@@ -723,28 +723,49 @@ console.log(g.throw); // f throw() { [native code] }
 
 `return()` 和 `throw()` 方法都可以用于强制生成器进入关闭状态。
 
-#### 1. return()
+#### 1.return()
 
-强制生成器进入关闭状态
+`return()` 方法强制生成器进入关闭状态
 
 ```js
 function* generatorFn() {
-    for (const x of [1, 2, 3]) {
-        yield x;
-    }
+  for (const x of [1, 2, 3]) {
+    yield x;
+  }
 }
 
 const g = generatorFn();
 
 console.log(g);  // generatorFn {<suspended>}
-console.log(g.return(4));  // { value: 4, done: true }
+console.log(g.return(4));  // { value: 4, done: true }，提供给 return()方法的值，就是终止迭代器对象的值
 console.log(g);  // generatorFn {<closed>}
-// 后续调用 next 都是 done: true 状态
+// 后续调用 next 都是 done: true 状态，而提供的任何返回值都不会被存储或传播
 console.log(g.next());
 console.log(g.next());
 ```
 
-#### 2. throw()
+`for-of` 循环等内置语言结构会忽略状态为 `done: true` 的 `IteratorObject` 内部返回的值
+
+```js
+function* generatorFn() {
+  for (const x of [1, 2, 3]) {
+    yield x;
+  }
+}
+
+const g = generatorFn();
+
+for (const x of g) {
+  if (x > 1) {
+    g.return(4);
+  }
+  console.log(x);
+}
+// 1
+// 2
+```
+
+#### 2.throw()
 
 会在暂停的时候将一个提供的错误注入到生成器对象中。如果错误未被处理，生成器就会关闭
 
