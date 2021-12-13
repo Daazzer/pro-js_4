@@ -364,6 +364,8 @@ for (const i of iter) {
 
 ### 7.3.1 生成器的基础
 
+生成器的形式是一个函数，函数名称前面加一个星号 `*` 表示它是一个生成器
+
 ```js
 // 声明一个生成器函数
 function* generatorFn() {}
@@ -373,57 +375,59 @@ let generatorFn() = function* () {}
 
 // 对象字面量
 let foo = {
-    * generatorFn() {}
+  * generatorFn() {}
 }
 
 // 作为类实例方法的生成器函数
 class Foo {
-    * generatorFn() {}
+  * generatorFn() {}
 }
 
 // 作为静态方法的生成器函数
 class Bar {
-    static * generatorFn() {}
+  static * generatorFn() {}
 }
 ```
 
+> **注意** 箭头函数不能用来定义生成器函数
 
+调用生成器函数会产生一个**生成器对象**。生成器对象一开始处于暂停执行（suspended）的状态。与迭代器相似，生成器对象也实现了 `Iterator` 接口，因此具有 `next()` 方法。调用这个方法会让生成器开始或恢复执行。
 
-调用生成器函数会产生一个**生成器对象**，生成器对象一开始处于暂定执行 (suspended) 的状态。生成器对象也实现了 `Iterator` 接口，因此具有 `next()` 方法
-
-函数体为空的生成器函数，调用一次 `next()` 就会让生成器到达 `done: true`
+函数体为空的生成器函数中间不会停留，调用一次 `next()` 就会让生成器到达 `done: true`
 
 ```js
 function* generatorFn() {}
 
 const generatorObject = generatorFn();
 
+console.log(generatorObject); // generatorFn {<suspended>}
 console.log(generatorObject.next());  // { done: true, value: undefined }
 ```
 
+`value` 属性是生成器函数的返回值，默认值为 `undefined`，可以通过生成器函数的返回值指定
+
+
 ```js
 class Foo {
-    *generatorFn() {}
+  *generatorFn() {}
 }
 
 function *generatorFn() {
-    console.log('foobar');
-    return 'foo';
+  console.log('foobar');
+  return 'foo';
 }
 
 class Bar {
-    static * generatorFn() {}
+  static * generatorFn() {}
 }
 
 const g = generatorFn();  // 调用生成器函数不会执行内部代码
 console.log(g);
 console.log(g.next);
-console.log(g.next());   // 只有 next() 之后才会执行内部代码
-console.log(g === g[Symbol.iterator]());  // true
+console.log(g.next());   //  { done: true, value: 'foo' }，只有 next() 之后才会执行内部代码
+console.log(g === g[Symbol.iterator]());  // true，生成器对象实现了 Iterable 接口，它们默认的迭代器是自引用的
 console.log(generatorFn()[Symbol.iterator]());  // generatorFn {<suspended>}
 ```
-
-
 
 ### 7.3.2 通过 yield 中断执行
 
