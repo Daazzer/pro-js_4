@@ -23,9 +23,10 @@
 
   <script>
     function* generatorFn1() {
+      // 与生成器函数的星号类似，yield 星号两侧的空格不影响其行为
       yield* [1, 2];
-      yield* [3, 4];
-      yield* [5, 6];
+      yield * [3, 4];
+      yield *[5, 6];
     }
 
     for (const x of generatorFn1()) {

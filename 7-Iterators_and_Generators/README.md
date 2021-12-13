@@ -569,70 +569,71 @@ console.log(Array.from(zeroes(8))); // [0, 0, 0, 0, 0, 0, 0, 0]
 
 ```js
 function* generatorFn() {
-    yield* [1, 2, 3];
+  yield* [1, 2, 3];
 }
 
 const generatorObject = generatorFn();
 
 for (const x of generatorObject) {
-    console.log(x);
-    // 1
-    // 2
-    // 3
+  console.log(x);
+  // 1
+  // 2
+  // 3
 }
 
-// 相当于 
+// 相当于
 // function* generatorFn() {
-//     for (const x of [1, 2, 3]) {
-//         yield 1x;
-//     }
+//   for (const x of [1, 2, 3]) {
+//       yield 1x;
+//   }
 // }
 ```
 
 ```js
 function* generatorFn1() {
-    yield* [1, 2];
-    yield* [3, 4];
-    yield* [5, 6];
+  // 与生成器函数的星号类似，yield 星号两侧的空格不影响其行为
+  yield* [1, 2];
+  yield * [3, 4];
+  yield *[5, 6];
 }
 
 for (const x of generatorFn1()) {
-    console.log(x);
-    // 1
-    // 2
-    // 3
-    // 4
-    // 5
-    // 6
+  console.log(x);
+  // 1
+  // 2
+  // 3
+  // 4
+  // 5
+  // 6
 }
 
 function* generatorFn2() {
-    yield* 'abcde';
+  yield* 'abcde';
 }
 
 for (const x of generatorFn2()) {
-    console.log(x);
-    // a
-    // b
-    // c
-    // d
-    // e
+  console.log(x);
+  // a
+  // b
+  // c
+  // d
+  // e
 }
 ```
 
-`yield*` 的值时关联迭代器返回 `done: true` 时的 `value` 属性。对于普通迭代器来说，这个值是 `undefined`
+`yield*` 的值是关联迭代器返回 `done: true` 时的 `value` 属性。对于普通迭代器来说，这个值是 `undefined`
 
 ```js
 function* generatorFn3() {
-    console.log('iter value:', yield* [1, 2, 3]);
+  console.log('iter value:', yield* [1, 2, 3]);
 }
 
 for (const x of generatorFn3()) {
-    console.log('value:', x);
-    // value: 1
-    // value: 2
-    // value: 3
-    // iter value: undefined
+  console.log('value:', x);
+  // value: 1
+  // value: 2
+  // value: 3
+  // iter value: undefined
 }
 ```
 
@@ -640,22 +641,20 @@ for (const x of generatorFn3()) {
 
 ```js
 function* innerGeneratorFn() {
-    yield 'foo';
-    return 'bar';
+  yield 'foo';
+  return 'bar';
 }
 
 function* outerGeneratorFn(genObj) {
-    console.log('iter value:', yield* genObj());
+  console.log('iter value:', yield* genObj());
 }
 
 for (const x of outerGeneratorFn(innerGeneratorFn)) {
-    console.log('value:', x);
+  console.log('value:', x);
 }
 // value: foo
 // iter value: bar
 ```
-
-
 
 #### 4. 使用 yield* 实现递归算法
 
