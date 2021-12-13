@@ -526,14 +526,14 @@ for (const _ of nTimes(3)) {
 ```js
 // yield 关键字可以作为函数的中间参数使用
 function* generatorFn(initial) {
-    console.log(initial);
-    console.log(yield);
+  console.log(initial);
+  console.log(yield);
 	console.log(yield);
 }
 
 const generatorObject = generatorFn('foo');
 
-generatorObject.next('bar');  // 'foo'  *第一个 next 参数不会使用，因为这是函数的开始
+generatorObject.next('bar');  // 'foo'  *第一个 next 参数不会使用，是为了开始执行生成器函数
 generatorObject.next('baz');  // 'baz'
 generatorObject.next('qux');  // 'qux'
 ```
@@ -542,7 +542,7 @@ generatorObject.next('qux');  // 'qux'
 
 ```js
 function* generatorFn1() {
-    return yield 'foo';
+  return yield 'foo';
 }
 
 const generatorObject1 = generatorFn1();
@@ -550,6 +550,17 @@ const generatorObject1 = generatorFn1();
 console.log(generatorObject1.next());  // {value: "foo", done: false}
 console.log(generatorObject1.next('bar'));  // {value: "bar", done: true}
 console.log(generatorObject1.next('bar'));  // {value: undefined, done: true}
+```
+
+这样使用生成器也可以实现范围和填充数组
+
+```js
+function* zeroes(n) {
+  while(n--) {
+    yield 0;
+  }
+}
+console.log(Array.from(zeroes(8))); // [0, 0, 0, 0, 0, 0, 0, 0]
 ```
 
 #### 3. 产生可迭代对象
