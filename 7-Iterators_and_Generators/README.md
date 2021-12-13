@@ -704,9 +704,24 @@ for (const x of f) {
 
 与迭代器类似，生成器也支持“可关闭”概念。
 
-- `next()`
-- `return()`
+一个实现 `Iterator` 接口的对象一定有
+
+- `next()` 方法
+- `return()` 方法，可选的，用于提前终止迭代器
 - `throw()` 方法
+
+```js
+function* generatorFn() {}
+
+const g = generatorFn();
+
+console.log(g); // generatorFn {<suspended>}
+console.log(g.next); // f next() { [native code] }
+console.log(g.return); // f return() { [native code] }
+console.log(g.throw); // f throw() { [native code] }
+```
+
+`return()` 和 `throw()` 方法都可以用于强制生成器进入关闭状态。
 
 #### 1. return()
 
