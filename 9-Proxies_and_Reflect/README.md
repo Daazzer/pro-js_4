@@ -288,7 +288,7 @@ if (Reflect.defineProperty(o, 'foo', { value: 'bar' })) {
 - `Reflect.set()`
 - `Reflect.deleteProperty()`
 
-#### 3. 用一等函数替代操作符
+#### 3.用一等函数替代操作符
 
 以下反射方法提供只有通过操作符才能完成的操作
 
