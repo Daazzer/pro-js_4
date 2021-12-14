@@ -341,15 +341,15 @@ console.log(secondProxy.foo);
 
 在某些情况下，代理也不能与现在的 ECMAScript 机制很好地协同。
 
-#### 1. 代理中的 this
+#### 1.代理中的 this
 
 方法中的 `this` 通常指向调用这个方法的对象
 
 ```js
 const target = {
-    thisValueEqualsProxy() {
-        return this === proxy;
-    }
+  thisValueEqualsProxy() {
+    return this === proxy;
+  }
 };
 
 const proxy = new Proxy(target, {});
@@ -358,25 +358,23 @@ console.log(target.thisValueEqualsProxy());  // false
 console.log(proxy.thisValueEqualsProxy());  // true
 ```
 
-
-
 如果目标对象依赖于对象标识，那就可能碰到意料之外的问题
 
 ```js
 const wm = new WeakMap();
 
 class User {
-    constructor(userId) {
-        wm.set(this, userId);
-    }
+  constructor(userId) {
+    wm.set(this, userId);
+  }
 
-    set id(userId) {
-        wm.set(this, userId);
-    }
+  set id(userId) {
+    wm.set(this, userId);
+  }
 
-    get id() {
-        return wm.get(this);
-    }
+  get id() {
+    return wm.get(this);
+  }
 }
 
 // 由于这个实现依赖 User 实例的对象标识，在这个实例被代理的情况下就会出问题
@@ -387,7 +385,7 @@ const userInstanceProxy = new Proxy(user, {});
 console.log(userInstanceProxy.id);  // undefined
 
 /* 
-因为 User 实例一开始使用目标对象作为 WeakMao 的键，代理对象却尝试从自身取得这个实例
+因为 User 实例一开始使用目标对象作为 WeakMap 的键，代理对象却尝试从自身取得这个实例
 要解决这个问题，就需要重新配置代理，把代理 User 实例改为代理 User 类本身。之后再创建
 代理的实例就会以代理实例作为 WeakMap 的键了
  */
@@ -395,8 +393,6 @@ const UserClassProxy = new Proxy(User, {});
 const proxyUser = new UserClassProxy(456);
 console.log(proxyUser.id);  // 456
 ```
-
-
 
 #### 2. 代理与内部槽位
 
