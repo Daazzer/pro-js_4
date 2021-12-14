@@ -929,31 +929,29 @@ new proxy();
 
 ### 9.3.1 跟踪属性访问
 
-捕获 `get` `set` `has` 等操作，可以知道对象属性什么时候被访问、被查阅。
+捕获 `get`、`set`、`has` 等操作，可以知道对象属性什么时候被访问、被查阅。
 
 ```js
 const user = {
-    name: 'Jake'
+  name: 'Jake'
 };
 
 const proxy = new Proxy(user, {
-    get(target, property, receiver) {
-        console.log(`Getting ${property}`);
+  get(target, property, receiver) {
+    console.log(`Getting ${property}`);
 
-        return Reflect.get(...arguments);
-    },
-    set(target, property, value, receiver) {
-        console.log(`Setting ${property}=${value}`);
+    return Reflect.get(...arguments);
+  },
+  set(target, property, value, receiver) {
+    console.log(`Setting ${property}=${value}`);
 
-        return Reflect.set(...arguments);
-    }
+    return Reflect.set(...arguments);
+  }
 });
 
 proxy.name;  // Getting name
 proxy.age = 27;  // Setting age=27
 ```
-
-
 
 ### 9.3.2 隐藏属性
 
