@@ -955,28 +955,30 @@ proxy.age = 27;  // Setting age=27
 
 ### 9.3.2 隐藏属性
 
+代理的内部实现对外部代码是不可见的，因此要隐藏目标对象上的属性也轻而易举
+
 ```js
 const hiddenProperties = ['foo', 'bar'];
 const targetObject = {
-    foo: 1,
-    bar: 2,
-    baz: 3
+  foo: 1,
+  bar: 2,
+  baz: 3
 };
 const proxy = new Proxy(targetObject, {
-    get(target, property) {
-        if (hiddenProperties.includes(property)) {
-            return undefined
-        } else {
-            return Reflect.get(...arguments);
-        }
-    },
-    has(target, property) {
-        if (hiddenProperties.includes(property)) {
-            return false;
-        } else {
-            return Reflect.has(...arguments);
-        }
+  get(target, property) {
+    if (hiddenProperties.includes(property)) {
+      return undefined
+    } else {
+      return Reflect.get(...arguments);
     }
+  },
+  has(target, property) {
+    if (hiddenProperties.includes(property)) {
+      return false;
+    } else {
+      return Reflect.has(...arguments);
+    }
+  }
 });
 // get()
 console.log(proxy.foo);  // undefined
@@ -988,8 +990,6 @@ console.log('foo' in proxy);  // false
 console.log('bar' in proxy);  // false
 console.log('baz' in proxy);  // true
 ```
-
-
 
 ### 9.3.3 属性验证
 
