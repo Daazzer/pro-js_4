@@ -298,17 +298,15 @@ if (Reflect.defineProperty(o, 'foo', { value: 'bar' })) {
 - `Reflect.deleteProperty()` 可以替代 `delete` 操作符
 - `Reflect.construct()` 可以替代 `new` 操作符
 
-#### 4. 安全地应用函数
+#### 4.安全地应用函数
 
 在 `Function` 原型上的 `apply` 方法
 
-`Function.prototype.apply.call(myFunc, thisVal, argumentList);`
-
-这种可怕的代码完全可以使用 `Reflect.apply` 来避免
-
-`Reflect.apply(myFunc, thisVal, argumentsList);`
-
-
+```js
+Function.prototype.apply.call(myFunc, thisVal, argumentList);
+// 这种可怕的代码完全可以使用 `Reflect.apply` 来避免
+Reflect.apply(myFunc, thisVal, argumentsList);
+```
 
 ### 9.1.7 代理另一个代理
 
