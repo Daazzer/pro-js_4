@@ -1018,22 +1018,22 @@ console.log(proxy.onlyNumbersGoHere);  // 1
 
 ### 9.3.4 函数与构造函数参数验证
 
-比如让函数值接收某种类型的值
+可对函数和构造函数参数进行审查。比如让函数值接收某种类型的值
 
 ```js
 function median(...nums) {
-    return nums.sort()[Math.floor(nums.length / 2)];
+  return nums.sort()[Math.floor(nums.length / 2)];
 }
 
 const proxy = new Proxy(median, {
-    apply(target, thisArg, ...argumentsList) {
-        for (const arg of argumentsList) {
-            if (typeof arg !== 'number') {
-                throw 'Non-number argument provided';
-            }
-        }
-        return Reflect.apply(...arguments);
+  apply(target, thisArg, ...argumentsList) {
+    for (const arg of argumentsList) {
+      if (typeof arg !== 'number') {
+        throw 'Non-number argument provided';
+      }
     }
+    return Reflect.apply(...arguments);
+  }
 });
 
 console.log(proxy(4, 7, 1));  // 4
@@ -1045,19 +1045,19 @@ console.log(proxy(4, '7', 1));  // 4
 
 ```js
 class User {
-    constructor(id) {
-        this.id_ = id;
-    }
+  constructor(id) {
+    this.id_ = id;
+  }
 }
 
 const proxy = new Proxy(User, {
-    construct(target, argumentsList, newTarget) {
-        if (argumentsList[0] === undefined) {
-            throw 'User cannot be instantiated without id';
-        } else {
-            return Reflect.construct(...arguments);
-        }
+  construct(target, argumentsList, newTarget) {
+    if (argumentsList[0] === undefined) {
+      throw 'User cannot be instantiated without id';
+    } else {
+      return Reflect.construct(...arguments);
     }
+  }
 });
 
 new proxy(1);
@@ -1065,8 +1065,6 @@ new proxy(1);
 new proxy();
 // Error: User cannot be instantiated without id
 ```
-
-
 
 ### 9.3.5 数据绑定与可观察对象
 
