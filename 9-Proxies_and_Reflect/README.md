@@ -245,14 +245,14 @@ console.log(proxy.foo);  // TypeError
 
 某些情况下应该优先使用反射 API
 
-#### 1. 反射 API 与对象 API
+#### 1.反射 API 与对象 API
 
 1. 反射 API 并不限于捕获处理程序；
 2. 大多数反射 API 方法在 `Object` 类型上有对应的方法。
 
 通常，`Object` 上的方法适用于通用程序，而反射方法适用于细粒度的对象控制与操作。
 
-#### 2. 状态标记
+#### 2.状态标记
 
 很多反射方法返回称作“状态标记”的布尔值，表示意图执行的操作是否成功
 
@@ -261,10 +261,10 @@ console.log(proxy.foo);  // TypeError
 ```js
 const o = {};
 try {
-    Object.defineProperty(o, 'foo', 'bar');
-    console.log('success');
+  Object.defineProperty(o, 'foo', 'bar');
+  console.log('success');
 } catch (e) {
-    console.log('failure');
+  console.log('failure');
 }
 ```
 
@@ -274,13 +274,11 @@ try {
 // 重构以上代码
 const o = {};
 if (Reflect.defineProperty(o, 'foo', { value: 'bar' })) {
-    console.log('success');
+  console.log('success');
 } else {
-    console.log('failure');
+  console.log('failure');
 }
 ```
-
-
 
 以下反射方法都会提供状态标记
 
