@@ -220,17 +220,17 @@ console.log(proxy.foo);  // TypeError
 
 `Proxy` 也暴露了 `revocable()` 方法，这个方法支持撤销代理对象与目标对象的关联。
 
-撤销代理的操作是不可逆的。撤销代理后再调用代理会抛出 `TypeError`
+撤销代理的操作是不可逆的。而且，撤销函数（`revoke()`）是幂等的，调用多少次的结果都一样。撤销代理后再调用代理会抛出 `TypeError`
 
 ```js
 const target = {
-    foo: 'bar'
+  foo: 'bar'
 };
 
 const { proxy, revoke } = Proxy.revocable(target, {
-    get() {
-        return 'intercepted';
-    }
+  get() {
+    return 'intercepted';
+  }
 });
 
 console.log(proxy.foo);  // intercepted
@@ -240,8 +240,6 @@ revoke();
 
 console.log(proxy.foo);  // TypeError
 ```
-
-
 
 ### 9.1.6 实用反射 API
 
