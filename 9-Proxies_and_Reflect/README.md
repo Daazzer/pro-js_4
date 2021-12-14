@@ -1068,23 +1068,25 @@ new proxy();
 
 ### 9.3.5 数据绑定与可观察对象
 
+通过代理可以把运行时中原本不相关的部分联系到一起。这样就可以实现各种模式，从而让不同的代码互操作。
+
 可以将代理的类绑定到一个全局实例集合，让所有创建的实例都被添加到这个集合中
 
 ```js
 const userList = [];
 
 class User {
-    constructor(name) {
-        this.name_ = name;
-    }
+  constructor(name) {
+    this.name_ = name;
+  }
 }
 
 const proxy = new Proxy(User, {
-    construct(target, argumentsList, newTarget) {
-        const newUser = Reflect.construct(...arguments);
-        userList.push(newUser);
-        return newUser;
-    }
+  construct(target, argumentsList, newTarget) {
+    const newUser = Reflect.construct(...arguments);
+    userList.push(newUser);
+    return newUser;
+  }
 });
 
 new proxy('John');
@@ -1094,6 +1096,5 @@ console.log(userList);  // [User {}, User {}, User {}]
 ```
 
 另外，还可以把集合绑定到一个事件分派程序，每次插入新实例都会发送消息
-
 
 
