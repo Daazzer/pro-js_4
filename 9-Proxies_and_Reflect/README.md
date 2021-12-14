@@ -193,28 +193,26 @@ console.log(target.baz);  // qux
 
 ### 9.1.4 捕获器不变式
 
-捕获处理程序必须遵循“捕获器不变式”（trap invariant），通常方式捕获器定义出现过于反常的行为
+捕获处理程序必须遵循“捕获器不变式”（trap invariant），通常防止捕获器定义出现过于反常的行为。
 
 比如，如果目标对象有一个不可配置且不可写的数据属性，那么捕获器返回一个与该属性不同的值时，会抛出 `TypeError`
 
 ```js
 const target = {};
 Object.defineProperty(target, 'foo', {
-    configurable: false,
-    writable: false,
-    value: 'bar'
+  configurable: false,
+  writable: false,
+  value: 'bar'
 });
 
 const proxy = new Proxy(target, {
-    get() {
-        return 'qux';
-    }
+  get() {
+    return 'qux';
+  }
 });
 
 console.log(proxy.foo);  // TypeError
 ```
-
-
 
 ### 9.1.5 可撤销代理
 
