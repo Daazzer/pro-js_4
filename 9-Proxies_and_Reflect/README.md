@@ -997,17 +997,17 @@ console.log('baz' in proxy);  // true
 
 ```js
 const target = {
-    onlyNumbersGoHere: 0
+  onlyNumbersGoHere: 0
 };
 
 const proxy = new Proxy(target, {
-    set(target, property, value) {
-        if (typeof value !== 'number') {
-            return false;
-        } else {
-            return Reflect.set(...arguments);
-        }
+  set(target, property, value) {
+    if (typeof value !== 'number') {
+      return false;
+    } else {
+      return Reflect.set(...arguments);
     }
+  }
 });
 
 proxy.onlyNumbersGoHere = 1;
@@ -1015,8 +1015,6 @@ console.log(proxy.onlyNumbersGoHere);  // 1
 proxy.onlyNumbersGoHere = '2';
 console.log(proxy.onlyNumbersGoHere);  // 1
 ```
-
-
 
 ### 9.3.4 函数与构造函数参数验证
 
