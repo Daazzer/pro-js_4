@@ -94,15 +94,15 @@ console.log(Object.create(proxy)['foo']);  // handler override
 
 ```js
 const target = {
-    foo: 'bar'
+  foo: 'bar'
 };
 
 const proxy = new Proxy(target, {
-    get(trapTarget, property, receiver) {
-        console.log(trapTarget === target);
-        console.log(property);
-        console.log(receiver === proxy);
-    }
+  get(trapTarget, property, receiver) {
+    console.log(trapTarget === target);
+    console.log(property);
+    console.log(receiver === proxy);
+  }
 });
 
 proxy.foo;
@@ -111,26 +111,22 @@ proxy.foo;
 // true
 ```
 
-
-
 有了这些参数，就可以重建被捕获方法的原始行为
 
 ```js
 const target = {
-    foo: 'bar'
+  foo: 'bar'
 };
 
 const proxy = new Proxy(target, {
-    get(trapTarget, property, receiver) {
-        return trapTarget[property];
-    }
+  get(trapTarget, property, receiver) {
+    return trapTarget[property];
+  }
 });
 
 console.log(proxy.foo);  // bar
 console.log(target.foo);  // bar
 ```
-
-
 
 实际上，可以通过全局 `Reflect` 对象上（封装了原始行为）的同名方法来轻松重建
 
@@ -138,7 +134,7 @@ console.log(target.foo);  // bar
 
 ```js
 const target = {
-    foo: 'bar'
+  foo: 'bar'
 };
 
 // const proxy0 = new Proxy(target, {
@@ -148,20 +144,18 @@ const target = {
 // });
 
 const proxy = new Proxy(target, {
-    get: Reflect.get
+  get: Reflect.get
 });
 
 console.log(proxy.foo);  // bar
 console.log(target.foo);  // bar
 ```
 
-
-
 如果创建一个可以捕获所有方法，然后将每个方法转发给对应反射 API 的空代理，那么甚至不需要定义处理程序对象
 
 ```js
 const target = {
-    foo: 'bar'
+  foo: 'bar'
 };
 
 const proxy = new Proxy(target, Reflect);
@@ -170,26 +164,24 @@ console.log(proxy.foo);  // bar
 console.log(target.foo);  // bar
 ```
 
-
-
 反射 API 为开发者准本好了样板代码，在此基础上开发者可以用最少的代码修饰捕获的方法
 
 ```js
 const target = {
-    foo: 'bar',
-    baz: 'qux',
-    bar: 'aa'
+  foo: 'bar',
+  baz: 'qux',
+  bar: 'aa'
 };
 
 const proxy = new Proxy(target, {
-    get(trapTarget, property, receiver) {
-        let decoration = '';
-        if (property === 'foo') {
-            decoration = '!!!';
-        }
-
-        return Reflect.get(...arguments) + decoration;
+  get(trapTarget, property, receiver) {
+    let decoration = '';
+    if (property === 'foo') {
+      decoration = '!!!';
     }
+
+    return Reflect.get(...arguments) + decoration;
+  }
 });
 
 console.log(proxy.foo);  // bar!!!
@@ -198,8 +190,6 @@ console.log(target.foo);  // bar
 console.log(proxy.baz);  // qux
 console.log(target.baz);  // qux
 ```
-
-
 
 ### 9.1.4 捕获器不变式
 
