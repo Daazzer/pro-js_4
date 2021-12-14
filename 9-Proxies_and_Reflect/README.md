@@ -339,6 +339,8 @@ console.log(secondProxy.foo);
 
 ### 9.1.8 代理的问题与不足
 
+在某些情况下，代理也不能与现在的 ECMAScript 机制很好地协同。
+
 #### 1. 代理中的 this
 
 方法中的 `this` 通常指向调用这个方法的对象
