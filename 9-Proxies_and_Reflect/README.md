@@ -589,31 +589,31 @@ Object.defineProperty(proxy, 'foo', { value: 'bar' });
 const myTarget = {};
 
 const proxy = new Proxy(myTarget, {
-    getOwnPropertyDescriptor(target, property) {
-        console.log('getOwnPropertyDescriptor()');
-        return Reflect.getOwnPropertyDescriptor(...arguments);
-    }
+  getOwnPropertyDescriptor(target, property) {
+    console.log('getOwnPropertyDescriptor()');
+    return Reflect.getOwnPropertyDescriptor(...arguments);
+  }
 });
 
 Object.getOwnPropertyDescriptor(proxy, 'foo');
 // getOwnPropertyDescriptor()
 ```
 
-#### 1. 返回值
+#### 1.返回值
 
 `getOwnPropertyDescriptor()` 必须返回对象，或者在属性不存在时返回 `undefined`
 
-#### 2. 拦截的操作
+#### 2.拦截的操作
 
 - `Object.getOwnPropertyDescriptor(proxy, property)`
 - `Reflect.getOwnPropertyDescriptor(proxy, property)`
 
-#### 3. 捕获器处理程序参数
+#### 3.捕获器处理程序参数
 
 - `target` 目标对象
 - `property` 引用目标对象上的字符串键属性
 
-#### 4. 捕获器不变式
+#### 4.捕获器不变式
 
 如果自有的 `target.property` 存在且不可配置，则处理程序必须返回一个表示该属性存在的对象
 
