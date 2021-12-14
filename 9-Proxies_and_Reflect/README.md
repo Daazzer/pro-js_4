@@ -243,6 +243,8 @@ console.log(proxy.foo);  // TypeError
 
 ### 9.1.6 实用反射 API
 
+某些情况下应该优先使用反射 API
+
 #### 1. 反射 API 与对象 API
 
 1. 反射 API 并不限于捕获处理程序；
