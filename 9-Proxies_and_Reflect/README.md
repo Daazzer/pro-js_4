@@ -394,7 +394,7 @@ const proxyUser = new UserClassProxy(456);
 console.log(proxyUser.id);  // 456
 ```
 
-#### 2. 代理与内部槽位
+#### 2.代理与内部槽位
 
 代理与内置引用类型，通常能很好的协同，但是也有一些例外
 
@@ -408,8 +408,6 @@ console.log(proxy instanceof Date);  // true
 
 proxy.getDate();  // TypeError: 'this' is not a Date object
 ```
-
-
 
 ## 9.2 代理捕获器与反射方法
 
