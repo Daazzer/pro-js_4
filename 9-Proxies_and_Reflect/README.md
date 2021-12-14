@@ -12,13 +12,11 @@ ES6 新增的代理和反射。可以给目标对象定义一个关联的代理�
 
 ### 9.1.1 创建空代理
 
-在任何可以使用目标对象的地方，都可以通过同样的方式来使用与之关联的代理对象。
-
 代理是使用 `Proxy` 构造函数创建的。这个构造函数接收两个参数：目标对象和处理程序对象。
 
 ```js
 const target = {
-    id: 'target'
+  id: 'target'
 };
 
 const handler = {};
@@ -30,6 +28,7 @@ console.log(target.id);  // target
 console.log(proxy.id);  // target
 
 // 给目标属性赋值会反映在两个对象上
+// 因为两个对象访问的是同一个值
 target.id = 'foo';
 console.log(target.id);  // foo
 console.log(proxy.id);  // foo
@@ -38,6 +37,7 @@ console.log(target.hasOwnProperty('id'));  // true
 console.log(proxy.hasOwnProperty('id'));  // true
 
 // Proxy.prototype 是 undefined
+// 因此不能使用 instanceof 操作符
 console.log(target instanceof Proxy);  // TypeError: Function has non-object prototype 'undefined' in instanceof check
 console.log(proxy instanceof Proxy);  // TypeError: Function has non-object prototype 'undefined' in instanceof check
 
