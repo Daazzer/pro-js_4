@@ -55,15 +55,13 @@ let person = {
 };
 ```
 
-
-
 修改默认特性：`Object.defineProperty(targetObj, propName, propDesc)`
 
 ```js
 let person = {};
 Object.defineProperty(person, "name", {
-    writable: false,
-    value: "Nicholas"
+  writable: false,
+  value: "Nicholas"
 });
 console.log(person.name);  // "Nicholas"
 // 严格模式下会报错
@@ -71,16 +69,12 @@ person.name = "Greg";
 console.log(person.name);  // "Nicholas"
 ```
 
-
-
 如果对象中一个属性的 `[[Configurable]]` 设置为 `false`
 
 - 不可 `delete` 此属性
 - 不可再次对同一个属性调用 `Object.defineProperty()`
 
 调用 `Object.defineProperty()` 默认的 `[[configurable]]` `[[enumerable]]` `[[writable]]` 默认为 `false`
-
-
 
 #### 2. 访问器属性
 
