@@ -90,35 +90,29 @@ console.log(person.name);  // "Nicholas"
 ```js
 // 设置一个值会导致其他变化发生
 let book = {
-    year_: 2017,
-    edition: 1
+  year_: 2017,
+  edition: 1
 };
 
 Object.defineProperty(book, "year", {
-    get() {
-        return this.year_;
-    },
-    set(newValue) {
-        if (newValue > 2017) {
-            this.year_ = newValue;
-            this.edition += newValue - 2017;
-        }
+  get() {
+    return this.year_;
+  },
+  set(newValue) {
+    if (newValue > 2017) {
+      this.year_ = newValue;
+      this.edition += newValue - 2017;
     }
+  }
 });
 
 book.year = 2018;
 console.log(book.edition);  // 2
 ```
 
-
-
 只定义获取函数 (getter) 说明这个属性时只读的，只有一个设置函数的属性是不能读取的
 
-
-
 > **注意** 在 ES5 以前有两个非标准属性可以访问访问器属性: `__defineGetter__()` 和 `__defineSetter__()`
-
-
 
 ### 8.1.2 定义多个属性
 
