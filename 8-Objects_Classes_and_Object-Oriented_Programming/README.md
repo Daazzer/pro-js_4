@@ -12,26 +12,22 @@ person.name = "Nicholas";
 person.age = 29;
 person.job = "Software Engineer";
 person.sayName = function() {
-    console.log(this.name);
+  console.log(this.name);
 };
 ```
-
-
 
 使用对象字面量创建对象（更加流行）
 
 ```js
 let person = {
-    name: "Nicholas",
-    age: 29,
-    job: "Software Enginner",
-    sayName() {
-        console.log(this.name);
-    }
+  name: "Nicholas",
+  age: 29,
+  job: "Software Enginner",
+  sayName() {
+    console.log(this.name);
+  }
 };
 ```
-
-
 
 ### 8.1.1 属性的类型
 
@@ -55,7 +51,7 @@ let person = {
 都会被设置为 true
  */
 let person = {
-    name: "Nicholas"
+  name: "Nicholas"
 };
 ```
 
