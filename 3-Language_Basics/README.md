@@ -1256,7 +1256,7 @@ let mySymbol = new Symbol();  // TypeError: Symbol is not a constructor
 Object() 函数
  */
 let mySymbol1 = new Symbol();
-let myWrappedSymbol = Object.(mySymbol1);
+let myWrappedSymbol = Object(mySymbol1);
 console.log(typeof myWrappedSymbol);  // "object"
 ```
 
